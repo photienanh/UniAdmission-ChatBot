@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UniAdmission ChatBot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Overlay for mobile -->
+        <div class="sidebar-overlay" id="sidebar-overlay"></div>
+        
+        <!-- Sidebar -->
+        <div class="sidebar collapsed" id="sidebar">
+            <div class="sidebar-header">
+                <h2><i class="fas fa-graduation-cap"></i> UniAdmission</h2>
+                
+                <!-- User info and logout moved to top -->
+                <div class="user-info">
+                    <i class="fas fa-user"></i>
+                    <span id="username">{{ current_user.username if current_user.is_authenticated else 'Guest' }}</span>
+                </div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fas fa-sign-out-alt"></i>
+                    Đăng xuất
+                </button>
+                
+                <!-- New chat button -->
+                <button class="new-chat-btn" id="new-chat-btn">
+                    <i class="fas fa-plus"></i>
+                    Cuộc trò chuyện mới
+                </button>
+            </div>
+            
+            <div class="chat-history" id="chat-history">
+                <!-- Lịch sử chat sẽ được load ở đây -->
+            </div>
+        </div>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="chat-container">
+                <div class="chat-header">
+                    <button class="sidebar-toggle" id="sidebar-toggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h1 id="chat-title">UniAdmission ChatBot</h1>
+                </div>
+                
+                <div class="chat-messages" id="chat-messages">
+                    <div class="message bot-message">
+                        <div class="message-content">
+                            <p>Xin chào! Tôi là UniAdmission Bot. Bạn có thể hỏi tôi bất kỳ thông tin gì về tuyển sinh đại học.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="chat-input-container">
+                    <form id="chat-form">
+                        <div class="input-wrapper">
+                            <textarea 
+                                id="user-input" 
+                                placeholder="Nhập câu hỏi của bạn ở đây..." 
+                                rows="1" 
+                                autofocus
+                            ></textarea>
+                            <button type="submit" id="send-button">
+                                <i class="fas fa-paper-plane"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentSessionId = null;
+        let chatHistory = [];
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatForm = document.getElementById('chat-form');
+            const userInput = document.getElementById('user-input');
+            const chatMessages = document.getElementById('chat-messages');
+            const sidebarToggle = document.getElementById('sidebar-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const sidebarOverlay = document.getElementById('sidebar-overlay');
+            const newChatBtn = document.getElementById('new-chat-btn');
+            
+            // Toggle sidebar function
+            function toggleSidebar() {
+                sidebar.classList.toggle('collapsed');
+                if (window.innerWidth <= 768) {
+                    sidebarOverlay.classList.toggle('show', !sidebar.classList.contains('collapsed'));
+                }
+            }
+            
+            // Close sidebar function (for mobile)
+            function closeSidebar() {
+                if (window.innerWidth <= 768) {
+                    sidebar.classList.add('collapsed');
+                    sidebarOverlay.classList.remove('show');
+                }
+            }
+            
+            // Load chat history
+            loadChatHistory();
+            
+            // Event delegation for chat sessions
+            document.getElementById('chat-history').addEventListener('click', function(e) {
+                const sessionElement = e.target.closest('.chat-session');
+                const deleteButton = e.target.closest('.delete-session');
+                
+                if (deleteButton) {
+                    e.stopPropagation();
+                    const sessionId = deleteButton.dataset.sessionId;
+                    if (confirm('Bạn có chắc muốn xóa cuộc trò chuyện này?')) {
+                        deleteSession(sessionId);
+                    }
+                } else if (sessionElement) {
+                    const sessionId = sessionElement.dataset.sessionId;
+                    loadSession(sessionId);
+                    closeSidebar(); // Close sidebar after selecting session on mobile
+                }
+            });
+            
+            // Toggle sidebar
+            sidebarToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                toggleSidebar();
+            });
+            
+            // Close sidebar when clicking overlay (mobile)
+            sidebarOverlay.addEventListener('click', function() {
+                closeSidebar();
+            });
+            
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                if (window.innerWidth > 768) {
+                    // Desktop: show sidebar, hide overlay
+                    sidebar.classList.remove('collapsed');
+                    sidebarOverlay.classList.remove('show');
+                } else {
+                    // Mobile: start with sidebar closed
+                    sidebar.classList.add('collapsed');
+                    sidebarOverlay.classList.remove('show');
+                }
+            });
+            
+            // Initialize sidebar state based on screen size
+            if (window.innerWidth <= 768) {
+                sidebar.classList.add('collapsed');
+            }
+            
+            // Focus input on page load
+            setTimeout(() => {
+                userInput.focus();
+            }, 500);
+            
+            // New chat button
+            newChatBtn.addEventListener('click', function() {
+                startNewChat();
+                closeSidebar(); // Close sidebar after starting new chat on mobile
+            });
+            
+            // Auto-resize textarea
+            userInput.addEventListener('input', function() {
+                this.style.height = 'auto';
+                this.style.height = (this.scrollHeight) + 'px';
+                if (this.scrollHeight > (20 * 5)) {
+                    this.style.overflowY = 'scroll';
+                } else {
+                    this.style.overflowY = 'hidden';
+                }
+            });
+
+            // Handle form submission
+            chatForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const message = userInput.value.trim();
+                if (message === '') return;
+                
+                // Disable submit button to prevent multiple submissions
+                const submitButton = document.getElementById('send-button');
+                submitButton.disabled = true;
+                
+                // Add user message to chat
+                addMessage(message, 'user');
+                
+                // Clear input and reset height
+                userInput.value = '';
+                userInput.style.height = 'auto';
+                
+                // Focus back to input
+                userInput.focus();
+                
+                // Show typing indicator
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'message bot-message typing';
+                typingIndicator.innerHTML = `
+                    <div class="message-content">
+                        <div class="typing-indicator">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                `;
+                chatMessages.appendChild(typingIndicator);
+                
+                // Scroll to bottom to show typing indicator
+                setTimeout(() => {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 100);
+                
+                // Send message to backend
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ 
+                        message: message,
+                        session_id: currentSessionId
+                    }),
+                })
+                .then(response => {
+                    if (response.status === 401) {
+                        window.location.href = '/login';
+                        return;
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Remove typing indicator
+                    document.querySelector('.typing')?.remove();
+                    
+                    // Re-enable submit button
+                    submitButton.disabled = false;
+                    
+                    if (data.error) {
+                        addMessage('Xin lỗi, đã xảy ra lỗi: ' + data.error, 'bot');
+                        return;
+                    }
+                    
+                    // Update session ID if new
+                    if (data.session_id && !currentSessionId) {
+                        currentSessionId = data.session_id;
+                        loadChatHistory(); // Reload to show new session
+                    }
+                    
+                    // Add bot response
+                    addMessage(data.response, 'bot');
+                    
+                    // Focus back to input after response
+                    setTimeout(() => {
+                        userInput.focus();
+                    }, 200);
+                })
+                .catch((error) => {
+                    // Remove typing indicator
+                    document.querySelector('.typing')?.remove();
+                    
+                    // Re-enable submit button
+                    submitButton.disabled = false;
+                    
+                    // Show error message
+                    addMessage('Xin lỗi, đã xảy ra lỗi khi xử lý yêu cầu của bạn. Vui lòng thử lại sau.', 'bot');
+                    
+                    // Focus back to input even on error
+                    setTimeout(() => {
+                        userInput.focus();
+                    }, 200);
+                    console.error('Error:', error);
+                });
+            });
+            
+            // Allow sending message with Enter (but Shift+Enter for new line)
+            userInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    document.getElementById('send-button').click();
+                }
+            });
+        });
+        
+        // Function to add a message to the chat
+        function addMessage(text, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${sender}-message`;
+            
+            // Replace newlines with <br> tags
+            const formattedText = text.replace(/\n/g, '<br>');
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    <p>${formattedText}</p>
+                </div>
+            `;
+            
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom with smooth behavior
+            setTimeout(() => {
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }, 100);
+        }
+        
+        // Load chat history from server
+        function loadChatHistory() {
+            fetch('/sessions')
+            .then(response => response.json())
+            .then(sessions => {
+                const historyContainer = document.getElementById('chat-history');
+                historyContainer.innerHTML = '';
+                
+                sessions.forEach(session => {
+                    const sessionElement = document.createElement('div');
+                    sessionElement.className = 'chat-session';
+                    sessionElement.dataset.sessionId = session.id; // Add data attribute
+                    sessionElement.innerHTML = `
+                        <div class="session-title">${session.title}</div>
+                        <div class="session-time">${new Date(session.updated_at).toLocaleDateString('vi-VN')}</div>
+                        <button class="delete-session" data-session-id="${session.id}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    `;
+                    
+                    historyContainer.appendChild(sessionElement);
+                });
+                
+                // Check if scroll is needed and add indicator
+                updateScrollIndicator();
+            })
+            .catch(error => {
+                console.error('Error loading chat history:', error);
+            });
+        }
+        
+        // Update scroll indicator for chat history
+        function updateScrollIndicator() {
+            const historyContainer = document.getElementById('chat-history');
+            const hasScroll = historyContainer.scrollHeight > historyContainer.clientHeight;
+            
+            if (hasScroll) {
+                historyContainer.classList.add('has-scroll');
+            } else {
+                historyContainer.classList.remove('has-scroll');
+            }
+            
+            // Update indicator on scroll
+            historyContainer.addEventListener('scroll', function() {
+                const isAtBottom = historyContainer.scrollTop + historyContainer.clientHeight >= historyContainer.scrollHeight - 10;
+                if (isAtBottom) {
+                    historyContainer.classList.remove('has-scroll');
+                } else {
+                    historyContainer.classList.add('has-scroll');
+                }
+            });
+        }
+        
+        // Load a specific chat session
+        function loadSession(sessionId) {
+            console.log('Loading session:', sessionId);
+            
+            fetch(`/sessions/${sessionId}/messages`)
+            .then(response => {
+                console.log('Session response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Session data loaded:', data);
+                const chatMessages = document.getElementById('chat-messages');
+                chatMessages.innerHTML = '';
+                
+                currentSessionId = sessionId;
+                document.getElementById('chat-title').textContent = data.session.title;
+                
+                data.messages.forEach(message => {
+                    addMessage(message.content, message.sender);
+                });
+                
+                // Scroll to bottom after loading all messages
+                setTimeout(() => {
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                }, 200);
+                
+                // Focus input after loading session
+                document.getElementById('user-input').focus();
+            })
+            .catch(error => {
+                console.error('Error loading session:', error);
+                alert('Không thể tải cuộc trò chuyện này. Vui lòng thử lại.');
+            });
+        }
+        
+        // Start a new chat
+        function startNewChat() {
+            currentSessionId = null;
+            document.getElementById('chat-title').textContent = 'UniAdmission ChatBot';
+            
+            const chatMessages = document.getElementById('chat-messages');
+            chatMessages.innerHTML = `
+                <div class="message bot-message">
+                    <div class="message-content">
+                        <p>Xin chào! Tôi là UniAdmission Bot. Bạn có thể hỏi tôi bất kỳ thông tin gì về tuyển sinh đại học.</p>
+                    </div>
+                </div>
+            `;
+            
+            // Focus input when starting new chat
+            document.getElementById('user-input').focus();
+        }
+        
+        // Delete a chat session
+        function deleteSession(sessionId) {
+            fetch(`/sessions/${sessionId}`, {
+                method: 'DELETE'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    if (currentSessionId === sessionId) {
+                        startNewChat();
+                    }
+                    loadChatHistory();
+                } else {
+                    alert('Không thể xóa cuộc trò chuyện này.');
+                }
+            })
+            .catch(error => {
+                console.error('Error deleting session:', error);
+                alert('Có lỗi xảy ra khi xóa cuộc trò chuyện.');
+            });
+        }
+        
+        // Logout function
+        function logout() {
+            window.location.href = '/logout';
+        }
+    </script>
+</body>
+</html>
