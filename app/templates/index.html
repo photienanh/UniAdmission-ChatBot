@@ -58,6 +58,15 @@
                 </div>
                 
                 <div class="chat-input-container">
+                    <!-- LLM Selection Switch -->
+                    <div class="llm-selector">
+                        <label class="switch">
+                            <input type="checkbox" id="llm-toggle">
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="llm-label" id="llm-label">🤖 Gemini AI</span>
+                    </div>
+                    
                     <form id="chat-form">
                         <div class="input-wrapper">
                             <textarea 
@@ -88,6 +97,17 @@
             const sidebar = document.getElementById('sidebar');
             const sidebarOverlay = document.getElementById('sidebar-overlay');
             const newChatBtn = document.getElementById('new-chat-btn');
+            const llmToggle = document.getElementById('llm-toggle');
+            const llmLabel = document.getElementById('llm-label');
+            
+            // Handle LLM toggle
+            llmToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    llmLabel.textContent = '🚀 Custom LLM';
+                } else {
+                    llmLabel.textContent = '🤖 Gemini AI';
+                }
+            });
             
             // Toggle sidebar function
             function toggleSidebar() {
@@ -216,6 +236,7 @@
                 }, 100);
                 
                 // Send message to backend
+                const useCustomLLM = document.getElementById('llm-toggle').checked;
                 fetch('/chat', {
                     method: 'POST',
                     headers: {
@@ -223,7 +244,8 @@
                     },
                     body: JSON.stringify({ 
                         message: message,
-                        session_id: currentSessionId
+                        session_id: currentSessionId,
+                        use_custom_llm: useCustomLLM
                     }),
                 })
                 .then(response => {

@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, jsonify, redirect, url_for, session, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash
-from load_llm import initialize_llm, initialize_rag, ask_gemini
+from load_llm import initialize_llm, initialize_rag, ask_llm, clear_chat_session
 from models import db, User, ChatSession, ChatMessage, init_db
 from datetime import datetime
 import os
@@ -50,7 +50,6 @@ def login():
             login_user(user)
             user.last_login = datetime.utcnow()
             db.session.commit()
-            
             if request.is_json:
                 return jsonify({'success': True, 'redirect': url_for('home')})
             return redirect(url_for('home'))
@@ -115,8 +114,7 @@ def chat():
     data = request.json
     user_input = data.get('message', '')
     session_id = data.get('session_id')
-    
-    print(f"[DEBUG] Received chat request - User: {current_user.username}, Message: {user_input[:50]}...")
+    use_custom_llm = data.get('use_custom_llm', False)  # Thêm tham số chọn LLM
     
     # Tạo session mới nếu chưa có
     if not session_id:
@@ -124,13 +122,10 @@ def chat():
         db.session.add(chat_session)
         db.session.flush()  # Để lấy ID
         session_id = chat_session.id
-        print(f"[DEBUG] Created new session: {session_id}")
     else:
         chat_session = db.session.get(ChatSession, session_id)
         if not chat_session or chat_session.user_id != current_user.id:
-            print(f"[DEBUG] Invalid session: {session_id}")
             return jsonify({'error': 'Session không hợp lệ'}), 403
-        print(f"[DEBUG] Using existing session: {session_id}")
     
     # Lưu tin nhắn của user
     user_message = ChatMessage(
@@ -141,10 +136,8 @@ def chat():
     db.session.add(user_message)
     
     try:
-        # Tạo phản hồi từ bot
-        print(f"[DEBUG] Calling ask_gemini...")
-        bot_response = ask_gemini(user_input, model, retriever)
-        print(f"[DEBUG] Got bot response: {bot_response['response'][:50]}...")
+        # Tạo phản hồi từ bot với LLM được chọn
+        bot_response = ask_llm(user_input, model, retriever, session_id, use_custom_llm)
         
         # Lưu phản hồi của bot
         bot_message = ChatMessage(
@@ -162,7 +155,6 @@ def chat():
             chat_session.title = user_input[:50] + "..." if len(user_input) > 50 else user_input
         
         db.session.commit()
-        print(f"[DEBUG] Successfully processed chat request")
         
         return jsonify({
             'response': bot_response['response'],
@@ -171,7 +163,6 @@ def chat():
         })
         
     except Exception as e:
-        print(f"[ERROR] Error in chat processing: {str(e)}")
         db.session.rollback()
         return jsonify({'error': f'Lỗi xử lý: {str(e)}'}), 500
 
@@ -229,5 +220,5 @@ def create_session():
     
     return jsonify(chat_session.to_dict())
 
-if __name__ == '__main__':
-    app.run(debug=True)
+# if __name__ == '__main__':
+#     app.run(debug=True)
