@@ -6,8 +6,8 @@ from typing import NamedTuple
 import threading
 
 raw_base_path = "data/school_raw"
-parsed_base_path = "data/parsed_x"
-empty_log_path = "data/parsed_x/_empty_{tid}.txt"
+parsed_base_path = "data/parsed_xxxx"
+empty_log_path = "data/parsed_xxxx/_empty_{tid}.txt"
 MIN_THRESHOLD = 2000
 if not os.path.exists(parsed_base_path): os.makedirs(parsed_base_path)
 

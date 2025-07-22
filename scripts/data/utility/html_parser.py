@@ -18,7 +18,7 @@ def _parse_single_table(table: str):
     rows = re.findall(r'<tr>(.*?)</tr>', table)
     for row in rows:
         parsed_row = []
-        columns: str = re.findall(r'<td(.*?)</td>', row)
+        columns: list[str] = re.findall(r'<td(.*?)</td>', row)
         for column in columns:
             column = column.partition(">")[-1]
             parsed_column = extract_text(column)
@@ -41,7 +41,7 @@ def convert_to_table(text: str):
 def parse_text(text: str) -> str:
     text = convert_to_table(text)
     target_tags = [
-        "p", "x_table", "a" #, "h1", "h2", "h3", "h4", "h5", "h6"
+        "p", "x_table" #, "a" #, "h1", "h2", "h3", "h4", "h5", "h6"
     ]
     soup = BeautifulSoup(text, "html.parser")
     elements = soup.find_all(target_tags)

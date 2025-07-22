@@ -1,4 +1,6 @@
-from typing import TypedDict, Dict, Literal, get_args
+# Store common format
+
+from typing import Dict, Literal
 
 TITLES = Literal[
     "Id", 

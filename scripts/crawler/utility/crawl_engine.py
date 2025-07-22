@@ -22,6 +22,11 @@ class CrawlEngine:
             return data
     def get_task(self, url: str) -> asyncio.Task:
         return asyncio.create_task(self.get_page(url))
+    def get_all(self, urls: list[str]) -> list[asyncio.Task]:
+        tasks: list[asyncio.Task] = []
+        for url in urls:
+            tasks.append(self.get_task(url))
+        return tasks
     async def stop(self):
         await self.session.close()
         
