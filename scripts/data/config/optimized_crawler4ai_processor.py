@@ -16,8 +16,8 @@ def processs_text(text: str) -> str:
             valid_lines.append(line)
     return "\n".join(valid_lines)
 class OpCrawler4AIProcessor(IProcessor):
-    def __init__(self, mini_threshold: int = 5000) -> None:
-        self.minimum_threshold = mini_threshold
+    def __init__(self, min_threshold: int = 5000) -> None:
+        self.minimum_threshold = min_threshold
         self.filter = PruningContentFilter(
             threshold=0.5,
             threshold_type="dynamic",

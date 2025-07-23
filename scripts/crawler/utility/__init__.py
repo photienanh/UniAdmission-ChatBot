@@ -4,3 +4,4 @@ from .priority_queue import *
 from .school_crawler import SchoolCrawler, CrawlerResult, ILogger, IConsumer
 from .get_info import get_uni_info
 from .sqlite import create, add_schools
+from .async_util import run_coroutine

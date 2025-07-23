@@ -43,7 +43,7 @@ def run_all():
     """Schedule and run all crawlers
     """
     data = get_uni_info()
-    max_concurrent = 8
+    max_concurrent = 32
     # Scheduler (Single thread)
     db_path = "sqlite:///data/sqlite/sqlite.db"
     create(db_path, True)

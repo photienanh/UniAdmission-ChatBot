@@ -47,8 +47,7 @@ def process_and_store_batch(batch, vector_db: Chroma, splitter: CharacterTextSpl
     chunks = splitter.split_documents(documents)
     vector_db.add_documents(chunks)
     print(f"Processed and stored {len(chunks)} chunks")
-    
-if __name__ == "__main__":
+def load_all():
     batch_size = 100
     embedding = HuggingFaceEmbeddings(model_name=EMBEDDING_NAME)
     vectordb = Chroma(embedding_function=embedding, persist_directory=persit_path)
@@ -64,3 +63,5 @@ if __name__ == "__main__":
     if len(batch) > 0:
         process_and_store_batch(batch, vectordb, splitter)
     print("Completed")
+if __name__ == "__main__":
+    load_all()
