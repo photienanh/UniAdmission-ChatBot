@@ -10,8 +10,6 @@ except ImportError:
 
 class SQLiteConsumer(IConsumer):
     def __init__(self, school_id: int, file_path: str, executor: ThreadPoolExecutor):
-        self._queue = queue.SimpleQueue()
-        self.semaphore = asyncio.Semaphore()
         self.school_id = school_id
         self.handler = PerformanceSQLite(file_path, auto_start=False)
         self.executor = executor

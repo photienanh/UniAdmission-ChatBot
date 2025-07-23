@@ -4,7 +4,6 @@ from .common import *
 import os
 import aiofiles
     
-        
 class FileConsumer(IConsumer):
     def __init__(self, folder_path: str):
         os.makedirs(folder_path, exist_ok=True)

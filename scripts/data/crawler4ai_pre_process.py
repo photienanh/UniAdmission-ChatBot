@@ -3,7 +3,7 @@ from config import *
 from utility import ProcessingManager
 
 raw_base_path = "data/school_raw"
-parsed_base_path = "data/parsed"
+parsed_base_path = "data/parsed_x"
 empty_log_path = "data/parsed/_empty.txt"
 if not os.path.exists(parsed_base_path): os.makedirs(parsed_base_path)
 
@@ -18,7 +18,7 @@ def run():
     file_provider = lambda tid: FileProvider(raw_base_path)
     file_consumer = lambda tid: FileConsumer(parsed_base_path)
     cmd_logger = lambda tid:CmdLogger()
-    simple_processor = lambda tid:SimpleProcessor()
+    simple_processor = lambda tid:Crawler4AIProcessor() # Just diffirent in this line
     manager = ProcessingManager(
         num_workers=4,
         concurrent_per_worker=4,
