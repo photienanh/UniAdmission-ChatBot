@@ -5,30 +5,51 @@ from typing import NamedTuple, Callable, Awaitable
 
 # Absolute import
 from utility import (
-    CrawlEngine, UrlPriorityQueue, ILogger, UrlItem,
+    CrawlEngine, UrlPriorityQueue, UrlItem, UrlKey,
     extract_anchor_data, url_reconstructor
 )
-from format import GeneralInfo
-
+try:
+    from format import GeneralInfo
+except:
+    from ..format import GeneralInfo
     
 class CrawlerResult(NamedTuple):
-    success_index: int
+    doc_index: int
     url: str
     html: str
+
+class ILogger:
+    def __init__(self):
+        pass
+    async def error(self, item: UrlItem, error: Exception):
+        raise NotImplementedError()
+    async def success(self, item: UrlItem):
+        raise NotImplementedError()
+    async def travel_valid(self, item: UrlItem):
+        raise NotImplementedError()
+    async def travel_invalid(self, from_url: str, url: str, travel_index: int):
+        raise NotImplementedError()
+class IConsumer:
+    def __init__(self) -> None:
+        pass
+    async def consume(self, result: CrawlerResult):
+        raise NotImplementedError()
+    
+    
 
 class SchoolCrawler:
     def __init__(self, 
             info: GeneralInfo,
             pq: UrlPriorityQueue,
             logger: ILogger,
-            consumer: Callable[[CrawlerResult], Awaitable[None]],
+            consumer: IConsumer,
             page_limit: int = 500,
             concurrent_limit: int = 4,
             max_retry: int = 3,
             timeout: float = 30,
         ):
         self.consumer = consumer
-        self.logger = logger#FileLogger(os.path.join(log_folder, str(info["Id"])))
+        self.logger = logger
         self.pq = pq
         self.info = info
         self.engine = CrawlEngine(concurrent_limit, timeout)
@@ -39,7 +60,14 @@ class SchoolCrawler:
 
     async def run(self):
         await self.engine.start()
-        self.pq.add(0, self.info["Website"], self.info["Tên trường"])
+        item = UrlItem(
+            UrlKey(0, 0, 0, 0),
+            "",
+            self.info["Website"],
+            ""
+        ) # For log first travel only
+        self.pq.add(0, item.from_url, item.url, item.html)
+        await self.logger.travel_valid(item)
         # try
         while len(self.pq) > 0:
             batch_items: list[UrlItem] = []
@@ -64,16 +92,20 @@ class SchoolCrawler:
                     batch_success_count += 1
                     anchor_data = extract_anchor_data(html)
                     result = CrawlerResult(
-                        success_index=self.success_count+batch_success_count,
+                        doc_index=self.success_count+batch_success_count,
                         url=item.url,
+                        
                         html=html
                     )
-                    await self.consumer(result)
+                    await self.consumer.consume(result)
                     await self.logger.success(item)
                     for anchor_item in anchor_data:
-                        url = url_reconstructor(item.url, anchor_item.href)
-                        new_item = self.pq.add(item.key.level+1, url, anchor_item.text)
-                        await self.logger.travel(url, new_item)
+                        new_url = url_reconstructor(item.url, anchor_item.href)
+                        new_item = self.pq.add(item.key.level+1, item.url, new_url, anchor_item.text)
+                        if new_item != None:
+                            await self.logger.travel_valid(new_item)
+                        else:
+                            await self.logger.travel_invalid(item.url, new_url, item.key.index)
             self.success_count += batch_success_count
             if self.success_count >= self.page_limit:
                 break

@@ -14,7 +14,7 @@ class CrawlEngine:
             try:
                 async with self.session.get(url) as respone:
                     try:
-                        data = await respone.text()
+                        data = await respone.text(encoding='utf-8')
                     except Exception as e:
                         data = e
             except Exception as e:

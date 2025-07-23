@@ -2,6 +2,7 @@ import os
 import datetime
 import aiofiles
 from typing import Optional
+
 from .common import *
 
 class FileLogger(ILogger):
@@ -23,10 +24,11 @@ class FileLogger(ILogger):
         log = f"{item.key.index}|{item.url}\n"
         async with aiofiles.open(self.success_log_file, 'a', encoding="utf-8") as file:
             await file.write(log)
-    async def travel(self, url: str, item: Optional[UrlItem]):
-        if item != None:
-            log = f"True|{item.key.index:>5}|{item.key.retry:>2}|{item.key.score}|{item.url}\n"
-        else:
-            log = f"False|{url}\n"
+    async def travel_valid(self, item: UrlItem):
+        log = f"True|{item.key.index:>5}|{item.key.retry:>2}|{item.key.score}|{item.from_url} -> {item.url}\n"
+        async with aiofiles.open(self.travel_log_file, 'a', encoding="utf-8") as file:
+                    await file.write(log)
+    async def travel_invalid(self, from_url: str, url: str, travel_index: int):
+        log = f"False|{travel_index:>5}|{from_url} - >{url}\n"
         async with aiofiles.open(self.travel_log_file, 'a', encoding="utf-8") as file:
             await file.write(log)

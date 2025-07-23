@@ -37,18 +37,9 @@ def extract_anchor_data(html: str) -> list[AnchorData]:
         if hrefs:
             urls.append(AnchorData(hrefs[0], texts[0] if texts else ""))
     return urls
-async def save_html(save_folder: str, index: int, url: str, text: str):
-    save_path = os.path.join(save_folder, f"{index}.html")
-    try:
-        async with aiofiles.open(save_path, 'w', encoding='utf-8') as file:
-            await file.write(f"<!-- Source:{url} -->\n")
-            await file.write(text)
-    except Exception as e:
-        print(f"Failed to save {url} | {e}")
-        
+
 __all__ = [
     "AnchorData",
     "url_reconstructor",
-    "extract_anchor_data",
-    "save_html"
+    "extract_anchor_data"
 ]

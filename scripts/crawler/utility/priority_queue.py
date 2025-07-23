@@ -8,8 +8,9 @@ class UrlKey(NamedTuple):
     retry: int
 class UrlItem(NamedTuple):
     key: UrlKey
+    from_url: str
     url: str
-    text: str
+    html: str
     
 class IFilter:
     def filter(self, recorded: set[str], url: str, text: str) -> bool:
@@ -37,19 +38,19 @@ class UrlPriorityQueue:
         self.priority = priority
         self.index_count = 0
         self.recorded = set([])
-    def add(self, level: int, url: str, text: str) -> Optional[UrlItem]:
+    def add(self, level: int, from_url: str, url: str, text: str) -> Optional[UrlItem]:
         if self.filter.filter(self.recorded, url, text):
             self.recorded.add(url)
             self.index_count += 1
             score = self.priority.score(url, text)
             key = UrlKey(score, level, self.index_count, 0)
-            item = UrlItem(key, url, text)
+            item = UrlItem(key, from_url, url, text)
             priority = self.priority.neg_priority(key)
             heapq.heappush(self.__data, (priority, item)) # Max heap
             return item
     def retry(self, item: UrlItem) -> UrlItem:
         key = UrlKey(item.key.score, item.key.level, item.key.index, item.key.retry + 1)
-        item = UrlItem(key, item.url, item.text)
+        item = UrlItem(key, item.from_url, item.url, item.html)
         priority = self.priority.neg_priority(key)
         heapq.heappush(self.__data, (priority, item)) # Max heap
         return item

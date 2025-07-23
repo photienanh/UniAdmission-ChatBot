@@ -4,10 +4,11 @@ import asyncio
 import aiofiles
 from typing import NamedTuple
 import threading
+import time
 
 raw_base_path = "data/school_raw"
-parsed_base_path = "data/parsed_xxxx"
-empty_log_path = "data/parsed_xxxx/_empty_{tid}.txt"
+parsed_base_path = "data/parsed"
+empty_log_path = "data/parsed/_empty_{tid}.txt"
 MIN_THRESHOLD = 2000
 if not os.path.exists(parsed_base_path): os.makedirs(parsed_base_path)
 
@@ -26,6 +27,8 @@ def split(lst: list, n: int):
     k, m = divmod(len(lst), n)
     return [lst[i*k + min(i, m) : (i+1)*k + min(i+1, m)] for i in range(n)]
 async def task(tid: int, index: int, semaphore: asyncio.Semaphore, info: JobInfo, log_path: str):
+    if index % 100 == 0:
+        start_time = time.time()
     async with semaphore:
         try:
             # print(f"Start {info.input_path}")
@@ -41,8 +44,10 @@ async def task(tid: int, index: int, semaphore: asyncio.Semaphore, info: JobInfo
                     await file.write(processed_text)
         except:
             pass
-    if index % 100 == 0:
-        print(f"Completed {tid}:{index}")
+    if index % 100 == 0 and index > 0:
+        end_time = time.time()
+        speed = (index)/(end_time-start_time)
+        print(f"Completed {tid}:{index} | Speed {speed:.4f} items/s")
 def thread_task(tid: int, thread_job_infos: list[JobInfo], log_path: str):
     event_loop = asyncio.new_event_loop()
     asyncio.set_event_loop(event_loop)
