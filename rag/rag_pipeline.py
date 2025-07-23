@@ -122,12 +122,6 @@ class RAGPipeline:
         self.qa_chain = self._create_qa_chain()
         
     def update_prompt(self, prompt_template: str) -> None:
-        """
-        Update the prompt template and recreate the QA chain.
-        
-        Args:
-            prompt_template: New prompt template
-        """
         self.prompt_template = prompt_template
         self.prompt = PromptTemplate(
             template=self.prompt_template,
@@ -186,19 +180,6 @@ class RAGPipeline:
         llm_model_name: Optional[str] = None,
         **kwargs
     ) -> "RAGPipeline":
-        """
-        Load a RAG pipeline from a persisted vector store.
-        
-        Args:
-            persist_directory: Directory where the vector store is persisted
-            vector_store_type: Type of vector store
-            llm_provider: Provider of the LLM
-            llm_model_name: Name of the LLM model
-            **kwargs: Additional keyword arguments for the RAG pipeline
-            
-        Returns:
-            Loaded RAG pipeline instance
-        """
         # Load retriever
         if persist_directory is None:
             persist_directory = config.VECTOR_DB_DIR
@@ -231,20 +212,6 @@ def create_pipeline(
     persist_directory: Optional[str] = None,
     **kwargs
 ) -> RAGPipeline:
-    """
-    Create or load a RAG pipeline.
-    
-    Args:
-        documents: List of documents to initialize the vector store with
-        vector_store_type: Type of vector store
-        llm_provider: Provider of the LLM
-        llm_model_name: Name of the LLM model
-        persist_directory: Directory to persist the vector store
-        **kwargs: Additional keyword arguments for the RAG pipeline
-        
-    Returns:
-        RAG pipeline instance
-    """
     if persist_directory is None:
         persist_directory = config.VECTOR_DB_DIR
         

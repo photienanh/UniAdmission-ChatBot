@@ -12,15 +12,7 @@ from rag_pipeline import create_pipeline, RAGPipeline
 
 
 def load_sample_data(csv_path: str = "../data/info/info.csv") -> pd.DataFrame:
-    """
-    Load sample data from a CSV file.
     
-    Args:
-        csv_path: Path to the CSV file
-        
-    Returns:
-        Pandas DataFrame with the sample data
-    """
     try:
         return pd.read_csv(csv_path)
     except Exception as e:
@@ -34,12 +26,6 @@ def load_sample_data(csv_path: str = "../data/info/info.csv") -> pd.DataFrame:
         })
 
 def process_data_and_create_pipeline() -> RAGPipeline:
-    """
-    Process sample data and create a RAG pipeline.
-    
-    Returns:
-        RAG pipeline instance
-    """
     # Load sample data
     df = load_sample_data()
     print(f"Loaded data with {len(df)} rows")
@@ -74,16 +60,7 @@ def process_data_and_create_pipeline() -> RAGPipeline:
 
 
 def run_query(pipeline: RAGPipeline, question: str) -> Dict[str, Any]:
-    """
-    Run a query through the RAG pipeline.
     
-    Args:
-        pipeline: RAG pipeline instance
-        question: Question to answer
-        
-    Returns:
-        Response with answer and source documents
-    """
     print(f"\nQuery: {question}")
     result = pipeline.query(question)
     

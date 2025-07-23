@@ -1,221 +1,155 @@
 """
 Retriever module for the RAG system.
-This module handles retrieval of relevant documents from vector stores.
+This module handles vector database and retrieval functionality.
 """
 
 import os
-from typing import List, Dict, Any, Optional, Union, Tuple
+from typing import List, Dict, Any, Optional, Union, Callable
 
-from langchain_core.vectorstores import VectorStore
-from langchain_core.embeddings import Embeddings
-from langchain_core.retrievers import BaseRetriever
-from langchain.retrievers import ContextualCompressionRetriever
-from langchain.retrievers.document_transformers import EmbeddingsRedundantFilter
-from langchain.retrievers.document_compressors import DocumentCompressorPipeline
 from langchain.schema import Document
+from langchain_core.retrievers import BaseRetriever
+from langchain_core.embeddings import Embeddings
+from langchain_chroma import Chroma
+from langchain_community.vectorstores import FAISS
 
 import config
 from embeddings import get_default_embeddings
 
+
 class RetrieverFactory:
-    """Factory for creating retrievers."""
+    """Factory class for retrievers."""
     
     @staticmethod
-    def create_vector_store(
+    def create_retriever(
         vector_store_type: str = "chroma",
         documents: Optional[List[Document]] = None,
-        embedding_function = None,
+        embedding_function: Optional[Embeddings] = None,
         persist_directory: Optional[str] = None,
+        collection_name: str = "university_admission",
+        search_kwargs: Optional[Dict[str, Any]] = None,
         **kwargs
-    ) -> VectorStore:
+    ) -> BaseRetriever:
         """
-        Create a vector store.
+        Create a retriever.
         
         Args:
             vector_store_type: Type of vector store (chroma, faiss, etc.)
-            documents: List of documents to add to the vector store
+            documents: List of documents
             embedding_function: Embedding function to use
             persist_directory: Directory to persist the vector store
+            collection_name: Name of the collection
+            search_kwargs: Search parameters
             **kwargs: Additional keyword arguments for the vector store
             
         Returns:
-            Initialized vector store
+            Retriever instance
         """
         if embedding_function is None:
             embedding_function = get_default_embeddings()
             
-        if persist_directory is None:
-            persist_directory = config.VECTOR_DB_DIR
+        if search_kwargs is None:
+            search_kwargs = {"k": config.DEFAULT_TOP_K}
+        
+        # Allow using specific vector_db_21_7 path from notebook
+        if persist_directory == "vector_db_21_7" or persist_directory == "./vector_db_21_7":
+            # Check both relative and absolute paths
+            possible_paths = [
+                "./vector_db_21_7",
+                "../vector_db_21_7",
+                "../../vector_db_21_7",
+                os.path.join(os.path.dirname(os.path.abspath(__file__)), "../vector_db_21_7"),
+                os.path.join(os.path.dirname(os.path.abspath(__file__)), "../../vector_db_21_7"),
+                "d:/ASUS/Courses/Intern/LLMforUni/vector_db_21_7"
+            ]
             
-        if vector_store_type.lower() == "chroma":
-            from langchain_chroma import Chroma
+            for path in possible_paths:
+                if os.path.exists(path):
+                    persist_directory = path
+                    break
+                    
+            print(f"Using vector database at: {persist_directory}")
             
-            if documents is not None:
-                vector_store = Chroma.from_documents(
-                    documents=documents,
-                    embedding=embedding_function,
-                    persist_directory=persist_directory,
-                    **kwargs
-                )
-                vector_store.persist()
-            else:
-                # Load existing vector store
+        if vector_store_type == "chroma":
+            # Load existing vector store if persist_directory is provided
+            if persist_directory and os.path.exists(persist_directory):
                 vector_store = Chroma(
                     persist_directory=persist_directory,
                     embedding_function=embedding_function,
+                    collection_name=collection_name,
                     **kwargs
                 )
+            # Create new vector store if documents are provided
+            elif documents:
+                vector_store = Chroma.from_documents(
+                    documents=documents,
+                    embedding=embedding_function,
+                    collection_name=collection_name,
+                    persist_directory=persist_directory,
+                    **kwargs
+                )
+            else:
+                raise ValueError("Either documents or a valid persist_directory must be provided")
                 
-            return vector_store
-            
-        elif vector_store_type.lower() == "faiss":
-            from langchain_community.vectorstores import FAISS
-            
-            if documents is not None:
+        elif vector_store_type == "faiss":
+            # Load existing vector store if persist_directory is provided
+            if persist_directory and os.path.exists(persist_directory):
+                vector_store = FAISS.load_local(
+                    folder_path=persist_directory,
+                    embeddings=embedding_function,
+                    **kwargs
+                )
+            # Create new vector store if documents are provided
+            elif documents:
                 vector_store = FAISS.from_documents(
                     documents=documents,
                     embedding=embedding_function,
                     **kwargs
                 )
                 
-                # Save FAISS index if persist_directory is provided
+                # Save the vector store if persist_directory is provided
                 if persist_directory:
-                    os.makedirs(persist_directory, exist_ok=True)
                     vector_store.save_local(persist_directory)
             else:
-                # Load existing vector store
-                vector_store = FAISS.load_local(
-                    persist_directory,
-                    embedding_function,
-                    **kwargs
-                )
-                
-            return vector_store
-            
+                raise ValueError("Either documents or a valid persist_directory must be provided")
         else:
             raise ValueError(f"Unsupported vector store type: {vector_store_type}")
-    
-    @staticmethod
-    def create_retriever(
-        vector_store: VectorStore,
-        search_type: str = "similarity",
-        search_kwargs: Optional[Dict[str, Any]] = None,
-        **kwargs
-    ) -> BaseRetriever:
-        """
-        Create a retriever from a vector store.
-        
-        Args:
-            vector_store: Vector store to create a retriever from
-            search_type: Type of search to perform
-            search_kwargs: Keyword arguments for the search
-            **kwargs: Additional keyword arguments for the retriever
             
-        Returns:
-            Initialized retriever
-        """
-        if search_kwargs is None:
-            search_kwargs = {"k": config.DEFAULT_TOP_K}
-            
-        if hasattr(vector_store, "as_retriever"):
-            retriever = vector_store.as_retriever(
-                search_type=search_type,
-                search_kwargs=search_kwargs,
-                **kwargs
-            )
-            return retriever
-        else:
-            raise ValueError(f"Vector store does not support retrieval")
-    
-    @staticmethod
-    def create_enhanced_retriever(
-        base_retriever: BaseRetriever,
-        use_reranking: bool = False,
-        use_query_expansion: bool = False,
-        **kwargs
-    ) -> BaseRetriever:
-        """
-        Create an enhanced retriever with reranking and/or query expansion capabilities.
-        
-        Args:
-            base_retriever: Base retriever to enhance
-            use_reranking: Whether to use reranking
-            use_query_expansion: Whether to use query expansion
-            **kwargs: Additional keyword arguments for the retriever components
-            
-        Returns:
-            Enhanced retriever
-        """
-        if not (use_reranking or use_query_expansion):
-            # No enhancements requested, return base retriever
-            return base_retriever
-            
-        enhanced_retriever = base_retriever
-        
-        if use_reranking:
-            # Create a reranking pipeline - example with redundant filter
-            embeddings = kwargs.get("embeddings", get_default_embeddings())
-            redundant_filter = EmbeddingsRedundantFilter(embeddings=embeddings)
-            
-            # You can add more compressors to the pipeline as needed
-            compressor_pipeline = DocumentCompressorPipeline(transformers=[redundant_filter])
-            
-            enhanced_retriever = ContextualCompressionRetriever(
-                base_compressor=compressor_pipeline,
-                base_retriever=enhanced_retriever
-            )
-            
-        if use_query_expansion:
-            # Placeholder for query expansion implementation
-            # This will be implemented in the future
-            pass
-            
-        return enhanced_retriever
+        # Create and return the retriever
+        return vector_store.as_retriever(
+            search_kwargs=search_kwargs
+        )
 
 
 def get_default_retriever(
     documents: Optional[List[Document]] = None,
-    embedding_function = None,
+    embedding_function: Optional[Embeddings] = None,
     vector_store_type: str = "chroma",
     persist_directory: Optional[str] = None,
-    use_reranking: bool = False,
-    use_query_expansion: bool = False,
+    collection_name: str = "university_admission",
     **kwargs
 ) -> BaseRetriever:
     """
     Get the default retriever.
     
     Args:
-        documents: List of documents to add to the vector store
+        documents: List of documents
         embedding_function: Embedding function to use
         vector_store_type: Type of vector store
         persist_directory: Directory to persist the vector store
-        use_reranking: Whether to use reranking
-        use_query_expansion: Whether to use query expansion
+        collection_name: Name of the collection
         **kwargs: Additional keyword arguments for the retriever
         
     Returns:
-        Default retriever
+        Default retriever instance
     """
-    vector_store = RetrieverFactory.create_vector_store(
+    if persist_directory is None:
+        persist_directory = config.VECTOR_DB_DIR
+        
+    return RetrieverFactory.create_retriever(
         vector_store_type=vector_store_type,
         documents=documents,
         embedding_function=embedding_function,
-        persist_directory=persist_directory
+        persist_directory=persist_directory,
+        collection_name=collection_name,
+        **kwargs
     )
-    
-    base_retriever = RetrieverFactory.create_retriever(
-        vector_store=vector_store,
-        search_kwargs={"k": config.DEFAULT_TOP_K, "score_threshold": config.SIMILARITY_THRESHOLD}
-    )
-    
-    if use_reranking or use_query_expansion:
-        return RetrieverFactory.create_enhanced_retriever(
-            base_retriever=base_retriever,
-            use_reranking=use_reranking,
-            use_query_expansion=use_query_expansion,
-            embeddings=embedding_function,
-            **kwargs
-        )
-    
-    return base_retriever

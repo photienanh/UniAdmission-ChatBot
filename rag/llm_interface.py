@@ -4,6 +4,7 @@ This module handles different LLM providers and configurations.
 """
 
 import os
+import torch
 from typing import Dict, Any, Optional, Union, List
 
 from langchain.chains.base import Chain
@@ -18,10 +19,9 @@ from langchain_community.llms import HuggingFacePipeline
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
 
 from dotenv import load_dotenv
-from . import config
+import config
 
 class LLMFactory:
-    """Factory for creating LLM interfaces."""
     
     @staticmethod
     def create_llm(
@@ -32,21 +32,6 @@ class LLMFactory:
         dynamic_length: bool = config.DYNAMIC_RESPONSE_LENGTH,
         **kwargs
     ) -> BaseLLM:
-        """
-        Create an LLM instance based on the provider.
-        
-        Args:
-            provider: Provider of the LLM (gemini, openai, huggingface)
-            model_name: Name of the LLM model
-            temperature: Temperature parameter for generation
-            max_tokens: Maximum number of tokens to generate, None for unlimited
-            dynamic_length: Whether to allow dynamic response length
-            **kwargs: Additional keyword arguments for the LLM
-            
-        Returns:
-            An initialized LLM instance
-        """
-        # Load environment variables for API keys
         load_dotenv()
         
         if model_name is None:
@@ -65,7 +50,6 @@ class LLMFactory:
                 **kwargs
             }
             
-            # Chỉ thiết lập max_output_tokens nếu có giá trị cụ thể và không yêu cầu độ dài động
             if max_tokens is not None and not dynamic_length:
                 llm_params["max_output_tokens"] = max_tokens
             
@@ -92,20 +76,44 @@ class LLMFactory:
         elif provider.lower() == "huggingface":
             # Initialize tokenizer and model
             try:
-                tokenizer = AutoTokenizer.from_pretrained(model_name)
+                print(f"Loading HuggingFace model: {model_name}")
+                tokenizer = AutoTokenizer.from_pretrained(
+                    model_name,
+                    trust_remote_code=True,
+                )
                 
                 # Add pad token if it doesn't exist
                 if tokenizer.pad_token is None:
                     tokenizer.pad_token = tokenizer.eos_token
                 
-                pipe_params = {
-                    "tokenizer": tokenizer,
-                    "device": kwargs.get("device", 0 if kwargs.get("use_gpu", False) else -1),
-                    "do_sample": True,
-                    "temperature": temperature,
-                    "pad_token_id": tokenizer.eos_token_id,
-                    **kwargs
-                }
+                # For Llama and Qwen models, we load the model directly
+                if "llama" in model_name.lower() or "qwen" in model_name.lower():
+                    model = AutoModelForCausalLM.from_pretrained(
+                        model_name,
+                        trust_remote_code=True,
+                        device_map="auto",
+                        torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32
+                    )
+                    
+                    pipe_params = {
+                        "model": model,
+                        "tokenizer": tokenizer,
+                        "do_sample": True,
+                        "temperature": temperature,
+                        "top_p": 0.95,
+                        "repetition_penalty": 1.15,
+                        **kwargs
+                    }
+                else:
+                    pipe_params = {
+                        "tokenizer": tokenizer,
+                        "model": model_name,
+                        "device": kwargs.get("device", 0 if kwargs.get("use_gpu", False) else -1),
+                        "do_sample": True,
+                        "temperature": temperature,
+                        "pad_token_id": tokenizer.eos_token_id,
+                        **kwargs
+                    }
                 
                 # Chỉ thiết lập max_length nếu có giá trị cụ thể và không yêu cầu độ dài động
                 if max_tokens is not None and not dynamic_length:
@@ -114,7 +122,6 @@ class LLMFactory:
                 # Create HuggingFace pipeline
                 pipe = pipeline(
                     "text-generation",
-                    model=model_name,
                     **pipe_params
                 )
                 
@@ -124,6 +131,50 @@ class LLMFactory:
                 raise ValueError(f"Error initializing HuggingFace model: {e}")
         else:
             raise ValueError(f"Unsupported LLM provider: {provider}")
+    
+    @staticmethod
+    def create_llm_from_notebook(model_id="meta-llama/Llama-3.2-1B"):
+        
+        try:
+            print(f"Loading model from notebook approach: {model_id}")
+            
+            # Initialize tokenizer
+            tokenizer = AutoTokenizer.from_pretrained(
+                model_id,
+                trust_remote_code=True
+            )
+            
+            # Initialize model with lower precision for memory efficiency
+            model = AutoModelForCausalLM.from_pretrained(
+                model_id,
+                trust_remote_code=True,
+                device_map="auto",
+                torch_dtype=torch.float16 if torch.cuda.is_available() else torch.float32
+            )
+            
+            # Add pad token if it doesn't exist
+            if tokenizer.pad_token is None:
+                tokenizer.pad_token = tokenizer.eos_token
+            
+            # Create HuggingFace pipeline
+            pipe = pipeline(
+                task="text-generation",
+                model=model,
+                tokenizer=tokenizer,
+                do_sample=True,
+                temperature=0.7,
+                top_p=0.95,
+                repetition_penalty=1.15
+            )
+            
+            # Create LangChain LLM
+            llm = HuggingFacePipeline(pipeline=pipe)
+            print("LLM initialized successfully!")
+            return llm
+            
+        except Exception as e:
+            print(f"Error initializing LLM: {e}")
+            return None
             
     @staticmethod
     def create_chain(
@@ -168,3 +219,15 @@ def get_default_llm() -> BaseLLM:
         max_tokens=config.DEFAULT_MAX_TOKENS,
         dynamic_length=config.DYNAMIC_RESPONSE_LENGTH
     )
+    
+def setup_llm(model_id="meta-llama/Llama-3.2-1B"):
+    """
+    Set up LLM with given model ID (compatibility function for the notebook).
+    
+    Args:
+        model_id: ID of the model to use
+        
+    Returns:
+        LLM instance
+    """
+    return LLMFactory.create_llm_from_notebook(model_id)
