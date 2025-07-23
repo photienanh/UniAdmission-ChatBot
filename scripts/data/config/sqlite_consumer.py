@@ -15,11 +15,13 @@ class SQLiteConsumer(IConsumer):
         future = self.executor.submit(self.handler.setup)
         future.result()
     async def consume(self, id: int, data: ProcessedResult):
-        if len(data.text) < self.min_threshold: return
+        text = ""
+        if len(data.text) < self.min_threshold: 
+            text = data.text
         loop = asyncio.get_event_loop()
         # print(id)
         await loop.run_in_executor(
             self.executor,
             self.handler.add_text,
-            id, "", data.text
+            id, "", text
         )

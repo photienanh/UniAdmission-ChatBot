@@ -19,7 +19,7 @@ def run():
     ids = retrieve_all_doc_ids(db_path)
     db_executor = ThreadPoolExecutor(1) # Only support 1 executor
     cmd_logger = lambda tid:CmdLogger()
-    simple_processor = lambda tid:Crawler4AIProcessor() # Just diffirent in this line
+    simple_processor = lambda tid:OpCrawler4AIProcessor(mini_threshold=5000) # Just diffirent in this line
     sqlite_provider = lambda tid:SQLiteProvider(db_path, db_executor)
     sqlite_consumer = lambda tid:SQLiteConsumer(db_path, db_executor, min_threshold=2000)
     manager = ProcessingManager(
