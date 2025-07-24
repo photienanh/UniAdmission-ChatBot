@@ -8,53 +8,59 @@ import os
 
 # Add the parent directory to sys.path to allow importing from the rag package
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from rag import huggingface_rag
+from rag import rag_pipeline
 
-def initialize_rag():
-    """Initialize the retriever from the vector database
-    Returns a retriever that can be used to retrieve documents
-    """
-    # Try to use the notebook's retriever first (which uses vector_db_21_7)
+from rag.rag_pipeline import SimplifiedRAG
+
+# Khởi tạo là None thay vì tạo instance mới mỗi lần import
+rag_pipeline = None
+
+def initialize_llm(llm_type: str = 'openai'):
+    global rag_pipeline
+    if rag_pipeline is None:
+        # Khởi tạo rag_pipeline nếu chưa được khởi tạo
+        rag_pipeline = SimplifiedRAG()
     try:
-        return huggingface_rag.initialize_retriever()
-    except Exception as e:
-        print(f"Failed to load notebook retriever: {e}")
-        print("Falling back to default retriever")
+        return rag_pipeline.change_llm(llm_type.lower())
+    except ValueError as e:
+        print(f"Error initializing LLM: {e}")
+        return None
+
+def create_rag_pipeline(vector_db_path: str = None, embedding_model: str = "intfloat/multilingual-e5-small", llm_type: str = "huggingface", llm_model_name: str = None, temperature: float = 0.7, top_k: int = 3):
+    global rag_pipeline
+    # Cập nhật biến toàn cục thay vì chỉ trả về một phiên bản mới
+    rag_pipeline = SimplifiedRAG(
+        vector_db_path=vector_db_path,
+        embedding_model=embedding_model,
+        llm_type=llm_type,
+        llm_model_name=llm_model_name,
+        temperature=temperature,
+        top_k=top_k
+    )
+    return rag_pipeline
+
+def ask(question: str):
+    global rag_pipeline
+    try:
+        if rag_pipeline is None:
+            # Tự động khởi tạo nếu chưa được khởi tạo
+            rag_pipeline = SimplifiedRAG()
+            print("Automatically initialized RAG pipeline with default settings.")
         
-        embedding = HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-small", cache_folder='./cache')
-        vectorstore = Chroma(persist_directory="../vector_db", embedding_function=embedding)
-        return vectorstore.as_retriever()
-
-def build_rag_prompt(question: str, retriever, k=3):
-    # Truy xuất các chunk văn bản liên quan
-    docs = retriever.invoke(question, k=k)
-    context = "\n\n".join([doc.page_content for doc in docs])
+        result = rag_pipeline.ask(question)
+        
+        ans = result.get('answer', 'No answer found.')
+        if "Trả lời:" in ans:
+            ans = ans.split("Trả lời:", 1)[1].strip()
+            
+        return {
+            'response': ans,
+            'sources': [doc.page_content for doc in result.get('source_documents', [])]
+        }
     
-    # Tạo prompt có chèn ngữ cảnh
-    prompt = f"""
-Bạn là một AI tư vấn tuyển sinh đại học, dựa vào hiểu biết của mình, có thể sử dụng kèm theo những thông tin sau đây, hãy trả lời câu hỏi hoặc đưa ra tư vấn.
-
-Thông tin được cung cấp:
-{context}
-
-Câu hỏi:
-{question}
-
-Trả lời:
-"""
-    return prompt
-
-def initialize_llm():
-    load_dotenv('gemini_api_key.env')
-    genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
-    model = genai.GenerativeModel("gemini-2.0-flash-lite-preview-02-05")
-    return model
-
-def ask_gemini(question, model, retriever):
-    prompt = build_rag_prompt(question, retriever)
-    response = model.generate_content(prompt)
-    return {"response": response.text}
-
-def ask_huggingface_rag(question, model=None, retriever=None):
-    result = huggingface_rag.notebook_ask(question)
-    return {"response": result["answer"]}
+    except Exception as e:
+        print(f"Error in ask function: {e}")
+        return {
+            'response': f"Sorry, an error occurred: {str(e)}",
+            'sources': []
+        }

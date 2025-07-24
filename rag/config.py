@@ -30,16 +30,18 @@ RERANKER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"  # Mô hình reranker m�
 REDUNDANT_FILTER_THRESHOLD = 0.95  # Ngưỡng lọc tài liệu trùng lặp
 
 # LLM configuration
-DEFAULT_LLM_MODEL = "gemini-2.0-flash-lite-preview-02-05"  # Default Gemini model
-DEFAULT_TEMPERATURE = 0.3
-DEFAULT_MAX_TOKENS = None  # Không giới hạn độ dài câu trả lời
-DYNAMIC_RESPONSE_LENGTH = True  # Cho phép độ dài câu trả lời thay đổi động
+DEFAULT_LLM_MODEL = "meta-llama/Llama-3.2-1B" 
+HUGGINGFACE_LLM_MODEL = "meta-llama/Llama-3.2-1B"  # Mô hình LLM mặc định
+GOOGLE_GEMINI_MODEL = "gemini-1.5-pro-latest"  # Updated to a valid Gemini model name
+OPENAI_MODEL = "gpt-3.5-turbo"  # Mô hình OpenAI mặc định
 
-# API keys (for backup/fallback, primary should be in .env)
-# Don't hardcode actual API keys here, use environment variables instead
+DEFAULT_TEMPERATURE = 0.3
+DEFAULT_MAX_TOKENS = None  
+DYNAMIC_RESPONSE_LENGTH = True 
+
 API_KEYS = {
-    "gemini": os.getenv("GEMINI_API_KEY", ""),
-    "openai": os.getenv("OPENAI_API_KEY", ""),
+    "gemini": os.getenv("GEMINI_API_KEY", "nothing"),
+    "openai": os.getenv("OPENAI_API_KEY", "nothing"),
 }
 
 # RAG prompt templates

@@ -1,7 +1,7 @@
 from flask import Flask, request, render_template, jsonify, redirect, url_for, session, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from werkzeug.security import generate_password_hash
-from load_llm import initialize_llm, initialize_rag, ask_gemini
+from load_llm import initialize_llm, create_rag_pipeline, ask
 from models import db, User, ChatSession, ChatMessage, init_db
 from datetime import datetime
 import os
@@ -24,9 +24,9 @@ login_manager.login_message = 'Vui lòng đăng nhập để sử dụng chatbot
 def load_user(user_id):
     return db.session.get(User, str(user_id))
 
-# Khởi tạo model và RAG
-model = initialize_llm()
-retriever = initialize_rag()
+# Khởi tạo RAG pipeline một lần duy nhất khi start ứng dụng
+# và sử dụng cùng một instance trong toàn bộ ứng dụng
+create_rag_pipeline()
 
 @app.route('/')
 @login_required
@@ -141,9 +141,8 @@ def chat():
     db.session.add(user_message)
     
     try:
-        # Tạo phản hồi từ bot
-        print(f"[DEBUG] Calling ask_gemini...")
-        bot_response = ask_gemini(user_input, model, retriever)
+        print(f"[DEBUG] Calling")
+        bot_response = ask(question=user_input)
         print(f"[DEBUG] Got bot response: {bot_response['response'][:50]}...")
         
         # Lưu phản hồi của bot
