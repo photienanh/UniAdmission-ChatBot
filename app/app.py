@@ -1,7 +1,6 @@
-from flask import Flask, request, render_template, jsonify, redirect, url_for, session, flash
+from flask import Flask, request, render_template, jsonify, redirect, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from werkzeug.security import generate_password_hash
-from load_llm import initialize_llm, initialize_rag, ask_llm, clear_chat_session
+from load_llm import initialize_llm, initialize_rag, ask_llm
 from models import db, User, ChatSession, ChatMessage, init_db
 from datetime import datetime
 import os
@@ -220,5 +219,5 @@ def create_session():
     
     return jsonify(chat_session.to_dict())
 
-# if __name__ == '__main__':
-#     app.run(debug=True)
+if __name__ == '__main__':
+    app.run(debug=True)

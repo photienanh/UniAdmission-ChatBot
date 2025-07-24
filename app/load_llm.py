@@ -42,11 +42,47 @@ def get_or_create_chat_session(model, session_id):
         chat_sessions[session_id] = model.start_chat()
     return chat_sessions[session_id]
 
-def ask_custom_llm(question):
-    url = get_custom_llm_url()
-    payload = {"prompt": question}
-    response = requests.post(url, json=payload)
-    return {"response": response.json()["response"]}  # Trả về dictionary với key "response"
+def ask_custom_llm(question, retriever):
+    """Gọi API LLM tự phát triển với RAG context"""
+    try:
+        # Lấy thông tin RAG context
+        rag_context = build_rag_context(question, retriever)
+        
+        # Tạo prompt với RAG context cho custom model
+        message_with_context = f"""
+Thông tin tham khảo:
+{rag_context}
+
+Câu hỏi: {question}
+"""
+        url = get_custom_llm_url()
+        
+        payload = {"prompt": message_with_context.strip()}
+        
+        # Thêm headers
+        headers = {
+            'Content-Type': 'application/json',
+            'ngrok-skip-browser-warning': 'true'
+        }
+        
+        response = requests.post(url, json=payload, headers=headers, timeout=300)
+        
+        if response.status_code == 200:
+            result = response.json()
+            return {"response": result["response"]}
+        else:
+            error_msg = f"Lỗi API: {response.status_code} - {response.text[:100]}"
+            return {"response": error_msg}
+            
+    except requests.exceptions.Timeout:
+        error_msg = "API phản hồi quá chậm. Vui lòng thử lại."
+        return {"response": error_msg}
+    except requests.exceptions.ConnectionError:
+        error_msg = "Không thể kết nối đến API. Kiểm tra lại kết nối."
+        return {"response": error_msg}
+    except Exception as e:
+        error_msg = f"Lỗi: {str(e)}"
+        return {"response": error_msg}
 
 
 def ask_gemini_with_chat(question, model, retriever, session_id):
@@ -65,7 +101,6 @@ Thông tin tham khảo:
 
 Câu hỏi: {question}
 """
-        
         # Gửi message và nhận response
         response = chat.send_message(message_with_context)
         
@@ -77,29 +112,11 @@ Câu hỏi: {question}
 def ask_llm(question, model, retriever, session_id=None, use_custom_llm=False):
     """Hàm chung để gọi LLM - Gemini hoặc Custom LLM"""
     if use_custom_llm:
-        # Sử dụng API LLM tự phát triển (không có conversation memory)
-        return ask_custom_llm(question)
+        return ask_custom_llm(question, retriever)
     else:
-        # Sử dụng Gemini với conversation memory
         return ask_gemini_with_chat(question, model, retriever, session_id)
 
 def clear_chat_session(session_id):
     """Xóa chat session khỏi memory"""
     if session_id in chat_sessions:
         del chat_sessions[session_id]
-
-# Giữ lại hàm cũ để tương thích ngược
-# def ask_gemini(question, model, retriever):
-#     prompt = f"""
-# Bạn là một AI tư vấn tuyển sinh đại học, dựa vào hiểu biết của mình, có thể sử dụng kèm theo những thông tin sau đây, hãy trả lời câu hỏi hoặc đưa ra tư vấn.
-
-# Thông tin được cung cấp:
-# {build_rag_context(question, retriever)}
-
-# Câu hỏi:
-# {question}
-
-# Trả lời:
-# """
-#     response = model.generate_content(prompt)
-#     return {"response": response.text}

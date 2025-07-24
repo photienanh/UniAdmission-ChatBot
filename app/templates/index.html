@@ -282,6 +282,8 @@
                     }, 200);
                 })
                 .catch((error) => {
+                    console.error('Error:', error);
+                    
                     // Remove typing indicator
                     document.querySelector('.typing')?.remove();
                     
@@ -295,7 +297,6 @@
                     setTimeout(() => {
                         userInput.focus();
                     }, 200);
-                    console.error('Error:', error);
                 });
             });
             
