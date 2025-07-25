@@ -9,6 +9,8 @@ from langchain_core.documents import Document
 from langchain_core.retrievers import BaseRetriever
 from langchain_core.language_models import BaseLLM
 from langchain_huggingface import HuggingFaceEmbeddings
+from langchain.retrievers.document_compressors import CrossEncoderReranker
+from langchain.retrievers import ContextualCompressionRetriever
 from langchain_chroma import Chroma
 from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
@@ -91,6 +93,15 @@ class SimplifiedRAG:
             chain_type_kwargs={"prompt": prompt_template},
             return_source_documents=True
         )
+        
+    def get_llm(self) -> BaseLLM:
+        return self.llm
+    
+    def get_vectorstore(self) -> Chroma:
+        return self.vectorstore
+    
+    def get_retriever(self) -> BaseRetriever:
+        return self.retriever
         
     def change_llm(self, llm_type: str, llm_model_name: str = None, temperature: float = None):
         """
@@ -180,5 +191,55 @@ class SimplifiedRAG:
         search_kwargs = {"k": k} if k is not None else None
         return self.retriever.get_relevant_documents(question, search_kwargs=search_kwargs)
     
-    def get_retriever(self) -> BaseRetriever:
+    def add_documents(self, documents: List[Document]) -> None:
+        """
+        Add new documents to the vector store.
+        
+        Args:
+            documents: List of Document objects to add
+        """
+        if not documents:
+            raise ValueError("No documents provided to add to the vector store.")
+        self.vectorstore.add_documents(documents)
+        self.vectorstore.persist()
+    
+    def change_retriever(self,
+        search_kwargs: Optional[Dict[str, Any]] = {"k": config.DEFAULT_TOP_K},
+        search_type: Optional[str] = "similarity"
+    ) -> BaseRetriever:
+        
+        if search_kwargs is None:
+            search_kwargs = {"k": config.DEFAULT_TOP_K}
+        
+        self.retriever = self.vectorstore.as_retriever(
+            search_kwargs=search_kwargs,
+            search_type=search_type
+        )
+        
         return self.retriever
+    
+    def rerank_documents(self,
+        question: str,
+        reranker_model: str = config.RERANKER_MODEL,
+        top_k: int = config.DEFAULT_TOP_K
+    ) -> List[Document]:
+        """
+        Rerank the retrieved documents using a cross-encoder reranker.
+        
+        Args:
+            question: The query for which documents are being reranked
+            documents: List of Document objects to rerank
+            reranker_model: Model name for the reranker
+            top_k: Number of top documents to return after reranking
+        
+        Returns:
+            List of reranked Document objects
+        """
+        reranker = CrossEncoderReranker(model_name=reranker_model)
+        compressed_retriever = ContextualCompressionRetriever(
+            base_retriever=self.retriever,
+            reranker=reranker,
+            top_k=top_k
+        )
+        
+        return compressed_retriever.get_relevant_documents(question, search_kwargs={"k": top_k})
