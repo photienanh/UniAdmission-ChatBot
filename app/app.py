@@ -23,9 +23,9 @@ login_manager.login_message = 'Vui lòng đăng nhập để sử dụng chatbot
 def load_user(user_id):
     return db.session.get(User, str(user_id))
 
-# Khởi tạo model và RAG
-model = initialize_llm()
-retriever = initialize_rag()
+# Khởi tạo RAG pipeline một lần duy nhất khi start ứng dụng
+# và sử dụng cùng một instance trong toàn bộ ứng dụng
+create_rag_pipeline()
 
 @app.route('/')
 @login_required
