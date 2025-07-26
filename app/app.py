@@ -1,6 +1,7 @@
 from flask import Flask, request, render_template, jsonify, redirect, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
-from load_llm import initialize_llm, initialize_rag, ask_llm
+from load_llm import initialize_gemini, ask_llm
+from rag import initialize_rag
 from models import db, User, ChatSession, ChatMessage, init_db
 from datetime import datetime
 import os
@@ -24,7 +25,7 @@ def load_user(user_id):
     return db.session.get(User, str(user_id))
 
 # Khởi tạo model và RAG
-model = initialize_llm()
+gemini = initialize_gemini()
 retriever = initialize_rag()
 
 @app.route('/')
@@ -114,6 +115,7 @@ def chat():
     user_input = data.get('message', '')
     session_id = data.get('session_id')
     use_custom_llm = data.get('use_custom_llm', False)  # Thêm tham số chọn LLM
+    use_web_search = data.get('use_web_search', True)  # Thêm tham số chọn web search (mặc định True)
     
     # Tạo session mới nếu chưa có
     if not session_id:
@@ -135,8 +137,8 @@ def chat():
     db.session.add(user_message)
     
     try:
-        # Tạo phản hồi từ bot với LLM được chọn
-        bot_response = ask_llm(user_input, model, retriever, session_id, use_custom_llm)
+        # Tạo phản hồi từ bot với LLM được chọn và search method
+        bot_response = ask_llm(user_input, gemini, retriever, session_id, use_custom_llm, use_web_search)
         
         # Lưu phản hồi của bot
         bot_message = ChatMessage(

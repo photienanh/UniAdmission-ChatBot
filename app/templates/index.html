@@ -67,6 +67,15 @@
                         <span class="llm-label" id="llm-label">🤖 Gemini AI</span>
                     </div>
                     
+                    <!-- Web Search Selection Switch -->
+                    <div class="search-selector">
+                        <label class="switch">
+                            <input type="checkbox" id="search-toggle" checked>
+                            <span class="slider round"></span>
+                        </label>
+                        <span class="search-label" id="search-label">🌐 Web Search</span>
+                    </div>
+                    
                     <form id="chat-form">
                         <div class="input-wrapper">
                             <textarea 
@@ -99,6 +108,8 @@
             const newChatBtn = document.getElementById('new-chat-btn');
             const llmToggle = document.getElementById('llm-toggle');
             const llmLabel = document.getElementById('llm-label');
+            const searchToggle = document.getElementById('search-toggle');
+            const searchLabel = document.getElementById('search-label');
             
             // Handle LLM toggle
             llmToggle.addEventListener('change', function() {
@@ -106,6 +117,15 @@
                     llmLabel.textContent = '🚀 Custom LLM';
                 } else {
                     llmLabel.textContent = '🤖 Gemini AI';
+                }
+            });
+            
+            // Handle Web Search toggle
+            searchToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    searchLabel.textContent = '🌐 Web Search';
+                } else {
+                    searchLabel.textContent = '📚 RAG Search';
                 }
             });
             
@@ -237,6 +257,7 @@
                 
                 // Send message to backend
                 const useCustomLLM = document.getElementById('llm-toggle').checked;
+                const useWebSearch = document.getElementById('search-toggle').checked;
                 fetch('/chat', {
                     method: 'POST',
                     headers: {
@@ -245,7 +266,8 @@
                     body: JSON.stringify({ 
                         message: message,
                         session_id: currentSessionId,
-                        use_custom_llm: useCustomLLM
+                        use_custom_llm: useCustomLLM,
+                        use_web_search: useWebSearch
                     }),
                 })
                 .then(response => {
