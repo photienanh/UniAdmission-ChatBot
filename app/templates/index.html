@@ -124,24 +124,6 @@
         let chatHistory = [];
         
         document.addEventListener('DOMContentLoaded', function() {
-            // Kiểm tra authentication status khi load trang
-            fetch('/sessions', {
-                method: 'GET',
-                cache: 'no-cache'
-            })
-            .then(response => {
-                if (response.status === 401) {
-                    // Nếu không authenticated, redirect về login
-                    window.location.replace('/login');
-                    return;
-                }
-                return response.json();
-            })
-            .catch(() => {
-                // Nếu có lỗi, redirect về login
-                window.location.replace('/login');
-            });
-            
             const chatForm = document.getElementById('chat-form');
             const userInput = document.getElementById('user-input');
             const chatMessages = document.getElementById('chat-messages');
@@ -474,12 +456,54 @@
                     sidebar.classList.add('collapsed');
                     sidebarOverlay.classList.remove('show');
                 }
+                
+                // Force show mobile elements
+                forceShowMobileElements();
             });
+            
+            // Mobile debug - force show elements
+            function forceShowMobileElements() {
+                if (window.innerWidth <= 768) {
+                    console.log('Mobile view detected, forcing elements visible');
+                    
+                    const chatInput = document.querySelector('.chat-input-area');
+                    const userDropdown = document.querySelector('.user-dropdown');
+                    
+                    if (chatInput) {
+                        chatInput.style.display = 'block';
+                        chatInput.style.visibility = 'visible';
+                        chatInput.style.opacity = '1';
+                        chatInput.style.position = 'fixed';
+                        chatInput.style.bottom = '0';
+                        chatInput.style.left = '0';
+                        chatInput.style.right = '0';
+                        chatInput.style.zIndex = '1000';
+                        chatInput.style.background = 'white';
+                        console.log('Chat input forced visible');
+                    } else {
+                        console.log('Chat input not found!');
+                    }
+                    
+                    if (userDropdown) {
+                        userDropdown.style.display = 'block';
+                        userDropdown.style.visibility = 'visible';
+                        userDropdown.style.opacity = '1';
+                        userDropdown.style.position = 'relative';
+                        userDropdown.style.zIndex = '1002';
+                        console.log('User dropdown forced visible');
+                    } else {
+                        console.log('User dropdown not found!');
+                    }
+                }
+            }
             
             // Initialize
             if (window.innerWidth <= 768) {
                 sidebar.classList.add('collapsed');
             }
+            
+            // Force show mobile elements on load
+            setTimeout(forceShowMobileElements, 100);
             
             loadChatHistory();
             
