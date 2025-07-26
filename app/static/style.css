@@ -360,7 +360,7 @@ body {
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #3498db;
+    background-color: #e74c3c;
     transition: .3s;
     border-radius: 26px;
 }
@@ -378,7 +378,7 @@ body {
 }
 
 input:checked + .slider {
-    background-color: #e74c3c;
+    background-color: #3498db;
 }
 
 input:checked + .slider:before {

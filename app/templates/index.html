@@ -61,7 +61,7 @@
                     <!-- LLM Selection Switch -->
                     <div class="llm-selector">
                         <label class="switch">
-                            <input type="checkbox" id="llm-toggle">
+                            <input type="checkbox" id="llm-toggle" checked>
                             <span class="slider round"></span>
                         </label>
                         <span class="llm-label" id="llm-label">🤖 Gemini AI</span>
@@ -114,9 +114,9 @@
             // Handle LLM toggle
             llmToggle.addEventListener('change', function() {
                 if (this.checked) {
-                    llmLabel.textContent = '🚀 Custom LLM';
-                } else {
                     llmLabel.textContent = '🤖 Gemini AI';
+                } else {
+                    llmLabel.textContent = '🚀 Custom LLM';
                 }
             });
             
@@ -256,7 +256,7 @@
                 }, 100);
                 
                 // Send message to backend
-                const useCustomLLM = document.getElementById('llm-toggle').checked;
+                const useGemini = document.getElementById('llm-toggle').checked;
                 const useWebSearch = document.getElementById('search-toggle').checked;
                 fetch('/chat', {
                     method: 'POST',
@@ -266,7 +266,7 @@
                     body: JSON.stringify({ 
                         message: message,
                         session_id: currentSessionId,
-                        use_custom_llm: useCustomLLM,
+                        use_gemini: useGemini,
                         use_web_search: useWebSearch
                     }),
                 })

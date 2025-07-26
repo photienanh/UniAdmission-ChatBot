@@ -103,12 +103,12 @@ def ask_gemini(question, model, retriever, session_id, use_web_search=True):
     except Exception as e:
         return {"response": f"Xin lỗi, có lỗi xảy ra: {str(e)}"}
 
-def ask_llm(question, model, retriever, session_id=None, use_custom_llm=False, use_web_search=True):
+def ask_llm(question, model, retriever, session_id=None, use_gemini=True, use_web_search=True):
     """Hàm chung để gọi LLM - Gemini hoặc Custom LLM"""
-    if use_custom_llm:
-        return ask_custom_llm(question, retriever, use_web_search)
-    else:
+    if use_gemini:
         return ask_gemini(question, model, retriever, session_id, use_web_search)
+    else:
+        return ask_custom_llm(question, retriever, use_web_search)
 
 def clear_chat_session(session_id):
     """Xóa chat session khỏi memory"""

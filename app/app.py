@@ -114,7 +114,7 @@ def chat():
     data = request.json
     user_input = data.get('message', '')
     session_id = data.get('session_id')
-    use_custom_llm = data.get('use_custom_llm', False)  # Thêm tham số chọn LLM
+    use_gemini = data.get('use_gemini', True)  # Thêm tham số chọn LLM
     use_web_search = data.get('use_web_search', True)  # Thêm tham số chọn web search (mặc định True)
     
     # Tạo session mới nếu chưa có
@@ -138,7 +138,7 @@ def chat():
     
     try:
         # Tạo phản hồi từ bot với LLM được chọn và search method
-        bot_response = ask_llm(user_input, gemini, retriever, session_id, use_custom_llm, use_web_search)
+        bot_response = ask_llm(user_input, gemini, retriever, session_id, use_gemini, use_web_search)
         
         # Lưu phản hồi của bot
         bot_message = ChatMessage(
