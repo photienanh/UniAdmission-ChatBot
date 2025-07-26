@@ -84,15 +84,15 @@
                     <div class="control-group">
                         <label for="model-select">Model:</label>
                         <select id="model-select">
-                            <option value="gemini" selected>✨ Gemini AI</option>
-                            <option value="custom">⚡ Custom LLM</option>
+                            <option value="gemini" selected>Gemini AI</option>
+                            <option value="custom">Custom LLM</option>
                         </select>
                     </div>
                     <div class="control-group">
                         <label for="search-select">Search:</label>
                         <select id="search-select">
-                            <option value="web" selected>🌐 Web Search</option>
-                            <option value="rag">📖 RAG Search</option>
+                            <option value="web" selected>Web Search</option>
+                            <option value="rag">RAG Search</option>
                         </select>
                     </div>
                 </div>
@@ -124,6 +124,24 @@
         let chatHistory = [];
         
         document.addEventListener('DOMContentLoaded', function() {
+            // Kiểm tra authentication status khi load trang
+            fetch('/sessions', {
+                method: 'GET',
+                cache: 'no-cache'
+            })
+            .then(response => {
+                if (response.status === 401) {
+                    // Nếu không authenticated, redirect về login
+                    window.location.replace('/login');
+                    return;
+                }
+                return response.json();
+            })
+            .catch(() => {
+                // Nếu có lỗi, redirect về login
+                window.location.replace('/login');
+            });
+            
             const chatForm = document.getElementById('chat-form');
             const userInput = document.getElementById('user-input');
             const chatMessages = document.getElementById('chat-messages');
@@ -333,9 +351,21 @@
             
             // Logout function
             window.logout = function() {
-                fetch('/logout')
+                fetch('/logout', {
+                    method: 'GET',
+                    cache: 'no-cache'
+                })
                 .then(() => {
-                    window.location.href = '/login';
+                    // Clear browser cache và history
+                    if (window.history && window.history.replaceState) {
+                        window.history.replaceState(null, null, '/login');
+                    }
+                    // Force reload để đảm bảo không cache
+                    window.location.replace('/login');
+                })
+                .catch(() => {
+                    // Nếu có lỗi, vẫn redirect về login
+                    window.location.replace('/login');
                 });
             };
             
