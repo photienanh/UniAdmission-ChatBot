@@ -32,6 +32,16 @@ def load_user(user_id):
 gemini = initialize_gemini()
 retriever = initialize_rag()
 
+# Middleware để ngăn cache cho các trang đã đăng nhập
+@app.after_request
+def after_request(response):
+    # Ngăn cache cho các trang yêu cầu authentication
+    if request.endpoint in ['home', 'delete_account']:
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate, private'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+    return response
+
 @app.route('/')
 @login_required
 def home():
@@ -110,7 +120,12 @@ def register():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    response = redirect(url_for('login'))
+    # Thêm headers để ngăn cache
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
 
 @app.route('/chat', methods=['POST'])
 @login_required

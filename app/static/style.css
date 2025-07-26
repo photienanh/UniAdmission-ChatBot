@@ -456,14 +456,6 @@ body {
     color: #374151;
     font-weight: 500;
     min-width: 50px;
-    display: flex;
-    align-items: center;
-    gap: 6px;
-}
-
-.control-group label i {
-    color: #6b7280;
-    font-size: 13px;
 }
 
 .control-group select {
@@ -657,10 +649,6 @@ body {
         font-size: 12px;
         padding: 6px 8px;
         padding-right: 28px;
-    }
-    
-    .chat-input-area {
-        padding: 16px;
     }
     
     .welcome-content {
