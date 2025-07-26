@@ -5,6 +5,10 @@ from rag import initialize_rag
 from models import db, User, ChatSession, ChatMessage, init_db
 from datetime import datetime
 import os
+import logging
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+logging.getLogger('tensorflow').setLevel(logging.ERROR)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-here-change-this')
@@ -220,6 +224,53 @@ def create_session():
     db.session.commit()
     
     return jsonify(chat_session.to_dict())
+
+@app.route('/delete_account', methods=['GET', 'POST'])
+@login_required
+def delete_account():
+    """Xóa tài khoản người dùng"""
+    if request.method == 'GET':
+        return render_template('delete_account.html')
+    
+    if request.method == 'POST':
+        data = request.json if request.is_json else request.form
+        confirm = data.get('confirm')
+        password = data.get('password')
+        
+        # Kiểm tra xác nhận
+        if confirm != 'DELETE':
+            return jsonify({'success': False, 'message': 'Vui lòng nhập "DELETE" để xác nhận'})
+        
+        # Kiểm tra mật khẩu
+        if not current_user.check_password(password):
+            return jsonify({'success': False, 'message': 'Mật khẩu không đúng'})
+        
+        try:
+            user_id = current_user.id
+            
+            # Xóa tất cả tin nhắn của user
+            ChatMessage.query.filter(
+                ChatMessage.session_id.in_(
+                    db.session.query(ChatSession.id).filter(ChatSession.user_id == user_id)
+                )
+            ).delete(synchronize_session=False)
+            
+            # Xóa tất cả phiên chat của user
+            ChatSession.query.filter(ChatSession.user_id == user_id).delete()
+            
+            # Đăng xuất user
+            logout_user()
+            
+            # Xóa user
+            User.query.filter(User.id == user_id).delete()
+            
+            db.session.commit()
+            
+            return jsonify({'success': True, 'message': 'Tài khoản đã được xóa thành công'})
+            
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'success': False, 'message': f'Có lỗi xảy ra: {str(e)}'})
 
 if __name__ == '__main__':
     app.run(debug=True)

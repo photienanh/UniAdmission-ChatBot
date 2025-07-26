@@ -18,7 +18,7 @@ def initialize_gemini():
     genai.configure(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel(
         "gemini-2.0-flash-lite-preview-02-05",
-        system_instruction="Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất. Nếu được cung cấp link nguồn thì thêm vào phần cuối câu trả lời.",
+        system_instruction="Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất. Nếu được cung cấp link nguồn thì thêm vào phần cuối câu trả lời, nếu không được cung cấp thì không thêm.",
     )
     return model
 
