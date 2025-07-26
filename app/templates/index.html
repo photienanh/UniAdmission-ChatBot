@@ -8,82 +8,116 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar Overlay for mobile -->
-        <div class="sidebar-overlay" id="sidebar-overlay"></div>
-        
+    <div class="chatgpt-container">
         <!-- Sidebar -->
-        <div class="sidebar collapsed" id="sidebar">
+        <div class="chatgpt-sidebar" id="sidebar">
             <div class="sidebar-header">
-                <h2><i class="fas fa-graduation-cap"></i> UniAdmission</h2>
-                
-                <!-- User info and logout moved to top -->
-                <div class="user-info">
-                    <i class="fas fa-user"></i>
-                    <span id="username">{{ current_user.username if current_user.is_authenticated else 'Guest' }}</span>
-                </div>
-                <button class="logout-btn" onclick="logout()">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Đăng xuất
-                </button>
-                
-                <!-- New chat button -->
                 <button class="new-chat-btn" id="new-chat-btn">
                     <i class="fas fa-plus"></i>
-                    Cuộc trò chuyện mới
+                    New chat
                 </button>
             </div>
             
             <div class="chat-history" id="chat-history">
-                <!-- Lịch sử chat sẽ được load ở đây -->
+                <!-- Chat history sẽ được load ở đây -->
+            </div>
+            
+            <div class="sidebar-footer">
+                <div class="user-menu" id="user-menu">
+                    <div class="user-info" onclick="toggleUserDropdown()">
+                        <i class="fas fa-user-circle"></i>
+                        <span class="username">{{ current_user.username if current_user.is_authenticated else 'Guest' }}</span>
+                        <i class="fas fa-chevron-up dropdown-icon" id="dropdown-icon"></i>
+                    </div>
+                </div>
+                <div class="user-dropdown" id="user-dropdown">
+                    <button class="dropdown-item logout-btn" onclick="logout()" title="Đăng xuất">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Đăng xuất</span>
+                    </button>
+                    <a href="{{ url_for('delete_account') }}" class="dropdown-item delete-account-btn" title="Xóa tài khoản">
+                        <i class="fas fa-trash"></i>
+                        <span>Xóa tài khoản</span>
+                    </a>
+                </div>
             </div>
         </div>
         
-        <!-- Main Content -->
-        <div class="main-content">
-            <div class="chat-container">
-                <div class="chat-header">
-                    <button class="sidebar-toggle" id="sidebar-toggle">
-                        <i class="fas fa-bars"></i>
-                    </button>
-                    <h1 id="chat-title">UniAdmission ChatBot</h1>
-                </div>
-                
-                <div class="chat-messages" id="chat-messages">
-                    <div class="message bot-message">
-                        <div class="message-content">
-                            <p>Xin chào! Tôi là UniAdmission Bot. Bạn có thể hỏi tôi bất kỳ thông tin gì về tuyển sinh đại học.</p>
+        <!-- Main Chat Area -->
+        <div class="chatgpt-main">
+            <!-- Header -->
+            <div class="chatgpt-header">
+                <button class="sidebar-toggle" id="sidebar-toggle">
+                    <i class="fas fa-bars"></i>
+                </button>
+                <h1 id="chat-title">UniAdmission ChatBot</h1>
+            </div>
+            
+            <!-- Chat Messages Area -->
+            <div class="chat-messages" id="chat-messages">
+                <div class="welcome-screen">
+                    <div class="welcome-content">
+                        <h2>UniAdmission ChatBot</h2>
+                        <p>Xin chào! Tôi là UniAdmission Bot. Bạn có thể hỏi tôi bất kỳ thông tin gì về tuyển sinh đại học.</p>
+                        <div class="example-prompts">
+                            <div class="prompt-card" onclick="fillPrompt('Điểm chuẩn đại học Bách Khoa Hà Nội')">
+                                <i class="fas fa-graduation-cap"></i>
+                                <span>Điểm chuẩn đại học Bách Khoa Hà Nội</span>
+                            </div>
+                            <div class="prompt-card" onclick="fillPrompt('Các trường đào tạo ngành Trí tuệ nhân tạo')">
+                                <i class="fas fa-brain"></i>
+                                <span>Các trường đào tạo ngành Trí tuệ nhân tạo</span>
+                            </div>
+                            <div class="prompt-card" onclick="fillPrompt('Ngành CNTT có tốt không?')">
+                                <i class="fas fa-laptop-code"></i>
+                                <span>Ngành CNTT có tốt không?</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="chat-input-container">
-                    <!-- LLM Selection Switch -->
-                    <div class="llm-selector">
-                        <label class="switch">
-                            <input type="checkbox" id="llm-toggle">
-                            <span class="slider round"></span>
-                        </label>
-                        <span class="llm-label" id="llm-label">🤖 Gemini AI</span>
+            </div>
+            
+            <!-- Chat Input -->
+            <div class="chat-input-area">
+                <!-- Model and Search Controls -->
+                <div class="input-controls">
+                    <div class="control-group">
+                        <label for="model-select">Model:</label>
+                        <select id="model-select">
+                            <option value="gemini" selected>✨ Gemini AI</option>
+                            <option value="custom">⚡ Custom LLM</option>
+                        </select>
                     </div>
-                    
-                    <form id="chat-form">
-                        <div class="input-wrapper">
-                            <textarea 
-                                id="user-input" 
-                                placeholder="Nhập câu hỏi của bạn ở đây..." 
-                                rows="1" 
-                                autofocus
-                            ></textarea>
-                            <button type="submit" id="send-button">
-                                <i class="fas fa-paper-plane"></i>
-                            </button>
-                        </div>
-                    </form>
+                    <div class="control-group">
+                        <label for="search-select">Search:</label>
+                        <select id="search-select">
+                            <option value="web" selected>🌐 Web Search</option>
+                            <option value="rag">📖 RAG Search</option>
+                        </select>
+                    </div>
                 </div>
+                
+                <!-- Input Form -->
+                <form id="chat-form" class="chat-form">
+                    <div class="input-container">
+                        <textarea 
+                            id="user-input" 
+                            placeholder="Message UniAdmission ChatBot..." 
+                            rows="1"
+                            autofocus
+                        ></textarea>
+                        <button type="submit" id="send-button" disabled>
+                            <i class="fas fa-arrow-up"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
             </div>
         </div>
     </div>
+    
+    <!-- Sidebar overlay for mobile -->
+    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
     <script>
         let currentSessionId = null;
@@ -97,27 +131,28 @@
             const sidebar = document.getElementById('sidebar');
             const sidebarOverlay = document.getElementById('sidebar-overlay');
             const newChatBtn = document.getElementById('new-chat-btn');
-            const llmToggle = document.getElementById('llm-toggle');
-            const llmLabel = document.getElementById('llm-label');
+            const modelSelect = document.getElementById('model-select');
+            const searchSelect = document.getElementById('search-select');
+            const sendButton = document.getElementById('send-button');
             
-            // Handle LLM toggle
-            llmToggle.addEventListener('change', function() {
-                if (this.checked) {
-                    llmLabel.textContent = '🚀 Custom LLM';
-                } else {
-                    llmLabel.textContent = '🤖 Gemini AI';
-                }
+            // Enable/disable send button based on input
+            userInput.addEventListener('input', function() {
+                sendButton.disabled = this.value.trim().length === 0;
+                // Auto-resize textarea
+                this.style.height = 'auto';
+                this.style.height = Math.min(this.scrollHeight, 200) + 'px';
             });
             
-            // Toggle sidebar function
+            // Toggle sidebar functions
             function toggleSidebar() {
-                sidebar.classList.toggle('collapsed');
                 if (window.innerWidth <= 768) {
-                    sidebarOverlay.classList.toggle('show', !sidebar.classList.contains('collapsed'));
+                    sidebar.classList.toggle('collapsed');
+                    sidebarOverlay.classList.toggle('show');
+                } else {
+                    sidebar.classList.toggle('collapsed');
                 }
             }
             
-            // Close sidebar function (for mobile)
             function closeSidebar() {
                 if (window.innerWidth <= 768) {
                     sidebar.classList.add('collapsed');
@@ -125,10 +160,207 @@
                 }
             }
             
-            // Load chat history
-            loadChatHistory();
+            // Toggle sidebar
+            sidebarToggle.addEventListener('click', toggleSidebar);
             
-            // Event delegation for chat sessions
+            // Close sidebar when clicking overlay
+            sidebarOverlay.addEventListener('click', closeSidebar);
+            
+            // Fill prompt from example cards
+            window.fillPrompt = function(text) {
+                userInput.value = text;
+                sendButton.disabled = false;
+                userInput.focus();
+            };
+            
+            // New chat
+            newChatBtn.addEventListener('click', function() {
+                startNewChat();
+                closeSidebar();
+            });
+            
+            function startNewChat() {
+                currentSessionId = null;
+                clearChatMessages();
+                showWelcomeScreen();
+                document.getElementById('chat-title').textContent = 'UniAdmission ChatBot';
+                
+                // Remove active class from all sessions
+                document.querySelectorAll('.chat-session').forEach(s => s.classList.remove('active'));
+            }
+            
+            function clearChatMessages() {
+                chatMessages.innerHTML = '';
+            }
+            
+            function showWelcomeScreen() {
+                chatMessages.innerHTML = `
+                    <div class="welcome-screen">
+                        <div class="welcome-content">
+                            <h2>UniAdmission ChatBot</h2>
+                            <p>Xin chào! Tôi là UniAdmission Bot. Bạn có thể hỏi tôi bất kỳ thông tin gì về tuyển sinh đại học.</p>
+                            <div class="example-prompts">
+                                <div class="prompt-card" onclick="fillPrompt('Điểm chuẩn đại học Bách Khoa Hà Nội')">
+                                    <i class="fas fa-graduation-cap"></i>
+                                    <span>Điểm chuẩn đại học Bách Khoa Hà Nội</span>
+                                </div>
+                                <div class="prompt-card" onclick="fillPrompt('Các trường đào tạo ngành Trí tuệ nhân tạo')">
+                                    <i class="fas fa-brain"></i>
+                                    <span>Các trường đào tạo ngành Trí tuệ nhân tạo</span>
+                                </div>
+                                <div class="prompt-card" onclick="fillPrompt('Ngành CNTT có tốt không?')">
+                                    <i class="fas fa-laptop-code"></i>
+                                    <span>Ngành CNTT có tốt không?</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            // Handle form submission
+            chatForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const message = userInput.value.trim();
+                if (message === '') return;
+                
+                // Get settings
+                const useGemini = modelSelect.value === 'gemini';
+                const useWebSearch = searchSelect.value === 'web';
+                
+                console.log('Model selected:', modelSelect.value, 'Use Gemini:', useGemini);
+                console.log('Search selected:', searchSelect.value, 'Use Web Search:', useWebSearch);
+                
+                // Add user message
+                addMessage(message, 'user');
+                
+                // Clear input
+                userInput.value = '';
+                userInput.style.height = 'auto';
+                sendButton.disabled = true;
+                
+                // Hide welcome screen if showing
+                const welcomeScreen = document.querySelector('.welcome-screen');
+                if (welcomeScreen) {
+                    welcomeScreen.remove();
+                }
+                
+                // Show typing indicator
+                showTypingIndicator();
+                
+                // Send to backend
+                fetch('/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        message: message,
+                        session_id: currentSessionId,
+                        use_gemini: useGemini,
+                        use_web_search: useWebSearch
+                    })
+                })
+                .then(response => {
+                    if (response.status === 401) {
+                        window.location.href = '/login';
+                        return;
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    hideTypingIndicator();
+                    if (data.error) {
+                        addMessage('Xin lỗi, có lỗi xảy ra: ' + data.error, 'bot');
+                    } else {
+                        addMessage(data.response, 'bot');
+                        currentSessionId = data.session_id;
+                        
+                        // Reload chat history if this was a new session
+                        if (!document.querySelector(`[data-session-id="${data.session_id}"]`)) {
+                            loadChatHistory();
+                        }
+                    }
+                })
+                .catch(error => {
+                    hideTypingIndicator();
+                    addMessage('Xin lỗi, có lỗi kết nối xảy ra.', 'bot');
+                    console.error('Error:', error);
+                });
+            });
+            
+            // Enter key handling
+            userInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    if (!sendButton.disabled) {
+                        chatForm.dispatchEvent(new Event('submit'));
+                    }
+                }
+            });
+            
+            function addMessage(content, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${sender}-message`;
+                messageDiv.innerHTML = `
+                    <div class="message-content">
+                        <p>${content.replace(/\n/g, '<br>')}</p>
+                    </div>
+                `;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            function showTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.className = 'message bot-message typing';
+                typingDiv.innerHTML = `
+                    <div class="message-content">
+                        <div class="typing-indicator">
+                            <span></span><span></span><span></span>
+                        </div>
+                    </div>
+                `;
+                chatMessages.appendChild(typingDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            function hideTypingIndicator() {
+                const typing = document.querySelector('.typing');
+                if (typing) typing.remove();
+            }
+            
+            // Logout function
+            window.logout = function() {
+                fetch('/logout')
+                .then(() => {
+                    window.location.href = '/login';
+                });
+            };
+            
+            // Toggle user dropdown
+            window.toggleUserDropdown = function() {
+                const dropdown = document.getElementById('user-dropdown');
+                const icon = document.getElementById('dropdown-icon');
+                
+                dropdown.classList.toggle('show');
+                icon.classList.toggle('rotated');
+            };
+            
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(e) {
+                const userMenu = document.getElementById('user-menu');
+                const dropdown = document.getElementById('user-dropdown');
+                const icon = document.getElementById('dropdown-icon');
+                
+                if (!userMenu.contains(e.target) && !dropdown.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                    icon.classList.remove('rotated');
+                }
+            });
+            
+            // Chat history event handling
             document.getElementById('chat-history').addEventListener('click', function(e) {
                 const sessionElement = e.target.closest('.chat-session');
                 const deleteButton = e.target.closest('.delete-session');
@@ -142,336 +374,90 @@
                 } else if (sessionElement) {
                     const sessionId = sessionElement.dataset.sessionId;
                     loadSession(sessionId);
-                    closeSidebar(); // Close sidebar after selecting session on mobile
+                    closeSidebar();
                 }
             });
             
-            // Toggle sidebar
-            sidebarToggle.addEventListener('click', function(e) {
-                e.preventDefault();
-                toggleSidebar();
-            });
+            function loadChatHistory() {
+                fetch('/sessions')
+                .then(response => response.json())
+                .then(sessions => {
+                    const historyDiv = document.getElementById('chat-history');
+                    historyDiv.innerHTML = '';
+                    
+                    sessions.forEach(session => {
+                        const sessionDiv = document.createElement('div');
+                        sessionDiv.className = 'chat-session';
+                        sessionDiv.dataset.sessionId = session.id;
+                        sessionDiv.innerHTML = `
+                            <span class="session-title">${session.title}</span>
+                            <button class="delete-session" data-session-id="${session.id}">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        `;
+                        historyDiv.appendChild(sessionDiv);
+                    });
+                })
+                .catch(error => console.error('Error loading chat history:', error));
+            }
             
-            // Close sidebar when clicking overlay (mobile)
-            sidebarOverlay.addEventListener('click', function() {
-                closeSidebar();
-            });
+            function loadSession(sessionId) {
+                fetch(`/sessions/${sessionId}/messages`)
+                .then(response => response.json())
+                .then(data => {
+                    currentSessionId = sessionId;
+                    clearChatMessages();
+                    
+                    document.getElementById('chat-title').textContent = data.session.title;
+                    
+                    data.messages.forEach(message => {
+                        addMessage(message.content, message.sender);
+                    });
+                    
+                    // Mark session as active
+                    document.querySelectorAll('.chat-session').forEach(s => s.classList.remove('active'));
+                    document.querySelector(`[data-session-id="${sessionId}"]`).classList.add('active');
+                })
+                .catch(error => console.error('Error loading session:', error));
+            }
             
-            // Handle window resize
+            function deleteSession(sessionId) {
+                fetch(`/sessions/${sessionId}`, { method: 'DELETE' })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        loadChatHistory();
+                        if (currentSessionId === sessionId) {
+                            startNewChat();
+                        }
+                    }
+                })
+                .catch(error => console.error('Error deleting session:', error));
+            }
+            
+            // Responsive handling
             window.addEventListener('resize', function() {
                 if (window.innerWidth > 768) {
-                    // Desktop: show sidebar, hide overlay
                     sidebar.classList.remove('collapsed');
                     sidebarOverlay.classList.remove('show');
-                } else {
-                    // Mobile: start with sidebar closed
+                } else if (!sidebar.classList.contains('collapsed')) {
                     sidebar.classList.add('collapsed');
                     sidebarOverlay.classList.remove('show');
                 }
             });
             
-            // Initialize sidebar state based on screen size
+            // Initialize
             if (window.innerWidth <= 768) {
                 sidebar.classList.add('collapsed');
             }
             
-            // Focus input on page load
+            loadChatHistory();
+            
+            // Focus input
             setTimeout(() => {
                 userInput.focus();
             }, 500);
-            
-            // New chat button
-            newChatBtn.addEventListener('click', function() {
-                startNewChat();
-                closeSidebar(); // Close sidebar after starting new chat on mobile
-            });
-            
-            // Auto-resize textarea
-            userInput.addEventListener('input', function() {
-                this.style.height = 'auto';
-                this.style.height = (this.scrollHeight) + 'px';
-                if (this.scrollHeight > (20 * 5)) {
-                    this.style.overflowY = 'scroll';
-                } else {
-                    this.style.overflowY = 'hidden';
-                }
-            });
-
-            // Handle form submission
-            chatForm.addEventListener('submit', function(e) {
-                e.preventDefault();
-                
-                const message = userInput.value.trim();
-                if (message === '') return;
-                
-                // Disable submit button to prevent multiple submissions
-                const submitButton = document.getElementById('send-button');
-                submitButton.disabled = true;
-                
-                // Add user message to chat
-                addMessage(message, 'user');
-                
-                // Clear input and reset height
-                userInput.value = '';
-                userInput.style.height = 'auto';
-                
-                // Focus back to input
-                userInput.focus();
-                
-                // Show typing indicator
-                const typingIndicator = document.createElement('div');
-                typingIndicator.className = 'message bot-message typing';
-                typingIndicator.innerHTML = `
-                    <div class="message-content">
-                        <div class="typing-indicator">
-                            <span></span><span></span><span></span>
-                        </div>
-                    </div>
-                `;
-                chatMessages.appendChild(typingIndicator);
-                
-                // Scroll to bottom to show typing indicator
-                setTimeout(() => {
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }, 100);
-                
-                // Send message to backend
-                const useCustomLLM = document.getElementById('llm-toggle').checked;
-                fetch('/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ 
-                        message: message,
-                        session_id: currentSessionId,
-                        use_custom_llm: useCustomLLM
-                    }),
-                })
-                .then(response => {
-                    if (response.status === 401) {
-                        window.location.href = '/login';
-                        return;
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    // Remove typing indicator
-                    document.querySelector('.typing')?.remove();
-                    
-                    // Re-enable submit button
-                    submitButton.disabled = false;
-                    
-                    if (data.error) {
-                        addMessage('Xin lỗi, đã xảy ra lỗi: ' + data.error, 'bot');
-                        return;
-                    }
-                    
-                    // Update session ID if new
-                    if (data.session_id && !currentSessionId) {
-                        currentSessionId = data.session_id;
-                        loadChatHistory(); // Reload to show new session
-                    }
-                    
-                    // Add bot response
-                    addMessage(data.response, 'bot');
-                    
-                    // Focus back to input after response
-                    setTimeout(() => {
-                        userInput.focus();
-                    }, 200);
-                })
-                .catch((error) => {
-                    console.error('Error:', error);
-                    
-                    // Remove typing indicator
-                    document.querySelector('.typing')?.remove();
-                    
-                    // Re-enable submit button
-                    submitButton.disabled = false;
-                    
-                    // Show error message
-                    addMessage('Xin lỗi, đã xảy ra lỗi khi xử lý yêu cầu của bạn. Vui lòng thử lại sau.', 'bot');
-                    
-                    // Focus back to input even on error
-                    setTimeout(() => {
-                        userInput.focus();
-                    }, 200);
-                });
-            });
-            
-            // Allow sending message with Enter (but Shift+Enter for new line)
-            userInput.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && !e.shiftKey) {
-                    e.preventDefault();
-                    document.getElementById('send-button').click();
-                }
-            });
         });
-        
-        // Function to add a message to the chat
-        function addMessage(text, sender) {
-            const messageDiv = document.createElement('div');
-            messageDiv.className = `message ${sender}-message`;
-            
-            // Replace newlines with <br> tags
-            const formattedText = text.replace(/\n/g, '<br>');
-            
-            messageDiv.innerHTML = `
-                <div class="message-content">
-                    <p>${formattedText}</p>
-                </div>
-            `;
-            
-            const chatMessages = document.getElementById('chat-messages');
-            chatMessages.appendChild(messageDiv);
-            
-            // Scroll to bottom with smooth behavior
-            setTimeout(() => {
-                chatMessages.scrollTop = chatMessages.scrollHeight;
-            }, 100);
-        }
-        
-        // Load chat history from server
-        function loadChatHistory() {
-            fetch('/sessions')
-            .then(response => response.json())
-            .then(sessions => {
-                const historyContainer = document.getElementById('chat-history');
-                historyContainer.innerHTML = '';
-                
-                sessions.forEach(session => {
-                    const sessionElement = document.createElement('div');
-                    sessionElement.className = 'chat-session';
-                    sessionElement.dataset.sessionId = session.id; // Add data attribute
-                    sessionElement.innerHTML = `
-                        <div class="session-title">${session.title}</div>
-                        <div class="session-time">${new Date(session.updated_at).toLocaleDateString('vi-VN')}</div>
-                        <button class="delete-session" data-session-id="${session.id}">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    `;
-                    
-                    historyContainer.appendChild(sessionElement);
-                });
-                
-                // Check if scroll is needed and add indicator
-                updateScrollIndicator();
-            })
-            .catch(error => {
-                console.error('Error loading chat history:', error);
-            });
-        }
-        
-        // Update scroll indicator for chat history
-        function updateScrollIndicator() {
-            const historyContainer = document.getElementById('chat-history');
-            const hasScroll = historyContainer.scrollHeight > historyContainer.clientHeight;
-            
-            if (hasScroll) {
-                historyContainer.classList.add('has-scroll');
-            } else {
-                historyContainer.classList.remove('has-scroll');
-            }
-            
-            // Update indicator on scroll
-            historyContainer.addEventListener('scroll', function() {
-                const isAtBottom = historyContainer.scrollTop + historyContainer.clientHeight >= historyContainer.scrollHeight - 10;
-                if (isAtBottom) {
-                    historyContainer.classList.remove('has-scroll');
-                } else {
-                    historyContainer.classList.add('has-scroll');
-                }
-            });
-        }
-        
-        // Load a specific chat session
-        function loadSession(sessionId) {
-            console.log('Loading session:', sessionId);
-            
-            fetch(`/sessions/${sessionId}/messages`)
-            .then(response => {
-                console.log('Session response status:', response.status);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Session data loaded:', data);
-                const chatMessages = document.getElementById('chat-messages');
-                chatMessages.innerHTML = '';
-                
-                currentSessionId = sessionId;
-                document.getElementById('chat-title').textContent = data.session.title;
-                
-                data.messages.forEach(message => {
-                    addMessage(message.content, message.sender);
-                });
-                
-                // Scroll to bottom after loading all messages
-                setTimeout(() => {
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }, 200);
-                
-                // Focus input after loading session
-                document.getElementById('user-input').focus();
-            })
-            .catch(error => {
-                console.error('Error loading session:', error);
-                alert('Không thể tải cuộc trò chuyện này. Vui lòng thử lại.');
-            });
-        }
-        
-        // Start a new chat
-        function startNewChat() {
-            currentSessionId = null;
-            document.getElementById('chat-title').textContent = 'UniAdmission ChatBot';
-            
-            const chatMessages = document.getElementById('chat-messages');
-            chatMessages.innerHTML = `
-                <div class="message bot-message">
-                    <div class="message-content">
-                        <p>Xin chào! Tôi là UniAdmission Bot. Bạn có thể hỏi tôi bất kỳ thông tin gì về tuyển sinh đại học.</p>
-                    </div>
-                </div>
-            `;
-            
-            // Focus input when starting new chat
-            document.getElementById('user-input').focus();
-        }
-        
-        // Delete a chat session
-        function deleteSession(sessionId) {
-            fetch(`/sessions/${sessionId}`, {
-                method: 'DELETE'
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                return response.json();
-            })
-            .then(data => {
-                if (data.success) {
-                    if (currentSessionId === sessionId) {
-                        startNewChat();
-                    }
-                    loadChatHistory();
-                } else {
-                    alert('Không thể xóa cuộc trò chuyện này.');
-                }
-            })
-            .catch(error => {
-                console.error('Error deleting session:', error);
-                alert('Có lỗi xảy ra khi xóa cuộc trò chuyện.');
-            });
-        }
-        
-        // Logout function
-        function logout() {
-            window.location.href = '/logout';
-        }
     </script>
 </body>
 </html>
