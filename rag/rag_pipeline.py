@@ -16,7 +16,7 @@ from langchain.chains import RetrievalQA
 from langchain.prompts import PromptTemplate
 
 from . import config
-from .llm_interface import create_huggingface_llm, create_gemini_llm, create_openai_llm
+from .llm_interface import create_huggingface_llm, initialize_gemini, get_or_create_gemini_chat
 
 
 class SimplifiedRAG:
@@ -54,8 +54,6 @@ class SimplifiedRAG:
                 llm_model_name = config.HUGGINGFACE_LLM_MODEL
             elif llm_type.lower() == "gemini":
                 llm_model_name = config.GOOGLE_GEMINI_MODEL
-            else:  # openai
-                llm_model_name = config.OPENAI_MODEL
                 
         # Initialize LLM
         self.llm_type = llm_type.lower()
@@ -64,38 +62,38 @@ class SimplifiedRAG:
                 model_name=llm_model_name,
                 temperature=temperature
             )
+            # Create RAG chain for HuggingFace model
+            prompt_template = PromptTemplate(
+                template=config.DEFAULT_RAG_PROMPT_TEMPLATE,
+                input_variables=["context", "question"]
+            )
+
+            self.qa_chain_huggingface = RetrievalQA.from_chain_type(
+                llm=self.llm,
+                chain_type="stuff",
+                retriever=self.retriever,
+                chain_type_kwargs={"prompt": prompt_template},
+                return_source_documents=True
+            )
         elif self.llm_type == "gemini":
-            self.llm = create_gemini_llm(
+            # Initialize Gemini directly (not using LangChain)
+            self.gemini_model = initialize_gemini(
                 model_name=llm_model_name,
                 temperature=temperature
             )
-        elif self.llm_type == "openai":
-            self.llm = create_openai_llm(
-                model_name=llm_model_name,
-                temperature=temperature
-            )
+            self.llm = None  # We're not using LangChain for Gemini
         else:
-            raise ValueError(f"Unsupported LLM type: {llm_type}. Use 'huggingface', 'gemini' or 'openai'")
+            raise ValueError(f"Unsupported LLM type: {llm_type}. Use 'huggingface' or 'gemini'")
         
         self.temperature = temperature
         self.top_k = top_k
-            
-        # Create RAG chain
-        prompt_template = PromptTemplate(
-            template=config.DEFAULT_RAG_PROMPT_TEMPLATE,
-            input_variables=["context", "question"]
-        )
-
-        self.qa_chain_huggingface = RetrievalQA.from_chain_type(
-            llm=self.llm,
-            chain_type="stuff",
-            retriever=self.retriever,
-            chain_type_kwargs={"prompt": prompt_template},
-            return_source_documents=True
-        )
         
-    def get_llm(self) -> BaseLLM:
-        return self.llm
+    def get_llm(self):
+        """Returns the LLM or Gemini model depending on the type"""
+        if self.llm_type == "huggingface":
+            return self.llm
+        else:
+            return self.gemini_model
     
     def get_vectorstore(self) -> Chroma:
         return self.vectorstore
@@ -108,12 +106,12 @@ class SimplifiedRAG:
         Change the LLM being used in the RAG pipeline.
         
         Args:
-            llm_type: Type of LLM to use ('huggingface', 'gemini', or 'openai')
+            llm_type: Type of LLM to use ('huggingface' or 'gemini')
             llm_model_name: Optional model name to use
             temperature: Optional temperature value
         
         Returns:
-            The initialized LLM
+            The initialized LLM or model
         """
         if temperature is None:
             temperature = config.DEFAULT_TEMPERATURE
@@ -125,51 +123,82 @@ class SimplifiedRAG:
                 llm_model_name = config.HUGGINGFACE_LLM_MODEL
             elif self.llm_type == "gemini":
                 llm_model_name = config.GOOGLE_GEMINI_MODEL
-            else:  # openai
-                llm_model_name = config.OPENAI_MODEL
         
         if self.llm_type == "huggingface":
             self.llm = create_huggingface_llm(
                 model_name=llm_model_name,
                 temperature=temperature
             )
+            
+            # Recreate the QA chain with the new LLM
+            prompt_template = PromptTemplate(
+                template=config.DEFAULT_RAG_PROMPT_TEMPLATE,
+                input_variables=["context", "question"]
+            )
+            
+            self.qa_chain_huggingface = RetrievalQA.from_chain_type(
+                llm=self.llm,
+                chain_type="stuff",
+                retriever=self.retriever,
+                chain_type_kwargs={"prompt": prompt_template},
+                return_source_documents=True
+            )
+            
+            return self.llm
+            
         elif self.llm_type == "gemini":
-            self.llm = create_gemini_llm(
+            # Initialize Gemini directly
+            self.gemini_model = initialize_gemini(
                 model_name=llm_model_name,
                 temperature=temperature
             )
-        elif self.llm_type == "openai":
-            self.llm = create_openai_llm(
-                model_name=llm_model_name,
-                temperature=temperature
-            )
+            self.llm = None  # Not using LangChain for Gemini
+            return self.gemini_model
+            
         else:
-            raise ValueError(f"Unsupported LLM type: {llm_type}. Use 'huggingface', 'gemini' or 'openai'")
+            raise ValueError(f"Unsupported LLM type: {llm_type}. Use 'huggingface' or 'gemini'")
         
-        # Recreate the QA chain with the new LLM
-        prompt_template = PromptTemplate(
-            template=config.DEFAULT_RAG_PROMPT_TEMPLATE,
-            input_variables=["context", "question"]
-        )
+    def build_prompt(self, context, question):
+        """Build a prompt with context and question"""
+        return f"""
+Thông tin tham khảo:
+{context}
+
+Câu hỏi: {question}
+"""
         
-        self.qa_chain_huggingface = RetrievalQA.from_chain_type(
-            llm=self.llm,
-            chain_type="stuff",
-            retriever=self.retriever,
-            chain_type_kwargs={"prompt": prompt_template},
-            return_source_documents=True
-        )
-        
-        return self.llm
-        
-    def ask(self, question: str) -> Dict[str, Any]:
+    def ask(self, question: str, session_id: str = None) -> Dict[str, Any]:
         try:
-            result = self.qa_chain_huggingface({"query": question})
-            return {
-                "question": question,
-                "answer": result["result"],
-                "source_documents": result["source_documents"]
-            }
+            # Retrieve relevant documents
+            docs = self.retrieve_documents(question, self.top_k)
+            context = "\n\n".join([doc.page_content for doc in docs])
+            
+            if self.llm_type == "huggingface":
+                # Use LangChain pipeline for HuggingFace models
+                result = self.qa_chain_huggingface({"query": question})
+                return {
+                    "question": question,
+                    "answer": result["result"],
+                    "source_documents": result["source_documents"]
+                }
+            elif self.llm_type == "gemini":
+                # Use direct Gemini API for Gemini models
+                prompt = self.build_prompt(context, question)
+                
+                if session_id:
+                    # Use chat session if session_id is provided
+                    chat = get_or_create_gemini_chat(self.gemini_model, session_id)
+                    response = chat.send_message(prompt)
+                else:
+                    # Otherwise use a one-off generation
+                    response = self.gemini_model.generate_content(prompt)
+                
+                return {
+                    "question": question,
+                    "answer": response.text,
+                    "source_documents": docs
+                }
+            
         except Exception as e:
             print(f"Error in RAG pipeline: {e}")
             # Try to retrieve documents even if LLM fails
