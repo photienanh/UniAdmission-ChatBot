@@ -57,9 +57,7 @@ def post_login(
         )
     jwt = login_user(request.username, request.password)
     if jwt:
-        response = JSONResponse(
-            status_code=307,
-            content={
+        response = JSONResponse({
             "success": True,
             "redirect": "/"
         })
@@ -99,7 +97,18 @@ async def post_register(
             }
         )   
     if register_user(request.full_name, request.username, request.email, request.password):
-        return RedirectResponse(url="/login")
+        jwt = login_user(request.username, request.password)
+        if not jwt: raise HTTPException(status_code=500, detail="Failed to auto login")
+        response = RedirectResponse(url="/")
+        response.set_cookie(
+            key="jwt",
+            value=jwt,
+            httponly=True,
+            secure=False, # http
+            samesite="lax",
+            max_age=3600
+        )
+        return response
     else:
         return JSONResponse(
             status_code=400,
