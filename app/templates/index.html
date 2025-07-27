@@ -79,8 +79,8 @@
             
             <!-- Chat Input -->
             <div class="chat-input-area">
-                <!-- Model and Search Controls -->
-                <div class="input-controls">
+                <!-- Model and Search Controls - ẩn mặc định -->
+                <div class="input-controls" id="input-controls" style="display: none;">
                     <div class="control-group">
                         <label for="model-select">Model:</label>
                         <select id="model-select">
@@ -100,6 +100,9 @@
                 <!-- Input Form -->
                 <form id="chat-form" class="chat-form">
                     <div class="input-container">
+                        <button type="button" id="settings-toggle" title="Settings">
+                            <i class="fas fa-cog"></i>
+                        </button>
                         <textarea 
                             id="user-input" 
                             placeholder="Message UniAdmission ChatBot..." 
@@ -134,6 +137,15 @@
             const modelSelect = document.getElementById('model-select');
             const searchSelect = document.getElementById('search-select');
             const sendButton = document.getElementById('send-button');
+            const settingsToggle = document.getElementById('settings-toggle');
+            const inputControls = document.getElementById('input-controls');
+            
+            // Toggle settings controls
+            settingsToggle.addEventListener('click', function() {
+                const isVisible = inputControls.style.display !== 'none';
+                inputControls.style.display = isVisible ? 'none' : 'flex';
+                settingsToggle.classList.toggle('active', !isVisible);
+            });
             
             // Enable/disable send button based on input
             userInput.addEventListener('input', function() {
@@ -456,61 +468,38 @@
                     sidebar.classList.add('collapsed');
                     sidebarOverlay.classList.remove('show');
                 }
-                
-                // Force show mobile elements
-                forceShowMobileElements();
-            });
+            }); 
             
-            // Mobile debug - force show elements
-            function forceShowMobileElements() {
-                if (window.innerWidth <= 768) {
-                    console.log('Mobile view detected, forcing elements visible');
-                    
-                    const chatInput = document.querySelector('.chat-input-area');
-                    const userDropdown = document.querySelector('.user-dropdown');
-                    
-                    if (chatInput) {
-                        chatInput.style.display = 'block';
-                        chatInput.style.visibility = 'visible';
-                        chatInput.style.opacity = '1';
-                        chatInput.style.position = 'fixed';
-                        chatInput.style.bottom = '0';
-                        chatInput.style.left = '0';
-                        chatInput.style.right = '0';
-                        chatInput.style.zIndex = '1000';
-                        chatInput.style.background = 'white';
-                        console.log('Chat input forced visible');
-                    } else {
-                        console.log('Chat input not found!');
-                    }
-                    
-                    if (userDropdown) {
-                        userDropdown.style.display = 'block';
-                        userDropdown.style.visibility = 'visible';
-                        userDropdown.style.opacity = '1';
-                        userDropdown.style.position = 'relative';
-                        userDropdown.style.zIndex = '1002';
-                        console.log('User dropdown forced visible');
-                    } else {
-                        console.log('User dropdown not found!');
-                    }
-                }
+            // Check authentication periodically (but not too frequently to avoid false alerts)
+            function checkAuthStatus() {
+                fetch('/auth/check')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (!data.authenticated) {
+                            // User is not authenticated, redirect to login
+                            window.location.href = '/login';
+                        }
+                    })
+                    .catch(error => {
+                        console.warn('Auth check failed:', error);
+                        // Don't redirect on network errors to avoid false alerts
+                    });
             }
+            
+            // Check auth every 15 minutes (reduced frequency to avoid false alerts)
+            setInterval(checkAuthStatus, 15 * 60 * 1000);
             
             // Initialize
             if (window.innerWidth <= 768) {
                 sidebar.classList.add('collapsed');
             }
             
-            // Force show mobile elements on load
-            setTimeout(forceShowMobileElements, 100);
-            
             loadChatHistory();
             
             // Focus input
             setTimeout(() => {
                 userInput.focus();
-            }, 500);
+            }, 100);
         });
     </script>
 </body>

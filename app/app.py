@@ -127,6 +127,20 @@ def logout():
     response.headers['Expires'] = '0'
     return response
 
+@app.route('/auth/check')
+def check_auth():
+    """Kiểm tra trạng thái đăng nhập"""
+    if current_user.is_authenticated:
+        return jsonify({
+            'authenticated': True,
+            'user': {
+                'id': current_user.id,
+                'username': current_user.username,
+                'full_name': current_user.full_name
+            }
+        })
+    return jsonify({'authenticated': False})
+
 @app.route('/chat', methods=['POST'])
 @login_required
 def chat():
