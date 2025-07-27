@@ -1,5 +1,5 @@
 from typing import cast
-from .models import DBSession, User
+from .models import DBSession, User, ChatSession, ChatMessage
 from .jwt_ import generate_jwt, decode_jwt
 from jwt import ExpiredSignatureError
 from .models import User
@@ -37,7 +37,7 @@ def login_user(username: str, password: str) -> str | None:
         return jwt
     return None
     
-def logout_user(username: str, jwt: str) -> bool:
+def logout_user(username: str) -> bool:
     """
     Return true on success else false
     """
@@ -63,3 +63,6 @@ def register_user(full_name: str, username: str, email: str, password: str) -> b
         DBSession.commit()
         return True
     return False
+
+def delete_all_user_data(user: User):
+    DBSession.session.delete(user) #cascade delete

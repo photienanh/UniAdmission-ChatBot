@@ -3,7 +3,7 @@ from sqlalchemy import (
     create_engine, Engine, Column,  ForeignKey, PrimaryKeyConstraint, 
     Integer, String, Boolean, Float, DateTime, Text, JSON
 )
-from sqlalchemy.orm import declarative_base, DeclarativeBase, Session, Relationship, sessionmaker
+from sqlalchemy.orm import declarative_base, DeclarativeBase, Session, sessionmaker, relationship
 from typing import cast, Optional, Any, Iterable
 from werkzeug.security import generate_password_hash, check_password_hash
 from urllib.parse import urlparse
@@ -24,6 +24,8 @@ class User(Base): #type:ignore
     created_at = cast(datetime, Column(DateTime, default=datetime.now(timezone.utc)))
     last_login = cast(Optional[datetime], Column(DateTime, nullable=True))
     is_active = cast(bool, Column(Boolean, default=True))
+    
+    sessions = relationship("ChatSession", backref="user", lazy=True,  cascade="all, delete-orphan")
     
     def set_password(self, password: str):
         """Mã hóa và lưu password"""
@@ -58,7 +60,7 @@ class ChatSession(Base): #type:ignore
     is_archived = cast(bool, Column(Boolean, default=False))
     
     # Relationship với ChatMessage
-    messages = cast(Iterable["ChatMessage"], Relationship("ChatMessage", backref="session", lazy=True, cascade="all, delete-orphan"))
+    messages = relationship("ChatMessage", backref="session", lazy=True, cascade="all, delete-orphan")
     
     def get_preview(self):
         """Lấy tin nhắn đầu tiên để làm preview"""

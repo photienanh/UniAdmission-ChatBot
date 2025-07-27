@@ -26,7 +26,9 @@ def get_index(request: Request):
     except HTTPException:
         return RedirectResponse(url="/login")
     return templates.TemplateResponse("index.html", {"request": request, "current_user": user.to_dict()})
-    
+@router.get("/home", name="home", response_class=HTMLResponse)
+def get_home(request: Request):
+    return get_index(request)
 @router.post("/chat", name="chat", response_class=JSONResponse)
 async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(ChatRequest)):
     if isinstance(data, dict): # Validation failed

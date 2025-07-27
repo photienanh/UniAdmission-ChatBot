@@ -11,6 +11,10 @@ class RegisterRequest(BaseModel):
     email: EmailStr
     password: str = Field(..., min_length=1)
     
+class DeleteAccountRequest(BaseModel):
+    confirm: str = Field(...)
+    password: str = Field(...)
+    
 class AuthSuccess(BaseModel):
     success: Literal[True] = Field(True)
     redirect: str = Field(...)
@@ -18,3 +22,4 @@ class AuthSuccess(BaseModel):
 class AuthFailed(BaseModel):
     success: Literal[False] = Field(False)
     message: str = Field(...)
+    
