@@ -1,6 +1,6 @@
 import google.generativeai as genai
 import requests
-from rag import build_rag_context
+from rag import build_rag_context, ask_rag, get_rag_instance
 from web_search import build_web_search_context, get_api_key
 
 # Dictionary để lưu trữ chat sessions cho mỗi session_id
@@ -87,18 +87,24 @@ def ask_custom_llm(question, retriever, use_web_search=True):
 def ask_gemini(question, model, retriever, session_id, use_web_search=True):
     """Hỏi Gemini với conversation memory sử dụng start_chat"""
     try:
-        # Lấy chat session
-        chat = get_or_create_chat_session(model, session_id)
-        
-        # Lấy thông tin context dựa trên lựa chọn
-        context = build_context(question, retriever, use_web_search)
-        
-        # Tạo message với context
-        prompt = build_prompt(context, question)
-        # Gửi message và nhận response
-        response = chat.send_message(prompt)
-        
-        return {"response": response.text}
+        if use_web_search:
+            # Sử dụng model trực tiếp với web search context
+            # Lấy chat session
+            chat = get_or_create_chat_session(model, session_id)
+            
+            # Lấy thông tin context từ web search
+            context = build_web_search_context(question)
+            
+            # Tạo message với context
+            prompt = build_prompt(context, question)
+            # Gửi message và nhận response
+            response = chat.send_message(prompt)
+            
+            return {"response": response.text}
+        else:
+            # Sử dụng RAG pipeline đã tích hợp sẵn Gemini
+            result = ask_rag(question, session_id=session_id)
+            return {"response": result["answer"]}
         
     except Exception as e:
         return {"response": f"Xin lỗi, có lỗi xảy ra: {str(e)}"}

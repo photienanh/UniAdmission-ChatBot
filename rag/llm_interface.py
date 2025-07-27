@@ -7,10 +7,8 @@ from langchain.chains.llm import LLMChain
 from langchain_core.language_models import BaseLLM
 
 import google.generativeai as genai
-from langchain_openai import ChatOpenAI
 from langchain_community.llms import HuggingFacePipeline
 from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
-from langchain_google_genai import ChatGoogleGenerativeAI
 
 from dotenv import load_dotenv
 from . import config
@@ -82,101 +80,62 @@ def create_huggingface_llm(
         return None
 
 
-def create_gemini_llm(
-    model_name: str = "gemini-1.5-pro-latest",
+def initialize_gemini(
+    model_name: str = "gemini-2.0-flash-lite-preview-02-05",
     temperature: float = 0.7,
-    max_tokens: Optional[int] = None,
-    **kwargs
-) -> BaseLLM:
+    api_key: str = None,
+    system_instruction: str = "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện."
+):
+    """
+    Initialize the Google Gemini model directly (not using LangChain wrapper).
+    
+    Args:
+        model_name: Name of the Gemini model
+        temperature: Temperature for text generation
+        api_key: Gemini API key (will be loaded from env if not provided)
+        system_instruction: System instruction for the model
+    
+    Returns:
+        An initialized Gemini GenerativeModel
+    """
     try:
-        # Load API key from environment
-        load_dotenv()
-        
-        api_key = os.getenv("GEMINI_API_KEY")
+        # Use provided API key or load from environment
         if not api_key:
-            api_key = os.getenv("GOOGLE_API_KEY")
-        
+            load_dotenv()
+            api_key = os.getenv("GEMINI_API_KEY")
+            if not api_key:
+                api_key = os.getenv("GOOGLE_API_KEY")
+                
         if not api_key:
             raise ValueError("Gemini API key not found. Set GEMINI_API_KEY or GOOGLE_API_KEY in .env file")
-            
-        # Import here to avoid potential circular imports
-        from langchain_google_genai import ChatGoogleGenerativeAI
         
-        # Ensure model_name has a default value if None
-        if model_name is None:
-            model_name = "gemini-1.5-pro-latest"  # Default model if none is provided
+        # Configure the genai client
+        genai.configure(api_key=api_key)
         
-        llm_params = {
-            "model": model_name,
-            "temperature": temperature,
-            "google_api_key": api_key,
-            **kwargs
-        }
+        # Create the generative model with system instruction
+        model = genai.GenerativeModel(
+            model_name,
+            system_instruction=system_instruction,
+            generation_config={"temperature": temperature}
+        )
         
-        # Set max_tokens if provided
-        if max_tokens is not None:
-            llm_params["max_output_tokens"] = max_tokens
-            
-        # Use the LangChain wrapper for Google's Generative AI
-        llm = ChatGoogleGenerativeAI(**llm_params)
         print(f"Google Gemini model initialized successfully with model: {model_name}")
-        return llm
+        return model
         
     except Exception as e:
         print(f"Error initializing Google Gemini model: {e}")
         return None
 
-def create_openai_llm(
-    model_name: str = "gpt-3.5-turbo",
-    temperature: float = 0.7,
-    max_tokens: Optional[int] = None,
-    **kwargs
-) -> BaseLLM:
-    """
-    Create an OpenAI LLM instance.
-    Args:
-        model_name: Name of the OpenAI model (default: "gpt-3.5-turbo")
-        temperature: Temperature for text generation
-        max_tokens: Maximum number of tokens to generate
-        **kwargs: Additional parameters for the LLM
-    Returns:
-        An initialized OpenAI LLM instance
-    """
-    try:
-        llm_params = {
-            "model": model_name,
-            "temperature": temperature,
-            **kwargs
-        }
+# Chat sessions dictionary to store conversation history
+gemini_chat_sessions = {}
+
+def get_or_create_gemini_chat(model, session_id=None):
+    """Get or create a Gemini chat session for the given session ID"""
+    if session_id is None:
+        # If no session ID is provided, create a new chat without storing it
+        return model.start_chat()
         
-        # Set max_tokens if provided
-        if max_tokens is not None:
-            llm_params["max_tokens"] = max_tokens
-        
-        llm = ChatOpenAI(**llm_params)
-        print("OpenAI model initialized successfully!")
-        return llm
-        
-    except Exception as e:
-        print(f"Error initializing OpenAI model: {e}")
-        return None
+    if session_id not in gemini_chat_sessions:
+        gemini_chat_sessions[session_id] = model.start_chat()
     
-def create_rag_chain(
-    llm,
-    prompt_template: str = config.DEFAULT_RAG_PROMPT_TEMPLATE,
-    input_variables: Optional[List[str]] = None,
-    output_key: str = "result"
-) -> LLMChain:
-    if input_variables is None:
-        input_variables = ["context", "question"]
-        
-    prompt = PromptTemplate(
-        template=prompt_template,
-        input_variables=input_variables
-    )
-    
-    return LLMChain(
-        llm=llm,
-        prompt=prompt,
-        output_key=output_key
-    )
+    return gemini_chat_sessions[session_id]
