@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, Body, Depends, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
-from typing import Optional, Union
+from typing import Optional, Union, Any, cast
 
 from .database import login_user, register_user, check_login, logout_user, delete_all_user_data, DBSession
 from .schema import LoginRequest, RegisterRequest, DeleteAccountRequest, AuthFailed, AuthSuccess
@@ -26,7 +26,12 @@ def get_login(request: Request):
 
 @router.get("/register", name="register", response_class=HTMLResponse)
 def get_register(request: Request):
-    return templates.TemplateResponse("register.html", {"request": request})
+    def get_flashed_messages():
+        return request.session.pop("_messages", [])
+    return templates.TemplateResponse(
+        "register.html", 
+        {"request": request, "get_flashed_messages": get_flashed_messages}
+    )
 
 @router.get("/delete_account", name="delete_account", response_class=HTMLResponse)
 def get_delete(request: Request):
@@ -35,9 +40,14 @@ def get_delete(request: Request):
 
 @router.post("/login", responses={200: {"model": AuthSuccess}, 400: {"model": AuthFailed}})
 def post_login(
-    request: Union[LoginRequest, dict] = Body(LoginRequest), # Union to prevent auto 422 error
+    request: Union[LoginRequest, dict, bytes] = Body(LoginRequest), # Union to prevent auto 422 error
 ):
-    if isinstance(request, dict): # Validation failed
+    if isinstance(request, bytes): # Validation failed
+        try:
+            request = LoginRequest.parse(request)
+        except:
+            pass
+    if not isinstance(request, LoginRequest):
         return JSONResponse(
             status_code=400,
             content={
@@ -48,11 +58,11 @@ def post_login(
     jwt = login_user(request.username, request.password)
     if jwt:
         response = JSONResponse(
+            status_code=307,
             content={
-                "success": True,
-                "redirect": "/"
-            }
-        )
+            "success": True,
+            "redirect": "/"
+        })
         response.set_cookie(
             key="jwt",
             value=jwt,
@@ -73,9 +83,14 @@ def post_login(
 
 @router.post("/register", responses={200: {"model": AuthSuccess}, 400: {"model": AuthFailed}})
 async def post_register(
-    request: Union[RegisterRequest, dict] = Body(RegisterRequest), # Union to prevent auto 422 error
+    request: Union[RegisterRequest, dict, bytes] = Body(RegisterRequest), # Union to prevent auto 422 error
 ):
-    if isinstance(request, dict): # Validation failed
+    if isinstance(request, bytes):
+        try:
+            request = RegisterRequest.parse(request)
+        except:
+            pass
+    if not isinstance(request, RegisterRequest): # Validation failed
         return JSONResponse(
             status_code=400,
             content={
@@ -84,12 +99,7 @@ async def post_register(
             }
         )   
     if register_user(request.full_name, request.username, request.email, request.password):
-        return JSONResponse(
-            content={
-                "success": True,
-                "redirect": "/login"
-            }
-        )
+        return RedirectResponse(url="/login")
     else:
         return JSONResponse(
             status_code=400,
