@@ -18,46 +18,50 @@ def get_api_key():
         "BRAVE_API_KEY": BRAVE_API_KEY
     }
 
-def build_web_search(query, max_results=3):
+def web_search(query, max_results=3):
     """Tìm kiếm thông tin từ web sử dụng Brave Search API"""
-    BRAVE_API_KEY = get_api_key()["BRAVE_API_KEY"]
-    
-    # Brave Search API endpoint
-    url = "https://api.search.brave.com/res/v1/web/search"
-    
-    headers = {
-        "Accept": "application/json",
-        "Accept-Encoding": "gzip",
-        "X-Subscription-Token": BRAVE_API_KEY}
-
-    params = {
-        "q": query,
-        "count": max_results,
-        "search_lang": "vi",  # Vietnamese language
-        "safesearch": "moderate",
-        "text_decorations": "false",  # Không cần đánh dấu văn bản
-    }
-    
-    response = requests.get(url, headers=headers, params=params)
-
-    data = response.json()
-    results = data.get("web", {}).get("results", [])
-    
-    pages = {}
-    for i, result in enumerate(results[:max_results], 1):
-        title = result.get("title", "")
-        snippet = result.get("description", "")
-        url = result.get("url", "")
+    try:
+        BRAVE_API_KEY = get_api_key()["BRAVE_API_KEY"]
+        if not BRAVE_API_KEY:
+            return
+        # Brave Search API endpoint
+        url = "https://api.search.brave.com/res/v1/web/search"
         
-        if title and snippet:
-            item = {
-                "title": title,
-                "snippet": snippet,
-                "url": url
-            }
-        pages[f"Nguồn {i}"] = item
-    
-    return pages
+        headers = {
+            "Accept": "application/json",
+            "Accept-Encoding": "gzip",
+            "X-Subscription-Token": BRAVE_API_KEY}
+
+        params = {
+            "q": query,
+            "count": max_results,
+            "search_lang": "vi",  # Vietnamese language
+            "safesearch": "moderate",
+            "text_decorations": "false",  # Không cần đánh dấu văn bản
+        }
+        
+        response = requests.get(url, headers=headers, params=params)
+
+        data = response.json()
+        results = data.get("web", {}).get("results", [])
+        
+        pages = {}
+        for i, result in enumerate(results[:max_results], 1):
+            title = result.get("title", "")
+            snippet = result.get("description", "")
+            url = result.get("url", "")
+            
+            if title and snippet:
+                item = {
+                    "title": title,
+                    "snippet": snippet,
+                    "url": url
+                }
+            pages[f"Nguồn {i}"] = item
+        
+        return pages
+    except:
+        return
     
 def extract_text_from_image_url(img_url, base_url=None):
     try:
@@ -125,12 +129,17 @@ def extract_main_content(url):
         return f"Lỗi khi xử lý URL: {e}"
     
 def build_web_search_context(query, max_results=3):
-    pages = build_web_search(query, max_results)
-    context = ""
-    for page in pages.values():
-        url = page["url"]
-        context += f"Nguồn {url}" + "\n\n"
-        context += extract_main_content(url) + 100*'-' + "\n\n"
-    # with open("web_search_context.txt", "w", encoding="utf-8") as f:
-    #     f.write(context)
-    return context
+    try:
+        pages = web_search(query, max_results)
+        if pages is None:
+            return ""
+        context = ""
+        for page in pages.values():
+            url = page["url"]
+            context += f"Nguồn {url}" + "\n\n"
+            context += extract_main_content(url) + 100*'-' + "\n\n"
+        # with open("web_search_context.txt", "w", encoding="utf-8") as f:
+        #     f.write(context)
+        return context
+    except:
+        return ""

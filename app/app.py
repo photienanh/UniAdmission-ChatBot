@@ -5,6 +5,10 @@ from rag import initialize_rag
 from models import db, User, ChatSession, ChatMessage, init_db
 from datetime import datetime
 import os
+import logging
+
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+logging.getLogger('tensorflow').setLevel(logging.ERROR)
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'your-secret-key-here-change-this')
@@ -27,6 +31,16 @@ def load_user(user_id):
 # Khởi tạo model và RAG
 gemini = initialize_gemini()
 retriever = initialize_rag()
+
+# Middleware để ngăn cache cho các trang đã đăng nhập
+@app.after_request
+def after_request(response):
+    # Ngăn cache cho các trang yêu cầu authentication
+    if request.endpoint in ['home', 'delete_account']:
+        response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate, private'
+        response.headers['Pragma'] = 'no-cache'
+        response.headers['Expires'] = '0'
+    return response
 
 @app.route('/')
 @login_required
@@ -106,7 +120,12 @@ def register():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    response = redirect(url_for('login'))
+    # Thêm headers để ngăn cache
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
 
 @app.route('/chat', methods=['POST'])
 @login_required
@@ -114,7 +133,7 @@ def chat():
     data = request.json
     user_input = data.get('message', '')
     session_id = data.get('session_id')
-    use_custom_llm = data.get('use_custom_llm', False)  # Thêm tham số chọn LLM
+    use_gemini = data.get('use_gemini', True)  # Thêm tham số chọn LLM
     use_web_search = data.get('use_web_search', True)  # Thêm tham số chọn web search (mặc định True)
     
     # Tạo session mới nếu chưa có
@@ -138,7 +157,7 @@ def chat():
     
     try:
         # Tạo phản hồi từ bot với LLM được chọn và search method
-        bot_response = ask_llm(user_input, gemini, retriever, session_id, use_custom_llm, use_web_search)
+        bot_response = ask_llm(user_input, gemini, retriever, session_id, use_gemini, use_web_search)
         
         # Lưu phản hồi của bot
         bot_message = ChatMessage(
@@ -220,6 +239,53 @@ def create_session():
     db.session.commit()
     
     return jsonify(chat_session.to_dict())
+
+@app.route('/delete_account', methods=['GET', 'POST'])
+@login_required
+def delete_account():
+    """Xóa tài khoản người dùng"""
+    if request.method == 'GET':
+        return render_template('delete_account.html')
+    
+    if request.method == 'POST':
+        data = request.json if request.is_json else request.form
+        confirm = data.get('confirm')
+        password = data.get('password')
+        
+        # Kiểm tra xác nhận
+        if confirm != 'DELETE':
+            return jsonify({'success': False, 'message': 'Vui lòng nhập "DELETE" để xác nhận'})
+        
+        # Kiểm tra mật khẩu
+        if not current_user.check_password(password):
+            return jsonify({'success': False, 'message': 'Mật khẩu không đúng'})
+        
+        try:
+            user_id = current_user.id
+            
+            # Xóa tất cả tin nhắn của user
+            ChatMessage.query.filter(
+                ChatMessage.session_id.in_(
+                    db.session.query(ChatSession.id).filter(ChatSession.user_id == user_id)
+                )
+            ).delete(synchronize_session=False)
+            
+            # Xóa tất cả phiên chat của user
+            ChatSession.query.filter(ChatSession.user_id == user_id).delete()
+            
+            # Đăng xuất user
+            logout_user()
+            
+            # Xóa user
+            User.query.filter(User.id == user_id).delete()
+            
+            db.session.commit()
+            
+            return jsonify({'success': True, 'message': 'Tài khoản đã được xóa thành công'})
+            
+        except Exception as e:
+            db.session.rollback()
+            return jsonify({'success': False, 'message': f'Có lỗi xảy ra: {str(e)}'})
 
 if __name__ == '__main__':
     app.run(debug=True)

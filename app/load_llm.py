@@ -18,7 +18,7 @@ def initialize_gemini():
     genai.configure(api_key=GEMINI_API_KEY)
     model = genai.GenerativeModel(
         "gemini-2.0-flash-lite-preview-02-05",
-        system_instruction="Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất. Nếu được cung cấp link nguồn thì thêm vào phần cuối câu trả lời.",
+        system_instruction="Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất. Nếu được cung cấp link nguồn thì thêm vào phần cuối câu trả lời, nếu không được cung cấp thì không thêm.",
     )
     return model
 
@@ -103,12 +103,12 @@ def ask_gemini(question, model, retriever, session_id, use_web_search=True):
     except Exception as e:
         return {"response": f"Xin lỗi, có lỗi xảy ra: {str(e)}"}
 
-def ask_llm(question, model, retriever, session_id=None, use_custom_llm=False, use_web_search=True):
+def ask_llm(question, model, retriever, session_id=None, use_gemini=True, use_web_search=True):
     """Hàm chung để gọi LLM - Gemini hoặc Custom LLM"""
-    if use_custom_llm:
-        return ask_custom_llm(question, retriever, use_web_search)
-    else:
+    if use_gemini:
         return ask_gemini(question, model, retriever, session_id, use_web_search)
+    else:
+        return ask_custom_llm(question, retriever, use_web_search)
 
 def clear_chat_session(session_id):
     """Xóa chat session khỏi memory"""
