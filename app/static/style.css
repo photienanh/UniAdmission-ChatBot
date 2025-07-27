@@ -457,36 +457,41 @@ body {
 
 .control-group label {
     font-size: 14px;
-    color: #374151;
-    font-weight: 500;
-    min-width: 50px;
+    color: #4b5563;
+    font-weight: 600;
+    min-width: 60px;
+    letter-spacing: 0.5px;
 }
 
 .control-group select {
-    padding: 6px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    background-color: white;
+    padding: 8px 32px 8px 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    background-color: #ffffff;
     color: #374151;
-    font-size: 13px;
+    font-size: 14px;
     cursor: pointer;
-    min-width: 130px;
+    min-width: 140px;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
-    background-position: right 8px center;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 10px center;
     background-repeat: no-repeat;
-    background-size: 14px;
-    padding-right: 30px;
+    background-size: 16px;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .control-group select:hover {
-    border-color: #9ca3af;
+    border-color: #3b82f6;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(59, 130, 246, 0.1);
+    background-color: #fafbff;
 }
 
 .control-group select:focus {
     outline: none;
-    border-color: #000000;
-    box-shadow: 0 0 0 1px #000000;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
 }
 
 .chat-form {
@@ -511,6 +516,36 @@ body {
     box-shadow: 0 0 0 1px #000000;
 }
 
+#settings-toggle {
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: #666666;
+    cursor: pointer;
+    padding: 6px;
+    border-radius: 50%;
+    width: 28px;
+    height: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    font-size: 12px;
+}
+
+#settings-toggle:hover {
+    background-color: #f0f0f0;
+    color: #000000;
+}
+
+#settings-toggle.active {
+    background-color: #000000;
+    color: white;
+}
+
 #user-input {
     flex: 1;
     background: none;
@@ -520,7 +555,7 @@ body {
     font-size: 16px;
     line-height: 1.5;
     color: #000000;
-    padding: 8px 40px 8px 0;
+    padding: 8px 40px 8px 35px;
     max-height: 200px;
     overflow-y: auto;
     font-family: inherit;
@@ -671,9 +706,10 @@ body {
     .control-group select {
         flex: 1;
         min-width: 0;
-        font-size: 12px;
-        padding: 6px 8px;
-        padding-right: 28px;
+        font-size: 13px;
+        padding: 6px 24px 6px 8px;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
     }
     
     .chat-input-area {
@@ -723,7 +759,7 @@ body {
     
     #user-input {
         font-size: 16px; /* Prevent zoom on iOS */
-        padding: 8px 40px 8px 0;
+        padding: 8px 40px 8px 35px;
     }
     
     #send-button {
