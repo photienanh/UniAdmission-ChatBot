@@ -3,6 +3,7 @@ from fastapi.responses import HTMLResponse, JSONResponse, RedirectResponse
 from fastapi.templating import Jinja2Templates
 from typing import Optional, Union, cast, Any
 from datetime import datetime, timezone
+from llm import ask_llm
 from .database import (
     check_login, create_chat_session, get_chat_session, create_message, 
     get_user_sessions, get_session_messages, DBSession
@@ -14,10 +15,6 @@ from .schema import (
 
 router = APIRouter()
 templates = Jinja2Templates(directory="templates")
-
-def ask_llm(question, model, retriever, session_id=None, use_custom_llm=False, use_web_search=True) -> dict[str, Any]:
-    """Hàm chung để gọi LLM - Gemini hoặc Custom LLM"""
-    return {"response": f"bot: {question}"}
 
 @router.get("/", name="index", response_class=HTMLResponse)
 def get_index(request: Request):
@@ -60,12 +57,10 @@ async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(Chat
         content=data.message
     )
     try:
-        bot_response = ask_llm(
+        bot_response = await ask_llm(
             question=data.message,
-            model="gemini",
-            retriever="",
             session_id=session_id,
-            use_custom_llm=data.use_custom_llm,
+            use_custom_llm=not data.use_gemini,
             use_web_search=data.use_web_search
         )
         bot_message = create_message(
@@ -88,6 +83,7 @@ async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(Chat
         return response
         
     except Exception as e:
+        print(f"Error: {e}")
         DBSession.rollback()
         return JSONResponse(
             status_code=500,

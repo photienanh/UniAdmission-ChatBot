@@ -5,7 +5,7 @@ from datetime import datetime
 class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1)
     session_id: Optional[str] = Field(None)
-    use_custom_llm: bool = Field(False)
+    use_gemini: bool = Field(False)
     use_web_search: bool = Field(True)
     
 class ChatResponse(BaseModel):
