@@ -83,7 +83,6 @@ def ask_gemini(question, gemini, session_id, use_web_search):
         
         # Tạo message với context
         prompt = build_prompt(question, use_web_search)
-        print(prompt)
         # Gửi message và nhận response
         response = chat.send_message(prompt)
         

@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template, jsonify, redirect, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from load_llm import initialize_gemini, ask_llm
-from rag import initialize_rag
 from models import db, User, ChatSession, ChatMessage, init_db
 from datetime import datetime, timezone
 import os

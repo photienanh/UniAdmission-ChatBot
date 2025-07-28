@@ -112,7 +112,7 @@ def extract_main_content(url):
         if tables:
             main_content += "\n\n" + "\n\n".join([table.to_string(index=False) for table in tables])
         if main_content:
-            return "\n\n".join(main_content)
+            return main_content
         else:
             return "Không tìm được nội dung có thể xử lý."    
 
