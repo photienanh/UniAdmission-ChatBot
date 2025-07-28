@@ -4,14 +4,19 @@ from datetime import datetime
 
 class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1)
+    model_type: str = Field(...)
     session_id: Optional[str] = Field(None)
-    use_gemini: bool = Field(False)
     use_web_search: bool = Field(True)
+    
+class SourceInfo(BaseModel):
+    url: str = Field(...)
+    content: str = Field(...)
     
 class ChatResponse(BaseModel):
     response: str = Field(...)
     session_id: str = Field(...)
     message_id: str = Field(...)
+    sources: list[SourceInfo] = Field(...)
     
 class SessionResponse(BaseModel):
     id: str = Field(...)

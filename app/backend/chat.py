@@ -30,7 +30,7 @@ def post_index(request: Request):
 def get_home(request: Request):
     return get_index(request)
 @router.post("/chat", name="chat", response_class=JSONResponse)
-async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(ChatRequest)):
+async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(ChatRequest)) -> ChatResponse | Any:
     if isinstance(data, dict): # Validation failed
         raise HTTPException(status_code=400, detail="Dữ liệu không hợp lệ")
     user = check_login(request)
@@ -60,7 +60,7 @@ async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(Chat
         bot_response = await ask_llm(
             question=data.message,
             session_id=session_id,
-            use_custom_llm=not data.use_gemini,
+            model_type=data.model_type,
             use_web_search=data.use_web_search
         )
         bot_message = create_message(
@@ -78,7 +78,8 @@ async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(Chat
         response = ChatResponse(
             response=bot_response["response"],
             session_id=session_id,
-            message_id=bot_message.id
+            message_id=bot_message.id,
+            sources=bot_response["sources"]
         )
         return response
         

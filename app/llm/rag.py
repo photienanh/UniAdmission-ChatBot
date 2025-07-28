@@ -16,7 +16,8 @@ class RAG:
         raise Exception(f"Static class does not support instance")
     @classmethod
     def __setup(cls):
-        RAG.retriever = initialize_rag()
+        # RAG.retriever = initialize_rag()
+        pass
     @classmethod
     def initialize(cls):
         if not hasattr(RAG, "retriever"):
@@ -30,10 +31,11 @@ class RAG:
         """Truy xuất context từ RAG vector database"""
         loop = asyncio.get_running_loop()
         # Truy xuất các chunk văn bản liên quan
-        docs = await loop.run_in_executor(
-            cls.executor, 
-            cls.__invoke,
-            question, k
-        )
+        # docs = await loop.run_in_executor(
+        #     cls.executor, 
+        #     cls.__invoke,
+        #     question, k
+        # )
+        docs = []
         context = "\n\n".join([doc.page_content for doc in docs])
         return context

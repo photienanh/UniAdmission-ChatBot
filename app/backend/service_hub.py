@@ -1,11 +1,13 @@
 # Test module, not used yet
 
 from fastapi import WebSocket, WebSocketDisconnect, APIRouter, Request
-from fastapi.responses import PlainTextResponse
+from fastapi.responses import PlainTextResponse, JSONResponse
 from .support import ProviderHub
 import uuid
 from config import SERVICE_REGISTER_TOKEN
 import json
+
+from .schema import ModelInfo
 
 provider_hub = ProviderHub()
 router = APIRouter()
@@ -63,3 +65,14 @@ async def restful_consume(request: Request, client_type: str):
     request_id = str(uuid.uuid4())
     result = await provider_hub.consume(client_type, request_id, text.decode())
     return PlainTextResponse(result)
+
+@router.get("/models")
+async def get_model_list(request: Request) -> list[ModelInfo]:
+    infos = provider_hub.get_current_infos()
+    infos.append(
+        {
+            "name": "Gemini",
+            "model_type": "gemini-2.0-flash-lite-preview-02-05"
+        }
+    )
+    return JSONResponse(content=infos) #type:ignore

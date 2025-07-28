@@ -12,6 +12,18 @@ class ProviderHub:
     def __init__(self) -> None:
         self.provider_wss: dict[str, WebsocketInfo] = {}
         self.poll = 0.1
+    def get_current_infos(self) -> list[dict[str, str]]:
+        result = []
+        for ws in self.provider_wss.values():
+            if ws.name.startswith("slm") or ws.name.startswith("llm") or ws.name.startswith("api"):
+                model_type = ws.client_type[:3]
+                while len(model_type) > 0 and model_type[0] == "_":
+                    model_type = model_type[1:]
+                result.append({
+                    "name": ws.name,
+                    "model_type": model_type
+                })
+        return result
     async def register_provider(self, ws: WebSocket, client_type: str, name: str, uid: str):
         info = WebsocketInfo(
             ws=ws,
