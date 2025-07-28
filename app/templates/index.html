@@ -14,7 +14,7 @@
             <div class="sidebar-header">
                 <button class="new-chat-btn" id="new-chat-btn">
                     <i class="fas fa-plus"></i>
-                    New chat
+                    Đoạn chat mới
                 </button>
             </div>
             
@@ -89,11 +89,15 @@
                         </select>
                     </div>
                     <div class="control-group">
-                        <label for="search-select">Search:</label>
-                        <select id="search-select">
-                            <option value="web" selected>Web Search</option>
-                            <option value="rag">RAG Search</option>
-                        </select>
+                        <label for="web-search-button " class="slider-label"><i class="fa-solid fa-globe"></i> Tìm kiếm trên mạng:</label>
+                        <div class="slider-container">
+                            <label class="slider-switch">
+                                <input type="checkbox" id="web-search-button">
+                                <span class="slider-track">
+                                    <span class="slider-thumb"></span>
+                                </span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 
@@ -135,7 +139,7 @@
             const sidebarOverlay = document.getElementById('sidebar-overlay');
             const newChatBtn = document.getElementById('new-chat-btn');
             const modelSelect = document.getElementById('model-select');
-            const searchSelect = document.getElementById('search-select');
+            const webSearchButton = document.getElementById('web-search-button');
             const sendButton = document.getElementById('send-button');
             const settingsToggle = document.getElementById('settings-toggle');
             const inputControls = document.getElementById('input-controls');
@@ -239,10 +243,10 @@
                 
                 // Get settings
                 const useGemini = modelSelect.value === 'gemini';
-                const useWebSearch = searchSelect.value === 'web';
+                const useWebSearch = webSearchButton.checked;
                 
                 console.log('Model selected:', modelSelect.value, 'Use Gemini:', useGemini);
-                console.log('Search selected:', searchSelect.value, 'Use Web Search:', useWebSearch);
+                console.log('Web Search enabled:', useWebSearch);
                 
                 // Add user message
                 addMessage(message, 'user');

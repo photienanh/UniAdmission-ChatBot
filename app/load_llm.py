@@ -1,6 +1,5 @@
 import google.generativeai as genai
 import requests
-from rag import build_rag_context
 from web_search import build_web_search_context, get_api_key
 
 # Dictionary để lưu trữ chat sessions cho mỗi session_id
@@ -28,32 +27,24 @@ def get_or_create_chat_session(model, session_id):
         chat_sessions[session_id] = model.start_chat()
     return chat_sessions[session_id]
 
-def build_context(question, retriever, use_web_search=True):
-    """Xây dựng context cho câu hỏi, có thể sử dụng RAG hoặc web search"""
-    if use_web_search:
-        # Sử dụng web search để lấy context
-        return build_web_search_context(question)
-    else:
-        # Sử dụng RAG để lấy context
-        return build_rag_context(question, retriever)
-
-def build_prompt(context, question):
+def build_prompt(question, use_web_search):
     """Tạo prompt với context và question"""
-    return f"""
+    if use_web_search:
+        context = build_web_search_context(question)
+        return f"""
 Thông tin tham khảo:
 {context}
 
 Câu hỏi: {question}
 """
+    else:
+        return f"""Câu hỏi: {question}"""
 
-def ask_custom_llm(question, retriever, use_web_search=True):
+def ask_custom_llm(question, use_web_search):
     """Gọi API LLM tự phát triển với RAG context"""
     try:
-        # Lấy thông tin context dựa trên lựa chọn
-        context = build_context(question, retriever, use_web_search)
-        
         # Tạo prompt với context cho custom model
-        prompt = build_prompt(context, question)
+        prompt = build_prompt(question, use_web_search)
         url = get_custom_llm_url()
         
         payload = {"prompt": prompt.strip()}
@@ -84,17 +75,15 @@ def ask_custom_llm(question, retriever, use_web_search=True):
         return {"response": error_msg}
 
 
-def ask_gemini(question, model, retriever, session_id, use_web_search=True):
+def ask_gemini(question, gemini, session_id, use_web_search):
     """Hỏi Gemini với conversation memory sử dụng start_chat"""
     try:
         # Lấy chat session
-        chat = get_or_create_chat_session(model, session_id)
-        
-        # Lấy thông tin context dựa trên lựa chọn
-        context = build_context(question, retriever, use_web_search)
+        chat = get_or_create_chat_session(gemini, session_id)
         
         # Tạo message với context
-        prompt = build_prompt(context, question)
+        prompt = build_prompt(question, use_web_search)
+        print(prompt)
         # Gửi message và nhận response
         response = chat.send_message(prompt)
         
@@ -103,12 +92,12 @@ def ask_gemini(question, model, retriever, session_id, use_web_search=True):
     except Exception as e:
         return {"response": f"Xin lỗi, có lỗi xảy ra: {str(e)}"}
 
-def ask_llm(question, model, retriever, session_id=None, use_gemini=True, use_web_search=True):
+def ask_llm(question, gemini, session_id=None, use_gemini=True, use_web_search=False):
     """Hàm chung để gọi LLM - Gemini hoặc Custom LLM"""
     if use_gemini:
-        return ask_gemini(question, model, retriever, session_id, use_web_search)
+        return ask_gemini(question, gemini, session_id, use_web_search)
     else:
-        return ask_custom_llm(question, retriever, use_web_search)
+        return ask_custom_llm(question, use_web_search)
 
 def clear_chat_session(session_id):
     """Xóa chat session khỏi memory"""
