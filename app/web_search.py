@@ -7,8 +7,8 @@ from io import BytesIO, StringIO
 from PIL import Image
 from dotenv import load_dotenv
 from urllib.parse import urljoin
-import pytesseract
-pytesseract.pytesseract.tesseract_cmd = r"D:\Tesseract-OCR\tesseract.exe"
+# import pytesseract
+# pytesseract.pytesseract.tesseract_cmd = r"D:\Tesseract-OCR\tesseract.exe"
 
 def get_api_key():
     load_dotenv('api_key.env')
@@ -64,26 +64,26 @@ def web_search(query, max_results=3):
     except:
         return
     
-def extract_text_from_image_url(img_url, base_url=None):
-    try:
-        # Xử lý URL tương đối thành tuyệt đối nếu cần
-        if base_url:
-            img_url = urljoin(base_url, img_url)
+# def extract_text_from_image_url(img_url, base_url=None):
+#     try:
+#         # Xử lý URL tương đối thành tuyệt đối nếu cần
+#         if base_url:
+#             img_url = urljoin(base_url, img_url)
 
-        # Tải ảnh từ URL
-        response = requests.get(img_url, timeout=10)
-        response.raise_for_status()  # Gây lỗi nếu ảnh không tải được
+#         # Tải ảnh từ URL
+#         response = requests.get(img_url, timeout=10)
+#         response.raise_for_status()  # Gây lỗi nếu ảnh không tải được
 
-        # Mở ảnh bằng PIL
-        image = Image.open(BytesIO(response.content)).convert("RGB")
+#         # Mở ảnh bằng PIL
+#         image = Image.open(BytesIO(response.content)).convert("RGB")
 
-        # Dùng pytesseract để OCR
-        text = pytesseract.image_to_string(image, lang="eng+vie")  # có thể thêm "vie" nếu có tiếng Việt
+#         # Dùng pytesseract để OCR
+#         text = pytesseract.image_to_string(image, lang="eng+vie")
 
-        return text.strip()
+#         return text.strip()
 
-    except Exception as e:
-        return ""
+#     except Exception as e:
+#         return ""
     
 def extract_tables(soup):
     tables = soup.find_all("table")

@@ -6,6 +6,7 @@
     <title>UniAdmission ChatBot</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
     <div class="chatgpt-container">
@@ -131,6 +132,15 @@
         let chatHistory = [];
         
         document.addEventListener('DOMContentLoaded', function() {
+            // Configure marked.js for better markdown parsing
+            if (typeof marked !== 'undefined') {
+                marked.setOptions({
+                    breaks: true, // Convert \n to <br>
+                    gfm: true,    // GitHub flavored markdown
+                    sanitize: false // Allow HTML (be careful with user input)
+                });
+            }
+            
             const chatForm = document.getElementById('chat-form');
             const userInput = document.getElementById('user-input');
             const chatMessages = document.getElementById('chat-messages');
@@ -319,9 +329,23 @@
             function addMessage(content, sender) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${sender}-message`;
+                
+                // Parse markdown cho bot messages, plain text cho user messages
+                let processedContent;
+                let contentClass = '';
+                
+                if (sender === 'bot') {
+                    // Parse markdown và clean up
+                    processedContent = marked.parse(content);
+                    contentClass = 'markdown-content';
+                } else {
+                    // User messages - just replace newlines with <br>
+                    processedContent = `<p>${content.replace(/\n/g, '<br>')}</p>`;
+                }
+                
                 messageDiv.innerHTML = `
-                    <div class="message-content">
-                        <p>${content.replace(/\n/g, '<br>')}</p>
+                    <div class="message-content ${contentClass}">
+                        ${processedContent}
                     </div>
                 `;
                 chatMessages.appendChild(messageDiv);
