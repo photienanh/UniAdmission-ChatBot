@@ -16,15 +16,15 @@ body {
     height: 100vh;
 }
 
-/* ChatGPT Container */
-.chatgpt-container {
+/* Chat Container */
+.chat-container {
     display: flex;
     height: 100vh;
     background-color: #ffffff;
 }
 
 /* Sidebar */
-.chatgpt-sidebar {
+.chat-sidebar {
     width: 260px;
     background-color: #f9f9f9;
     color: #000000;
@@ -36,7 +36,7 @@ body {
     border-right: 1px solid #e5e5e5;
 }
 
-.chatgpt-sidebar.collapsed {
+.chat-sidebar.collapsed {
     margin-left: -260px;
 }
 
@@ -270,7 +270,7 @@ body {
 }
 
 /* Main Chat Area */
-.chatgpt-main {
+.chat-main {
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -279,7 +279,7 @@ body {
 }
 
 /* Header */
-.chatgpt-header {
+.chat-header {
     display: flex;
     align-items: center;
     justify-content: flex-start;
@@ -310,7 +310,7 @@ body {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
 
-.chatgpt-header h1 {
+.chat-header h1 {
     font-size: 18px;
     font-weight: 600;
     color: #000000;
@@ -407,15 +407,15 @@ body {
 }
 
 .message.user-message {
-    background-color: #ffffff;
+    background-color: #ffffff; /* Background trắng cho toàn bộ message user */
 }
 
 .message.bot-message {
-    background-color: #f7f7f8;
+    background-color: #ffffff; /* Background trắng cho toàn bộ message bot */
 }
 
 .message-content {
-    max-width: 800px;
+    max-width: 800px; /* Giống với max-width của chat-form */
     margin: 0 auto;
     padding: 0 24px;
     display: flex;
@@ -424,11 +424,20 @@ body {
 }
 
 .message.user-message .message-content {
-    justify-content: flex-end;
+    justify-content: flex-end; /* Căn phải cho user */
+    padding-right: 0; /* Bỏ padding để căn thẳng với ô input */
 }
 
 .message.bot-message .message-content {
     justify-content: flex-start;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+/* Khi sidebar bị thu gọn */
+.chat-sidebar.collapsed ~ .chat-main .message.bot-message .message-content {
+    padding: 0 24px; /* Giữ nguyên padding để thẳng với input-container */
 }
 
 .message-content p {
@@ -444,37 +453,24 @@ body {
 }
 
 .message.user-message .message-content p {
-    background: #000000;
-    color: white;
+    background: #e5e5e5; /* Nền xám đậm hơn cho khung tin nhắn user */
+    color: #000000; /* Chữ đen cho user */
     border-bottom-right-radius: 4px;
+    border: none;
+    margin-left: auto; /* Căn phải */
+    padding: 12px 16px; /* Thêm lại padding cho khung tin nhắn user */
+    border-radius: 18px; /* Thêm lại border radius cho khung tin nhắn user */
+    max-width: 70%; /* Giới hạn chiều rộng tin nhắn user */
 }
 
 .message.bot-message .message-content p {
-    background: #ffffff;
-    color: #000000;
-    border-bottom-left-radius: 4px;
-    border: 1px solid #e5e5e5;
-}
-
-/* Special styling for bot messages with markdown */
-.message.bot-message .message-content.markdown-content {
-    justify-content: flex-start;
-    display: block;
-    max-width: 85%;
-    margin-left: 24px;
-}
-
-.message.bot-message .message-content.markdown-content > * {
-    background: #ffffff;
-    color: #000000;
-    border: 1px solid #e5e5e5;
-    padding: 12px 16px;
-    border-radius: 18px;
-    border-bottom-left-radius: 4px;
-    word-wrap: break-word;
-    font-size: 15px;
-    line-height: 1.6;
-    margin: 0;
+    background: transparent; /* Bỏ nền cho bot */
+    color: #000000; /* Chữ đen cho bot */
+    border: none; /* Bỏ khung */
+    border-radius: 0; /* Bỏ border radius */
+    padding: 0; /* Bỏ padding */
+    margin-right: auto; /* Đẩy về phía trái như chatbot thông thường */
+    max-width: 100%; /* Sử dụng toàn bộ chiều rộng có sẵn */
 }
 
 /* Chat Input Area */
@@ -810,273 +806,21 @@ body {
     40% { transform: scale(1); opacity: 1; }
 }
 
-/* Sidebar overlay for mobile */
-.sidebar-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 999;
-    display: none;
-}
-
-.sidebar-overlay.show {
-    display: block;
-}
-
-/* Mobile responsive */
-@media (max-width: 768px) {
-    html, body {
-        height: 100%;
-        overflow: hidden;
-    }
-    
-    .chatgpt-container {
-        height: 100vh;
-        overflow: hidden;
-        position: relative;
-    }
-    
-    .chatgpt-sidebar {
-        position: fixed;
-        height: 100vh;
-        z-index: 1001;
-        transform: translateX(0);
-        transition: transform 0.3s ease;
-        left: 0;
-        top: 0;
-        width: 260px;
-    }
-    
-    .chatgpt-sidebar.collapsed {
-        transform: translateX(-100%);
-        margin-left: 0;
-    }
-    
-    .chatgpt-main {
-        width: 100%;
-        margin-left: 0;
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        height: 100vh;
-        position: relative;
-        z-index: 1;
-    }
-    
-    .sidebar-toggle {
-        display: block;
-    }
-    
-    .chatgpt-header {
-        flex-direction: row;
-        align-items: center;
-        gap: 12px;
-        padding: 12px 16px;
-    }
-    
-    .chatgpt-header h1 {
-        font-size: 16px;
-    }
-    
-    .input-controls {
-        flex-direction: column;
-        gap: 12px;
-        margin-bottom: 12px;
-    }
-    
-    .control-group {
-        width: 100%;
-        justify-content: space-between;
-    }
-    
-    .control-group label {
-        min-width: 60px;
-    }
-    
-    .control-group select {
-        flex: 1;
-        min-width: 0;
-        font-size: 13px;
-        padding: 6px 24px 6px 8px;
-        border: 1px solid #e5e7eb;
-        border-radius: 6px;
-    }
-    
-    .slider-switch {
-        width: 55px;
-        height: 24px;
-        min-width: 55px;
-    }
-    
-    .slider-thumb {
-        height: 18px;
-        width: 18px;
-        left: 3px;
-        bottom: 3px;
-    }
-    
-    .slider-switch input:checked + .slider-track .slider-thumb {
-        transform: translateX(31px);
-    }
-    
-    .slider-label {
-        font-size: 13px;
-        flex: 1;
-    }
-    
-    .chat-input-area {
-        padding: 16px;
-        position: relative;
-        z-index: 1;
-        background-color: #ffffff;
-        border-top: 1px solid #e5e5e5;
-    }
-    
-    .chat-form {
-        max-width: 100%;
-        margin: 0;
-    }
-    
-    .welcome-content {
-        padding: 24px 16px;
-    }
-    
-    .welcome-content h2 {
-        font-size: 24px;
-    }
-    
-    .example-prompts {
-        grid-template-columns: 1fr;
-        gap: 12px;
-    }
-    
-    .prompt-card {
-        padding: 16px;
-        border-radius: 8px;
-    }
-    
-    .message-content {
-        padding: 0 16px;
-    }
-    
-    .message-content p {
-        max-width: 90%;
-        font-size: 14px;
-    }
-    
-    .input-container {
-        padding: 10px 12px;
-        border-radius: 20px;
-    }
-    
-    #user-input {
-        font-size: 16px; /* Prevent zoom on iOS */
-        padding: 8px 40px 8px 35px;
-    }
-    
-    #send-button {
-        width: 28px;
-        height: 28px;
-        right: 8px;
-    }
-    
-    .user-menu {
-        padding: 8px 12px;
-        font-size: 13px;
-    }
-    
-    .user-info {
-        gap: 8px;
-    }
-    
-    .user-info i {
-        font-size: 18px;
-    }
-    
-    .username {
-        font-size: 13px;
-    }
-    
-    .user-dropdown.show {
-        max-height: 80px;
-    }
-    
-    .delete-account-btn {
-        font-size: 12px;
-        padding: 6px 12px;
-    }
-    
-    /* Đảm bảo chat input và user dropdown luôn hiển thị */
-    .chat-input-area {
-        position: fixed !important;
-        bottom: 0 !important;
-        left: 0 !important;
-        right: 0 !important;
-        width: 100% !important;
-        z-index: 1000 !important;
-        background: white !important;
-        border-top: 1px solid #e5e5e5 !important;
-        box-sizing: border-box !important;
-    }
-    
-    .user-dropdown {
-        position: relative !important;
-        display: block !important;
-        z-index: 1002 !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-    }
-    
-    .user-dropdown-btn {
-        display: flex !important;
-        align-items: center !important;
-        z-index: 1002 !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-    }
-    
-    .user-dropdown-menu {
-        position: absolute !important;
-        top: 100% !important;
-        right: 0 !important;
-        z-index: 1003 !important;
-        display: none !important;
-    }
-    
-    .user-dropdown.active .user-dropdown-menu {
-        display: block !important;
-    }
-    
-    /* Điều chỉnh chat messages để không bị che bởi input */
-    .chat-messages {
-        padding-bottom: 80px !important;
-        margin-bottom: 0 !important;
-    }
-    
-    .chatgpt-content {
-        padding-bottom: 80px !important;
-    }
-}
-
 /* End of main styles */
 
 /* Markdown styling for bot messages */
 .message.bot-message .message-content.markdown-content {
-    background: #ffffff;
-    color: #000000;
-    border: 1px solid #e5e5e5;
-    padding: 12px 16px;
-    border-radius: 18px;
-    border-bottom-left-radius: 4px;
-    max-width: 85%;
+    background: transparent; /* Bỏ nền cho bot markdown */
+    color: #000000; /* Chữ đen cho bot */
+    border: none; /* Bỏ khung */
+    padding: 0 24px; /* Bỏ padding */
+    border-radius: 0; /* Bỏ border radius */
+    max-width: 800px;
     word-wrap: break-word;
     font-size: 15px;
     line-height: 1.6;
     display: block;
-    margin-left: 0;
+    margin: 0 auto; /* Căn trái cho bot markdown như chatbot thông thường */
 }
 
 .message.bot-message .message-content.markdown-content p {
