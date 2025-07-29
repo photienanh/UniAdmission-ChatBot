@@ -85,8 +85,7 @@
                     <div class="control-group">
                         <label for="model-select">Model:</label>
                         <select id="model-select">
-                            <option value="gemini" selected>Gemini AI</option>
-                            <option value="custom">Custom LLM</option>
+                            <option value="gemini-2.0-flash-lite-preview-02-05" selected>Loading models...</option>
                         </select>
                     </div>
                     <div class="control-group">
@@ -149,6 +148,38 @@
             const sendButton = document.getElementById('send-button');
             const settingsToggle = document.getElementById('settings-toggle');
             const inputControls = document.getElementById('input-controls');
+            
+            // Load available models
+            async function loadModels() {
+                try {
+                    const response = await fetch('/models');
+                    const models = await response.json();
+                    
+                    // Clear existing options
+                    modelSelect.innerHTML = '';
+                    
+                    // Add models to select
+                    models.forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model.model_type;
+                        option.textContent = model.name;
+                        
+                        // Set Gemini as default if available
+                        if (model.name === 'Gemini') {
+                            option.selected = true;
+                        }
+                        
+                        modelSelect.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error('Error loading models:', error);
+                    // Fallback to default options if API fails
+                    modelSelect.innerHTML = `
+                        <option value="gemini-2.0-flash-lite-preview-02-05" selected>Gemini AI</option>
+                        <option value="custom">Custom LLM</option>
+                    `;
+                }
+            }
             
             // Toggle settings controls
             settingsToggle.addEventListener('click', function() {
@@ -252,10 +283,11 @@
                 if (message === '') return;
                 
                 // Get settings
-                const useGemini = modelSelect.value === 'gemini';
+                const selectedModelType = modelSelect.value;
+                const useGemini = selectedModelType.includes('gemini');
                 const useWebSearch = webSearchButton.checked;
                 
-                console.log('Model selected:', modelSelect.value, 'Use Gemini:', useGemini);
+                console.log('Model selected:', selectedModelType, 'Use Gemini:', useGemini);
                 console.log('Web Search enabled:', useWebSearch);
                 
                 // Add user message
@@ -284,7 +316,7 @@
                     body: JSON.stringify({
                         message: message,
                         session_id: currentSessionId,
-                        use_gemini: useGemini,
+                        model_type: selectedModelType,
                         use_web_search: useWebSearch
                     })
                 })
@@ -300,7 +332,7 @@
                     if (data.error) {
                         addMessage('Xin lỗi, có lỗi xảy ra: ' + data.error, 'bot');
                     } else {
-                        addMessage(data.response, 'bot');
+                        addMessage(data.response, 'bot', data.search_sources || null);
                         currentSessionId = data.session_id;
                         
                         // Reload chat history if this was a new session
@@ -326,7 +358,7 @@
                 }
             });
             
-            function addMessage(content, sender) {
+            function addMessage(content, sender, sources = null) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${sender}-message`;
                 
@@ -343,9 +375,23 @@
                     processedContent = `<p>${content.replace(/\n/g, '<br>')}</p>`;
                 }
                 
+                // Tạo nút nguồn nếu có sources
+                let sourcesButton = '';
+                if (sender === 'bot' && sources && sources.length > 0) {
+                    sourcesButton = `
+                        <div class="sources-button-container">
+                            <button class="sources-button" onclick="showSources(this)" data-sources='${JSON.stringify(sources)}'>
+                                <i class="fas fa-link"></i>
+                                <span>Nguồn (${sources.length})</span>
+                            </button>
+                        </div>
+                    `;
+                }
+                
                 messageDiv.innerHTML = `
                     <div class="message-content ${contentClass}">
                         ${processedContent}
+                        ${sourcesButton}
                     </div>
                 `;
                 chatMessages.appendChild(messageDiv);
@@ -529,8 +575,66 @@
             // Check auth every 15 minutes (reduced frequency to avoid false alerts)
             setInterval(checkAuthStatus, 15 * 60 * 1000);
             
-            // Initialize
+            // Function to show sources modal
+            window.showSources = function(button) {
+                const sources = JSON.parse(button.dataset.sources);
+                
+                // Create modal
+                const modal = document.createElement('div');
+                modal.className = 'sources-modal';
+                modal.innerHTML = `
+                    <div class="sources-modal-content">
+                        <div class="sources-modal-header">
+                            <h3>Nguồn tham khảo</h3>
+                            <button class="sources-modal-close">&times;</button>
+                        </div>
+                        <div class="sources-modal-body">
+                            ${sources.map((source, index) => `
+                                <div class="source-item">
+                                    <div class="source-header">
+                                        <span class="source-number">${index + 1}</span>
+                                        <div class="source-info">
+                                            <a href="${source.url}" target="_blank" class="source-title">
+                                                ${source.title || source.url}
+                                            </a>
+                                            <div class="source-url">${source.url}</div>
+                                        </div>
+                                    </div>
+                                    <div class="source-content">
+                                        ${source.content ? source.content : 'Không có nội dung xem trước'}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Close modal handlers
+                const closeBtn = modal.querySelector('.sources-modal-close');
+                closeBtn.addEventListener('click', () => {
+                    modal.remove();
+                });
+                
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.remove();
+                    }
+                });
+                
+                // Close on ESC key
+                const handleEsc = (e) => {
+                    if (e.key === 'Escape') {
+                        modal.remove();
+                        document.removeEventListener('keydown', handleEsc);
+                    }
+                };
+                document.addEventListener('keydown', handleEsc);
+            };
             
+            // Initialize
+            loadModels();
             loadChatHistory();
             
             // Update bot message spacing after loading history
