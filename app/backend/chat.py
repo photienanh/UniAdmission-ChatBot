@@ -76,10 +76,12 @@ async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(Chat
             chat_session.title = message + "..." if len(message) > 50 else message
         DBSession.commit()
         response = ChatResponse(
-            response=bot_response["response"],
             session_id=session_id,
             message_id=bot_message.id,
-            sources=bot_response["sources"]
+            context=bot_response["context"],
+            response=bot_response["response"],
+            sources=bot_response["sources"],
+            search_sources=bot_response["search_sources"],
         )
         return response
         

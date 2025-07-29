@@ -1,4 +1,4 @@
-from .common import build_context, build_prompt
+from .common import build_prompt, get_or_create_chat_session
 import google.generativeai as genai
 from config import GEMINI_API_KEY, GEMINI_MODEL, SYSTEM_INSTRUCTION
 genai.configure(api_key=GEMINI_API_KEY)
@@ -8,10 +8,38 @@ class Gemini:
         raise Exception(f"Static class does not support instance")
     @classmethod
     async def ask(cls, question: str, session_id: str, use_web_search: bool):
-        context = await build_context(question, use_web_search)
-        prompt = build_prompt(context, question)
-        session = cls.model.start_chat()
-        response = await session.send_message_async(prompt)
+        chat = get_or_create_chat_session(cls.model, session_id)
+        prompt, source = build_prompt(question, use_web_search, max_results=3)
+        response = chat.send_message(prompt)
+  # source : {1: {"url": "https://example.com", 
+    #               "title": "Example Title", 
+    #               "content": "Example content"},
+    #         2: {"url": "https://example2.com",
+    #               "title": "Example Title 2", 
+    #               "content": "Example content 2"},
+    #         3: {"url": "https://example3.com",
+    #               "title": "Example Title 3", 
+    #               "content": "Example content 3"}}
+        # if not use_web_search:
+        #     return {
+        #         "response": response.text
+        #     }
+        # if source is None:
+        #     return {
+        #         "response": response.text
+        #     }
+        search_sources = []
+        if source:
+            for _, value in source.items():
+                search_sources.append({
+                    "url": value.get("url", ""),
+                    "title": value.get("title", ""),
+                    "content": value.get("content", "")
+                })
+        
         return {
-            "response": response.text
-        }
+                "response": response.text,
+                "context": "example context" if use_web_search else "",
+                "sources": [],
+                "search_sources": search_sources if use_web_search else []
+            }

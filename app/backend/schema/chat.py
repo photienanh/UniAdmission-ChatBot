@@ -10,13 +10,16 @@ class ChatRequest(BaseModel):
     
 class SourceInfo(BaseModel):
     url: str = Field(...)
+    title: str = Field(...)
     content: str = Field(...)
     
 class ChatResponse(BaseModel):
     response: str = Field(...)
     session_id: str = Field(...)
+    context: str = Field(...)
     message_id: str = Field(...)
     sources: list[SourceInfo] = Field(...)
+    search_sources: list[SourceInfo] = Field(...)
     
 class SessionResponse(BaseModel):
     id: str = Field(...)

@@ -85,8 +85,7 @@
                     <div class="control-group">
                         <label for="model-select">Model:</label>
                         <select id="model-select">
-                            <option value="gemini" selected>Gemini AI</option>
-                            <option value="custom">Custom LLM</option>
+                            <option value="gemini-2.0-flash-lite-preview-02-05" selected>Loading models...</option>
                         </select>
                     </div>
                     <div class="control-group">
@@ -149,6 +148,38 @@
             const sendButton = document.getElementById('send-button');
             const settingsToggle = document.getElementById('settings-toggle');
             const inputControls = document.getElementById('input-controls');
+            
+            // Load available models
+            async function loadModels() {
+                try {
+                    const response = await fetch('/models');
+                    const models = await response.json();
+                    
+                    // Clear existing options
+                    modelSelect.innerHTML = '';
+                    
+                    // Add models to select
+                    models.forEach(model => {
+                        const option = document.createElement('option');
+                        option.value = model.model_type;
+                        option.textContent = model.name;
+                        
+                        // Set Gemini as default if available
+                        if (model.name === 'Gemini') {
+                            option.selected = true;
+                        }
+                        
+                        modelSelect.appendChild(option);
+                    });
+                } catch (error) {
+                    console.error('Error loading models:', error);
+                    // Fallback to default options if API fails
+                    modelSelect.innerHTML = `
+                        <option value="gemini-2.0-flash-lite-preview-02-05" selected>Gemini AI</option>
+                        <option value="custom">Custom LLM</option>
+                    `;
+                }
+            }
             
             // Toggle settings controls
             settingsToggle.addEventListener('click', function() {
@@ -252,10 +283,11 @@
                 if (message === '') return;
                 
                 // Get settings
-                const useGemini = modelSelect.value === 'gemini';
+                const selectedModelType = modelSelect.value;
+                const useGemini = selectedModelType.includes('gemini');
                 const useWebSearch = webSearchButton.checked;
                 
-                console.log('Model selected:', modelSelect.value, 'Use Gemini:', useGemini);
+                console.log('Model selected:', selectedModelType, 'Use Gemini:', useGemini);
                 console.log('Web Search enabled:', useWebSearch);
                 
                 // Add user message
@@ -284,7 +316,7 @@
                     body: JSON.stringify({
                         message: message,
                         session_id: currentSessionId,
-                        use_gemini: useGemini,
+                        model_type: selectedModelType,
                         use_web_search: useWebSearch
                     })
                 })
@@ -530,7 +562,7 @@
             setInterval(checkAuthStatus, 15 * 60 * 1000);
             
             // Initialize
-            
+            loadModels();
             loadChatHistory();
             
             // Update bot message spacing after loading history
