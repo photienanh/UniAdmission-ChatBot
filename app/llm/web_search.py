@@ -117,18 +117,19 @@ def extract_main_content(url):
     
 def get_source(query, max_results):
     try:
-        source = {}
+        search_source = []
+        context = ""
         pages = web_search(query, max_results)
         if pages is None:
-            return None
-        for i, page in enumerate(pages.values(), 1):
+            return None, None
+        for page in pages.values():
             url = page["url"]
-            source[i] = {
+            search_source.append({
                 "url": url,
                 "title": page["title"],
-                "content": extract_main_content(url)
-            }
-            
-        return source
+                "content": page["snippet"],
+            })
+            context += extract_main_content(url) + 100*'-' + "\n\n"
+        return context, search_source
     except:
-        return None
+        return None, None

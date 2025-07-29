@@ -9,7 +9,7 @@ class Gemini:
     @classmethod
     async def ask(cls, question: str, session_id: str, use_web_search: bool):
         chat = get_or_create_chat_session(cls.model, session_id)
-        prompt, source = build_prompt(question, use_web_search, max_results=3)
+        prompt, search_sources = build_prompt(question, use_web_search, max_results=3)
         response = chat.send_message(prompt)
   # source : {1: {"url": "https://example.com", 
     #               "title": "Example Title", 
@@ -28,15 +28,7 @@ class Gemini:
         #     return {
         #         "response": response.text
         #     }
-        search_sources = []
-        if source:
-            for _, value in source.items():
-                search_sources.append({
-                    "url": value.get("url", ""),
-                    "title": value.get("title", ""),
-                    "content": value.get("content", "")
-                })
-        
+                
         return {
                 "response": response.text,
                 "context": "example context" if use_web_search else "",

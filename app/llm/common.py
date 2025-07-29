@@ -16,17 +16,14 @@ def clear_chat_session(session_id):
 def build_prompt(question, use_web_search, max_results):
     """Tạo prompt với context và question"""
     if use_web_search:
-        source = get_source(question, max_results)
-        if source is None:
+        context, search_sources = get_source(question, max_results)
+        if search_sources is None:
             return f"""Câu hỏi: {question}""", None
-        context = ""
-        for s in source.values():
-            context += f"Nguồn: {s['url']}" + "\n\n" + s['content'] + 100*'-' + "\n\n"
         prompt = f"""
 Thông tin tham khảo:
 {context}
 Câu hỏi: {question}
 """
-        return prompt, source
+        return prompt, search_sources
     else:
         return f"""Câu hỏi: {question}""", None
