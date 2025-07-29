@@ -1,0 +1,10 @@
+*app/api_key.env
+*app/test/
+*app/cache/
+*app/__pycache__/
+*app/instance/
+*app/test.ipynb
+*update_ec2/
+vector_db*/
+*.pyc
+*app/config.py
