@@ -1,6 +1,5 @@
 from fastapi import FastAPI
 from config import SECRET_KEY
-from llm import initialize_llm
 from backend import (
     DBSession,
     static_router,
@@ -10,7 +9,6 @@ from backend import (
     NoCacheOnDeleteMiddleWare, SessionMiddleware
 )
 
-initialize_llm()
 DBSession.setup()
 
 app = FastAPI()

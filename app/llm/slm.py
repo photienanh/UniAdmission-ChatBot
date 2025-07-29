@@ -1,6 +1,6 @@
 import asyncio
 import aiohttp
-from .common import build_context, build_prompt
+from .common import build_prompt
 from config import DOMAIN, SLM_CLIENT_NAME
 import json
 

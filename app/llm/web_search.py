@@ -1,14 +1,10 @@
 import requests
 import os
 import pandas as pd
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup
 from newspaper import Article
-from io import BytesIO, StringIO
-from PIL import Image
+from io import StringIO
 from dotenv import load_dotenv
-from urllib.parse import urljoin
-# import pytesseract
-# pytesseract.pytesseract.tesseract_cmd = r"D:\Tesseract-OCR\tesseract.exe"
 
 def get_api_key():
     load_dotenv('api_key.env')
@@ -19,7 +15,7 @@ def get_api_key():
         "BRAVE_API_KEY": BRAVE_API_KEY
     }
 
-def web_search(query, max_results=3):
+def web_search(query, max_results):
     """Tìm kiếm thông tin từ web sử dụng Brave Search API"""
     try:
         BRAVE_API_KEY = get_api_key()["BRAVE_API_KEY"]
@@ -62,7 +58,7 @@ def web_search(query, max_results=3):
         
         return pages
     except:
-        return
+        return None
     
 # def extract_text_from_image_url(img_url, base_url=None):
 #     try:
@@ -119,17 +115,21 @@ def extract_main_content(url):
     except Exception as e:
         return f"Lỗi khi xử lý URL: {e}"
     
-def build_web_search_context(query, max_results=3):
+def get_source(query, max_results):
     try:
+        search_source = []
+        context = ""
         pages = web_search(query, max_results)
         if pages is None:
-            return ""
-        context = ""
+            return None, None
         for page in pages.values():
             url = page["url"]
-            context += f"Nguồn {url}" + "\n\n"
+            search_source.append({
+                "url": url,
+                "title": page["title"],
+                "content": page["snippet"],
+            })
             context += extract_main_content(url) + 100*'-' + "\n\n"
-            
-        return context
+        return context, search_source
     except:
-        return ""
+        return None, None

@@ -1,11 +1,29 @@
-from .rag import RAG
-def build_prompt(context: str, question: str):
-    """Tạo prompt với context và question"""
-    return f"Thông tin tham khảo:\n{context}\nCâu hỏi: {question}"
+from .web_search import get_source
 
-async def build_context(question: str, use_web_search: bool):
-    """Xây dựng context cho câu hỏi, có thể sử dụng RAG hoặc web search"""
+chat_sessions = {}
+
+def get_or_create_chat_session(model, session_id):
+    """Lấy hoặc tạo chat session cho session_id"""
+    if session_id not in chat_sessions:
+        chat_sessions[session_id] = model.start_chat()
+    return chat_sessions[session_id]
+
+def clear_chat_session(session_id):
+    """Xóa chat session khỏi memory"""
+    if session_id in chat_sessions:
+        del chat_sessions[session_id]
+
+def build_prompt(question, use_web_search, max_results):
+    """Tạo prompt với context và question"""
     if use_web_search:
-        return "Not implemented"
+        context, search_sources = get_source(question, max_results)
+        if search_sources is None:
+            return f"""Câu hỏi: {question}""", None
+        prompt = f"""
+Thông tin tham khảo:
+{context}
+Câu hỏi: {question}
+"""
+        return prompt, search_sources
     else:
-        return await RAG.build_rag_context(question)
+        return f"""Câu hỏi: {question}""", None

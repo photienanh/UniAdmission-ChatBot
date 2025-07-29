@@ -9,19 +9,17 @@ class ChatRequest(BaseModel):
     use_web_search: bool = Field(True)
     
 class SourceInfo(BaseModel):
-    url: str
-    title: str
-    content: Optional[str] 
+    url: str = Field(...)
+    title: str = Field(...)
+    content: str = Field(...)
     
 class ChatResponse(BaseModel):
-    response: str 
-    session_id: str
-    message_id: str 
-    context: Optional[str] 
-    sources: list[SourceInfo] 
-    search_sources: list[SourceInfo]
-    
-    
+    response: str = Field(...)
+    session_id: str = Field(...)
+    context: str = Field(...)
+    message_id: str = Field(...)
+    sources: list[SourceInfo] = Field(...)
+    search_sources: list[SourceInfo] = Field(...)
     
 class SessionResponse(BaseModel):
     id: str 
