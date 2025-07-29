@@ -6,15 +6,16 @@
     <title>UniAdmission ChatBot</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
-    <div class="chatgpt-container">
+    <div class="chat-container">
         <!-- Sidebar -->
-        <div class="chatgpt-sidebar" id="sidebar">
+        <div class="chat-sidebar" id="sidebar">
             <div class="sidebar-header">
                 <button class="new-chat-btn" id="new-chat-btn">
                     <i class="fas fa-plus"></i>
-                    New chat
+                    Đoạn chat mới
                 </button>
             </div>
             
@@ -44,9 +45,9 @@
         </div>
         
         <!-- Main Chat Area -->
-        <div class="chatgpt-main">
+        <div class="chat-main">
             <!-- Header -->
-            <div class="chatgpt-header">
+            <div class="chat-header">
                 <button class="sidebar-toggle" id="sidebar-toggle">
                     <i class="fas fa-bars"></i>
                 </button>
@@ -89,11 +90,15 @@
                         </select>
                     </div>
                     <div class="control-group">
-                        <label for="search-select">Search:</label>
-                        <select id="search-select">
-                            <option value="web" selected>Web Search</option>
-                            <option value="rag">RAG Search</option>
-                        </select>
+                        <label for="web-search-button " class="slider-label"><i class="fa-solid fa-globe"></i> Tìm kiếm trên mạng:</label>
+                        <div class="slider-container">
+                            <label class="slider-switch">
+                                <input type="checkbox" id="web-search-button">
+                                <span class="slider-track">
+                                    <span class="slider-thumb"></span>
+                                </span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 
@@ -118,24 +123,29 @@
             </div>
         </div>
     </div>
-    
-    <!-- Sidebar overlay for mobile -->
-    <div class="sidebar-overlay" id="sidebar-overlay"></div>
 
     <script>
         let currentSessionId = null;
         let chatHistory = [];
         
         document.addEventListener('DOMContentLoaded', function() {
+            // Configure marked.js for better markdown parsing
+            if (typeof marked !== 'undefined') {
+                marked.setOptions({
+                    breaks: true, // Convert \n to <br>
+                    gfm: true,    // GitHub flavored markdown
+                    sanitize: false // Allow HTML (be careful with user input)
+                });
+            }
+            
             const chatForm = document.getElementById('chat-form');
             const userInput = document.getElementById('user-input');
             const chatMessages = document.getElementById('chat-messages');
             const sidebarToggle = document.getElementById('sidebar-toggle');
             const sidebar = document.getElementById('sidebar');
-            const sidebarOverlay = document.getElementById('sidebar-overlay');
             const newChatBtn = document.getElementById('new-chat-btn');
             const modelSelect = document.getElementById('model-select');
-            const searchSelect = document.getElementById('search-select');
+            const webSearchButton = document.getElementById('web-search-button');
             const sendButton = document.getElementById('send-button');
             const settingsToggle = document.getElementById('settings-toggle');
             const inputControls = document.getElementById('input-controls');
@@ -157,26 +167,31 @@
             
             // Toggle sidebar functions
             function toggleSidebar() {
-                if (window.innerWidth <= 768) {
-                    sidebar.classList.toggle('collapsed');
-                    sidebarOverlay.classList.toggle('show');
-                } else {
-                    sidebar.classList.toggle('collapsed');
-                }
+                sidebar.classList.toggle('collapsed');
+                // Update bot message spacing when sidebar toggles on desktop
+                updateBotMessageSpacing();
+            }
+            
+            // Update bot message padding based on sidebar state
+            function updateBotMessageSpacing() {
+                const botMessages = document.querySelectorAll('.message.bot-message .message-content');
+                const isSidebarCollapsed = sidebar.classList.contains('collapsed');
+                
+                botMessages.forEach(messageContent => {
+                    if (isSidebarCollapsed) {
+                        messageContent.style.paddingLeft = '24px';
+                    } else {
+                        messageContent.style.paddingLeft = '40px'; // Gần lề sidebar hơn nữa
+                    }
+                });
             }
             
             function closeSidebar() {
-                if (window.innerWidth <= 768) {
-                    sidebar.classList.add('collapsed');
-                    sidebarOverlay.classList.remove('show');
-                }
+                sidebar.classList.add('collapsed');
             }
             
             // Toggle sidebar
             sidebarToggle.addEventListener('click', toggleSidebar);
-            
-            // Close sidebar when clicking overlay
-            sidebarOverlay.addEventListener('click', closeSidebar);
             
             // Fill prompt from example cards
             window.fillPrompt = function(text) {
@@ -239,10 +254,10 @@
                 
                 // Get settings
                 const useGemini = modelSelect.value === 'gemini';
-                const useWebSearch = searchSelect.value === 'web';
+                const useWebSearch = webSearchButton.checked;
                 
                 console.log('Model selected:', modelSelect.value, 'Use Gemini:', useGemini);
-                console.log('Search selected:', searchSelect.value, 'Use Web Search:', useWebSearch);
+                console.log('Web Search enabled:', useWebSearch);
                 
                 // Add user message
                 addMessage(message, 'user');
@@ -315,12 +330,39 @@
             function addMessage(content, sender) {
                 const messageDiv = document.createElement('div');
                 messageDiv.className = `message ${sender}-message`;
+                
+                // Parse markdown cho bot messages, plain text cho user messages
+                let processedContent;
+                let contentClass = '';
+                
+                if (sender === 'bot') {
+                    // Parse markdown và clean up
+                    processedContent = marked.parse(content);
+                    contentClass = 'markdown-content';
+                } else {
+                    // User messages - just replace newlines with <br>
+                    processedContent = `<p>${content.replace(/\n/g, '<br>')}</p>`;
+                }
+                
                 messageDiv.innerHTML = `
-                    <div class="message-content">
-                        <p>${content.replace(/\n/g, '<br>')}</p>
+                    <div class="message-content ${contentClass}">
+                        ${processedContent}
                     </div>
                 `;
                 chatMessages.appendChild(messageDiv);
+                
+                // Apply correct padding for bot messages based on sidebar state
+                if (sender === 'bot') {
+                    const messageContent = messageDiv.querySelector('.message-content');
+                    const isSidebarCollapsed = sidebar.classList.contains('collapsed');
+                    
+                    if (isSidebarCollapsed) {
+                        messageContent.style.paddingLeft = '24px';
+                    } else {
+                        messageContent.style.paddingLeft = '40px'; // Gần lề sidebar hơn nữa
+                    }
+                }
+                
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
             
@@ -335,6 +377,17 @@
                     </div>
                 `;
                 chatMessages.appendChild(typingDiv);
+                
+                // Apply correct padding for typing indicator based on sidebar state
+                const messageContent = typingDiv.querySelector('.message-content');
+                const isSidebarCollapsed = sidebar.classList.contains('collapsed');
+                
+                if (isSidebarCollapsed) {
+                    messageContent.style.paddingLeft = '24px';
+                } else {
+                    messageContent.style.paddingLeft = '40px'; // Gần lề sidebar hơn nữa
+                }
+                
                 chatMessages.scrollTop = chatMessages.scrollHeight;
             }
             
@@ -459,17 +512,6 @@
                 .catch(error => console.error('Error deleting session:', error));
             }
             
-            // Responsive handling
-            window.addEventListener('resize', function() {
-                if (window.innerWidth > 768) {
-                    sidebar.classList.remove('collapsed');
-                    sidebarOverlay.classList.remove('show');
-                } else if (!sidebar.classList.contains('collapsed')) {
-                    sidebar.classList.add('collapsed');
-                    sidebarOverlay.classList.remove('show');
-                }
-            }); 
-            
             // Check authentication periodically (but not too frequently to avoid false alerts)
             function checkAuthStatus() {
                 fetch('/auth/check')
@@ -490,11 +532,13 @@
             setInterval(checkAuthStatus, 15 * 60 * 1000);
             
             // Initialize
-            if (window.innerWidth <= 768) {
-                sidebar.classList.add('collapsed');
-            }
             
             loadChatHistory();
+            
+            // Update bot message spacing after loading history
+            setTimeout(() => {
+                updateBotMessageSpacing();
+            }, 100);
             
             // Focus input
             setTimeout(() => {

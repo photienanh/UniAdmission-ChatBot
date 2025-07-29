@@ -1,9 +1,8 @@
 from flask import Flask, request, render_template, jsonify, redirect, url_for, flash
 from flask_login import LoginManager, login_user, logout_user, login_required, current_user
 from load_llm import initialize_gemini, ask_llm
-from rag import initialize_rag
 from models import db, User, ChatSession, ChatMessage, init_db
-from datetime import datetime
+from datetime import datetime, timezone
 import os
 import logging
 
@@ -30,7 +29,6 @@ def load_user(user_id):
 
 # Khởi tạo model và RAG
 gemini = initialize_gemini()
-retriever = initialize_rag()
 
 # Middleware để ngăn cache cho các trang đã đăng nhập
 @app.after_request
@@ -62,7 +60,7 @@ def login():
         
         if user and user.check_password(password):
             login_user(user)
-            user.last_login = datetime.utcnow()
+            user.last_login = datetime.now(timezone.utc)
             db.session.commit()
             if request.is_json:
                 return jsonify({'success': True, 'redirect': url_for('home')})
@@ -148,7 +146,7 @@ def chat():
     user_input = data.get('message', '')
     session_id = data.get('session_id')
     use_gemini = data.get('use_gemini', True)  # Thêm tham số chọn LLM
-    use_web_search = data.get('use_web_search', True)  # Thêm tham số chọn web search (mặc định True)
+    use_web_search = data.get('use_web_search', False)  # Thêm tham số chọn web search
     
     # Tạo session mới nếu chưa có
     if not session_id:
@@ -171,7 +169,7 @@ def chat():
     
     try:
         # Tạo phản hồi từ bot với LLM được chọn và search method
-        bot_response = ask_llm(user_input, gemini, retriever, session_id, use_gemini, use_web_search)
+        bot_response = ask_llm(user_input, gemini, session_id, use_gemini, use_web_search)
         
         # Lưu phản hồi của bot
         bot_message = ChatMessage(
@@ -182,7 +180,7 @@ def chat():
         db.session.add(bot_message)
         
         # Cập nhật thời gian session
-        chat_session.updated_at = datetime.utcnow()
+        chat_session.updated_at = datetime.now(timezone.utc)
         
         # Tự động tạo title cho session từ tin nhắn đầu tiên
         if not chat_session.title:
@@ -302,4 +300,4 @@ def delete_account():
             return jsonify({'success': False, 'message': f'Có lỗi xảy ra: {str(e)}'})
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", debug=True)
