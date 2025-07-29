@@ -16,9 +16,9 @@ class ProviderHub:
         result = []
         for ws in self.provider_wss.values():
             if ws.name.startswith("slm") or ws.name.startswith("llm") or ws.name.startswith("api"):
-                model_type = ws.client_type[:3]
-                while len(model_type) > 0 and model_type[0] == "_":
-                    model_type = model_type[1:]
+                model_type = ws.client_type#[3:]
+                # while len(model_type) > 0 and model_type[0] == "_":
+                #     model_type = model_type[1:]
                 result.append({
                     "name": ws.name,
                     "model_type": model_type

@@ -22,7 +22,11 @@ def get_index(request: Request):
         user = check_login(request)
     except HTTPException:
         return RedirectResponse(url="/login")
-    return templates.TemplateResponse("index.html", {"request": request, "current_user": user.to_dict()})
+    response = templates.TemplateResponse("index.html", {"request": request, "current_user": user.to_dict()})
+    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
 @router.post("/", name="index", response_class=HTMLResponse)
 def post_index(request: Request):
     return get_index(request)
@@ -79,7 +83,9 @@ async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(Chat
             response=bot_response["response"],
             session_id=session_id,
             message_id=bot_message.id,
-            sources=bot_response["sources"]
+            context=None,
+            sources=bot_response["sources"],
+            search_sources=bot_response["sources"]
         )
         return response
         

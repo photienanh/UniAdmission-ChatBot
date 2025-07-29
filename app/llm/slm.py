@@ -2,6 +2,7 @@ import asyncio
 import aiohttp
 from .common import build_context, build_prompt
 from config import DOMAIN, SLM_CLIENT_NAME
+import json
 
 async def post(url: str, prompt: str):
     async with aiohttp.ClientSession() as session:
@@ -16,7 +17,7 @@ class SLM:
         url = f"{DOMAIN}/consume/{SLM_CLIENT_NAME}"
         # context = await build_context(question, use_web_search)
         # prompt = build_prompt(context, question)
-        response = await post(url, question)
-        return {
-            "response": response
-        }
+        text = await post(url, question)
+        result: dict = json.loads(text)
+        result["response"] = result["answer"]
+        return result

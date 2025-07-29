@@ -9,22 +9,27 @@ class ChatRequest(BaseModel):
     use_web_search: bool = Field(True)
     
 class SourceInfo(BaseModel):
-    url: str = Field(...)
-    content: str = Field(...)
+    url: str
+    title: str
+    content: Optional[str] 
     
 class ChatResponse(BaseModel):
-    response: str = Field(...)
-    session_id: str = Field(...)
-    message_id: str = Field(...)
-    sources: list[SourceInfo] = Field(...)
+    response: str 
+    session_id: str
+    message_id: str 
+    context: Optional[str] 
+    sources: list[SourceInfo] 
+    search_sources: list[SourceInfo]
+    
+    
     
 class SessionResponse(BaseModel):
-    id: str = Field(...)
-    title: str = Field(...)
-    created_at: datetime = Field(...)
-    updated_at: datetime = Field(...)
-    message_count: int = Field(...)
-    preview: str = Field(...)
+    id: str 
+    title: str 
+    created_at: datetime
+    updated_at: datetime 
+    message_count: int
+    preview: str 
 
 class MessageResponse(BaseModel):
     id: str = Field(...)

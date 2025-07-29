@@ -92,6 +92,10 @@ class ChatMessage(Base): #type:ignore
     message_type = cast(str, Column(String(20), default="text")) # 'text', 'image', 'file'
     extra_data = cast(Any, Column(JSON)) # Lưu thêm thông tin như thời gian phản hồi, tokens sử dụng, etc.
 
+    context = cast(Optional[str], Column(Text, nullable=True))
+    sources = cast(Optional[str], Column(Text, nullable=True))
+    search_sources = cast(Optional[str], Column(Text, nullable=True))
+
     def to_dict(self):
         return {
             "id": self.id,

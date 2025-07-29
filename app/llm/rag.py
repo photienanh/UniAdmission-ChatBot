@@ -11,7 +11,7 @@ def initialize_rag():
     return retriever
 class RAG:
     retriever: VectorStoreRetriever
-    executor = ThreadPoolExecutor(1)
+    # executor = ThreadPoolExecutor(1)
     def __init__(self) -> None:
         raise Exception(f"Static class does not support instance")
     @classmethod
@@ -20,9 +20,10 @@ class RAG:
         pass
     @classmethod
     def initialize(cls):
-        if not hasattr(RAG, "retriever"):
-            future = cls.executor.submit(cls.__setup) # Move retriever to executor thread
-            future.result()
+        # if not hasattr(RAG, "retriever"):
+            # future = cls.executor.submit(cls.__setup) # Move retriever to executor thread
+            # future.result()
+        pass
     @classmethod
     def __invoke(cls, question: str, k: int = 3):
         return cls.retriever.invoke(question, k=k)
