@@ -203,7 +203,6 @@
             // New chat
             newChatBtn.addEventListener('click', function() {
                 startNewChat();
-                closeSidebar();
             });
             
             function startNewChat() {
@@ -451,7 +450,6 @@
                 } else if (sessionElement) {
                     const sessionId = sessionElement.dataset.sessionId;
                     loadSession(sessionId);
-                    closeSidebar();
                 }
             });
             
