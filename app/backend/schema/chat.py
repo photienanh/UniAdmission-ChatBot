@@ -22,12 +22,12 @@ class ChatResponse(BaseModel):
     search_sources: list[SourceInfo] = Field(...)
     
 class SessionResponse(BaseModel):
-    id: str = Field(...)
-    title: str = Field(...)
-    created_at: datetime = Field(...)
-    updated_at: datetime = Field(...)
-    message_count: int = Field(...)
-    preview: str = Field(...)
+    id: str 
+    title: str 
+    created_at: datetime
+    updated_at: datetime 
+    message_count: int
+    preview: str 
 
 class MessageResponse(BaseModel):
     id: str = Field(...)

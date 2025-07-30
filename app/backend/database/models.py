@@ -69,8 +69,12 @@ class ChatSession(Base): #type:ignore
             content = cast(str, first_message.content)
             return content[:50] + "..." if len(content) > 50 else content
         return "Cuộc trò chuyện mới"
-        
-    
+    def auto_set_title(self):
+        if not self.title:
+            first_message = DBSession.session.query(ChatMessage).filter_by(session_id=self.id, sender='user').first()
+            if first_message:
+                content = first_message.content
+                self.title = content[:50] + "..." if len(content) > 50 else content    
     def to_dict(self):
         return {
             "id": self.id,
@@ -92,6 +96,10 @@ class ChatMessage(Base): #type:ignore
     message_type = cast(str, Column(String(20), default="text")) # 'text', 'image', 'file'
     extra_data = cast(Any, Column(JSON)) # Lưu thêm thông tin như thời gian phản hồi, tokens sử dụng, etc.
 
+    context = cast(Optional[str], Column(Text, nullable=True))
+    sources = cast(list, Column(JSON, nullable=True))
+    search_sources = cast(list, Column(JSON, nullable=True))
+
     def to_dict(self):
         return {
             "id": self.id,
@@ -99,7 +107,9 @@ class ChatMessage(Base): #type:ignore
             "content": self.content,
             "timestamp": cast(datetime, self.timestamp).isoformat(),
             "message_type": self.message_type,
-            "extra_data": self.extra_data
+            "extra_data": self.extra_data,
+            "sources": self.sources,
+            "search_sources": self.search_sources
         }
 
 class DBSession:

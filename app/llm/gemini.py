@@ -1,7 +1,7 @@
 from .common import build_prompt, get_or_create_chat_session
 import google.generativeai as genai
 from config import GEMINI_API_KEY, GEMINI_MODEL, SYSTEM_INSTRUCTION
-genai.configure(api_key=GEMINI_API_KEY)
+genai.configure(api_key=GEMINI_API_KEY) #type:ignore
 class Gemini:
     model = genai.GenerativeModel(GEMINI_MODEL, system_instruction=SYSTEM_INSTRUCTION) #type:ignore
     def __init__(self) -> None:
@@ -33,5 +33,5 @@ class Gemini:
                 "response": response.text,
                 "context": "example context" if use_web_search else "",
                 "sources": [],
-                "search_sources": search_sources if use_web_search else []
+                "search_sources": search_sources if use_web_search and search_sources else []
             }
