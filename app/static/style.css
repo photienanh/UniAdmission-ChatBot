@@ -3,6 +3,69 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: default !important;
+}
+
+/* Only allow text cursor on actual text inputs */
+input[type="text"], 
+input[type="password"], 
+input[type="email"], 
+textarea {
+    cursor: text !important;
+}
+
+/* Buttons and clickable elements should have pointer */
+button, 
+a, 
+select,
+label,
+input[type="checkbox"],
+input[type="radio"],
+input[type="submit"],
+input[type="button"],
+.clickable,
+[onclick],
+.new-chat-btn,
+.sidebar-toggle,
+.send-button,
+.settings-toggle,
+.prompt-card,
+.chat-session,
+.delete-session,
+.user-info,
+.dropdown-item,
+.sources-button,
+.password-toggle,
+.slider-switch,
+.slider-track,
+.slider-thumb,
+.slider-label,
+#model-select,
+#web-search-button,
+button *,
+a *,
+select *,
+label *,
+.clickable *,
+[onclick] *,
+.new-chat-btn *,
+.sidebar-toggle *,
+.send-button *,
+.settings-toggle *,
+.prompt-card *,
+.chat-session *,
+.delete-session *,
+.user-info *,
+.dropdown-item *,
+.sources-button *,
+.password-toggle *,
+.slider-switch *,
+.slider-track *,
+.slider-thumb *,
+.slider-label *,
+#model-select *,
+#web-search-button * {
+    cursor: pointer !important;
 }
 
 html, body {
