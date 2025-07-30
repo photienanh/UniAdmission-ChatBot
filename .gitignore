@@ -8,3 +8,5 @@
 vector_db*/
 *.pyc
 *app/config.py
+config.py
+z_temp/

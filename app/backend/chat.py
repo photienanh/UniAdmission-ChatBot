@@ -9,6 +9,7 @@ from .database import (
     get_user_sessions, get_session_messages, DBSession
 )
 from .schema import (
+    SuccessResponse, ErrorReponse, FailedResponse, ServerError, NO_CACHE_HEADERS,
     ChatRequest, ChatResponse, 
     SessionResponse, SessionMessagesResponse, CreateChatSessionRequest
 )
@@ -20,12 +21,13 @@ templates = Jinja2Templates(directory="templates")
 def get_index(request: Request):
     try:
         user = check_login(request)
-    except HTTPException:
+    except HTTPException: # Redirect to login page when user is not logged in
         return RedirectResponse(url="/login")
-    response = templates.TemplateResponse("index.html", {"request": request, "current_user": user.to_dict()})
-    response.headers["Cache-Control"] = "no-store, no-cache, must-revalidate, max-age=0"
-    response.headers["Pragma"] = "no-cache"
-    response.headers["Expires"] = "0"
+    response = templates.TemplateResponse(
+        "index.html", 
+        {"request": request, "current_user": user.to_dict()}
+    )
+    response.headers.update(NO_CACHE_HEADERS)
     return response
 @router.post("/", name="index", response_class=HTMLResponse)
 def post_index(request: Request):
@@ -35,8 +37,7 @@ def get_home(request: Request):
     return get_index(request)
 @router.post("/chat", name="chat", response_class=JSONResponse)
 async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(ChatRequest)) -> ChatResponse | Any:
-    if isinstance(data, dict): # Validation failed
-        raise HTTPException(status_code=400, detail="Dữ liệu không hợp lệ")
+    if isinstance(data, dict): return FailedResponse("Dữ liệu không hợp lệ")
     user = check_login(request)
     session_id: str | None = data.session_id
     # Tạo session mới nếu chưa có
@@ -47,19 +48,10 @@ async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(Chat
         chat_session = get_chat_session(session_id)
         if not chat_session or cast(str, chat_session.user_id) != user.id:
             data.session_id = ""
-            return JSONResponse(
-                status_code=403,
-                content={
-                    "error": "Session không hợp lệ"
-                }
-            )
+            return ErrorReponse(403, "Session không hợp lệ")
     session_id = cast(str, session_id)
     # Lưu tin nhắn của user
-    user_message = create_message(
-        session_id=session_id,
-        sender='user',
-        content=data.message
-    )
+    user_message = create_message(session_id, 'user', data.message, "", [], [])
     try:
         bot_response = await ask_llm(
             question=data.message,
@@ -67,17 +59,9 @@ async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(Chat
             model_type=data.model_type,
             use_web_search=data.use_web_search
         )
-        bot_message = create_message(
-            session_id=session_id,
-            sender='bot',
-            content=bot_response['response']
-        )
-        # Cập nhật thời gian session
+        bot_message = create_message(session_id, 'bot', bot_response['response'], bot_response["context"], bot_response["sources"], bot_response["search_sources"])
         chat_session.updated_at = datetime.now(timezone.utc)
-        # Tự động tạo title cho session từ tin nhắn đầu tiên
-        if not chat_session.title:
-            message = data.message[:50]
-            chat_session.title = message + "..." if len(message) > 50 else message
+        chat_session.auto_set_title()
         DBSession.commit()
         response = ChatResponse(
             session_id=session_id,
@@ -88,16 +72,10 @@ async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(Chat
             search_sources=bot_response["search_sources"],
         )
         return response
-        
     except Exception as e:
         print(f"Error: {e}")
         DBSession.rollback()
-        return JSONResponse(
-            status_code=500,
-            content={
-                "errof": f"Lỗi xử lý: {str(e)}"
-            }
-        )
+        return ErrorReponse(500, f"Lỗi xử lý: {str(e)}")
     
 @router.get("/sessions")
 def get_sessions(request: Request) -> list[SessionResponse]:
@@ -121,18 +99,12 @@ def delete_session(request: Request, session_id: str):
     """Xóa một phiên chat"""
     user = check_login(request)
     chat_session = get_chat_session(session_id)
-    
     if not chat_session or chat_session.user_id != user.id:
-        return HTTPException(
-            status_code=404,
-            detail="Session không hợp lệ"
-        )
+        return ErrorReponse(404, "Session không hợp lệ")
     DBSession.session.delete(chat_session)
     DBSession.commit()
-    return JSONResponse({
-        "success": True
-    })
-    
+    return SuccessResponse("Xóa phiên chat thành công")
+
 @router.post("/sessions")
 def create_session(request: Request, data: CreateChatSessionRequest) -> SessionResponse:
     """Tạo phiên chat mới"""
