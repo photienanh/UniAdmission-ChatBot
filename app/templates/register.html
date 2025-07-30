@@ -11,6 +11,31 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            cursor: default !important;
+        }
+
+        /* Only allow text cursor on actual text inputs */
+        input[type="text"], 
+        input[type="password"], 
+        input[type="email"], 
+        textarea {
+            cursor: text !important;
+        }
+
+        /* Buttons and clickable elements should have pointer */
+        button, 
+        a, 
+        .clickable,
+        [onclick],
+        .register-btn,
+        .password-toggle,
+        button *,
+        a *,
+        .clickable *,
+        [onclick] *,
+        .register-btn *,
+        .password-toggle * {
+            cursor: pointer !important;
         }
 
         body {
@@ -302,6 +327,14 @@
 
         // Setup event listeners for password toggles
         document.addEventListener('DOMContentLoaded', function() {
+            // Prevent unwanted focus behavior
+            document.addEventListener('mousedown', function(e) {
+                // Only allow focus on inputs, textareas, and buttons
+                if (!e.target.matches('input, textarea, button, a, select')) {
+                    e.preventDefault();
+                }
+            });
+
             // Password toggle
             const passwordToggle = document.getElementById('password-toggle');
             const passwordInput = document.getElementById('password');

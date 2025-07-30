@@ -3,6 +3,49 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: default !important;
+}
+
+/* Only allow text cursor on actual text inputs */
+input[type="text"], 
+input[type="password"], 
+input[type="email"], 
+textarea {
+    cursor: text !important;
+}
+
+/* Buttons and clickable elements should have pointer */
+button, 
+a, 
+.clickable,
+[onclick],
+.new-chat-btn,
+.sidebar-toggle,
+.send-button,
+.settings-toggle,
+.prompt-card,
+.chat-session,
+.delete-session,
+.user-info,
+.dropdown-item,
+.sources-button,
+.password-toggle,
+button *,
+a *,
+.clickable *,
+[onclick] *,
+.new-chat-btn *,
+.sidebar-toggle *,
+.send-button *,
+.settings-toggle *,
+.prompt-card *,
+.chat-session *,
+.delete-session *,
+.user-info *,
+.dropdown-item *,
+.sources-button *,
+.password-toggle * {
+    cursor: pointer !important;
 }
 
 html, body {
