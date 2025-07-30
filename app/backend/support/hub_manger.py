@@ -15,14 +15,12 @@ class ProviderHub:
     def get_current_infos(self) -> list[dict[str, str]]:
         result = []
         for ws in self.provider_wss.values():
-            if ws.name.startswith("slm") or ws.name.startswith("llm") or ws.name.startswith("api"):
-                model_type = ws.client_type[:3]
-                while len(model_type) > 0 and model_type[0] == "_":
-                    model_type = model_type[1:]
-                result.append({
-                    "name": ws.name,
-                    "model_type": model_type
-                })
+            model_type = ws.client_type
+            result.append({
+                "name": ws.name,
+                "model_type": model_type
+            })
+        
         return result
     async def register_provider(self, ws: WebSocket, client_type: str, name: str, uid: str):
         info = WebsocketInfo(
@@ -53,11 +51,15 @@ class ProviderHub:
             while True:
                 ws = self.provider_wss.get(client_type)
                 if ws and ws.uid == uid:
+                    print("Waiting for result")
                     if request_id in ws.result:
                         return ws.result.pop(request_id)
                     await asyncio.sleep(self.poll)
                 else:
-                    return Exception("Provider aldready closed")
+                    err = "Provider aldready closed"
+                    if ws and ws.uid != uid:
+                        err += " mismath uid"
+                    return Exception(err)
         else:
             print(f"Provider ws not registed")
     async def provide(self, client_type: str, request_id: str, text: str):

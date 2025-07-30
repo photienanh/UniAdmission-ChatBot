@@ -8,3 +8,8 @@
 vector_db*/
 *.pyc
 *app/config.py
+config.py
+z_temp/
+search_engines
+.gitignore
+_test_.ipynb

@@ -1,16 +1,28 @@
-# Test module, not used yet
-
-from fastapi import WebSocket, WebSocketDisconnect, APIRouter, Request
+from fastapi import WebSocket, WebSocketDisconnect, APIRouter, Request, HTTPException
 from fastapi.responses import PlainTextResponse, JSONResponse
 from .support import ProviderHub
 import uuid
-from config import SERVICE_REGISTER_TOKEN
+from config import SERVICE_REGISTER_TOKEN, GEMINI_MODEL
 import json
-
-from .schema import ModelInfo
+from typing import Any
+import json
+from .schema import ModelInfo, NO_CACHE_HEADERS
 
 provider_hub = ProviderHub()
 router = APIRouter()
+
+async def direct_consume(client_type: str, data: Any):
+    if isinstance(data, str):
+        text = data
+    else:
+        text = json.dumps(data)
+    request_id = str(uuid.uuid4())
+    result = await provider_hub.consume(client_type, request_id, text)
+    if result == None:
+        return None
+    if isinstance(result, Exception):
+        raise result
+    return json.loads(result)
 
 @router.websocket("/provider")
 async def websocket_provider_register(websocket: WebSocket):
@@ -58,13 +70,18 @@ async def websocket_consumer_register(websocket: WebSocket):
                     })
     except WebSocketDisconnect:
         print("Consumer disconnected") 
-    
+ 
 @router.post("/consume/{client_type}")
 async def restful_consume(request: Request, client_type: str):
     text = await request.body()
     request_id = str(uuid.uuid4())
     result = await provider_hub.consume(client_type, request_id, text.decode())
-    return PlainTextResponse(result)
+    if isinstance(result, str):
+        return PlainTextResponse(result)
+    elif result != None:
+        return HTTPException(status_code=500, detail=str(result))
+    else:
+        return HTTPException(status_code=400, detail="Provider not registed")
 
 @router.get("/models")
 async def get_model_list(request: Request) -> list[ModelInfo]:
@@ -72,7 +89,9 @@ async def get_model_list(request: Request) -> list[ModelInfo]:
     infos.append(
         {
             "name": "Gemini",
-            "model_type": "gemini-2.0-flash-lite-preview-02-05"
+            "model_type": GEMINI_MODEL
         }
     )
-    return JSONResponse(content=infos) #type:ignore
+    response = JSONResponse(content=infos)
+    response.headers.update(NO_CACHE_HEADERS)
+    return response #type:ignore
