@@ -1,4 +1,4 @@
-from fastapi import WebSocket, WebSocketDisconnect, APIRouter, Request
+from fastapi import WebSocket, WebSocketDisconnect, APIRouter, Request, HTTPException
 from fastapi.responses import PlainTextResponse, JSONResponse
 from .support import ProviderHub
 import uuid
@@ -76,7 +76,12 @@ async def restful_consume(request: Request, client_type: str):
     text = await request.body()
     request_id = str(uuid.uuid4())
     result = await provider_hub.consume(client_type, request_id, text.decode())
-    return PlainTextResponse(result)
+    if isinstance(result, str):
+        return PlainTextResponse(result)
+    elif result != None:
+        return HTTPException(status_code=500, detail=str(result))
+    else:
+        return HTTPException(status_code=400, detail="Provider not registed")
 
 @router.get("/models")
 async def get_model_list(request: Request) -> list[ModelInfo]:
