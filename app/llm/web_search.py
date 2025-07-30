@@ -29,13 +29,13 @@ def web_search(query, max_results):
         pages = {}
         for i, result in enumerate(results[:max_results], 1):
             title = result.get("title", "")
-            snippet = result.get("description", "")
+            description = result.get("description", "")
             url = result.get("url", "")
             
-            if title and snippet:
+            if title and description:
                 item = {
                     "title": title,
-                    "snippet": snippet,
+                    "description": description,
                     "url": url
                 }
             pages[f"Nguồn {i}"] = item
@@ -87,7 +87,7 @@ def get_source(query, max_results):
             search_source.append({
                 "url": url,
                 "title": page["title"],
-                "content": page["snippet"],
+                "content": page["description"],
             })
             context += extract_main_content(url) + 100*'-' + "\n\n"
         return context, search_source
