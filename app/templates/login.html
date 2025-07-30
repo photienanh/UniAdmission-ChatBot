@@ -73,6 +73,10 @@
             font-size: 15px;
         }
 
+        .form-group {
+            position: relative;
+        }
+
         .form-group input {
             width: 100%;
             padding: 16px 18px;
@@ -82,6 +86,38 @@
             transition: all 0.2s ease;
             background-color: #ffffff;
             color: #000000;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 18px;
+            top: calc(50% + 17px);
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666666;
+            font-size: 18px;
+            transition: all 0.2s ease;
+            z-index: 10;
+            padding: 4px;
+            pointer-events: auto;
+            user-select: none;
+        }
+
+        .password-toggle:hover {
+            color: #000000;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .password-toggle:active {
+            transform: translateY(-50%) scale(0.95);
+        }
+
+        .form-group.password-field {
+            margin-bottom: 24px;
+        }
+
+        .form-group.password-field input {
+            padding-right: 50px;
         }
 
         .form-group input:focus {
@@ -185,9 +221,10 @@
                 <input type="text" id="username" name="username" required>
             </div>
             
-            <div class="form-group">
+            <div class="form-group password-field">
                 <label for="password">Mật khẩu</label>
                 <input type="password" id="password" name="password" required>
+                <i class="fas fa-eye password-toggle" id="password-toggle"></i>
             </div>
             
             <button type="submit" class="login-btn">
@@ -201,6 +238,52 @@
     </div>
 
     <script>
+        // Function to toggle password visibility
+        function togglePassword(event, inputId, toggleIcon) {
+            // Prevent the input from getting focus when clicking the icon
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const passwordInput = document.getElementById(inputId);
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleIcon.classList.remove('fa-eye');
+                toggleIcon.classList.add('fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                toggleIcon.classList.remove('fa-eye-slash');
+                toggleIcon.classList.add('fa-eye');
+            }
+        }
+
+        // Setup event listener for password toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordToggle = document.getElementById('password-toggle');
+            const passwordInput = document.getElementById('password');
+            
+            passwordToggle.addEventListener('mousedown', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    passwordToggle.classList.remove('fa-eye');
+                    passwordToggle.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    passwordToggle.classList.remove('fa-eye-slash');
+                    passwordToggle.classList.add('fa-eye');
+                }
+            });
+            
+            // Prevent click event from bubbling to input
+            passwordToggle.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            });
+        });
+
         document.getElementById('login-form').addEventListener('submit', function(e) {
             e.preventDefault();
             

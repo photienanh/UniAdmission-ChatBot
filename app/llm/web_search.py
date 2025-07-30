@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 from newspaper import Article
 from io import StringIO
 from config import BRAVE_API_KEY
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def web_search(query, max_results):
     """Tìm kiếm thông tin từ web sử dụng Brave Search API"""
@@ -59,9 +61,12 @@ def extract_main_content(url):
     try:
         main_content = ""
 
+        response = requests.get(url, verify=False)
+        html = response.text
         article = Article(url, language='vi')
-        article.download()
+        article.set_html(html)
         article.parse()
+        
         main_content += article.text.strip()
 
         response = requests.get(url)
