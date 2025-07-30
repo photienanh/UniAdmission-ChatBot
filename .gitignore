@@ -10,3 +10,5 @@ vector_db*/
 *app/config.py
 config.py
 z_temp/
+search_engines
+.gitignore
