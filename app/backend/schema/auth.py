@@ -19,14 +19,14 @@ class RegisterRequest(BaseModel):
         form_data = dict(parse_qsl(b.decode()))
         return RegisterRequest(**form_data)
 class DeleteAccountRequest(BaseModel):
-    confirm: str = Field(...)
-    password: str = Field(...)
+    confirm: str
+    password: str
     
 class AuthSuccess(BaseModel):
     success: Literal[True] = Field(True)
-    redirect: str = Field(...)
+    redirect: str
     
 class AuthFailed(BaseModel):
     success: Literal[False] = Field(False)
-    message: str = Field(...)
+    message: str
     

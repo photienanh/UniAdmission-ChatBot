@@ -51,7 +51,7 @@ class ProviderHub:
             while True:
                 ws = self.provider_wss.get(client_type)
                 if ws and ws.uid == uid:
-                    print("Waiting for result")
+                    # print("Waiting for result")
                     if request_id in ws.result:
                         return ws.result.pop(request_id)
                     await asyncio.sleep(self.poll)

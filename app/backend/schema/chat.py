@@ -4,22 +4,23 @@ from datetime import datetime
 
 class ChatRequest(BaseModel):
     message: str = Field(..., min_length=1)
-    model_type: str = Field(...)
+    model_type: str
     session_id: Optional[str] = Field(None)
     use_web_search: bool = Field(True)
     
 class SourceInfo(BaseModel):
-    url: str = Field(...)
-    title: str = Field(...)
-    content: str = Field(...)
+    url: str
+    title: str
+    description: str
+    content: str
     
 class ChatResponse(BaseModel):
-    response: str = Field(...)
-    session_id: str = Field(...)
-    context: str = Field(...)
-    message_id: str = Field(...)
-    sources: list[SourceInfo] = Field(...)
-    search_sources: list[SourceInfo] = Field(...)
+    response: str
+    session_id: str
+    context: str
+    message_id: str
+    sources: list[SourceInfo]
+    search_sources: list[SourceInfo]
     
 class SessionResponse(BaseModel):
     id: str 
@@ -30,16 +31,16 @@ class SessionResponse(BaseModel):
     preview: str 
 
 class MessageResponse(BaseModel):
-    id: str = Field(...)
-    sender: Literal['bot', 'uesr'] = Field(...)
-    content: str = Field(...)
-    timestamp: str = Field(...)
+    id: str
+    sender: Literal['bot', 'uesr']
+    content: str
+    timestamp: str
     message_type: Literal['text', 'image', 'file'] = Field('text')
-    extra_data: Optional[Any] = Field(...)
+    extra_data: Optional[Any]
 
 class SessionMessagesResponse(BaseModel):
     session: SessionResponse
     messages: list[MessageResponse]
     
 class CreateChatSessionRequest(BaseModel):
-    title: str = Field(...)
+    title: str
