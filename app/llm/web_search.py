@@ -5,6 +5,8 @@ from bs4 import BeautifulSoup
 from newspaper import Article
 from io import StringIO
 from config import BRAVE_API_KEY
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def web_search(query, max_results):
     """Tìm kiếm thông tin từ web sử dụng Brave Search API"""
@@ -29,13 +31,13 @@ def web_search(query, max_results):
         pages = {}
         for i, result in enumerate(results[:max_results], 1):
             title = result.get("title", "")
-            snippet = result.get("description", "")
+            description = result.get("description", "")
             url = result.get("url", "")
             
-            if title and snippet:
+            if title and description:
                 item = {
                     "title": title,
-                    "snippet": snippet,
+                    "description": description,
                     "url": url
                 }
             pages[f"Nguồn {i}"] = item
@@ -59,9 +61,12 @@ def extract_main_content(url):
     try:
         main_content = ""
 
+        response = requests.get(url, verify=False)
+        html = response.text
         article = Article(url, language='vi')
-        article.download()
+        article.set_html(html)
         article.parse()
+        
         main_content += article.text.strip()
 
         response = requests.get(url)
@@ -87,7 +92,7 @@ def get_source(query, max_results):
             search_source.append({
                 "url": url,
                 "title": page["title"],
-                "content": page["snippet"],
+                "content": page["description"],
             })
             context += extract_main_content(url) + 100*'-' + "\n\n"
         return context, search_source

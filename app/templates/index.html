@@ -128,6 +128,14 @@
         let chatHistory = [];
         
         document.addEventListener('DOMContentLoaded', function() {
+            // Prevent unwanted focus behavior
+            document.addEventListener('mousedown', function(e) {
+                // Only allow focus on inputs, textareas, and buttons
+                if (!e.target.matches('input, textarea, button, a, select')) {
+                    e.preventDefault();
+                }
+            });
+
             // Configure marked.js for better markdown parsing
             if (typeof marked !== 'undefined') {
                 marked.setOptions({
@@ -532,7 +540,9 @@
                     document.getElementById('chat-title').textContent = data.session.title;
                     
                     data.messages.forEach(message => {
-                        addMessage(message.content, message.sender);
+                        // Lấy search_sources từ trường search_sources hoặc extra_data
+                        const sources = message.search_sources || message.extra_data?.search_sources || null;
+                        addMessage(message.content, message.sender, sources);
                     });
                     
                     // Mark session as active
@@ -601,7 +611,7 @@
                                         </div>
                                     </div>
                                     <div class="source-content">
-                                        ${source.content ? source.content : 'Không có nội dung xem trước'}
+                                        ${source.content && source.content.trim() !== '' && source.content !== 'We cannot provide a description for this page right now' ? source.content : 'Không có nội dung xem trước'}
                                     </div>
                                 </div>
                             `).join('')}
@@ -611,22 +621,45 @@
                 
                 document.body.appendChild(modal);
                 
+                // Animate source items
+                setTimeout(() => {
+                    const sourceItems = modal.querySelectorAll('.source-item');
+                    sourceItems.forEach((item, index) => {
+                        setTimeout(() => {
+                            item.style.opacity = '0';
+                            item.style.transform = 'translateY(20px)';
+                            item.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                            
+                            setTimeout(() => {
+                                item.style.opacity = '1';
+                                item.style.transform = 'translateY(0)';
+                            }, 50);
+                        }, index * 100);
+                    });
+                }, 100);
+                
                 // Close modal handlers
                 const closeBtn = modal.querySelector('.sources-modal-close');
-                closeBtn.addEventListener('click', () => {
-                    modal.remove();
-                });
+                const closeModal = () => {
+                    modal.style.animation = 'modalFadeOut 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    modal.querySelector('.sources-modal-content').style.animation = 'modalSlideOut 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    setTimeout(() => {
+                        modal.remove();
+                    }, 300);
+                };
+                
+                closeBtn.addEventListener('click', closeModal);
                 
                 modal.addEventListener('click', (e) => {
                     if (e.target === modal) {
-                        modal.remove();
+                        closeModal();
                     }
                 });
                 
                 // Close on ESC key
                 const handleEsc = (e) => {
                     if (e.key === 'Escape') {
-                        modal.remove();
+                        closeModal();
                         document.removeEventListener('keydown', handleEsc);
                     }
                 };
