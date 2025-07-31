@@ -11,6 +11,26 @@
             padding: 0;
             box-sizing: border-box;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            cursor: default !important;
+        }
+
+        /* Cursor controls for clickable elements */
+        button,
+        a,
+        input[type="submit"],
+        input[type="button"],
+        .cancel-btn,
+        .delete-btn,
+        button *,
+        a *,
+        .cancel-btn *,
+        .delete-btn * {
+            cursor: pointer !important;
+        }
+
+        input,
+        textarea {
+            cursor: text !important;
         }
 
         body {
@@ -312,6 +332,14 @@
     </div>
 
     <script>
+        // Prevent unwanted focus behavior
+        document.addEventListener('mousedown', function(e) {
+            // Only allow focus on inputs, textareas, and buttons
+            if (!e.target.matches('input, textarea, button, a, select')) {
+                e.preventDefault();
+            }
+        });
+
         const confirmInput = document.getElementById('confirm_text');
         const passwordInput = document.getElementById('password');
         const deleteBtn = document.getElementById('delete-btn');
