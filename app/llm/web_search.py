@@ -68,8 +68,7 @@ def extract_main_content(url):
         article.parse()
         
         main_content += article.text.strip()
-
-        response = requests.get(url)
+        
         soup = BeautifulSoup(response.content, "html.parser")
         tables = extract_tables(soup)
         if tables:
@@ -83,10 +82,9 @@ def extract_main_content(url):
 def get_source(query, max_results):
     try:
         search_source = []
-        context = ""
         pages = web_search(query, max_results)
         if pages is None:
-            return None, None
+            return None
         for page in pages.values():
             url = page["url"]
             content = extract_main_content(url)
@@ -96,7 +94,6 @@ def get_source(query, max_results):
                 "description": page["description"],
                 "content": content
             })
-            context += content + 100*'-' + "\n\n"
-        return context, search_source
+        return search_source
     except:
-        return None, None
+        return None

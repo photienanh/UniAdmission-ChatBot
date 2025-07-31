@@ -340,6 +340,8 @@
                     if (data.error) {
                         addMessage('Xin lỗi, có lỗi xảy ra: ' + data.error, 'bot');
                     } else {
+                        console.log('Server response data:', data); // Debug log
+                        console.log('Search sources:', data.search_sources); // Debug log
                         addMessage(data.response, 'bot', data.search_sources || null);
                         currentSessionId = data.session_id;
                         
@@ -385,15 +387,23 @@
                 
                 // Tạo nút nguồn nếu có sources
                 let sourcesButton = '';
+                console.log('Creating sources button for sender:', sender, 'sources:', sources); // Debug log
                 if (sender === 'bot' && sources && sources.length > 0) {
-                    sourcesButton = `
-                        <div class="sources-button-container">
-                            <button class="sources-button" onclick="showSources(this)" data-sources='${JSON.stringify(sources)}'>
-                                <i class="fas fa-link"></i>
-                                <span>Nguồn (${sources.length})</span>
-                            </button>
-                        </div>
-                    `;
+                    console.log('Creating sources button with', sources.length, 'sources'); // Debug log
+                    try {
+                        const sourcesJson = JSON.stringify(sources);
+                        console.log('Sources JSON:', sourcesJson); // Debug log
+                        sourcesButton = `
+                            <div class="sources-button-container">
+                                <button class="sources-button" onclick="showSources(this)" data-sources='${sourcesJson.replace(/'/g, '&#39;')}'>
+                                    <i class="fas fa-link"></i>
+                                    <span>Nguồn (${sources.length})</span>
+                                </button>
+                            </div>
+                        `;
+                    } catch (error) {
+                        console.error('Error creating sources JSON:', error);
+                    }
                 }
                 
                 messageDiv.innerHTML = `
@@ -587,103 +597,121 @@
             
             // Function to show sources modal
             window.showSources = function(button) {
-                const sources = JSON.parse(button.dataset.sources);
+                console.log('showSources called with button:', button); // Debug log
+                console.log('Button dataset:', button.dataset); // Debug log
                 
-                // Check if sources is valid and not empty
-                if (!sources || !Array.isArray(sources) || sources.length === 0) {
-                    console.warn('No valid sources found');
-                    return;
-                }
-                
-                // Create modal
-                const modal = document.createElement('div');
-                modal.className = 'sources-modal';
-                modal.innerHTML = `
-                    <div class="sources-modal-content">
-                        <div class="sources-modal-header">
-                            <h3>Nguồn tham khảo</h3>
-                            <button class="sources-modal-close">&times;</button>
+                try {
+                    const sourcesData = button.dataset.sources;
+                    console.log('Raw sources data:', sourcesData); // Debug log
+                    
+                    if (!sourcesData) {
+                        console.warn('No sources data found in button dataset');
+                        return;
+                    }
+                    
+                    const sources = JSON.parse(sourcesData);
+                    console.log('Parsed sources:', sources); // Debug log
+                    
+                    // Check if sources is valid and not empty
+                    if (!sources || !Array.isArray(sources) || sources.length === 0) {
+                        console.warn('No valid sources found');
+                        return;
+                    }
+                    
+                    // Create modal
+                    const modal = document.createElement('div');
+                    modal.className = 'sources-modal';
+                    modal.innerHTML = `
+                        <div class="sources-modal-content">
+                            <div class="sources-modal-header">
+                                <h3>Nguồn tham khảo</h3>
+                                <button class="sources-modal-close">&times;</button>
+                            </div>
+                            <div class="sources-modal-body">
+                                ${sources.map((source, index) => `
+                                    <div class="source-item">
+                                        <div class="source-header">
+                                            <span class="source-number">${index + 1}</span>
+                                            <div class="source-info">
+                                                <a href="${source.url || '#'}" target="_blank" class="source-title">
+                                                    ${source.title || source.url || 'Không có tiêu đề'}
+                                                </a>
+                                                <div class="source-url">${source.url || 'Không có URL'}</div>
+                                            </div>
+                                        </div>
+                                        <div class="source-content">
+                                            ${source.description && source.description.trim() !== '' && source.description !== 'We cannot provide a description for this page right now' ? source.description : 'Không có mô tả'}
+                                        </div>
+                                        <div class="source-context" id="source-context-${index}" style="display: none;">
+                                            <div class="context-header">
+                                                <strong>Nội dung đầy đủ:</strong>
+                                            </div>
+                                            <div class="context-content">
+                                                ${source.content && source.content.trim() !== '' && source.content !== 'We cannot provide a description for this page right now' ? source.content : 'Không có nội dung'}
+                                            </div>
+                                        </div>
+                                        <div class="source-footer">
+                                            <button class="show-context-btn" onclick="showSourceContext(${index}, this)" title="Xem nội dung đầy đủ">
+                                                <i class="fas fa-eye"></i>
+                                                <span>Show context</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
                         </div>
-                        <div class="sources-modal-body">
-                            ${sources.map((source, index) => `
-                                <div class="source-item">
-                                    <div class="source-header">
-                                        <span class="source-number">${index + 1}</span>
-                                        <div class="source-info">
-                                            <a href="${source.url || '#'}" target="_blank" class="source-title">
-                                                ${source.title || source.url || 'Không có tiêu đề'}
-                                            </a>
-                                            <div class="source-url">${source.url || 'Không có URL'}</div>
-                                        </div>
-                                    </div>
-                                    <div class="source-content">
-                                        ${source.description && source.description.trim() !== '' && source.description !== 'We cannot provide a description for this page right now' ? source.description : 'Không có mô tả'}
-                                    </div>
-                                    <div class="source-context" id="source-context-${index}" style="display: none;">
-                                        <div class="context-header">
-                                            <strong>Nội dung đầy đủ:</strong>
-                                        </div>
-                                        <div class="context-content">
-                                            ${source.content && source.content.trim() !== '' && source.content !== 'We cannot provide a description for this page right now' ? source.content : 'Không có nội dung'}
-                                        </div>
-                                    </div>
-                                    <div class="source-footer">
-                                        <button class="show-context-btn" onclick="showSourceContext(${index}, this)" title="Xem nội dung đầy đủ">
-                                            <i class="fas fa-eye"></i>
-                                            <span>Show context</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                `;
-                
-                document.body.appendChild(modal);
-                
-                // Animate source items
-                setTimeout(() => {
-                    const sourceItems = modal.querySelectorAll('.source-item');
-                    sourceItems.forEach((item, index) => {
-                        setTimeout(() => {
-                            item.style.opacity = '0';
-                            item.style.transform = 'translateY(20px)';
-                            item.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                            
-                            setTimeout(() => {
-                                item.style.opacity = '1';
-                                item.style.transform = 'translateY(0)';
-                            }, 50);
-                        }, index * 100);
-                    });
-                }, 100);
-                
-                // Close modal handlers
-                const closeBtn = modal.querySelector('.sources-modal-close');
-                const closeModal = () => {
-                    modal.style.animation = 'modalFadeOut 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
-                    modal.querySelector('.sources-modal-content').style.animation = 'modalSlideOut 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                    `;
+                    
+                    document.body.appendChild(modal);
+                    
+                    // Animate source items
                     setTimeout(() => {
-                        modal.remove();
-                    }, 300);
-                };
-                
-                closeBtn.addEventListener('click', closeModal);
-                
-                modal.addEventListener('click', (e) => {
-                    if (e.target === modal) {
-                        closeModal();
-                    }
-                });
-                
-                // Close on ESC key
-                const handleEsc = (e) => {
-                    if (e.key === 'Escape') {
-                        closeModal();
-                        document.removeEventListener('keydown', handleEsc);
-                    }
-                };
-                document.addEventListener('keydown', handleEsc);
+                        const sourceItems = modal.querySelectorAll('.source-item');
+                        sourceItems.forEach((item, index) => {
+                            setTimeout(() => {
+                                item.style.opacity = '0';
+                                item.style.transform = 'translateY(20px)';
+                                item.style.transition = 'all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                                
+                                setTimeout(() => {
+                                    item.style.opacity = '1';
+                                    item.style.transform = 'translateY(0)';
+                                }, 50);
+                            }, index * 100);
+                        });
+                    }, 100);
+                    
+                    // Close modal handlers
+                    const closeBtn = modal.querySelector('.sources-modal-close');
+                    const closeModal = () => {
+                        modal.style.animation = 'modalFadeOut 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        modal.querySelector('.sources-modal-content').style.animation = 'modalSlideOut 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)';
+                        setTimeout(() => {
+                            modal.remove();
+                        }, 300);
+                    };
+                    
+                    closeBtn.addEventListener('click', closeModal);
+                    
+                    modal.addEventListener('click', (e) => {
+                        if (e.target === modal) {
+                            closeModal();
+                        }
+                    });
+                    
+                    // Close on ESC key
+                    const handleEsc = (e) => {
+                        if (e.key === 'Escape') {
+                            closeModal();
+                            document.removeEventListener('keydown', handleEsc);
+                        }
+                    };
+                    document.addEventListener('keydown', handleEsc);
+                    
+                } catch (error) {
+                    console.error('Error in showSources:', error);
+                    alert('Có lỗi khi hiển thị nguồn tham khảo');
+                }
             };
             
             // Function to show/hide source context
