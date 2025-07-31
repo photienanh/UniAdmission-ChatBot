@@ -17,7 +17,6 @@ class SourceInfo(BaseModel):
 class ChatResponse(BaseModel):
     response: str
     session_id: str
-    context: str
     message_id: str
     sources: list[SourceInfo]
     search_sources: list[SourceInfo]

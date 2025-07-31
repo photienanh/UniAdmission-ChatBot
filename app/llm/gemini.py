@@ -34,7 +34,6 @@ class Gemini:
                 search_souce["description"] = search_souce["content"][:50]
         return {
                 "response": response.text,
-                "context": "example context" if use_web_search else "",
                 "sources": [],
                 "search_sources": search_sources if use_web_search and search_sources else []
             }

@@ -51,7 +51,7 @@ async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(Chat
             return ErrorReponse(403, "Session không hợp lệ")
     session_id = cast(str, session_id)
     # Lưu tin nhắn của user
-    user_message = create_message(session_id, 'user', data.message, "", [], [])
+    user_message = create_message(session_id, 'user', data.message, [], [])
     try:
         bot_response = await ask_llm(
             question=data.message,
@@ -59,14 +59,13 @@ async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(Chat
             model_type=data.model_type,
             use_web_search=data.use_web_search
         )
-        bot_message = create_message(session_id, 'bot', bot_response['response'], bot_response["context"], bot_response["sources"], bot_response["search_sources"])
+        bot_message = create_message(session_id, 'bot', bot_response['response'], bot_response["sources"], bot_response["search_sources"])
         chat_session.updated_at = datetime.now(timezone.utc)
         chat_session.auto_set_title()
         DBSession.commit()
         response = ChatResponse(
             session_id=session_id,
             message_id=bot_message.id,
-            context=bot_response["context"],
             response=bot_response["response"],
             sources=bot_response["sources"],
             search_sources=bot_response["search_sources"],
