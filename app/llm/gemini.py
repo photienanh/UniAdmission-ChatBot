@@ -28,10 +28,12 @@ class Gemini:
         #     return {
         #         "response": response.text
         #     }
-                
+        search_sources: list
+        for search_souce in search_sources: # Tempory fix
+            if "description" not in search_souce:
+                search_souce["description"] = search_souce["content"][:50]
         return {
                 "response": response.text,
-                "context": "example context" if use_web_search else "",
                 "sources": [],
                 "search_sources": search_sources if use_web_search and search_sources else []
             }

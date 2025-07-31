@@ -20,6 +20,14 @@ class SLM:
         result: dict | None = await direct_request(model_type, question, use_web_search)
         if result != None:
             result["response"] = result["answer"]
+            search_sources: list = result.get("search_sources", []) #type:ignore
+            for search_souce in search_sources: # Tempory fix
+                if "description" not in search_souce:
+                    search_souce["description"] = search_souce["content"][:50]
+            sources: list = result.get("sources", [])
+            for source in sources:
+                if "description" not in source:
+                    source["description"] = source["content"][:50]
             # print(result)
             return result
         else:

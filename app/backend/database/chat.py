@@ -17,7 +17,7 @@ def get_chat_session(session_id: str) -> ChatSession | None:
     if session:
         return session
 
-def create_message(session_id: str, sender: Literal["user", "bot"], content: str, context: str, sources: list[dict[str, str]], search_sources: list[dict[str, str]]) ->  ChatMessage:
+def create_message(session_id: str, sender: Literal["user", "bot"], content: str, sources: list[dict[str, str]], search_sources: list[dict[str, str]]) ->  ChatMessage:
     """
     Create new message, no commit
     """
@@ -25,7 +25,6 @@ def create_message(session_id: str, sender: Literal["user", "bot"], content: str
     chat_message.session_id = session_id
     chat_message.content = content
     chat_message.sender = sender
-    chat_message.context = context
     chat_message.sources = sources
     chat_message.search_sources = search_sources
     DBSession.session.add(chat_message)
