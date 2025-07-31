@@ -89,12 +89,14 @@ def get_source(query, max_results):
             return None, None
         for page in pages.values():
             url = page["url"]
+            content = extract_main_content(url)
             search_source.append({
                 "url": url,
                 "title": page["title"],
-                "content": page["description"],
+                "description": page["description"],
+                "content": content
             })
-            context += extract_main_content(url) + 100*'-' + "\n\n"
+            context += content + 100*'-' + "\n\n"
         return context, search_source
     except:
         return None, None

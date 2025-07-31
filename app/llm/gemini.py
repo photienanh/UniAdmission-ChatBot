@@ -11,27 +11,11 @@ class Gemini:
         chat = get_or_create_chat_session(cls.model, session_id)
         prompt, search_sources = build_prompt(question, use_web_search, max_results=3)
         response = chat.send_message(prompt)
-  # source : {1: {"url": "https://example.com", 
-    #               "title": "Example Title", 
-    #               "content": "Example content"},
-    #         2: {"url": "https://example2.com",
-    #               "title": "Example Title 2", 
-    #               "content": "Example content 2"},
-    #         3: {"url": "https://example3.com",
-    #               "title": "Example Title 3", 
-    #               "content": "Example content 3"}}
-        # if not use_web_search:
-        #     return {
-        #         "response": response.text
-        #     }
-        # if source is None:
-        #     return {
-        #         "response": response.text
-        #     }
-        search_sources: list
-        for search_souce in search_sources: # Tempory fix
-            if "description" not in search_souce:
-                search_souce["description"] = search_souce["content"][:50]
+
+        if search_sources:
+            for search_souce in search_sources: # Tempory fix
+                if "description" not in search_souce:
+                    search_souce["description"] = search_souce["content"][:50]
         return {
                 "response": response.text,
                 "sources": [],

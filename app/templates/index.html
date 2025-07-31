@@ -589,6 +589,12 @@
             window.showSources = function(button) {
                 const sources = JSON.parse(button.dataset.sources);
                 
+                // Check if sources is valid and not empty
+                if (!sources || !Array.isArray(sources) || sources.length === 0) {
+                    console.warn('No valid sources found');
+                    return;
+                }
+                
                 // Create modal
                 const modal = document.createElement('div');
                 modal.className = 'sources-modal';
@@ -604,14 +610,28 @@
                                     <div class="source-header">
                                         <span class="source-number">${index + 1}</span>
                                         <div class="source-info">
-                                            <a href="${source.url}" target="_blank" class="source-title">
-                                                ${source.title || source.url}
+                                            <a href="${source.url || '#'}" target="_blank" class="source-title">
+                                                ${source.title || source.url || 'Không có tiêu đề'}
                                             </a>
-                                            <div class="source-url">${source.url}</div>
+                                            <div class="source-url">${source.url || 'Không có URL'}</div>
                                         </div>
                                     </div>
                                     <div class="source-content">
-                                        ${source.content && source.content.trim() !== '' && source.content !== 'We cannot provide a description for this page right now' ? source.content : 'Không có nội dung xem trước'}
+                                        ${source.description && source.description.trim() !== '' && source.description !== 'We cannot provide a description for this page right now' ? source.description : 'Không có mô tả'}
+                                    </div>
+                                    <div class="source-context" id="source-context-${index}" style="display: none;">
+                                        <div class="context-header">
+                                            <strong>Nội dung đầy đủ:</strong>
+                                        </div>
+                                        <div class="context-content">
+                                            ${source.content && source.content.trim() !== '' && source.content !== 'We cannot provide a description for this page right now' ? source.content : 'Không có nội dung'}
+                                        </div>
+                                    </div>
+                                    <div class="source-footer">
+                                        <button class="show-context-btn" onclick="showSourceContext(${index}, this)" title="Xem nội dung đầy đủ">
+                                            <i class="fas fa-eye"></i>
+                                            <span>Show context</span>
+                                        </button>
                                     </div>
                                 </div>
                             `).join('')}
@@ -664,6 +684,25 @@
                     }
                 };
                 document.addEventListener('keydown', handleEsc);
+            };
+            
+            // Function to show/hide source context
+            window.showSourceContext = function(sourceIndex, buttonElement) {
+                const contextDiv = document.getElementById(`source-context-${sourceIndex}`);
+                const icon = buttonElement.querySelector('i');
+                const text = buttonElement.querySelector('span');
+                
+                if (contextDiv.style.display === 'none') {
+                    contextDiv.style.display = 'block';
+                    icon.className = 'fas fa-eye-slash';
+                    text.textContent = 'Hide context';
+                    buttonElement.title = 'Ẩn nội dung đầy đủ';
+                } else {
+                    contextDiv.style.display = 'none';
+                    icon.className = 'fas fa-eye';
+                    text.textContent = 'Show context';
+                    buttonElement.title = 'Xem nội dung đầy đủ';
+                }
             };
             
             // Initialize

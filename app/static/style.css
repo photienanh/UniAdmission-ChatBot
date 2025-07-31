@@ -40,6 +40,7 @@ input[type="button"],
 .slider-track,
 .slider-thumb,
 .slider-label,
+.show-context-btn,
 #model-select,
 #web-search-button,
 button *,
@@ -63,6 +64,7 @@ label *,
 .slider-track *,
 .slider-thumb *,
 .slider-label *,
+.show-context-btn *,
 #model-select *,
 #web-search-button * {
     cursor: pointer !important;
@@ -1199,10 +1201,20 @@ body {
     align-items: flex-start;
     gap: 12px;
     margin-bottom: 12px;
+    position: relative;
+}
+
+.source-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e7eb;
 }
 
 .source-info {
     flex: 1;
+    min-width: 0;
 }
 
 .source-number {
@@ -1268,4 +1280,67 @@ body {
     border-left: 4px solid #000000;
     font-style: italic;
     border: 1px solid #000000;
+}
+
+/* Show context button */
+.show-context-btn {
+    background: #f8f9fa;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0.0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+    min-width: 110px;
+    justify-content: center;
+}
+
+.show-context-btn:hover {
+    background: #e5e7eb;
+    border-color: #9ca3af;
+    transform: scale(1.08);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.show-context-btn:active {
+    transform: scale(1.02);
+    transition: all 0.1s ease;
+}
+
+.show-context-btn i {
+    font-size: 11px;
+}
+
+/* Source context content */
+.source-context {
+    margin-left: 40px;
+    margin-top: 8px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 12px;
+}
+
+.context-header {
+    font-size: 13px;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.context-content {
+    color: #000000;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    max-height: 200px;
+    overflow-y: auto;
+    white-space: pre-wrap;
 }
