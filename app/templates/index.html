@@ -410,6 +410,11 @@
                     <div class="message-content ${contentClass}">
                         ${processedContent}
                         ${sourcesButton}
+                        <div class="message-actions">
+                            <button class="copy-button" onclick="copyMessageContent(this)" title="Copy message">
+                                <i class="fas fa-copy"></i>
+                            </button>
+                        </div>
                     </div>
                 `;
                 chatMessages.appendChild(messageDiv);
@@ -732,6 +737,116 @@
                     buttonElement.title = 'Xem nội dung đầy đủ';
                 }
             };
+            
+            // Function to copy message content
+            window.copyMessageContent = function(buttonElement) {
+                try {
+                    // Find the message content div
+                    const messageContent = buttonElement.closest('.message-content');
+                    let textToCopy = '';
+                    
+                    // Get all text content from the message, excluding the copy button and sources button
+                    const contentElements = messageContent.querySelectorAll('p, li, h1, h2, h3, h4, h5, h6, pre, blockquote');
+                    if (contentElements.length > 0) {
+                        // Extract text from structured content
+                        contentElements.forEach((element, index) => {
+                            if (index > 0) textToCopy += '\n';
+                            textToCopy += element.textContent.trim();
+                        });
+                    } else {
+                        // Fallback: get all text content and clean it
+                        const clonedContent = messageContent.cloneNode(true);
+                        // Remove the copy button and sources button from the clone
+                        const actionsDiv = clonedContent.querySelector('.message-actions');
+                        const sourcesDiv = clonedContent.querySelector('.sources-button-container');
+                        if (actionsDiv) actionsDiv.remove();
+                        if (sourcesDiv) sourcesDiv.remove();
+                        textToCopy = clonedContent.textContent.trim();
+                    }
+                    
+                    // Visual feedback function
+                    const showFeedback = (success = true) => {
+                        const icon = buttonElement.querySelector('i');
+                        const originalClass = icon.className;
+                        
+                        if (success) {
+                            icon.className = 'fas fa-check';
+                            buttonElement.style.color = '#22c55e';
+                        } else {
+                            icon.className = 'fas fa-times';
+                            buttonElement.style.color = '#ef4444';
+                        }
+                        
+                        // Reset after 2 seconds
+                        setTimeout(() => {
+                            icon.className = originalClass;
+                            buttonElement.style.color = '';
+                        }, 2000);
+                    };
+                    
+                    // Try modern clipboard API first
+                    if (navigator.clipboard && navigator.clipboard.writeText) {
+                        navigator.clipboard.writeText(textToCopy).then(() => {
+                            showFeedback(true);
+                        }).catch(err => {
+                            console.warn('Modern clipboard failed, trying fallback:', err);
+                            // Try fallback method
+                            fallbackCopy(textToCopy, showFeedback);
+                        });
+                    } else {
+                        // Use fallback method directly
+                        fallbackCopy(textToCopy, showFeedback);
+                    }
+                    
+                } catch (error) {
+                    console.error('Error copying message:', error);
+                    // Show error feedback
+                    const icon = buttonElement.querySelector('i');
+                    const originalClass = icon.className;
+                    icon.className = 'fas fa-times';
+                    buttonElement.style.color = '#ef4444';
+                    setTimeout(() => {
+                        icon.className = originalClass;
+                        buttonElement.style.color = '';
+                    }, 2000);
+                }
+            };
+            
+            // Fallback copy function for older browsers or when modern clipboard fails
+            function fallbackCopy(text, callback) {
+                try {
+                    // Create a temporary textarea element
+                    const textArea = document.createElement('textarea');
+                    textArea.value = text;
+                    textArea.style.position = 'fixed';
+                    textArea.style.left = '-9999px';
+                    textArea.style.top = '-9999px';
+                    textArea.style.opacity = '0';
+                    document.body.appendChild(textArea);
+                    
+                    // Focus and select the text
+                    textArea.focus();
+                    textArea.select();
+                    textArea.setSelectionRange(0, 99999); // For mobile devices
+                    
+                    // Try to copy using execCommand
+                    const successful = document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    
+                    if (callback) {
+                        callback(successful);
+                    }
+                    
+                    if (!successful) {
+                        console.error('Fallback copy failed');
+                    }
+                } catch (err) {
+                    console.error('Fallback copy error:', err);
+                    if (callback) {
+                        callback(false);
+                    }
+                }
+            }
             
             // Initialize
             loadModels();

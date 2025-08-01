@@ -35,6 +35,7 @@ input[type="button"],
 .user-info,
 .dropdown-item,
 .sources-button,
+.copy-button,
 .password-toggle,
 .slider-switch,
 .slider-track,
@@ -59,6 +60,7 @@ label *,
 .user-info *,
 .dropdown-item *,
 .sources-button *,
+.copy-button *,
 .password-toggle *,
 .slider-switch *,
 .slider-track *,
@@ -491,6 +493,8 @@ body {
 .message.user-message .message-content {
     justify-content: flex-end; /* Căn phải cho user */
     padding-right: 0; /* Bỏ padding để căn thẳng với ô input */
+    flex-direction: column; /* Thay đổi direction để message actions nằm dưới message */
+    align-items: flex-end; /* Căn tất cả về phải */
 }
 
 .message.bot-message .message-content {
@@ -498,6 +502,8 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 0 24px;
+    flex-direction: column; /* Để message actions nằm dưới message */
+    align-items: flex-start; /* Căn tất cả về trái */
 }
 
 /* Khi sidebar bị thu gọn */
@@ -536,6 +542,59 @@ body {
     padding: 0; /* Bỏ padding */
     margin-right: auto; /* Đẩy về phía trái như chatbot thông thường */
     max-width: 100%; /* Sử dụng toàn bộ chiều rộng có sẵn */
+}
+
+/* Message Actions */
+.message-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.message-content:hover .message-actions {
+    opacity: 1;
+}
+
+.copy-button {
+    background: none;
+    border: none;
+    color: #666666;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-size: 14px;
+}
+
+.copy-button:hover {
+    color: #000000;
+    transform: scale(1.2);
+}
+
+.copy-button:active {
+    transform: scale(1.0);
+}
+
+/* User message actions - align to the right since the message is on the right */
+.message.user-message .message-actions {
+    justify-content: flex-end;
+    align-self: flex-end; /* Căn về phía phải */
+    max-width: 70%;
+}
+
+/* Bot message actions - align to the right */
+.message.bot-message .message-actions {
+    justify-content: flex-end;
+    align-self: flex-end; /* Căn về phía phải */
 }
 
 /* Chat Input Area */
