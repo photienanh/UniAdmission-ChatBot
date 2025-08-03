@@ -28,7 +28,6 @@ class SLM:
             for source in sources:
                 if "description" not in source:
                     source["description"] = source["content"][:50]
-            # print(result)
             return result
         else:
             raise HTTPException(status_code=500, detail=f"Failed to inference {model_type}")
