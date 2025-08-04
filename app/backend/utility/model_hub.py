@@ -76,10 +76,13 @@ class ModelHub:
     async def inference(self, input: ModelInput) -> ModelOutput | str:
         model_id = input["model_id"]
         job_id = str(uuid.uuid4())
+        def is_valid(id: str, infos: list[ModelInfo]):
+            return id in [info["id"] for info in infos]
         for connection in self.connections.values():
-            if model_id in [model_info["id"] for model_info in connection["models"]]:
+            if is_valid(model_id, connection["models"]):
                 connection["input_queue"].append((job_id, input))
-                while model_id in [model_info["id"] for model_info in connection["models"]]:
+                # While not disconnected, try to get result
+                while connection in self.connections.values():
                     for index, (o_job_id, output) in enumerate(connection["output_queue"]):
                         if o_job_id == job_id:
                             connection["output_queue"].pop(index)

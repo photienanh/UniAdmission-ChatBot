@@ -234,7 +234,7 @@
                     // Add models to select
                     models.forEach(model => {
                         const option = document.createElement('option');
-                        option.value = model.model_type;
+                        option.value = model.id;
                         option.textContent = model.name;
                         
                         // Set Gemini as default if available
