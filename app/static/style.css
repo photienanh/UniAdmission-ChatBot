@@ -616,6 +616,48 @@ body {
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
+/* Control Row Layout */
+.control-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+.control-row:last-child {
+    margin-bottom: 0;
+}
+
+/* First row - always visible */
+.control-row .main-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+}
+
+/* Web Search Options - chỉ hiện khi web search được bật */
+.web-search-options {
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    width: 100%;
+    justify-content: center;
+    margin-top: 12px;
+    gap: 40px;
+}
+
+.web-search-options.show {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
+}
+
 @keyframes slideInControls {
     from {
         opacity: 0;
@@ -663,6 +705,14 @@ body {
     animation-delay: 0.3s;
 }
 
+.control-group:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.control-group:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
 @keyframes slideInGroup {
     from {
         opacity: 0;
@@ -683,7 +733,7 @@ body {
     font-size: 14px;
     color: #4b5563;
     font-weight: 600;
-    min-width: 60px;
+    min-width: 60px; /* Trở về như cũ */
     letter-spacing: 0.5px;
 }
 
@@ -695,7 +745,7 @@ body {
     color: #374151;
     font-size: 14px;
     cursor: pointer;
-    min-width: 140px;
+    min-width: 140px; /* Trở về như cũ */
     appearance: none;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
     background-position: right 10px center;
@@ -733,6 +783,8 @@ body {
     font-weight: 500;
     color: #495057;
     transition: color 0.3s ease;
+    cursor: default !important;
+    pointer-events: none;
 }
 
 .slider-switch {
@@ -742,6 +794,7 @@ body {
     height: 26px;
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform: scale(1);
+    cursor: pointer;
 }
 
 .slider-switch:hover {
@@ -784,7 +837,7 @@ body {
 }
 
 .slider-switch input:checked + .slider-track .slider-thumb {
-    transform: translateX(34px);
+    transform: translateX(24px);
 }
 
 /* Hover effect */
@@ -794,6 +847,41 @@ body {
 
 .slider-switch:hover .slider-thumb {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive cho Web Search Settings */
+@media (max-width: 768px) {
+    .input-controls {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+    
+    .control-row .main-controls {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+    
+    .web-search-options {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+        margin-top: 8px;
+    }
+    
+    .control-group {
+        justify-content: space-between;
+    }
+    
+    .control-group label {
+        min-width: auto;
+        font-size: 13px;
+    }
+    
+    .control-group select {
+        min-width: 100px;
+    }
 }
 
 .chat-form {

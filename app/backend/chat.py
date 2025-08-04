@@ -57,7 +57,9 @@ async def post_chat(request: Request, data: Union[ChatRequest, dict] = Body(Chat
             question=data.message,
             session_id=session_id,
             model_type=data.model_type,
-            use_web_search=data.use_web_search
+            use_web_search=data.use_web_search,
+            max_results=data.search_results_count,
+            priority_domains=data.priority_domains
         )
         bot_message = create_message(session_id, 'bot', bot_response['response'], bot_response["sources"], bot_response["search_sources"])
         chat_session.updated_at = datetime.now(timezone.utc)

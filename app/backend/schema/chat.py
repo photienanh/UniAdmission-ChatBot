@@ -7,6 +7,8 @@ class ChatRequest(BaseModel):
     model_type: str
     session_id: Optional[str] = Field(None)
     use_web_search: bool = Field(True)
+    search_results_count: int = Field(3, ge=1, le=4)  # Từ 1-4 trang
+    priority_domains: bool = Field(True)  # Ưu tiên domain chính thức
     
 class SourceInfo(BaseModel):
     url: str

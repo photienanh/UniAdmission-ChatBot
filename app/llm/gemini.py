@@ -7,9 +7,9 @@ class Gemini:
     def __init__(self) -> None:
         raise Exception(f"Static class does not support instance")
     @classmethod
-    async def ask(cls, question: str, session_id: str, use_web_search: bool):
+    async def ask(cls, question: str, session_id: str, use_web_search: bool, max_results: int, priority_domains: bool):
         chat = get_or_create_chat_session(cls.model, session_id)
-        prompt, search_sources = build_prompt(question, use_web_search, max_results=3)
+        prompt, search_sources = build_prompt(question, use_web_search, max_results)
         response = chat.send_message(prompt)
 
         if search_sources:

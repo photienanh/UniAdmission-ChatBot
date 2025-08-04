@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UniAdmission ChatBot</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='favicon.svg') }}">
+
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
@@ -82,21 +86,56 @@
             <div class="chat-input-area">
                 <!-- Model and Search Controls - ẩn mặc định -->
                 <div class="input-controls" id="input-controls" style="display: none;">
-                    <div class="control-group">
-                        <label for="model-select">Model:</label>
-                        <select id="model-select">
-                            <option value="gemini-2.0-flash-lite-preview-02-05" selected>Loading models...</option>
-                        </select>
-                    </div>
-                    <div class="control-group">
-                        <label for="web-search-button " class="slider-label"><i class="fa-solid fa-globe"></i> Tìm kiếm trên mạng:</label>
-                        <div class="slider-container">
-                            <label class="slider-switch">
-                                <input type="checkbox" id="web-search-button">
-                                <span class="slider-track">
-                                    <span class="slider-thumb"></span>
-                                </span>
-                            </label>
+                    <!-- Main Controls Row -->
+                    <div class="control-row">
+                        <div class="main-controls">
+                            <div class="control-group">
+                                <label for="model-select">Model:</label>
+                                <select id="model-select">
+                                    <option value="gemini-2.0-flash-lite-preview-02-05" selected>Loading models...</option>
+                                </select>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="web-search-button" class="slider-label">
+                                    <i class="fa-solid fa-globe"></i> Tìm kiếm trên mạng:
+                                </label>
+                                <div class="slider-container">
+                                    <div class="slider-switch">
+                                        <input type="checkbox" id="web-search-button">
+                                        <span class="slider-track">
+                                            <span class="slider-thumb"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Advanced Web Search Options -->
+                        <div class="web-search-options" id="web-search-options">
+                            <div class="control-group">
+                                <label for="search-results-count">Số trang:</label>
+                                <select id="search-results-count">
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3" selected>3</option>
+                                    <option value="4">4</option>
+                                </select>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="priority-domains" class="slider-label">
+                                    <i class="fa-solid fa-shield-alt"></i> Ưu tiên trang chính thức:
+                                </label>
+                                <div class="slider-container">
+                                    <div class="slider-switch">
+                                        <input type="checkbox" id="priority-domains" checked>
+                                        <span class="slider-track">
+                                            <span class="slider-thumb"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -153,9 +192,35 @@
             const newChatBtn = document.getElementById('new-chat-btn');
             const modelSelect = document.getElementById('model-select');
             const webSearchButton = document.getElementById('web-search-button');
+            const webSearchOptions = document.getElementById('web-search-options');
+            const searchResultsCount = document.getElementById('search-results-count');
+            const priorityDomains = document.getElementById('priority-domains');
             const sendButton = document.getElementById('send-button');
             const settingsToggle = document.getElementById('settings-toggle');
             const inputControls = document.getElementById('input-controls');
+            
+            // Web Search Options Toggle
+            webSearchButton.addEventListener('change', function() {
+                if (this.checked) {
+                    webSearchOptions.style.display = 'flex';
+                    webSearchOptions.classList.add('show');
+                } else {
+                    webSearchOptions.classList.remove('show');
+                    setTimeout(() => {
+                        webSearchOptions.style.display = 'none';
+                    }, 300);
+                }
+            });
+            
+            // Handle slider switch clicks
+            document.querySelectorAll('.slider-switch').forEach(switchElement => {
+                switchElement.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const checkbox = this.querySelector('input[type="checkbox"]');
+                    checkbox.checked = !checkbox.checked;
+                    checkbox.dispatchEvent(new Event('change'));
+                });
+            });
             
             // Load available models
             async function loadModels() {
@@ -325,7 +390,9 @@
                         message: message,
                         session_id: currentSessionId,
                         model_type: selectedModelType,
-                        use_web_search: useWebSearch
+                        use_web_search: useWebSearch,
+                        search_results_count: parseInt(searchResultsCount.value),
+                        priority_domains: priorityDomains.checked
                     })
                 })
                 .then(response => {
