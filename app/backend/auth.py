@@ -8,7 +8,7 @@ from .database import (
     DBSession
 )
 from .schema import (
-    SuccessResponse, FailedResponse, ErrorReponse, ServerError, NO_CACHE_HEADERS,
+    SuccessResponse, FailedResponse, ServerError, NO_CACHE_HEADERS,
     LoginRequest, RegisterRequest, DeleteAccountRequest, AuthFailed, AuthSuccess
 )
 
@@ -50,14 +50,8 @@ def get_delete(request: Request):
     return templates.TemplateResponse("delete_account.html", {"request": request, "current_user": user})
 
 @router.post("/login", responses={200: {"model": AuthSuccess}, 400: {"model": AuthFailed}})
-def post_login(
-    request: Union[LoginRequest, dict, bytes] = Body(LoginRequest), # Union to prevent auto 422 error
-):
-    if isinstance(request, bytes): # When request is Form
-        try:
-            request = LoginRequest.parse(request)
-        except: pass
-    if not isinstance(request, LoginRequest): return FailedResponse("Dữ liệu không hợp lệ")
+def post_login(request: Union[LoginRequest, bytes]):
+    if not isinstance(request, LoginRequest): request = LoginRequest.parse(request)
     jwt = login_user(request.username, request.password)
     if jwt:
         response = JSONResponse({
@@ -70,15 +64,8 @@ def post_login(
         return FailedResponse("Tên đăng nhập hoặc mật khẩu không đúng")
     
 @router.post("/register", responses={200: {"model": AuthSuccess}, 400: {"model": AuthFailed}})
-async def post_register(
-    request: Union[RegisterRequest, dict, bytes] = Body(RegisterRequest), # Union to prevent auto 422 error
-):
-    if isinstance(request, bytes): # When request is Form
-        try:
-            request = RegisterRequest.parse(request)
-        except: pass
-    if not isinstance(request, RegisterRequest): # Validation failed
-        return FailedResponse("Dữ liệu không hợp lệ")
+async def post_register(request: Union[RegisterRequest, bytes]):
+    if not isinstance(request, RegisterRequest): request = RegisterRequest.parse(request)
     if register_user(request.full_name, request.username, request.email, request.password):
         jwt = login_user(request.username, request.password)
         if not jwt: raise ServerError("Failed to auto login")
@@ -103,16 +90,15 @@ def get_logout(request: Request):
 def post_delete(request: Request, data: DeleteAccountRequest):
     """Xóa tài khoản người dùng"""
     user = check_login(request)
-    if data.confirm != "DELETE":
+    if data["confirm"] != "DELETE":
         return FailedResponse('Vui lòng nhập "DELETE" để xác nhận')
-    if not user.check_password(data.password):
+    if not user.check_password(data["password"]):
         return FailedResponse("Mật khẩu không đúng")
     try:
         delete_all_user_data(user)
-        login_user(user.username, data.password)
+        login_user(user.username, data["password"])
         DBSession.commit()
         return SuccessResponse("Tài khoản đã được xóa thành công")
     except Exception as e:
         DBSession.rollback()
         return FailedResponse("Đã có lỗi xảy ra")
-    

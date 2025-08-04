@@ -17,15 +17,24 @@ def get_chat_session(session_id: str) -> ChatSession | None:
     if session:
         return session
 
-def create_message(session_id: str, sender: Literal["user", "bot"], content: str, sources: list[dict[str, str]], search_sources: list[dict[str, str]]) ->  ChatMessage:
+def create_message(
+    session_id: str, 
+    role: Literal["user", "bot"], 
+    message: str, 
+    model_id: str | None = None, 
+    sources: list[dict[str, str]] = [], 
+    search_sources: list[dict[str, str]] = [],
+    **extrakwargs
+) ->  ChatMessage:
     """
     Create new message, no commit
     """
     chat_message = ChatMessage()
     chat_message.session_id = session_id
-    chat_message.content = content
-    chat_message.sender = sender
-    chat_message.sources = sources
+    chat_message.message = message
+    chat_message.role = role
+    chat_message.model_id = model_id
+    chat_message.rag_sources = sources
     chat_message.search_sources = search_sources
     DBSession.session.add(chat_message)
     return chat_message

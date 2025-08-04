@@ -379,7 +379,14 @@
                 
                 // Show typing indicator
                 showTypingIndicator();
-                
+                var webSearchParam = null;
+                if (useWebSearch) { 
+                    webSearchParam = {
+                        in_domain: priorityDomains.checked,
+                        k_pages: parseInt(searchResultsCount.value),
+                        k_docs: 3 // TODO: Send real package, this is just placeholder
+                    }
+                }
                 // Send to backend
                 fetch('/chat', {
                     method: 'POST',
@@ -389,10 +396,8 @@
                     body: JSON.stringify({
                         message: message,
                         session_id: currentSessionId,
-                        model_type: selectedModelType,
-                        use_web_search: useWebSearch,
-                        search_results_count: parseInt(searchResultsCount.value),
-                        priority_domains: priorityDomains.checked
+                        model_id: selectedModelType,
+                        web_search: webSearchParam,
                     })
                 })
                 .then(response => {
@@ -409,7 +414,7 @@
                     } else {
                         console.log('Server response data:', data); // Debug log
                         console.log('Search sources:', data.search_sources); // Debug log
-                        addMessage(data.response, 'bot', data.search_sources || null);
+                        addMessage(data.message, 'bot', data.search_sources || null);
                         currentSessionId = data.session_id;
                         
                         // Reload chat history if this was a new session
@@ -435,15 +440,15 @@
                 }
             });
             
-            function addMessage(content, sender, sources = null) {
+            function addMessage(content, role, sources = null) {
                 const messageDiv = document.createElement('div');
-                messageDiv.className = `message ${sender}-message`;
+                messageDiv.className = `message ${role}-message`;
                 
                 // Parse markdown cho bot messages, plain text cho user messages
                 let processedContent;
                 let contentClass = '';
                 
-                if (sender === 'bot') {
+                if (role === 'bot') {
                     // Parse markdown và clean up
                     processedContent = marked.parse(content);
                     contentClass = 'markdown-content';
@@ -454,8 +459,8 @@
                 
                 // Tạo nút nguồn nếu có sources
                 let sourcesButton = '';
-                console.log('Creating sources button for sender:', sender, 'sources:', sources); // Debug log
-                if (sender === 'bot' && sources && sources.length > 0) {
+                console.log('Creating sources button for role:', role, 'sources:', sources); // Debug log
+                if (role === 'bot' && sources && sources.length > 0) {
                     console.log('Creating sources button with', sources.length, 'sources'); // Debug log
                     try {
                         const sourcesJson = JSON.stringify(sources);
@@ -487,7 +492,7 @@
                 chatMessages.appendChild(messageDiv);
                 
                 // Apply correct padding for bot messages based on sidebar state
-                if (sender === 'bot') {
+                if (role === 'bot') {
                     const messageContent = messageDiv.querySelector('.message-content');
                     const isSidebarCollapsed = sidebar.classList.contains('collapsed');
                     
@@ -624,7 +629,7 @@
                     data.messages.forEach(message => {
                         // Lấy search_sources từ trường search_sources hoặc extra_data
                         const sources = message.search_sources || message.extra_data?.search_sources || null;
-                        addMessage(message.content, message.sender, sources);
+                        addMessage(message.content, message.role, sources);
                     });
                     
                     // Mark session as active

@@ -1,29 +1,14 @@
-from pydantic import BaseModel, EmailStr, Field
-from typing import Optional, Literal, Any
+from typing import Optional, Literal, Any, TypedDict
 from datetime import datetime
+from .model import SourceInfo, WebSearchParam
 
-class ChatRequest(BaseModel):
-    message: str = Field(..., min_length=1)
-    model_type: str
-    session_id: Optional[str] = Field(None)
-    use_web_search: bool = Field(True)
-    search_results_count: int = Field(3, ge=1, le=4)  # Từ 1-4 trang
-    priority_domains: bool = Field(True)  # Ưu tiên domain chính thức
-    
-class SourceInfo(BaseModel):
-    url: str
-    title: str
-    description: str
-    content: str
-    
-class ChatResponse(BaseModel):
-    response: str
-    session_id: str
-    message_id: str
-    sources: list[SourceInfo]
-    search_sources: list[SourceInfo]
-    
-class SessionResponse(BaseModel):
+class ChatRequest(TypedDict):
+    message: str
+    model_id: str
+    session_id: Optional[str]
+    web_search: Optional[WebSearchParam]
+
+class SessionResponse(TypedDict):
     id: str 
     title: str 
     created_at: datetime
@@ -31,17 +16,21 @@ class SessionResponse(BaseModel):
     message_count: int
     preview: str 
 
-class MessageResponse(BaseModel):
+class MessageResponse(TypedDict):
     id: str
-    sender: Literal['bot', 'uesr']
-    content: str
-    timestamp: str
-    message_type: Literal['text', 'image', 'file'] = Field('text')
-    extra_data: Optional[Any]
+    session_id: str
+    role: Literal["user", "bot"]
+    message: str
+    timestamp: datetime
+    message_type: Literal['text', 'image', 'file']
+    rag_sources: list[SourceInfo]
+    search_sources: list[SourceInfo]
+    model_id: Optional[str]
+    extra_data: Optional[dict]
 
-class SessionMessagesResponse(BaseModel):
+class SessionMessagesResponse(TypedDict):
     session: SessionResponse
     messages: list[MessageResponse]
     
-class CreateChatSessionRequest(BaseModel):
+class CreateChatSessionData(TypedDict):
     title: str
