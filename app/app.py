@@ -6,6 +6,7 @@ from backend import (
     auth_router,
     chat_router,
     model_router,
+    script_router,
     set_ping_filter,
     NoCacheOnDeleteMiddleWare, SessionMiddleware
 )
@@ -20,6 +21,7 @@ app.include_router(static_router, tags=["Static"]) # Use this due to diffirent i
 app.include_router(auth_router, tags=["Authenticaton"])
 app.include_router(chat_router, tags=["Chat"])
 app.include_router(model_router, tags=["Models"])
+app.include_router(script_router, tags=["Script"])
 
 if __name__ == "__main__":
     print("App starting")

@@ -1,4 +1,4 @@
-from engines import (
+from ..engines import (
     SearchResult,
     HtmlResult,
     PreProcessedResult,

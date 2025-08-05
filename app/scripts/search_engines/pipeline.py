@@ -1,10 +1,11 @@
 from typing import Any
-from component import *
-from engines import ProcessedResult
-from typing import Literal
+from .component import *
+from .engines import ProcessedResult
+    
+from typing import Literal, TYPE_CHECKING
 import traceback
 
-class Pipeline:
+class SearchPipeline:
     def __init__(self) -> None:
         self.querier = WebQuery()
         self.downloader = PageDowloader(10)
@@ -41,6 +42,3 @@ class Pipeline:
 
         return result
     
-if __name__ == "__main__":
-    pipeline = Pipeline()
-    result = pipeline("Ba công khai", 5)

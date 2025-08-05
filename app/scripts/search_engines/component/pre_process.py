@@ -1,7 +1,7 @@
 from crawl4ai.markdown_generation_strategy import DefaultMarkdownGenerator
 from crawl4ai import MarkdownGenerationResult, DefaultMarkdownGenerator
 from typing import Any, cast
-from engines import HtmlResult, PreProcessedResult, UrlContent
+from ..engines import HtmlResult, PreProcessedResult, UrlContent
 import re
 import requests
 URL_PATTERN = re.compile(r'\[(.*?)\]\((.*?)\)', re.DOTALL)

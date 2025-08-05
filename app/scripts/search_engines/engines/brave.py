@@ -2,7 +2,7 @@ import requests
 from urllib.parse import urlparse
 import json
 from .data import SearchResult, AbstractSearchEngine
-from config import BRAVE_API_KEY
+from ..config import BRAVE_API_KEY
 from typing import cast
 from datetime import datetime, timezone
     

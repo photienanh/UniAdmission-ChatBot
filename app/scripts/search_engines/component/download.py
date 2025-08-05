@@ -1,5 +1,5 @@
 import requests
-from engines import SearchResult, HtmlResult
+from ..engines import SearchResult, HtmlResult
 
 class PageDowloader:
     def __init__(self, timeout: float) -> None:

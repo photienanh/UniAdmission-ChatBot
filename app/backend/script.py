@@ -1,12 +1,32 @@
-from fastapi import APIRouter, Request
-from fastapi.responses import FileResponse
+from fastapi import APIRouter, Request, BackgroundTasks
+from fastapi.responses import StreamingResponse
 import os
+import tarfile
+import io
 from .schema import NO_CACHE_HEADERS
 
 router = APIRouter()
 
-@router.get("/script/{filename}", name="static", response_class=FileResponse)
-async def get_static(filename: str):
-    response = FileResponse(os.path.join("scripts", filename))
+@router.get("/script/kaggle_client", response_class=StreamingResponse)
+async def get_kaggle_client(background_tasks: BackgroundTasks):
+    tar_buffer = io.BytesIO()
+    with tarfile.open(fileobj=tar_buffer, mode='w:gz') as tar:
+        tar.add("scripts/kaggle_client", arcname='')
+    tar_buffer.seek(0)    
+    background_tasks.add_task(tar_buffer.close)
+    response = StreamingResponse(
+        content=tar_buffer, 
+        media_type="application/x-tar"
+    )
+    response.headers.update(NO_CACHE_HEADERS)
+    return response
+@router.get("/script/search_engines", response_class=StreamingResponse)
+async def get_search_engines(background_tasks: BackgroundTasks):
+    tar_buffer = io.BytesIO()
+    with tarfile.open(fileobj=tar_buffer, mode='w:gz') as tar:
+        tar.add("scripts/search_engines", arcname='')
+    tar_buffer.seek(0)    
+    background_tasks.add_task(tar_buffer.close)
+    response = StreamingResponse(content=tar_buffer, media_type="application/x-tar")
     response.headers.update(NO_CACHE_HEADERS)
     return response

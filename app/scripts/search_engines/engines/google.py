@@ -1,6 +1,6 @@
 import requests
-from config import GOOGLE_API_KEY as API_KEY
-from config import GOOGLE_CX as CX
+from ..config import GOOGLE_API_KEY as API_KEY
+from ..config import GOOGLE_CX as CX
 from .data import AbstractSearchEngine, SearchResult
 from typing import cast
 from datetime import datetime, timezone

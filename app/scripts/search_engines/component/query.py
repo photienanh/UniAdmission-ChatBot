@@ -1,5 +1,5 @@
 import requests
-from engines import SearchResult, HtmlResult, GoogleSearchEngine, BraveSearchEngine, AbstractSearchEngine
+from ..engines import SearchResult, HtmlResult, GoogleSearchEngine, BraveSearchEngine, AbstractSearchEngine
 from typing import Literal
 
 class WebQuery:
