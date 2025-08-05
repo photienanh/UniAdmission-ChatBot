@@ -10,11 +10,7 @@ class SuccessResponse(JSONResponse):
 class FailedResponse(JSONResponse):
     def __init__(self, message: str, status_code: int = 400) -> None:
         super().__init__({"message": message, "success": False}, status_code=status_code)
-        
-class ErrorReponse(JSONResponse):
-    def __init__(self, status_code: int, error: str) -> None:
-        super().__init__({"error": error}, status_code)
-        
+
 class ServerError(HTTPException):
     def __init__(self, detail: Any) -> None:
         super().__init__(500, detail)

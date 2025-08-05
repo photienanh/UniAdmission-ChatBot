@@ -35,11 +35,13 @@ input[type="button"],
 .user-info,
 .dropdown-item,
 .sources-button,
+.copy-button,
 .password-toggle,
 .slider-switch,
 .slider-track,
 .slider-thumb,
 .slider-label,
+.show-context-btn,
 #model-select,
 #web-search-button,
 button *,
@@ -58,11 +60,13 @@ label *,
 .user-info *,
 .dropdown-item *,
 .sources-button *,
+.copy-button *,
 .password-toggle *,
 .slider-switch *,
 .slider-track *,
 .slider-thumb *,
 .slider-label *,
+.show-context-btn *,
 #model-select *,
 #web-search-button * {
     cursor: pointer !important;
@@ -489,6 +493,8 @@ body {
 .message.user-message .message-content {
     justify-content: flex-end; /* Căn phải cho user */
     padding-right: 0; /* Bỏ padding để căn thẳng với ô input */
+    flex-direction: column; /* Thay đổi direction để message actions nằm dưới message */
+    align-items: flex-end; /* Căn tất cả về phải */
 }
 
 .message.bot-message .message-content {
@@ -496,6 +502,8 @@ body {
     max-width: 800px;
     margin: 0 auto;
     padding: 0 24px;
+    flex-direction: column; /* Để message actions nằm dưới message */
+    align-items: flex-start; /* Căn tất cả về trái */
 }
 
 /* Khi sidebar bị thu gọn */
@@ -536,6 +544,59 @@ body {
     max-width: 100%; /* Sử dụng toàn bộ chiều rộng có sẵn */
 }
 
+/* Message Actions */
+.message-actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    margin-top: 8px;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.message-content:hover .message-actions {
+    opacity: 1;
+}
+
+.copy-button {
+    background: none;
+    border: none;
+    color: #666666;
+    cursor: pointer;
+    padding: 4px;
+    border-radius: 4px;
+    width: auto;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    font-size: 14px;
+}
+
+.copy-button:hover {
+    color: #000000;
+    transform: scale(1.2);
+}
+
+.copy-button:active {
+    transform: scale(1.0);
+}
+
+/* User message actions - align to the right since the message is on the right */
+.message.user-message .message-actions {
+    justify-content: flex-end;
+    align-self: flex-end; /* Căn về phía phải */
+    max-width: 70%;
+}
+
+/* Bot message actions - align to the right */
+.message.bot-message .message-actions {
+    justify-content: flex-end;
+    align-self: flex-end; /* Căn về phía phải */
+}
+
 /* Chat Input Area */
 .chat-input-area {
     padding: 20px 24px 24px 24px;
@@ -553,6 +614,48 @@ body {
     transform: translateY(-20px);
     animation: slideInControls 0.6s ease-out forwards;
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Control Row Layout */
+.control-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 8px;
+    flex-direction: column;
+    transition: all 0.3s ease;
+}
+
+.control-row:last-child {
+    margin-bottom: 0;
+}
+
+/* First row - always visible */
+.control-row .main-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    width: 100%;
+    justify-content: center;
+}
+
+/* Web Search Options - chỉ hiện khi web search được bật */
+.web-search-options {
+    display: none;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    width: 100%;
+    justify-content: center;
+    margin-top: 12px;
+    gap: 40px;
+}
+
+.web-search-options.show {
+    display: flex;
+    opacity: 1;
+    transform: translateY(0);
 }
 
 @keyframes slideInControls {
@@ -602,6 +705,14 @@ body {
     animation-delay: 0.3s;
 }
 
+.control-group:nth-child(4) {
+    animation-delay: 0.4s;
+}
+
+.control-group:nth-child(5) {
+    animation-delay: 0.5s;
+}
+
 @keyframes slideInGroup {
     from {
         opacity: 0;
@@ -622,7 +733,7 @@ body {
     font-size: 14px;
     color: #4b5563;
     font-weight: 600;
-    min-width: 60px;
+    min-width: 60px; /* Trở về như cũ */
     letter-spacing: 0.5px;
 }
 
@@ -634,7 +745,7 @@ body {
     color: #374151;
     font-size: 14px;
     cursor: pointer;
-    min-width: 140px;
+    min-width: 140px; /* Trở về như cũ */
     appearance: none;
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
     background-position: right 10px center;
@@ -672,6 +783,8 @@ body {
     font-weight: 500;
     color: #495057;
     transition: color 0.3s ease;
+    cursor: default !important;
+    pointer-events: none;
 }
 
 .slider-switch {
@@ -681,6 +794,7 @@ body {
     height: 26px;
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform: scale(1);
+    cursor: pointer;
 }
 
 .slider-switch:hover {
@@ -723,7 +837,7 @@ body {
 }
 
 .slider-switch input:checked + .slider-track .slider-thumb {
-    transform: translateX(34px);
+    transform: translateX(24px);
 }
 
 /* Hover effect */
@@ -733,6 +847,41 @@ body {
 
 .slider-switch:hover .slider-thumb {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Responsive cho Web Search Settings */
+@media (max-width: 768px) {
+    .input-controls {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+    
+    .control-row .main-controls {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+    
+    .web-search-options {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+        margin-top: 8px;
+    }
+    
+    .control-group {
+        justify-content: space-between;
+    }
+    
+    .control-group label {
+        min-width: auto;
+        font-size: 13px;
+    }
+    
+    .control-group select {
+        min-width: 100px;
+    }
 }
 
 .chat-form {
@@ -1199,10 +1348,20 @@ body {
     align-items: flex-start;
     gap: 12px;
     margin-bottom: 12px;
+    position: relative;
+}
+
+.source-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e7eb;
 }
 
 .source-info {
     flex: 1;
+    min-width: 0;
 }
 
 .source-number {
@@ -1268,4 +1427,67 @@ body {
     border-left: 4px solid #000000;
     font-style: italic;
     border: 1px solid #000000;
+}
+
+/* Show context button */
+.show-context-btn {
+    background: #f8f9fa;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 12px;
+    color: #374151;
+    cursor: pointer;
+    transition: all 0.25s cubic-bezier(0.4, 0.0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    white-space: nowrap;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    flex-shrink: 0;
+    min-width: 110px;
+    justify-content: center;
+}
+
+.show-context-btn:hover {
+    background: #e5e7eb;
+    border-color: #9ca3af;
+    transform: scale(1.08);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.show-context-btn:active {
+    transform: scale(1.02);
+    transition: all 0.1s ease;
+}
+
+.show-context-btn i {
+    font-size: 11px;
+}
+
+/* Source context content */
+.source-context {
+    margin-left: 40px;
+    margin-top: 8px;
+    border-top: 1px solid #e5e7eb;
+    padding-top: 12px;
+}
+
+.context-header {
+    font-size: 13px;
+    color: #374151;
+    margin-bottom: 8px;
+}
+
+.context-content {
+    color: #000000;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 12px;
+    background: #f9fafb;
+    border-radius: 6px;
+    border: 1px solid #e5e7eb;
+    max-height: 200px;
+    overflow-y: auto;
+    white-space: pre-wrap;
 }

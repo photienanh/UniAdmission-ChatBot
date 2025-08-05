@@ -1,16 +1,71 @@
 import requests
-import os
 import pandas as pd
+from openai import OpenAI
 from bs4 import BeautifulSoup
 from newspaper import Article
 from io import StringIO
-from config import BRAVE_API_KEY
+from config import BRAVE_API_KEY, GPT_API_KEY
 import urllib3
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-def web_search(query, max_results):
+def initialize_openai_client():
+    return OpenAI(
+        base_url="https://models.github.ai/inference",
+        api_key=GPT_API_KEY
+    )
+
+def generate_search_keywords(question, model="openai/gpt-4o-mini"):
+    """Hỏi GPT một câu hỏi và trả về kết quả"""
+    client = initialize_openai_client()
+    response = client.chat.completions.create(
+        model=model,
+        messages=[
+            {
+                "role": "system",
+                "content": """Bạn là chuyên gia tạo từ khóa tìm kiếm thông minh. Nhiệm vụ: phân tích câu hỏi và tạo từ khóa giúp tìm được thông tin CĂN BẢN để LLM có thể suy luận ra câu trả lời.
+
+CHIẾN LƯỢC TÌM KIẾM:
+
+1. **Phân tích ý định câu hỏi**: Xác định thông tin gì cần thiết để trả lời
+2. **Tìm nguồn thông tin gốc**: Thay vì tìm trực tiếp câu trả lời, tìm dữ liệu để suy luận
+3. **Tối ưu từ khóa**: Dùng thuật ngữ chính thức, tên đầy đủ
+
+VÍ DỤ THÔNG MINH:
+
+Câu hỏi: "Số tiến sĩ trong viện trí tuệ nhân tạo UET là bao nhiêu?"
+→ Cần: Danh sách giảng viên để đếm tiến sĩ
+→ Từ khóa: "danh sách giảng viên viện trí tuệ nhân tạo UET"
+
+Câu hỏi: "Điểm chuẩn ngành CNTT Bách Khoa 2024?"  
+→ Cần: Bảng điểm chuẩn chính thức
+→ Từ khóa: "điểm chuẩn đại học Bách Khoa Hà Nội 2024"
+
+Câu hỏi: "Học phí ngành AI VNU-UET như thế nào?"
+→ Cần: Bảng học phí chính thức  
+→ Từ khóa: "học phí đại học công nghệ VNU-UET 2024"
+
+Câu hỏi: "Chương trình đào tạo ngành CNTT có môn gì?"
+→ Cần: Khung chương trình chi tiết
+→ Từ khóa: "chương trình đào tạo ngành công nghệ thông tin UET"
+
+NGUYÊN TẮC:
+- Thêm năm học nếu cần thông tin mới nhất
+- Tìm "danh sách", "bảng", "chương trình" thay vì câu hỏi trực tiếp
+- Ưu tiên trang web chính thức (.edu.vn)
+
+Chỉ trả về từ khóa, không giải thích."""
+            },
+            {   "role": "user",
+                "content": question
+            }
+        ],
+    )
+    return response.choices[0].message.content.strip()
+
+def web_search(question, max_results):
     """Tìm kiếm thông tin từ web sử dụng Brave Search API"""
     try:
+        query = generate_search_keywords(question).replace('"', '')
         # Brave Search API endpoint
         url = "https://api.search.brave.com/res/v1/web/search"
         headers = {
@@ -27,9 +82,8 @@ def web_search(query, max_results):
         response = requests.get(url, headers=headers, params=params)
         data = response.json()
         results = data.get("web", {}).get("results", [])
-        
-        pages = {}
-        for i, result in enumerate(results[:max_results], 1):
+        pages = []
+        for result in results[:max_results]:
             title = result.get("title", "")
             description = result.get("description", "")
             url = result.get("url", "")
@@ -40,7 +94,7 @@ def web_search(query, max_results):
                     "description": description,
                     "url": url
                 }
-            pages[f"Nguồn {i}"] = item
+                pages.append(item)
         return pages
     except:
         return None
@@ -68,8 +122,7 @@ def extract_main_content(url):
         article.parse()
         
         main_content += article.text.strip()
-
-        response = requests.get(url)
+        
         soup = BeautifulSoup(response.content, "html.parser")
         tables = extract_tables(soup)
         if tables:
@@ -83,18 +136,18 @@ def extract_main_content(url):
 def get_source(query, max_results):
     try:
         search_source = []
-        context = ""
         pages = web_search(query, max_results)
         if pages is None:
-            return None, None
-        for page in pages.values():
+            return None
+        for page in pages:
             url = page["url"]
+            content = extract_main_content(url)
             search_source.append({
                 "url": url,
                 "title": page["title"],
-                "content": page["description"],
+                "description": page["description"],
+                "content": content
             })
-            context += extract_main_content(url) + 100*'-' + "\n\n"
-        return context, search_source
+        return search_source
     except:
-        return None, None
+        return None
