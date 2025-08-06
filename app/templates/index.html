@@ -124,6 +124,11 @@
                             </div>
                             
                             <div class="control-group">
+                                <label for="search-docs-count">Số tài liệu:</label>
+                                <input type="number" id="search-docs-count" min="20" max="30" value="25" step="1">
+                            </div>
+                            
+                            <div class="control-group">
                                 <label for="priority-domains" class="slider-label">
                                     <i class="fa-solid fa-shield-alt"></i> Ưu tiên trang chính thức:
                                 </label>
@@ -194,6 +199,7 @@
             const webSearchButton = document.getElementById('web-search-button');
             const webSearchOptions = document.getElementById('web-search-options');
             const searchResultsCount = document.getElementById('search-results-count');
+            const searchDocsCount = document.getElementById('search-docs-count');
             const priorityDomains = document.getElementById('priority-domains');
             const sendButton = document.getElementById('send-button');
             const settingsToggle = document.getElementById('settings-toggle');
@@ -267,6 +273,30 @@
                 // Auto-resize textarea
                 this.style.height = 'auto';
                 this.style.height = Math.min(this.scrollHeight, 200) + 'px';
+            });
+            
+            // Validate k_docs input (20-30 range) - visual feedback for invalid values
+            searchDocsCount.addEventListener('input', function() {
+                let value = parseInt(this.value);
+                
+                // Check if value is invalid and add/remove visual feedback
+                if (this.value !== '' && (!isNaN(value) && (value < 20 || value > 30))) {
+                    this.classList.add('invalid');
+                } else {
+                    this.classList.remove('invalid');
+                }
+            });
+            
+            // Validate k_docs input (20-30 range) - only on blur to allow free typing
+            searchDocsCount.addEventListener('blur', function() {
+                let value = parseInt(this.value);
+                if (this.value === '' || isNaN(value) || value < 20) {
+                    this.value = 20;
+                } else if (value > 30) {
+                    this.value = 30;
+                }
+                // Remove invalid class after correction
+                this.classList.remove('invalid');
             });
             
             // Toggle sidebar functions
@@ -381,10 +411,15 @@
                 showTypingIndicator();
                 var webSearchParam = null;
                 if (useWebSearch) { 
+                    // Validate k_docs value before sending
+                    let kDocsValue = parseInt(searchDocsCount.value);
+                    if (isNaN(kDocsValue) || kDocsValue < 20) kDocsValue = 20;
+                    if (kDocsValue > 30) kDocsValue = 30;
+                    
                     webSearchParam = {
                         in_domain: priorityDomains.checked,
                         k_pages: parseInt(searchResultsCount.value),
-                        k_docs: 3 // TODO: Send real package, this is just placeholder
+                        k_docs: kDocsValue
                     }
                 }
                 // Send to backend
