@@ -125,7 +125,7 @@
                             
                             <div class="control-group">
                                 <label for="search-docs-count">Số tài liệu:</label>
-                                <input type="number" id="search-docs-count" min="20" max="30" value="25" step="1">
+                                <input type="number" id="search-docs-count" min="0" max="30" value="5" step="1">
                             </div>
                             
                             <div class="control-group">
@@ -280,7 +280,7 @@
                 let value = parseInt(this.value);
                 
                 // Check if value is invalid and add/remove visual feedback
-                if (this.value !== '' && (!isNaN(value) && (value < 20 || value > 30))) {
+                if (this.value !== '' && (!isNaN(value) && (value < 0 || value > 30))) {
                     this.classList.add('invalid');
                 } else {
                     this.classList.remove('invalid');
@@ -290,8 +290,8 @@
             // Validate k_docs input (20-30 range) - only on blur to allow free typing
             searchDocsCount.addEventListener('blur', function() {
                 let value = parseInt(this.value);
-                if (this.value === '' || isNaN(value) || value < 20) {
-                    this.value = 20;
+                if (this.value === '' || isNaN(value) || value < 0) {
+                    this.value = 0;
                 } else if (value > 30) {
                     this.value = 30;
                 }
@@ -413,8 +413,8 @@
                 if (useWebSearch) { 
                     // Validate k_docs value before sending
                     let kDocsValue = parseInt(searchDocsCount.value);
-                    if (isNaN(kDocsValue) || kDocsValue < 20) kDocsValue = 20;
-                    if (kDocsValue > 30) kDocsValue = 30;
+                    if (isNaN(kDocsValue) || kDocsValue < 0) kDocsValue = 0;
+                    if (kDocsValue > 50) kDocsValue = 50;
                     
                     webSearchParam = {
                         in_domain: priorityDomains.checked,
@@ -664,7 +664,7 @@
                     data.messages.forEach(message => {
                         // Lấy search_sources từ trường search_sources hoặc extra_data
                         const sources = message.search_sources || message.extra_data?.search_sources || null;
-                        addMessage(message.content, message.role, sources);
+                        addMessage(message.message, message.role, sources);
                     });
                     
                     // Mark session as active

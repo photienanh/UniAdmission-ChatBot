@@ -17,7 +17,7 @@ async def ask_llm(
         intermediate = await SLM.ask(model_id, question, session_id, web_search=web_search_params)
         result = {
             "message": intermediate["response"]["message"],
-            "sources": intermediate["response"]["search_sources"],
+            "sources": intermediate["response"]["rag_sources"],
             "search_sources": intermediate["response"]["search_sources"]
         }
     return result
