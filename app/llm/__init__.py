@@ -10,7 +10,7 @@ async def ask_llm(
     web_search_params: Any | None
 ):
     """Hàm chung để gọi LLM - Gemini hoặc Custom LLM"""
-    if model_id == GEMINI_MODEL:
+    if model_id == f"server:{GEMINI_MODEL}":
         result: dict[str, Any] = await  Gemini.ask(question, session_id, web_search_params)
     else:
         # result: dict[str, Any] = await SLM.ask_old(model_type ,question, session_id, use_web_search)
@@ -18,6 +18,9 @@ async def ask_llm(
         result = {
             "message": intermediate["response"]["message"],
             "sources": intermediate["response"]["rag_sources"],
-            "search_sources": intermediate["response"]["search_sources"]
+            "search_sources": intermediate["response"]["search_sources"],
+            "extra_data": {
+                "query": intermediate["response"]["search_query"]
+            }
         }
     return result

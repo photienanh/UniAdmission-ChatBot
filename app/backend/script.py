@@ -7,11 +7,11 @@ from .schema import NO_CACHE_HEADERS
 
 router = APIRouter()
 
-@router.get("/script/kaggle_client", response_class=StreamingResponse)
-async def get_kaggle_client(background_tasks: BackgroundTasks):
+@router.get("/script/{package_name}", response_class=StreamingResponse)
+async def get_kaggle_client(package_name: str, background_tasks: BackgroundTasks):
     tar_buffer = io.BytesIO()
     with tarfile.open(fileobj=tar_buffer, mode='w:gz') as tar:
-        tar.add("scripts/kaggle_client", arcname='')
+        tar.add(f"scripts/{package_name}", arcname='')
     tar_buffer.seek(0)    
     background_tasks.add_task(tar_buffer.close)
     response = StreamingResponse(
@@ -20,13 +20,13 @@ async def get_kaggle_client(background_tasks: BackgroundTasks):
     )
     response.headers.update(NO_CACHE_HEADERS)
     return response
-@router.get("/script/search_engines", response_class=StreamingResponse)
-async def get_search_engines(background_tasks: BackgroundTasks):
-    tar_buffer = io.BytesIO()
-    with tarfile.open(fileobj=tar_buffer, mode='w:gz') as tar:
-        tar.add("scripts/search_engines", arcname='')
-    tar_buffer.seek(0)    
-    background_tasks.add_task(tar_buffer.close)
-    response = StreamingResponse(content=tar_buffer, media_type="application/x-tar")
-    response.headers.update(NO_CACHE_HEADERS)
-    return response
+# @router.get("/script/search_engines", response_class=StreamingResponse)
+# async def get_search_engines(background_tasks: BackgroundTasks):
+#     tar_buffer = io.BytesIO()
+#     with tarfile.open(fileobj=tar_buffer, mode='w:gz') as tar:
+#         tar.add("scripts/search_engines", arcname='')
+#     tar_buffer.seek(0)    
+#     background_tasks.add_task(tar_buffer.close)
+#     response = StreamingResponse(content=tar_buffer, media_type="application/x-tar")
+#     response.headers.update(NO_CACHE_HEADERS)
+#     return response

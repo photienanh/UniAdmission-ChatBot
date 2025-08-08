@@ -24,6 +24,7 @@ def create_message(
     model_id: str | None = None, 
     sources: list[dict[str, str]] = [], 
     search_sources: list[dict[str, str]] = [],
+    extra_data: dict = {},
     **extrakwargs
 ) ->  ChatMessage:
     """
@@ -36,6 +37,7 @@ def create_message(
     chat_message.model_id = model_id
     chat_message.rag_sources = sources
     chat_message.search_sources = search_sources
+    chat_message.extra_data = extra_data
     DBSession.session.add(chat_message)
     return chat_message
 
