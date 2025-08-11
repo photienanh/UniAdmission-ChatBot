@@ -22,8 +22,3 @@ app.include_router(auth_router, tags=["Authenticaton"])
 app.include_router(chat_router, tags=["Chat"])
 app.include_router(model_router, tags=["Models"])
 app.include_router(script_router, tags=["Script"])
-
-if __name__ == "__main__":
-    print("App starting")
-    import uvicorn
-    uvicorn.run(app)
