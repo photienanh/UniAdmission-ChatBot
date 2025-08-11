@@ -12,13 +12,15 @@ class SearchPipeline:
         self.preprocessor = PreProcessor()
         self.processor = Processor(10)
         self.logger = Logger("web_search_logs")
-    def __call__(self, query: str, k: int = 10, engine_type: Literal["brave", "google"] = "brave") -> list[ProcessedResult]:
-        k = max(1, min(10, k))
+    def __call__(self, query: str, k: int = 10, in_domain: bool = False, engine_type: Literal["brave", "google"] = "brave") -> list[ProcessedResult]:
+        k = max(1, min(10, k)) # Limit to k
+        search_k = max(10, k) # Query at least 10
         result: list[ProcessedResult] = []
         self.logger.enable = True
         self.logger.start(query, k, engine_type)
-        for search_result in self.querier(query, k, engine_type):
+        for search_result in self.querier(query, search_k, in_domain, engine_type):
             try:
+                if len(result) >= k: break # Break when reach target
                 self.logger.count()
                 if search_result == None: continue
                 
@@ -38,7 +40,4 @@ class SearchPipeline:
                 result.append(processed_result)
             except:
                 traceback.print_exc()
-
-
         return result
-    

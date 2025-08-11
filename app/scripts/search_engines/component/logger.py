@@ -14,9 +14,6 @@ class Logger:
         self.enable = True
         self.folder_path = folder_path
         self._count = 0
-        self._count = 0
-        self._count = 0
-        self._count = 0
         os.makedirs(self.folder_path, exist_ok=True)
     def start(self, query: str, k: int, engine_type: str):
         if self.enable:

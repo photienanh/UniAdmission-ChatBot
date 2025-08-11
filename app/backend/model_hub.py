@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Request
 from fastapi.responses import JSONResponse, Response
-from config import SERVICE_REGISTER_TOKEN, GEMINI_MODEL
+from config import GEMINI_MODEL
 from .schema import *
 from .utility import ModelHub
 
@@ -23,8 +23,8 @@ async def failed_response_submitter(request: Request, data: ErrorData):
 async def get_model_list(request: Request) -> list[ModelInfo]:
     result = hub.get_alive_list()
     result.append({
-        "name": "Gemini",
-        "id": GEMINI_MODEL,
+        "name": "Gemini (server)",
+        "id": f"server:{GEMINI_MODEL}",
         "params_size": "Unknown"
     })
     return result

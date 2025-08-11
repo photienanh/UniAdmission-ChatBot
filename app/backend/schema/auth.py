@@ -1,5 +1,10 @@
+import sys
+if sys.version_info.minor >= 12:
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
 from pydantic import BaseModel, EmailStr, Field
-from typing import Optional, Literal, TypedDict
+from typing import Optional, Literal
 from urllib.parse import parse_qsl
 
 class LoginRequest(BaseModel):

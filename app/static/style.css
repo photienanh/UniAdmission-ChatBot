@@ -10,6 +10,7 @@
 input[type="text"], 
 input[type="password"], 
 input[type="email"], 
+input[type="number"],
 textarea {
     cursor: text !important;
 }
@@ -769,6 +770,58 @@ body {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
     transform: translateY(-1px);
+}
+
+/* Number input styles */
+.control-group input[type="number"] {
+    padding: 8px 12px;
+    border: 2px solid #e5e7eb;
+    border-radius: 8px;
+    background-color: #ffffff;
+    color: #374151;
+    font-size: 14px;
+    min-width: 140px;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transform: translateY(0);
+    text-align: center;
+    font-weight: 500;
+}
+
+.control-group input[type="number"]:hover {
+    border-color: #3b82f6;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(59, 130, 246, 0.1);
+    background-color: #fafbff;
+    transform: translateY(-2px);
+}
+
+.control-group input[type="number"]:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    transform: translateY(-1px);
+}
+
+/* Hide spinner arrows in number input */
+.control-group input[type="number"]::-webkit-outer-spin-button,
+.control-group input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Invalid input styles - red border */
+.control-group input[type="number"].invalid {
+    border-color: #ef4444;
+    box-shadow: 0 1px 3px rgba(239, 68, 68, 0.1), 0 0 0 1px rgba(239, 68, 68, 0.1);
+    background-color: #fef2f2;
+}
+
+.control-group input[type="number"].invalid:focus {
+    outline: none;
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1), 0 1px 3px rgba(239, 68, 68, 0.1);
+    background-color: #fef2f2;
 }
 
 /* Slider Switch Styles */

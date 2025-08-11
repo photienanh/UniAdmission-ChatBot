@@ -22,7 +22,7 @@ def set_jwt(response: Response, jwt: str):
         httponly=True,
         secure=False, # http
         samesite="lax",
-        max_age=3600
+        max_age=60 * 60 * 24
     )
     return response
 
