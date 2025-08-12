@@ -1,0 +1,932 @@
+[
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ - Đại học Quốc gia Hà Nội có những ngành nào nổi bật?",
+        "output": "Chào bạn! Trường Đại học Công nghệ (UET), thuộc Đại học Quốc gia Hà Nội, nổi bật với các ngành như **Công nghệ Thông tin**, **Kỹ thuật Điều khiển và Tự động hóa**, **Vật lý Kỹ thuật & Công nghệ Nano**, và **Công nghệ Nông nghiệp**. Theo báo cáo năm 2024, ngành Công nghệ Thông tin có 313 học viên thạc sĩ đang học và 151 tuyển mới, cho thấy sức hút lớn. Các chương trình được thiết kế hiện đại, gắn với nghiên cứu và nhu cầu thị trường. Nếu bạn quan tâm đến ngành cụ thể, mình có thể tư vấn thêm!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có đào tạo ngành Toán học không?",
+        "output": "Chào bạn! Có, Trường Đại học Sư phạm Hà Nội (HNUE) đào tạo ngành **Toán học** và **Thống kê**, theo báo cáo năm 2024. Là trường hàng đầu về đào tạo giáo viên, chương trình Toán học tại đây rất mạnh, tập trung vào việc đào tạo giáo viên trung học và nghiên cứu khoa học. Nếu bạn muốn biết thêm về yêu cầu nhập học hoặc cơ hội nghề nghiệp, mình sẵn sàng hỗ trợ!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Tỷ lệ việc làm sau tốt nghiệp của Trường Đại học Ngoại thương là bao nhiêu?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có tỷ lệ sinh viên tốt nghiệp có việc làm đúng chuyên môn đạt **98,94%**, một con số rất ấn tượng! Các ngành như Kinh tế (109 tốt nghiệp) và Ngôn ngữ Anh (101 tốt nghiệp) có cơ hội việc làm cao nhờ hợp tác với các doanh nghiệp quốc tế. Nếu bạn cần thông tin về ngành cụ thể, mình có thể tư vấn thêm!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có những chương trình đào tạo nào?",
+        "output": "Chào bạn! Trường Đại học Xây dựng Hà Nội (HUCE) cung cấp nhiều chương trình đào tạo chất lượng trong lĩnh vực xây dựng, theo báo cáo năm 2024. Các ngành nổi bật bao gồm **Kỹ thuật Xây dựng**, **Kiến trúc**, **Kỹ thuật Công trình Giao thông**, và **Quản lý Xây dựng**. Trường cũng có các chương trình thạc sĩ và tiến sĩ, với định hướng phát triển kỹ thuật và công nghệ. Nếu bạn quan tâm đến ngành cụ thể, mình có thể cung cấp thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có hỗ trợ học bổng cho sinh viên không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có chính sách hỗ trợ học bổng cho sinh viên, mặc dù không nêu rõ số liệu cụ thể. Với triết lý 'Giáo dục toàn diện vì sự phát triển bền vững', trường thường cung cấp học bổng dựa trên thành tích học tập hoặc hoàn cảnh khó khăn. Bạn có thể liên hệ qua số (+84) 243 765 5391 hoặc website www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên - Đại học Quốc gia TP.HCM có những cơ sở nào?",
+        "output": "Chào bạn! Theo tài liệu tuyển sinh năm 2024, Trường Đại học Khoa học Tự nhiên (QST), thuộc Đại học Quốc gia TP.HCM, có hai cơ sở: **Cơ sở 1** tại 227 Nguyễn Văn Cừ, Quận 5, TP.HCM (dành cho chương trình theo đề án) và **Cơ sở 2** tại Khu đô thị Đại học Quốc gia, Phường Linh Trung, TP. Thủ Đức (dành cho sinh viên chính quy). Bạn có thể tìm thêm thông tin tại https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có hợp tác với doanh nghiệp nào không?",
+        "output": "Chào bạn! Trường Đại học Công nghệ (UET) có quan hệ hợp tác chặt chẽ với nhiều doanh nghiệp lớn, theo báo cáo năm 2024. Các đối tác nổi bật bao gồm **Samsung Electronics**, **FPT Software**, và **Giao hàng Tiết kiệm** (7 thỏa thuận mới trong năm 2024). Những hợp tác này mang lại cơ hội thực tập và việc làm cho sinh viên. Nếu bạn muốn biết về một đối tác cụ thể, mình sẵn sàng hỗ trợ!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có kiểm định chất lượng giáo dục không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) đã được kiểm định chất lượng cơ sở giáo dục bởi Trung tâm Kiểm định Chất lượng Giáo dục - Đại học Quốc gia Hà Nội (VNU-CEA), đạt Chu kỳ 2, hiệu lực từ 02/06/2023 đến 02/06/2028. Điều này đảm bảo chất lượng đào tạo đạt chuẩn. Nếu bạn muốn biết về kiểm định chương trình cụ thể, mình có thể giúp!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có hỗ trợ sinh viên quốc tế không?",
+        "output": "Chào bạn! Trường Đại học Ngoại thương (FTU) rất hỗ trợ sinh viên quốc tế, theo báo cáo năm 2024. Trường quản lý đoàn ra/vào, hỗ trợ thủ tục nhập cảnh lần đầu, và tổ chức các chương trình trao đổi sinh viên. Các ngành như Ngôn ngữ Anh (262 sinh viên) và Kinh tế rất phù hợp với sinh viên quốc tế. Bạn có thể liên hệ qua website www.ftu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có cơ sở vật chất như thế nào?",
+        "output": "Chào bạn! Trường Đại học Xây dựng Hà Nội (HUCE) có cơ sở vật chất hiện đại, theo báo cáo năm 2024. Cơ sở chính tại 55 đường Giải Phóng, Hà Nội, được trang bị giảng đường, phòng thí nghiệm, và thư viện tiên tiến. Ngoài ra, khu thí nghiệm tại Hà Nam hỗ trợ nghiên cứu thực tiễn. Trường đang phát triển thêm cơ sở mới để nâng cao chất lượng đào tạo. Nếu bạn cần thêm thông tin, mình sẵn sàng hỗ trợ!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội được thành lập khi nào?",
+        "output": "Chào bạn! Trường Đại học Công nghiệp Hà Nội (HaUI) được thành lập vào năm **1898** với tiền thân là Trường Trung cấp Kỹ thuật Hà Nội, theo báo cáo năm 2024. Trường đã phát triển thành một cơ sở đào tạo kỹ thuật hàng đầu với triết lý 'Giáo dục toàn diện vì sự phát triển bền vững'. Nếu bạn cần thêm thông tin về lịch sử hoặc chương trình đào tạo, mình sẵn sàng hỗ trợ!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có ngành Công nghệ Sinh học không?",
+        "output": "Chào bạn! Có, Trường Đại học Khoa học Tự nhiên (QST), thuộc Đại học Quốc gia TP.HCM, đào tạo ngành **Công nghệ Sinh học**, theo tài liệu tuyển sinh năm 2024. Đây là một trong những ngành mũi nhọn của trường, với chương trình đào tạo gắn liền với nghiên cứu và ứng dụng thực tiễn. Bạn có thể tìm hiểu thêm tại https://tuyensinh.hcmus.edu.vn hoặc liên hệ mình để biết chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có cung cấp ký túc xá cho sinh viên không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) thuộc Đại học Quốc gia Hà Nội có hệ thống ký túc xá tại Khu đô thị Đại học Quốc gia Hà Nội, phục vụ sinh viên chính quy. Ký túc xá được trang bị đầy đủ tiện nghi, hỗ trợ sinh viên trong học tập và sinh hoạt. Để biết thêm chi tiết về điều kiện đăng ký, bạn có thể liên hệ qua website www.uet.vnu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có chương trình trao đổi sinh viên quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có các chương trình trao đổi sinh viên quốc tế, đặc biệt thông qua các thỏa thuận hợp tác với các trường đại học nước ngoài. Các chương trình này thường dành cho sinh viên ngành Ngôn ngữ và Sư phạm. Để biết thêm thông tin chi tiết, bạn có thể liên hệ qua website www.hnue.edu.vn hoặc văn phòng quốc tế của trường!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có ngành Ngôn ngữ Nhật không?",
+        "output": "Chào bạn! Có, Trường Đại học Ngoại thương (FTU) đào tạo ngành **Ngôn ngữ Nhật**, theo báo cáo năm 2024. Đây là một trong những ngành ngôn ngữ nổi bật của trường, với 262 sinh viên theo học các chương trình ngôn ngữ. Chương trình tập trung vào kỹ năng giao tiếp và cơ hội việc làm trong các doanh nghiệp Nhật Bản. Bạn có thể tìm hiểu thêm tại www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có dự án nghiên cứu về vật liệu mới không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có các dự án nghiên cứu về **vật liệu xây dựng mới**, đặc biệt trong lĩnh vực vật liệu thân thiện môi trường và công nghệ bê tông tiên tiến (trang 2). Các dự án này thường được thực hiện tại khu thí nghiệm ở Hà Nam. Nếu bạn muốn biết thêm về các dự án cụ thể, mình có thể hỗ trợ tìm hiểu thêm!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Tỷ lệ giảng viên có trình độ tiến sĩ tại Trường Đại học Công nghiệp Hà Nội là bao nhiêu?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có đội ngũ giảng viên với khoảng **30% đạt trình độ tiến sĩ**, dựa trên thông tin về cơ cấu nhân sự. Con số này phản ánh chất lượng đào tạo cao của trường. Để có số liệu chính xác nhất, bạn có thể liên hệ qua số (+84) 243 765 5391 hoặc website www.haui.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có hỗ trợ sinh viên khởi nghiệp không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có các chương trình hỗ trợ sinh viên khởi nghiệp, bao gồm các câu lạc bộ khởi nghiệp và các buổi hội thảo kết nối với doanh nghiệp. Trường cũng hợp tác với các trung tâm ươm tạo tại Đại học Quốc gia TP.HCM. Bạn có thể tìm hiểu thêm tại https://tuyensinh.hcmus.edu.vn hoặc văn phòng hỗ trợ sinh viên!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có tổ chức hoạt động ngoại khóa không?",
+        "output": "Chào bạn! Trường Đại học Công nghệ (UET) tổ chức nhiều hoạt động ngoại khóa, theo báo cáo năm 2024. Các hoạt động bao gồm câu lạc bộ công nghệ, hội thảo khoa học, và các sự kiện văn hóa như Ngày hội Công nghệ. Những hoạt động này giúp sinh viên phát triển kỹ năng mềm và kết nối cộng đồng. Bạn có thể tìm hiểu thêm qua website www.uet.vnu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có bao nhiêu sinh viên đang theo học?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có khoảng **15.000 sinh viên** đang theo học các chương trình đại học, thạc sĩ, và tiến sĩ. Con số này có thể thay đổi theo từng năm, vì vậy bạn nên liên hệ qua website www.hnue.edu.vn để có thông tin chính xác nhất!"
+    }
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có chương trình đào tạo thạc sĩ không?",
+        "output": "Chào bạn! Có, theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) cung cấp các chương trình đào tạo thạc sĩ, đặc biệt trong các lĩnh vực như **Kinh tế**, **Quản trị Kinh doanh**, và **Kinh tế Quốc tế** (trang 6). Các chương trình này được thiết kế phù hợp với nhu cầu thị trường và có hợp tác quốc tế. Bạn có thể tìm hiểu thêm chi tiết qua website www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có hợp tác quốc tế nào không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có các chương trình hợp tác quốc tế với nhiều trường đại học và tổ chức, đặc biệt trong lĩnh vực kỹ thuật và xây dựng (trang 3). Ví dụ, trường hợp tác với các trường ở Nhật Bản và Hàn Quốc về nghiên cứu vật liệu xây dựng. Để biết thêm chi tiết, bạn có thể liên hệ qua website www.nuce.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có ngành Kỹ thuật Điện không?",
+        "output": "Chào bạn! Có, Trường Đại học Công nghiệp Hà Nội (HaUI) đào tạo ngành **Kỹ thuật Điện**, theo báo cáo năm 2024 (trang 15). Ngành này tập trung vào kỹ thuật điện công nghiệp và tự động hóa, với cơ hội việc làm cao. Bạn có thể tìm hiểu thêm qua số (+84) 243 765 5391 hoặc website www.haui.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có phòng thí nghiệm công nghệ cao không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST), thuộc Đại học Quốc gia TP.HCM, có các phòng thí nghiệm công nghệ cao, đặc biệt trong các lĩnh vực như **Công nghệ Sinh học**, **Hóa học**, và **Vật lý**. Các phòng thí nghiệm này hỗ trợ nghiên cứu và đào tạo thực tiễn. Bạn có thể tìm hiểu thêm tại https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có hỗ trợ học phí cho sinh viên khó khăn không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) có chính sách hỗ trợ học phí và học bổng cho sinh viên có hoàn cảnh khó khăn, dựa trên thành tích học tập hoặc điều kiện kinh tế. Để biết chi tiết về điều kiện và cách đăng ký, bạn có thể liên hệ qua website www.uet.vnu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có ngành Sư phạm Vật lý không?",
+        "output": "Chào bạn! Có, Trường Đại học Sư phạm Hà Nội (HNUE) đào tạo ngành **Sư phạm Vật lý**, theo báo cáo năm 2024. Đây là một trong những ngành đào tạo giáo viên chủ lực của trường, với chương trình chất lượng cao và kiểm định đạt chuẩn. Bạn có thể liên hệ qua www.hnue.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có ký túc xá cho sinh viên không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có ký túc xá dành cho sinh viên, đặc biệt tại cơ sở Hà Nội. Ký túc xá được trang bị tiện nghi hiện đại, đáp ứng nhu cầu sinh hoạt. Bạn có thể liên hệ qua website www.ftu.edu.vn để biết thêm thông tin về đăng ký và chi phí!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có đào tạo ngành Kỹ thuật Môi trường không?",
+        "output": "Chào bạn! Có, Trường Đại học Xây dựng Hà Nội (HUCE) đào tạo ngành **Kỹ thuật Môi trường**, theo báo cáo năm 2024. Ngành này tập trung vào xử lý nước thải, chất thải rắn, và công nghệ môi trường. Bạn có thể tìm hiểu thêm qua website www.nuce.edu.vn để biết chi tiết về chương trình!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có tổ chức hội thảo nghề nghiệp không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) thường xuyên tổ chức các hội thảo nghề nghiệp và ngày hội việc làm, kết nối sinh viên với các doanh nghiệp. Các sự kiện này giúp sinh viên tìm hiểu cơ hội việc làm và kỹ năng cần thiết. Bạn có thể liên hệ qua (+84) 243 765 5391 để biết lịch tổ chức!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có chương trình đào tạo tiến sĩ không?",
+        "output": "Chào bạn! Có, Trường Đại học Khoa học Tự nhiên (QST), thuộc Đại học Quốc gia TP.HCM, cung cấp các chương trình đào tạo tiến sĩ trong các lĩnh vực như **Toán học**, **Vật lý**, và **Công nghệ Sinh học**, theo tài liệu năm 2024. Bạn có thể tìm hiểu chi tiết qua website https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có ngành Kỹ thuật Máy tính không?",
+        "output": "Chào bạn! Có, Trường Đại học Công nghệ (UET) đào tạo ngành **Kỹ thuật Máy tính**, thuộc nhóm ngành Công nghệ Thông tin, theo báo cáo năm 2024. Ngành này tập trung vào phần cứng, phần mềm, và hệ thống nhúng, với tỷ lệ việc làm cao. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có hợp tác với trường đại học nước ngoài nào không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có hợp tác với nhiều trường đại học quốc tế, như các trường ở Nhật Bản, Hàn Quốc, và Pháp, tập trung vào trao đổi sinh viên và nghiên cứu giáo dục. Bạn có thể liên hệ qua website www.hnue.edu.vn để biết thêm chi tiết về các chương trình hợp tác!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có tổ chức các câu lạc bộ sinh viên không?",
+        "output": "Chào bạn! Có, Trường Đại học Ngoại thương (FTU) có nhiều câu lạc bộ sinh viên, như Câu lạc bộ Kinh doanh, Câu lạc bộ Ngoại ngữ, và Câu lạc bộ Văn hóa, theo báo cáo năm 2024. Các câu lạc bộ này giúp sinh viên phát triển kỹ năng mềm và mạng lưới quan hệ. Bạn có thể tìm hiểu thêm qua www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có ngành Kiến trúc không?",
+        "output": "Chào bạn! Có, Trường Đại học Xây dựng Hà Nội (HUCE) đào tạo ngành **Kiến trúc**, theo báo cáo năm 2024. Ngành này tập trung vào thiết kế kiến trúc và quy hoạch đô thị, với chương trình đào tạo hiện đại. Bạn có thể tìm hiểu thêm qua website www.nuce.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có hỗ trợ thực tập cho sinh viên không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có chương trình hỗ trợ thực tập cho sinh viên, đặc biệt thông qua hợp tác với các doanh nghiệp như VinGroup và các công ty kỹ thuật. Các chương trình thực tập giúp sinh viên tích lũy kinh nghiệm thực tế. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có ngành Hóa học không?",
+        "output": "Chào bạn! Có, Trường Đại họzc Khoa học Tự nhiên (QST) đào tạo ngành **Hóa học**, theo tài liệu tuyển sinh năm 2024. Ngành này tập trung vào nghiên cứu hóa học ứng dụng và công nghiệp, với các phòng thí nghiệm hiện đại hỗ trợ. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có bao nhiêu giảng viên?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) có khoảng **200 giảng viên**, bao gồm các giáo sư, tiến sĩ, và thạc sĩ, đảm bảo chất lượng giảng dạy. Để có con số chính xác và cập nhật, bạn có thể liên hệ qua www.uet.vnu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có chương trình đào tạo từ xa không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có một số chương trình đào tạo từ xa, đặc biệt trong lĩnh vực giáo dục và sư phạm. Bạn có thể liên hệ qua website www.hnue.edu.vn để biết thêm thông tin về các chương trình cụ thể!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có ngành Kinh tế Quốc tế không?",
+        "output": "Chào bạn! Có, Trường Đại học Ngoại thương (FTU) đào tạo ngành **Kinh tế Quốc tế**, theo báo cáo năm 2024. Đây là một trong những ngành mũi nhọn của trường, với chương trình gắn liền với thương mại và hợp tác quốc tế. Bạn có thể tìm hiểu thêm qua www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có hỗ trợ sinh viên khởi nghiệp không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có các chương trình hỗ trợ sinh viên khởi nghiệp, bao gồm hội thảo và các khóa học về quản lý dự án xây dựng. Trường cũng kết nối với các doanh nghiệp để hỗ trợ ý tưởng khởi nghiệp. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có ngành Công nghệ May không?",
+        "output": "Chào bạn! Có, Trường Đại học Công nghiệp Hà Nội (HaUI) đào tạo ngành **Công nghệ May**, theo báo cáo năm 2024 (trang 15). Ngành này tập trung vào thiết kế và sản xuất công nghiệp may mặc, với cơ hội việc làm cao trong ngành dệt may. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có tổ chức ngày hội việc làm không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) thường xuyên tổ chức ngày hội việc làm và hội thảo nghề nghiệp, kết nối sinh viên với các doanh nghiệp trong lĩnh vực công nghệ và khoa học. Bạn có thể tìm lịch sự kiện qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có hỗ trợ sinh viên quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) có hỗ trợ sinh viên quốc tế, bao gồm tư vấn nhập học, hỗ trợ thủ tục visa, và các chương trình trao đổi quốc tế. Bạn có thể liên hệ qua website www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có ngành Ngôn ngữ Anh không?",
+        "output": "Chào bạn! Có, Trường Đại học Sư phạm Hà Nội (HNUE) đào tạo ngành **Ngôn ngữ Anh**, theo báo cáo năm 2024. Ngành này tập trung vào đào tạo giáo viên tiếng Anh và kỹ năng ngôn ngữ. Bạn có thể tìm hiểu thêm qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có phòng thí nghiệm công nghệ không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) không tập trung vào phòng thí nghiệm công nghệ, mà chủ yếu đầu tư vào các phòng học mô phỏng kinh doanh và thương mại điện tử. Tuy nhiên, trường hợp tác với các doanh nghiệp công nghệ để hỗ trợ sinh viên. Bạn có thể liên hệ qua www.ftu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có chương trình đào tạo từ xa không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) hiện tập trung vào đào tạo trực tiếp, nhưng có một số khóa học ngắn hạn và chương trình liên kết có thể học từ xa. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm thông tin về các chương trình này!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có hợp tác với doanh nghiệp nào không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) hợp tác với nhiều doanh nghiệp như **VinGroup**, **Samsung**, và các công ty dệt may. Các hợp tác này mang lại cơ hội thực tập và việc làm cho sinh viên. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có ngành Vật lý không?",
+        "output": "Chào bạn! Có, Trường Đại học Khoa học Tự nhiên (QST) đào tạo ngành **Vật lý**, theo tài liệu tuyển sinh năm 2024. Ngành này tập trung vào nghiên cứu vật lý lý thuyết và ứng dụng, với các phòng thí nghiệm hiện đại. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có tổ chức các hội thảo khoa học không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) thường xuyên tổ chức các hội thảo khoa học về công nghệ thông tin, trí tuệ nhân tạo, và công nghệ nano. Các hội thảo này thu hút cả sinh viên và chuyên gia. Bạn có thể tìm lịch sự kiện qua www.uet.vnu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có hỗ trợ học bổng cho sinh viên không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có chính sách học bổng cho sinh viên dựa trên thành tích học tập và hoàn cảnh khó khăn. Bạn có thể liên hệ qua www.hnue.edu.vn để biết chi tiết về các loại học bổng và cách đăng ký!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có đào tạo ngành Quản trị Kinh doanh không?",
+        "output": "Chào bạn! Có, Trường Đại học Ngoại thương (FTU) đào tạo ngành **Quản trị Kinh doanh**, theo báo cáo năm 2024. Ngành này rất được ưa chuộng, với chương trình gắn liền với thực tiễn và hợp tác quốc tế. Bạn có thể tìm hiểu thêm qua www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có bao nhiêu sinh viên đang theo học?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có khoảng **10.000 sinh viên** đang theo học các chương trình đại học, thạc sĩ, và tiến sĩ. Để có số liệu chính xác nhất, bạn có thể liên hệ qua www.nuce.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có phòng thí nghiệm hiện đại không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có các phòng thí nghiệm hiện đại, đặc biệt trong các lĩnh vực kỹ thuật điện, cơ khí, và công nghệ may. Các phòng thí nghiệm này hỗ trợ đào tạo và nghiên cứu thực tiễn. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có hợp tác với doanh nghiệp nào không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) hợp tác với nhiều doanh nghiệp trong lĩnh vực công nghệ và khoa học, như **FPT Software** và các công ty công nghệ sinh học. Các hợp tác này mang lại cơ hội thực tập và việc làm. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có ngành Công nghệ Nông nghiệp không?",
+        "output": "Chào bạn! Có, Trường Đại học Công nghệ (UET) đào tạo ngành **Công nghệ Nông nghiệp**, theo báo cáo năm 2024. Ngành này tập trung vào ứng dụng công nghệ cao trong nông nghiệp, như IoT và tự động hóa. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có tổ chức các sự kiện văn hóa không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) thường xuyên tổ chức các sự kiện văn hóa, như Ngày hội truyền thống, các chương trình giao lưu văn nghệ, và các hoạt động chào đón tân sinh viên. Bạn có thể tìm lịch sự kiện qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có hỗ trợ thực tập cho sinh viên không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có chương trình hỗ trợ thực tập thông qua hợp tác với các doanh nghiệp quốc tế, như các công ty thương mại và ngân hàng. Các chương trình này giúp sinh viên tích lũy kinh nghiệm thực tế. Bạn có thể liên hệ qua www.ftu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có ngành Quản lý Xây dựng không?",
+        "output": "Chào bạn! Có, Trường Đại học Xây dựng Hà Nội (HUCE) đào tạo ngành **Quản lý Xây dựng**, theo báo cáo năm 2024. Ngành này tập trung vào quản lý dự án và chi phí xây dựng, với cơ hội việc làm cao. Bạn có thể tìm hiểu thêm qua www.nuce.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có chương trình đào tạo thạc sĩ không?",
+        "output": "Chào bạn! Có, Trường Đại học Công nghiệp Hà Nội (HaUI) cung cấp các chương trình đào tạo thạc sĩ trong các lĩnh vực như kỹ thuật và công nghệ, theo báo cáo năm 2024. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết về các ngành thạc sĩ!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có ký túc xá cho sinh viên không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có ký túc xá tại Khu đô thị Đại học Quốc gia TP.HCM, Phường Linh Trung, TP. Thủ Đức. Ký túc xá được trang bị đầy đủ tiện nghi cho sinh viên. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có dự án nghiên cứu về trí tuệ nhân tạo không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) có nhiều dự án nghiên cứu về **trí tuệ nhân tạo**, đặc biệt trong các lĩnh vực như xử lý ngôn ngữ tự nhiên và học máy. Các dự án này thường hợp tác với các doanh nghiệp như FPT Software. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có bao nhiêu giảng viên?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có khoảng **600 giảng viên**, bao gồm các giáo sư, tiến sĩ, và thạc sĩ, đảm bảo chất lượng đào tạo. Để có số liệu chính xác, bạn có thể liên hệ qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có ngành Ngôn ngữ Trung Quốc không?",
+        "output": "Chào bạn! Có, Trường Đại học Ngoại thương (FTU) đào tạo ngành **Ngôn ngữ Trung Quốc**, theo báo cáo năm 2024. Ngành này tập trung vào kỹ năng ngôn ngữ và thương mại, với cơ hội việc làm trong các doanh nghiệp Trung Quốc. Bạn có thể tìm hiểu thêm qua www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có tổ chức các câu lạc bộ sinh viên không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có nhiều câu lạc bộ sinh viên, như Câu lạc bộ Kiến trúc, Câu lạc bộ Kỹ thuật, và các câu lạc bộ văn hóa. Các câu lạc bộ này giúp sinh viên phát triển kỹ năng và kết nối. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có ngành Kỹ thuật Cơ khí không?",
+        "output": "Chào bạn! Có, Trường Đại học Công nghiệp Hà Nội (HaUI) đào tạo ngành **Kỹ thuật Cơ khí**, theo báo cáo năm 2024 (trang 15). Ngành này tập trung vào thiết kế và chế tạo máy, với cơ hội việc làm cao trong ngành công nghiệp. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có hỗ trợ học bổng không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có chính sách học bổng cho sinh viên dựa trên thành tích học tập và hoàn cảnh khó khăn. Bạn có thể tìm hiểu chi tiết qua https://tuyensinh.hcmus.edu.vn hoặc liên hệ văn phòng trường!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có chương trình trao đổi sinh viên quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) có các chương trình trao đổi sinh viên quốc tế với các trường đại học ở Nhật Bản, Hàn Quốc, và châu Âu. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết về điều kiện tham gia!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có ngành Sư phạm Hóa học không?",
+        "output": "Chào bạn! Có, Trường Đại học Sư phạm Hà Nội (HNUE) đào tạo ngành **Sư phạm Hóa học**, theo báo cáo năm 2024. Ngành này tập trung vào đào tạo giáo viên hóa học với chương trình chất lượng cao. Bạn có thể tìm hiểu thêm qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có hỗ trợ sinh viên khởi nghiệp không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có các chương trình hỗ trợ sinh viên khởi nghiệp, bao gồm các khóa học về kinh doanh và các câu lạc bộ khởi nghiệp. Trường cũng kết nối với các doanh nghiệp để hỗ trợ ý tưởng khởi nghiệp. Bạn có thể liên hệ qua www.ftu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có phòng thí nghiệm công nghệ cao không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có các phòng thí nghiệm công nghệ cao, đặc biệt trong lĩnh vực vật liệu xây dựng và kỹ thuật công trình, tại cơ sở Hà Nam. Bạn có thể tìm hiểu thêm qua www.nuce.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có tổ chức các sự kiện văn hóa không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) thường xuyên tổ chức các sự kiện văn hóa, như Ngày hội sinh viên, các chương trình văn nghệ, và các hoạt động giao lưu. Bạn có thể tìm lịch sự kiện qua www.haui.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có ngành Công nghệ Thông tin không?",
+        "output": "Chào bạn! Có, Trường Đại học Khoa học Tự nhiên (QST) đào tạo ngành **Công nghệ Thông tin**, theo tài liệu tuyển sinh năm 2024. Ngành này tập trung vào lập trình, trí tuệ nhân tạo, và dữ liệu lớn, với cơ hội việc làm cao. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có bao nhiêu sinh viên đang theo học?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) có khoảng **5.000 sinh viên** đang theo học các chương trình đại học, thạc sĩ, và tiến sĩ. Để có số liệu chính xác, bạn có thể liên hệ qua www.uet.vnu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có dự án nghiên cứu khoa học không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có nhiều dự án nghiên cứu khoa học trong lĩnh vực giáo dục, toán học, và khoa học tự nhiên. Các dự án này thường do giảng viên và sinh viên thực hiện. Bạn có thể tìm hiểu thêm qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có chương trình đào tạo từ xa không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) hiện tập trung vào đào tạo trực tiếp, nhưng có một số khóa học ngắn hạn và chương trình liên kết có thể học từ xa. Bạn có thể liên hệ qua www.ftu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có hợp tác với doanh nghiệp nào không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) hợp tác với nhiều doanh nghiệp xây dựng, như **Vinaconex** và **Tập đoàn Hòa Phát**, mang lại cơ hội thực tập và việc làm. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có hỗ trợ sinh viên quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có hỗ trợ sinh viên quốc tế, bao gồm tư vấn nhập học và các chương trình trao đổi. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có tổ chức các câu lạc bộ sinh viên không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có nhiều câu lạc bộ sinh viên, như Câu lạc bộ Công nghệ Thông tin, Câu lạc bộ Khoa học, và Câu lạc bộ Văn hóa. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có ngành Vật lý Kỹ thuật không?",
+        "output": "Chào bạn! Có, Trường Đại học Công nghệ (UET) đào tạo ngành **Vật lý Kỹ thuật & Công nghệ Nano**, theo báo cáo năm 2024. Ngành này tập trung vào nghiên cứu vật liệu và công nghệ cao. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có phòng thí nghiệm hiện đại không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có các phòng thí nghiệm hiện đại trong các lĩnh vực như hóa học, vật lý, và sinh học, hỗ trợ đào tạo và nghiên cứu. Bạn có thể liên hệ qua www.hnue.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có bao nhiêu sinh viên đang theo học?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có khoảng **16.000 sinh viên** đang theo học các chương trình đại học, thạc sĩ, và tiến sĩ. Để có số liệu chính xác, bạn có thể liên hệ qua www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có chương trình đào tạo tiến sĩ không?",
+        "output": "Chào bạn! Có, Trường Đại học Xây dựng Hà Nội (HUCE) cung cấp các chương trình đào tạo tiến sĩ trong các lĩnh vực như kỹ thuật xây dựng và quản lý xây dựng, theo báo cáo năm 2024. Bạn có thể tìm hiểu thêm qua www.nuce.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có dự án nghiên cứu về công nghệ không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có các dự án nghiên cứu về công nghệ, đặc biệt trong lĩnh vực kỹ thuật điện và công nghệ may. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có bao nhiêu giảng viên?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có khoảng **400 giảng viên**, bao gồm các giáo sư, tiến sĩ, và thạc sĩ. Để có số liệu chính xác, bạn có thể liên hệ qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có tổ chức ngày hội việc làm không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) thường xuyên tổ chức ngày hội việc làm, kết nối sinh viên với các doanh nghiệp công nghệ như FPT Software và Samsung. Bạn có thể tìm lịch sự kiện qua www.uet.vnu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có ngành Sư phạm Sinh học không?",
+        "output": "Chào bạn! Có, Trường Đại học Sư phạm Hà Nội (HNUE) đào tạo ngành **Sư phạm Sinh học**, theo báo cáo năm 2024. Ngành này tập trung vào đào tạo giáo viên sinh học với chương trình chất lượng cao. Bạn có thể tìm hiểu thêm qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có hợp tác với trường đại học nước ngoài nào không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có hợp tác với nhiều trường đại học quốc tế, như các trường ở Nhật Bản, Hàn Quốc, và châu Âu, tập trung vào trao đổi sinh viên và nghiên cứu kinh tế. Bạn có thể liên hệ qua www.ftu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có hỗ trợ học bổng không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có chính sách học bổng cho sinh viên dựa trên thành tích học tập và hoàn cảnh khó khăn. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có bao nhiêu sinh viên đang theo học?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có khoảng **20.000 sinh viên** đang theo học các chương trình đại học, thạc sĩ, và tiến sĩ. Để có số liệu chính xác, bạn có thể liên hệ qua www.haui.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có dự án nghiên cứu khoa học không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có nhiều dự án nghiên cứu khoa học trong các lĩnh vực như công nghệ sinh học, vật lý, và hóa học. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có phòng thí nghiệm hiện đại không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) có các phòng thí nghiệm hiện đại trong các lĩnh vực như công nghệ thông tin, trí tuệ nhân tạo, và công nghệ nano. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có tổ chức ngày hội việc làm không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) thường xuyên tổ chức ngày hội việc làm, đặc biệt cho các ngành sư phạm, kết nối sinh viên với các trường học và tổ chức giáo dục. Bạn có thể tìm lịch sự kiện qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có ngành Thương mại Điện tử không?",
+        "output": "Chào bạn! Có, Trường Đại học Ngoại thương (FTU) đào tạo ngành **Thương mại Điện tử**, theo báo cáo năm 2024. Ngành này tập trung vào kinh doanh số và công nghệ thương mại, với cơ hội việc làm cao. Bạn có thể tìm hiểu thêm qua www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có ngành Kỹ thuật Công trình Giao thông không?",
+        "output": "Chào bạn! Có, Trường Đại học Xây dựng Hà Nội (HUCE) đào tạo ngành **Kỹ thuật Công trình Giao thông**, theo báo cáo năm 2024. Ngành này tập trung vào thiết kế và xây dựng cầu đường, với chương trình thực tiễn cao. Bạn có thể tìm hiểu thêm qua www.nuce.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có chương trình trao đổi sinh viên quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có các chương trình trao đổi sinh viên quốc tế với các trường đại học ở Hàn Quốc, Nhật Bản, và Trung Quốc. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có ngành Toán học không?",
+        "output": "Chào bạn! Có, Trường Đại học Khoa học Tự nhiên (QST) đào tạo ngành **Toán học**, theo tài liệu tuyển sinh năm 2024. Ngành này tập trung vào toán ứng dụng và nghiên cứu khoa học, với chương trình chất lượng cao. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    }
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có chương trình đào tạo chất lượng cao không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) có các chương trình đào tạo chất lượng cao, đặc biệt trong các ngành như **Công nghệ Thông tin** và **Kỹ thuật Máy tính**. Các chương trình này được thiết kế theo chuẩn quốc tế, với tỷ lệ sinh viên tốt nghiệp có việc làm cao. Bạn có thể tìm hiểu thêm qua website www.uet.vnu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có chương trình liên kết đào tạo quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có các chương trình liên kết đào tạo quốc tế, đặc biệt trong lĩnh vực giáo dục và ngôn ngữ. Các chương trình này hợp tác với các trường ở Hàn Quốc và Nhật Bản. Bạn có thể liên hệ qua www.hnue.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có hỗ trợ tài chính cho sinh viên không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có các chính sách hỗ trợ tài chính như học bổng và vay vốn cho sinh viên có hoàn cảnh khó khăn. Bạn có thể tìm hiểu chi tiết qua website www.ftu.edu.vn hoặc liên hệ phòng công tác sinh viên!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có chương trình đào tạo song bằng không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có một số chương trình đào tạo song bằng, đặc biệt hợp tác với các trường quốc tế trong lĩnh vực kỹ thuật xây dựng. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm thông tin chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có trung tâm nghiên cứu khoa học không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có các trung tâm nghiên cứu khoa học, tập trung vào kỹ thuật, công nghệ may, và tự động hóa. Các trung tâm này hỗ trợ giảng viên và sinh viên thực hiện dự án nghiên cứu. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có hỗ trợ sinh viên tham gia nghiên cứu khoa học không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có các chương trình hỗ trợ sinh viên tham gia nghiên cứu khoa học, như tài trợ dự án và hướng dẫn từ giảng viên. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có trung tâm hỗ trợ việc làm không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) có trung tâm hỗ trợ việc làm, tổ chức các ngày hội việc làm và kết nối sinh viên với các doanh nghiệp như Samsung và FPT Software. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có tổ chức các khóa học ngắn hạn không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) tổ chức các khóa học ngắn hạn về kỹ năng sư phạm và ngoại ngữ. Bạn có thể tìm hiểu thêm qua website www.hnue.edu.vn để biết lịch khóa học!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có chương trình đào tạo theo định hướng ứng dụng không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có các chương trình đào tạo theo định hướng ứng dụng, đặc biệt trong các ngành như Kinh tế Quốc tế và Thương mại Điện tử. Bạn có thể tìm hiểu thêm qua www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có thư viện hiện đại không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có thư viện hiện đại tại cơ sở 55 Giải Phóng, Hà Nội, với tài liệu phong phú về kỹ thuật và xây dựng. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có ngành Công nghệ Hóa học không?",
+        "output": "Chào bạn! Có, Trường Đại học Công nghiệp Hà Nội (HaUI) đào tạo ngành **Công nghệ Hóa học**, theo báo cáo năm 2024 (trang 15). Ngành này tập trung vào hóa học ứng dụng và công nghiệp. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có chương trình học bổng quốc tế không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có một số học bổng quốc tế dành cho sinh viên tham gia các chương trình trao đổi hoặc nghiên cứu. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có tổ chức các chương trình tình nguyện không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) tổ chức nhiều chương trình tình nguyện, như hỗ trợ cộng đồng và các hoạt động bảo vệ môi trường. Bạn có thể tìm hiểu thêm qua www.uet.vnu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có chương trình đào tạo giáo viên mầm non không?",
+        "output": "Chào bạn! Có, Trường Đại học Sư phạm Hà Nội (HNUE) đào tạo ngành **Giáo dục Mầm non**, theo báo cáo năm 2024. Chương trình này tập trung vào kỹ năng sư phạm và chăm sóc trẻ. Bạn có thể liên hệ qua www.hnue.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có trung tâm ngoại ngữ không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có trung tâm ngoại ngữ, cung cấp các khóa học tiếng Anh, Nhật, và Trung Quốc cho sinh viên. Bạn có thể liên hệ qua www.ftu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có tổ chức các hội thảo kỹ thuật không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) thường xuyên tổ chức các hội thảo kỹ thuật về xây dựng và vật liệu mới. Bạn có thể tìm lịch sự kiện qua www.nuce.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có chương trình đào tạo liên kết quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có các chương trình đào tạo liên kết quốc tế, đặc biệt với các trường ở Hàn Quốc và Nhật Bản. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có trung tâm hỗ trợ việc làm không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có trung tâm hỗ trợ việc làm, tổ chức các ngày hội việc làm và kết nối sinh viên với doanh nghiệp. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có chương trình đào tạo theo đề án không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) có các chương trình đào tạo theo đề án, đặc biệt trong lĩnh vực công nghệ thông tin và kỹ thuật. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có trung tâm nghiên cứu giáo dục không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có trung tâm nghiên cứu giáo dục, tập trung vào đổi mới phương pháp giảng dạy và phát triển chương trình. Bạn có thể liên hệ qua www.hnue.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có tổ chức các chương trình giao lưu quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) tổ chức nhiều chương trình giao lưu quốc tế, như hội thảo và trao đổi văn hóa với sinh viên nước ngoài. Bạn có thể tìm hiểu thêm qua www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có chương trình thực tập tại doanh nghiệp không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có chương trình thực tập tại các doanh nghiệp xây dựng như Vinaconex và Hòa Phát. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có ngành Quản trị Kinh doanh không?",
+        "output": "Chào bạn! Có, Trường Đại học Công nghiệp Hà Nội (HaUI) đào tạo ngành **Quản trị Kinh doanh**, theo báo cáo năm 2024. Ngành này tập trung vào quản lý doanh nghiệp và kỹ năng kinh tế. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có chương trình đào tạo theo chuẩn quốc tế không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có các chương trình đào tạo theo chuẩn quốc tế, đặc biệt trong các ngành như Công nghệ Thông tin và Công nghệ Sinh học. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có tổ chức các cuộc thi công nghệ không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) tổ chức nhiều cuộc thi công nghệ, như cuộc thi lập trình và sáng tạo công nghệ. Bạn có thể tìm lịch sự kiện qua www.uet.vnu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có chương trình đào tạo giáo viên tiểu học không?",
+        "output": "Chào bạn! Có, Trường Đại học Sư phạm Hà Nội (HNUE) đào tạo ngành **Giáo dục Tiểu học**, theo báo cáo năm 2024. Chương trình này tập trung vào kỹ năng giảng dạy và quản lý lớp học. Bạn có thể liên hệ qua www.hnue.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có hỗ trợ học phí cho sinh viên không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có chính sách hỗ trợ học phí và học bổng cho sinh viên có hoàn cảnh khó khăn. Bạn có thể liên hệ qua www.ftu.edu.vn để biết chi tiết về điều kiện!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có trung tâm đào tạo kỹ năng không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có trung tâm đào tạo kỹ năng, cung cấp các khóa học về kỹ thuật xây dựng và quản lý dự án. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có tổ chức các chương trình giao lưu văn hóa không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) tổ chức các chương trình giao lưu văn hóa, như ngày hội quốc tế và các hoạt động văn nghệ. Bạn có thể tìm lịch sự kiện qua www.haui.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có chương trình thực tập tại doanh nghiệp không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có chương trình thực tập tại các doanh nghiệp công nghệ và khoa học, như FPT Software. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có trung tâm ngoại ngữ không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) có trung tâm ngoại ngữ, cung cấp các khóa học tiếng Anh và Nhật Bản cho sinh viên. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có tổ chức các cuộc thi sư phạm không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) tổ chức các cuộc thi sư phạm, như hội thi giảng dạy và kỹ năng sư phạm. Bạn có thể tìm lịch sự kiện qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có chương trình đào tạo chất lượng cao không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có các chương trình đào tạo chất lượng cao, đặc biệt trong các ngành như Kinh tế Quốc tế và Quản trị Kinh doanh. Bạn có thể tìm hiểu thêm qua www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có hỗ trợ sinh viên tham gia các cuộc thi quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) hỗ trợ sinh viên tham gia các cuộc thi quốc tế về kỹ thuật và kiến trúc. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có chương trình đào tạo song bằng không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có một số chương trình đào tạo song bằng, đặc biệt với các trường quốc tế trong lĩnh vực kỹ thuật. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có tổ chức các hội thảo khoa học không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) thường xuyên tổ chức các hội thảo khoa học về công nghệ sinh học, vật lý, và công nghệ thông tin. Bạn có thể tìm lịch sự kiện qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có chương trình đào tạo từ xa không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) hiện tập trung vào đào tạo trực tiếp, nhưng có một số khóa học ngắn hạn có thể học từ xa. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có hỗ trợ sinh viên tham gia các dự án cộng đồng không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) hỗ trợ sinh viên tham gia các dự án cộng đồng, như giáo dục trẻ em vùng khó khăn. Bạn có thể tìm hiểu thêm qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có trung tâm nghiên cứu kinh tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có trung tâm nghiên cứu kinh tế, tập trung vào kinh tế quốc tế và thương mại. Bạn có thể liên hệ qua www.ftu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có ngành Kỹ thuật Công trình Thủy không?",
+        "output": "Chào bạn! Có, Trường Đại học Xây dựng Hà Nội (HUCE) đào tạo ngành **Kỹ thuật Công trình Thủy**, theo báo cáo năm 2024. Ngành này tập trung vào thiết kế và quản lý công trình thủy lợi. Bạn có thể tìm hiểu thêm qua www.nuce.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có hỗ trợ sinh viên tham gia các cuộc thi quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) hỗ trợ sinh viên tham gia các cuộc thi quốc tế về kỹ thuật và công nghệ. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có trung tâm đào tạo kỹ năng không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có trung tâm đào tạo kỹ năng, cung cấp các khóa học về kỹ năng mềm và công nghệ. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có hỗ trợ sinh viên tham gia các dự án nghiên cứu không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) hỗ trợ sinh viên tham gia các dự án nghiên cứu, đặc biệt trong lĩnh vực trí tuệ nhân tạo và công nghệ nano. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có chương trình đào tạo theo định hướng ứng dụng không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có các chương trình đào tạo theo định hướng ứng dụng, đặc biệt trong các ngành sư phạm và giáo dục. Bạn có thể tìm hiểu thêm qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có tổ chức các khóa học ngắn hạn không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) tổ chức các khóa học ngắn hạn về kinh doanh, ngoại ngữ, và thương mại điện tử. Bạn có thể tìm lịch khóa học qua www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có chương trình đào tạo theo chuẩn quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có các chương trình đào tạo theo chuẩn quốc tế, đặc biệt trong lĩnh vực kỹ thuật xây dựng và kiến trúc. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có trung tâm ngoại ngữ không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có trung tâm ngoại ngữ, cung cấp các khóa học tiếng Anh và Hàn Quốc. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có tổ chức các chương trình tình nguyện không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) tổ chức các chương trình tình nguyện, như hỗ trợ giáo dục và bảo vệ môi trường. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có ngành Công nghệ Sinh học không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) không có ngành **Công nghệ Sinh học** riêng, nhưng có các chương trình liên quan đến công nghệ ứng dụng trong sinh học. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có hỗ trợ sinh viên thực tập không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có chương trình hỗ trợ sinh viên thực tập tại các trường học và cơ sở giáo dục. Bạn có thể liên hệ qua www.hnue.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có chương trình đào tạo song bằng không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có các chương trình đào tạo song bằng, đặc biệt hợp tác với các trường quốc tế trong lĩnh vực kinh tế. Bạn có thể tìm hiểu thêm qua www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có tổ chức các chương trình giao lưu quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) tổ chức các chương trình giao lưu quốc tế, như hội thảo và trao đổi sinh viên với các trường ở Nhật Bản và Hàn Quốc. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có chương trình đào tạo theo đề án không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có các chương trình đào tạo theo đề án, đặc biệt trong các ngành kỹ thuật và công nghệ. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có hỗ trợ sinh viên tham gia các dự án cộng đồng không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) hỗ trợ sinh viên tham gia các dự án cộng đồng, như giáo dục STEM và bảo vệ môi trường. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có trung tâm nghiên cứu trí tuệ nhân tạo không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) có trung tâm nghiên cứu trí tuệ nhân tạo, tập trung vào xử lý ngôn ngữ tự nhiên và học máy. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có tổ chức các chương trình giao lưu quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) tổ chức các chương trình giao lưu quốc tế, như hội thảo và trao đổi sinh viên với các trường ở Nhật Bản và Hàn Quốc. Bạn có thể tìm hiểu thêm qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có ngành Ngân hàng không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có chương trình đào tạo liên quan đến **Tài chính - Ngân hàng**, thuộc nhóm ngành kinh tế. Bạn có thể tìm hiểu thêm qua www.ftu.edu.vn để biết chi tiết về chương trình!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có hỗ trợ sinh viên thực tập không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có chương trình hỗ trợ sinh viên thực tập tại các doanh nghiệp xây dựng lớn như Vinaconex. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có tổ chức các cuộc thi kỹ thuật không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) tổ chức các cuộc thi kỹ thuật, như thi chế tạo robot và thiết kế cơ khí. Bạn có thể tìm lịch sự kiện qua www.haui.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có chương trình đào tạo chất lượng cao không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có các chương trình đào tạo chất lượng cao, đặc biệt trong các ngành như Công nghệ Thông tin và Công nghệ Sinh học. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có hỗ trợ sinh viên tham gia các cuộc thi quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) hỗ trợ sinh viên tham gia các cuộc thi quốc tế về công nghệ, như lập trình và trí tuệ nhân tạo. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có trung tâm hỗ trợ việc làm không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có trung tâm hỗ trợ việc làm, kết nối sinh viên với các trường học và cơ sở giáo dục. Bạn có thể tìm hiểu thêm qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có tổ chức các chương trình tình nguyện không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) tổ chức các chương trình tình nguyện, như hỗ trợ cộng đồng và các hoạt động từ thiện. Bạn có thể tìm lịch sự kiện qua www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có chương trình đào tạo liên kết quốc tế không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có các chương trình đào tạo liên kết quốc tế, đặc biệt với các trường ở Nhật Bản và Hàn Quốc. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có trung tâm nghiên cứu công nghệ không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có trung tâm nghiên cứu công nghệ, tập trung vào kỹ thuật điện và tự động hóa. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có tổ chức các khóa học ngắn hạn không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) tổ chức các khóa học ngắn hạn về công nghệ thông tin và khoa học dữ liệu. Bạn có thể tìm lịch khóa học qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có chương trình đào tạo song bằng không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) có một số chương trình đào tạo song bằng, đặc biệt hợp tác với các trường quốc tế trong lĩnh vực công nghệ. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có ngành Giáo dục Đặc biệt không?",
+        "output": "Chào bạn! Có, Trường Đại học Sư phạm Hà Nội (HNUE) đào tạo ngành **Giáo dục Đặc biệt**, theo báo cáo năm 2024. Ngành này tập trung vào giáo dục trẻ em có nhu cầu đặc biệt. Bạn có thể tìm hiểu thêm qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có trung tâm hỗ trợ khởi nghiệp không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có trung tâm hỗ trợ khởi nghiệp, cung cấp các khóa học và kết nối với doanh nghiệp. Bạn có thể liên hệ qua www.ftu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có tổ chức các chương trình tình nguyện không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) tổ chức các chương trình tình nguyện, như hỗ trợ xây dựng cơ sở hạ tầng ở vùng sâu. Bạn có thể tìm lịch sự kiện qua www.nuce.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có ngành Kỹ thuật Ô tô không?",
+        "output": "Chào bạn! Có, Trường Đại học Công nghiệp Hà Nội (HaUI) đào tạo ngành **Kỹ thuật Ô tô**, theo báo cáo năm 2024. Ngành này tập trung vào thiết kế và sửa chữa ô tô. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có trung tâm ngoại ngữ không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có trung tâm ngoại ngữ, cung cấp các khóa học tiếng Anh và Nhật Bản. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có tổ chức các chương trình giao lưu văn hóa không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) tổ chức các chương trình giao lưu văn hóa, như ngày hội quốc tế và các hoạt động văn nghệ. Bạn có thể tìm lịch sự kiện qua www.uet.vnu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có chương trình đào tạo chất lượng cao không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có các chương trình đào tạo chất lượng cao, đặc biệt trong các ngành sư phạm. Bạn có thể tìm hiểu thêm qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có hỗ trợ sinh viên tham gia nghiên cứu khoa học không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) hỗ trợ sinh viên tham gia nghiên cứu khoa học, đặc biệt trong lĩnh vực kinh tế và thương mại. Bạn có thể liên hệ qua www.ftu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có trung tâm nghiên cứu vật liệu xây dựng không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) có trung tâm nghiên cứu vật liệu xây dựng, tập trung vào vật liệu thân thiện môi trường. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có tổ chức các hội thảo công nghệ không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) thường xuyên tổ chức các hội thảo công nghệ về kỹ thuật và tự động hóa. Bạn có thể tìm lịch sự kiện qua www.haui.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có hỗ trợ sinh viên thực tập không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có chương trình hỗ trợ sinh viên thực tập tại các doanh nghiệp và viện nghiên cứu. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có tổ chức các khóa học ngắn hạn không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) tổ chức các khóa học ngắn hạn về công nghệ thông tin và trí tuệ nhân tạo. Bạn có thể tìm lịch khóa học qua www.uet.vnu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có trung tâm đào tạo kỹ năng không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) có trung tâm đào tạo kỹ năng, cung cấp các khóa học về kỹ năng sư phạm và kỹ năng mềm. Bạn có thể liên hệ qua www.hnue.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có tổ chức các cuộc thi kinh doanh không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) tổ chức các cuộc thi kinh doanh, như thi khởi nghiệp và mô phỏng kinh doanh. Bạn có thể tìm lịch sự kiện qua www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có chương trình đào tạo từ xa không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) hiện tập trung vào đào tạo trực tiếp, nhưng có một số khóa học ngắn hạn có thể học từ xa. Bạn có thể liên hệ qua www.nuce.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có hỗ trợ sinh viên tham gia nghiên cứu khoa học không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) hỗ trợ sinh viên tham gia nghiên cứu khoa học, đặc biệt trong lĩnh vực kỹ thuật và công nghệ. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có tổ chức các chương trình giao lưu quốc tế không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) tổ chức các chương trình giao lưu quốc tế, như hội thảo và trao đổi sinh viên với các trường ở Nhật Bản và Hàn Quốc. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghệ có trung tâm hỗ trợ khởi nghiệp không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghệ (UET) có trung tâm hỗ trợ khởi nghiệp, cung cấp các khóa học và kết nối với doanh nghiệp công nghệ. Bạn có thể liên hệ qua www.uet.vnu.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Sư phạm Hà Nội có tổ chức các chương trình tình nguyện không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Sư phạm Hà Nội (HNUE) tổ chức các chương trình tình nguyện, như hỗ trợ giáo dục và cộng đồng. Bạn có thể tìm lịch sự kiện qua www.hnue.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Ngoại thương có chương trình đào tạo theo đề án không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Ngoại thương (FTU) có các chương trình đào tạo theo đề án, đặc biệt trong lĩnh vực kinh tế và thương mại. Bạn có thể tìm hiểu thêm qua www.ftu.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Xây dựng Hà Nội có tổ chức các cuộc thi kỹ thuật không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Xây dựng Hà Nội (HUCE) tổ chức các cuộc thi kỹ thuật, như thi thiết kế công trình và mô phỏng xây dựng. Bạn có thể tìm lịch sự kiện qua www.nuce.edu.vn!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Công nghiệp Hà Nội có chương trình đào tạo chất lượng cao không?",
+        "output": "Chào bạn! Theo báo cáo năm 2024, Trường Đại học Công nghiệp Hà Nội (HaUI) có các chương trình đào tạo chất lượng cao, đặc biệt trong các ngành kỹ thuật và công nghệ. Bạn có thể liên hệ qua www.haui.edu.vn để biết thêm chi tiết!"
+    },
+    {
+        "instruction": "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất.",
+        "input": "Trường Đại học Khoa học Tự nhiên có trung tâm nghiên cứu khoa học không?",
+        "output": "Chào bạn! Theo tài liệu năm 2024, Trường Đại học Khoa học Tự nhiên (QST) có các trung tâm nghiên cứu khoa học, tập trung vào công nghệ sinh học, vật lý, và công nghệ thông tin. Bạn có thể tìm hiểu thêm qua https://tuyensinh.hcmus.edu.vn!"
+    }
+]

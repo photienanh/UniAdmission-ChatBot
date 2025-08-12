@@ -12,7 +12,7 @@ class ConnectionInfo(ClientInfo):
 
 class ModelHub:
     def __init__(self) -> None:
-        self.timeout = 5
+        self.timeout = 60
         self.poll = 0.1
         self.maintain_poll = 0.5
         self.connections: dict[str, ConnectionInfo] = {}
