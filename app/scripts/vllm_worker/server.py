@@ -61,9 +61,7 @@ async def _generate(request_dict: dict, raw_request: Request) -> Response:
     sampling_params = SamplingParams(**request_dict.pop("params"))
     if not sampling_params.extra_args:
         sampling_params.extra_args = {}
-    sampling_params.extra_args["enable_thinking"] = False
-    # request_id = random_uuid()
-    results_generator = engine.generate(prompt, sampling_params, lora_request)
+    results_generator = await engine.chat_quick(prompt, sampling_params, lora_request)
     # Streaming case
     async def stream_results() -> AsyncGenerator[bytes, None]:
         async for request_output in results_generator:
@@ -85,9 +83,9 @@ async def _generate(request_dict: dict, raw_request: Request) -> Response:
     except asyncio.CancelledError:
         return Response(status_code=499)
 
+    # with open("fout.txt", 'w') as file:
+    #     file.write(str(final_output))
     assert final_output is not None
-    prompt = final_output.prompt
-    assert prompt is not None
     text_outputs = [prompt + output.text for output in final_output.outputs]
     ret = {"text": text_outputs}
     return JSONResponse(ret)

@@ -33,7 +33,7 @@ def login_user(username: str, password: str) -> str | None:
     if user and user.check_password(password):
         user.is_active = True
         DBSession.commit()
-        jwt = generate_jwt(cast(str, user.username), exp_hours=1)
+        jwt = generate_jwt(cast(str, user.username), exp_hours=24)
         return jwt
     return None
     
