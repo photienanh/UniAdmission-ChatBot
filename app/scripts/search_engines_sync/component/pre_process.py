@@ -1,8 +1,9 @@
 from crawl4ai.markdown_generation_strategy import DefaultMarkdownGenerator
 from crawl4ai import MarkdownGenerationResult, DefaultMarkdownGenerator
 from typing import Any, cast
-from ..schema import HtmlResult, PreProcessedResult, UrlContent
+from ..engines import HtmlResult, PreProcessedResult, UrlContent
 import re
+import requests
 URL_PATTERN = re.compile(r'\[(.*?)\]\((.*?)\)', re.DOTALL)
 URL_PATTERN_2 = re.compile(r'(?:\*\s|\])\((.*?)\)', re.DOTALL)
 # URL_PATTERN = re.compile(r'\[\!\[\]\((.*?)\)\]\((.*?)\)')
@@ -19,7 +20,21 @@ def check_pdf(url: str) -> bool:
     if url.endswith(".pdf"):
         return True
     elif "drive.google.com/file" in url:
-        return True # Tempory, as there is hardly anyway to check
+        return True # Tempory, as there is hardly anyway to checkd
+        # try:
+        #     with requests.Session() as session:
+        #         response = session.head(url, allow_redirects=True)
+        #         print(response.headers)
+        #         content_type = response.headers.get("Content-Type", "")
+        #         content_disp = response.headers.get("Content-Disposition", "")
+        #         print(content_type, content_disp)
+        #         if "application/pdf" in content_type.lower():
+        #             return True
+        #         if ".pdf" in content_disp.lower():
+        #             return True
+        #         return False
+        # except Exception as e:
+        #     print(f"Error while check pdf: {url}")
     return False
 
 class PreProcessor:

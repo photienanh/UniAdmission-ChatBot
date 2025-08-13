@@ -5,9 +5,10 @@ import time
 from langchain_core.documents import Document
 from typing import Literal
 import copy
-import os
 
 from .pipeline import SearchPipeline
+
+
 
 class CmdLogger:
     def __init__(self, prefix: str) -> None:
@@ -25,25 +26,16 @@ class CmdLogger:
             print(f"[{self._prefix}] {message}")
 class Websearch:
     def __init__(self, embedding_name: str, chunk_size: int = 1024, chunk_overlap: int = 128) -> None:
-        os.environ["WEB_SEARCH_SSL"] = str(False)
-        os.environ["GOOGLE_SEARCH_API_KEY"] = "AIzaSyAtItbzZTJQijvT4A5ynzEWhY1YNXYWKNY"
-        os.environ["GOOGLE_SEARCH_CX"] = "9501a956284f141ab"
-        os.environ["BRAVE_SEARCH_API_KEY"] = "BSAbUIq8YC6VrPhwp688ST6Vtz7cyrH"
         self.embedding = HuggingFaceEmbeddings(model_name=embedding_name)
-        self.web_search = SearchPipeline(
-            page_timeout=10,
-            file_timeout=10,
-            concurrent_page=4,
-            concurrent_processor_download=16
-        )
+        self.web_search = SearchPipeline()
         self.splitter = TokenTextSplitter(chunk_size=1024, chunk_overlap=128)
         self.logger = CmdLogger("Web search")
     def __del__(self):
         del self.embedding
         del self.splitter
-    async def _search_to_docs(self, query: str, k_pages: int, in_domain: bool, engine: Literal["google", "brave"] = "brave") -> list[Document]:
+    def _search_to_docs(self, query: str, k_pages: int, in_domain: bool, engine: Literal["google", "brave"] = "brave") -> list[Document]:
         self.logger.start()
-        search_results = await self.web_search.call_fast(query, k_pages, in_domain, engine)
+        search_results = self.web_search(query, k_pages, in_domain, engine)
         self.logger.end("Web search")
         docs: list[Document] = []
         for search_result in search_results:
@@ -60,9 +52,9 @@ class Websearch:
             )
             docs.append(doc)
         return docs
-    async def _search_to_chunks(self, web_query: str, rag_query: str, k_pages: int, k_chunks: int, in_domain: bool, engine: Literal["google", "brave"] = "brave") -> tuple[list[dict], list[Document]]: 
+    def _search_to_chunks(self, web_query: str, rag_query: str, k_pages: int, k_chunks: int, in_domain: bool, engine: Literal["google", "brave"] = "brave") -> tuple[list[dict], list[Document]]: 
         docs_metadata: list[dict] = []
-        docs = await self._search_to_docs(web_query, k_pages, in_domain, engine)
+        docs = self._search_to_docs(web_query, k_pages, in_domain, engine)
         lens = []
         for doc in docs:
             doc_meta: dict = copy.deepcopy(doc.metadata) #type:ignore
@@ -75,5 +67,5 @@ class Websearch:
         self.logger.log(f"Splitted {len(docs)} docs to {len(chunks)} chunks")
         relevant_chunks = vector_storage.as_retriever(search_kwargs={"k": k_chunks}).invoke(rag_query)
         return (docs_metadata, relevant_chunks)
-    async def __call__(self, web_query: str, rag_query: str, k_pages: int, k_docs: int, in_domain: bool, engine: Literal["google", "brave"] = "brave") -> tuple[list[dict], list[Document]]: 
-        return await self._search_to_chunks(web_query, rag_query, k_pages, k_docs, in_domain, engine)
+    def __call__(self, web_query: str, rag_query: str, k_pages: int, k_docs: int, in_domain: bool, engine: Literal["google", "brave"] = "brave") -> tuple[list[dict], list[Document]]: 
+        return self._search_to_chunks(web_query, rag_query, k_pages, k_docs, in_domain, engine)
