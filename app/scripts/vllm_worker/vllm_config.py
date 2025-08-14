@@ -38,7 +38,7 @@ class Config:
         )
         lora_config = LoRAConfig(
             max_lora_rank=16,
-            max_loras=1,
+            max_loras=2,
         )
         vllm_config = VllmConfig(
             model_config=model_config,

@@ -6,8 +6,11 @@ from langchain_core.documents import Document
 from typing import Literal
 import copy
 import os
+from openai import OpenAI
 
 from .pipeline import SearchPipeline
+
+INSTRUCTION = "Hãy trả lời câu hỏi sau ngắn gọn trong 100 từ, khi không có thông tin, đưa ra ví dụ. Chỉ trả lời câu hỏi, không giải thích."
 
 class CmdLogger:
     def __init__(self, prefix: str) -> None:
@@ -25,7 +28,6 @@ class CmdLogger:
             print(f"[{self._prefix}] {message}")
 class Websearch:
     def __init__(self, embedding_name: str, chunk_size: int = 1024, chunk_overlap: int = 128) -> None:
-        os.environ["WEB_SEARCH_SSL"] = str(False)
         os.environ["GOOGLE_SEARCH_API_KEY"] = "AIzaSyAtItbzZTJQijvT4A5ynzEWhY1YNXYWKNY"
         os.environ["GOOGLE_SEARCH_CX"] = "9501a956284f141ab"
         os.environ["BRAVE_SEARCH_API_KEY"] = "BSAbUIq8YC6VrPhwp688ST6Vtz7cyrH"
@@ -38,6 +40,20 @@ class Websearch:
         )
         self.splitter = TokenTextSplitter(chunk_size=1024, chunk_overlap=128)
         self.logger = CmdLogger("Web search")
+        self.client = OpenAI(api_key=os.getenv("OPEN_AI_API_KEY"))
+    async def _extract_hyde(self, message: str):
+        # HERE
+        response = self.client.chat.completions.create(
+            model="gpt-4o-mini", 
+            messages=[
+                {"role": "system", "content": INSTRUCTION},
+                {"role": "user", "content": message}
+            ],
+            temperature=0.7
+        )
+        return response.choices[0].message.content or message
+    async def close(self):
+        await self.web_search.close()
     def __del__(self):
         del self.embedding
         del self.splitter
@@ -49,9 +65,9 @@ class Websearch:
         engine: Literal["google", "brave"] = "brave",
         include_pdf: bool = False,
         include_image: bool = False
-    ) -> list[Document]:
+    ) -> tuple[str, list[Document]]:
         self.logger.start()
-        search_results = await self.web_search.call_fast(query, k_pages, in_domain, engine, include_pdf, include_image)
+        web_query, search_results = await self.web_search.call_cache(query, k_pages, in_domain, engine, include_pdf, include_image)
         self.logger.end("Web search")
         docs: list[Document] = []
         for search_result in search_results:
@@ -79,20 +95,19 @@ class Websearch:
                 metadata=doc_meta
             )
             docs.append(doc)
-        return docs
+        return web_query, docs
     async def _search_to_chunks(
         self, 
-        web_query: str, 
-        rag_query: str, 
+        query: str, 
         k_pages: int, 
         k_chunks: int, 
         in_domain: bool, 
         engine: Literal["google", "brave"] = "brave",
         include_pdf: bool = False,
         include_image: bool = False
-    ) -> tuple[list[dict], list[Document]]: 
+    ) -> tuple[str, list[dict], list[Document]]: 
         docs_metadata: list[dict] = []
-        docs = await self._search_to_docs(web_query, k_pages, in_domain, engine, include_pdf, include_image)
+        web_query, docs = await self._search_to_docs(query, k_pages, in_domain, engine, include_pdf, include_image)
         lens = []
         for doc in docs:
             doc_meta: dict = copy.deepcopy(doc.metadata) #type:ignore
@@ -103,17 +118,20 @@ class Websearch:
         vector_storage = FAISS.from_documents(chunks, self.embedding)
         self.logger.log(f"Page length: {lens}")
         self.logger.log(f"Splitted {len(docs)} docs to {len(chunks)} chunks")
+        rag_query = await self._extract_hyde(query)
+        print(f"[HYDE] {rag_query}")
         relevant_chunks = vector_storage.as_retriever(search_kwargs={"k": k_chunks}).invoke(rag_query)
-        return (docs_metadata, relevant_chunks)
+        return (web_query, docs_metadata, relevant_chunks)
     async def __call__(
         self,
-        web_query: str, 
-        rag_query: str, 
+        query: str, 
         k_pages: int, 
         k_docs: int, 
         in_domain: bool, 
         engine: Literal["google", "brave"] = "brave",
         include_pdf: bool = False,
         include_image: bool = False
-    ) -> tuple[list[dict], list[Document]]: 
-        return await self._search_to_chunks(web_query, rag_query, k_pages, k_docs, in_domain, engine, include_pdf, include_image)
+    ) -> tuple[str, list[dict], list[Document]]: 
+        return await self._search_to_chunks(query, k_pages, k_docs, in_domain, engine, include_pdf, include_image)
+    
+
