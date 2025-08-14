@@ -12,7 +12,7 @@ class Config:
     def get_vllm(cls, model_id: str):
         model_config = ModelConfig(
             model=model_id,
-            # max_model_len=8192, # Auto with model config file
+            max_model_len=16384, # Auto with model config file
             # max_seq_len_to_capture=16384,
             # enforce_eager=True
         )
