@@ -29,7 +29,7 @@ class Websearch:
         os.environ["GOOGLE_SEARCH_API_KEY"] = "AIzaSyAtItbzZTJQijvT4A5ynzEWhY1YNXYWKNY"
         os.environ["GOOGLE_SEARCH_CX"] = "9501a956284f141ab"
         os.environ["BRAVE_SEARCH_API_KEY"] = "BSAbUIq8YC6VrPhwp688ST6Vtz7cyrH"
-        self.embedding = HuggingFaceEmbeddings(model_name=embedding_name)
+        self.embedding = HuggingFaceEmbeddings(model_name=embedding_name, model_kwargs={"device":"cpu"})
         self.web_search = SearchPipeline(
             page_timeout=10,
             file_timeout=10,
