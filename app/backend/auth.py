@@ -49,6 +49,10 @@ def get_delete(request: Request):
     user = check_login(request)
     return templates.TemplateResponse("delete_account.html", {"request": request, "current_user": user})
 
+@router.post("/check", responses={200: {"model": AuthSuccess}, 400: {"model": AuthFailed}})
+def auth_check(request: Request):
+    user = check_login(request)
+    return Response(status_code=200, content="Valid")
 @router.post("/login", responses={200: {"model": AuthSuccess}, 400: {"model": AuthFailed}})
 def post_login(request: Union[LoginRequest, bytes]):
     if not isinstance(request, LoginRequest): request = LoginRequest.parse(request)

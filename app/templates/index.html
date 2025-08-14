@@ -696,18 +696,19 @@
             
             // Check authentication periodically (but not too frequently to avoid false alerts)
             function checkAuthStatus() {
-                fetch('/auth/check')
-                    .then(response => response.json())
-                    .then(data => {
-                        if (!data.authenticated) {
-                            // User is not authenticated, redirect to login
-                            window.location.href = '/login';
-                        }
-                    })
-                    .catch(error => {
-                        console.warn('Auth check failed:', error);
-                        // Don't redirect on network errors to avoid false alerts
-                    });
+                fetch('/check', {
+                    method: 'POST'
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        // User is not authenticated, redirect to login
+                        window.location.href = '/login';
+                    }
+                })
+                .catch(error => {
+                    console.warn('Auth check failed:', error);
+                    // Don't redirect on network errors to avoid false alerts
+                });
             }
             
             // Check auth every 15 minutes (reduced frequency to avoid false alerts)
