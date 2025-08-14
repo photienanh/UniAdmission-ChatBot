@@ -93,7 +93,7 @@ class Processor:
             except Exception as e:
                 print(e)
                 traceback.print_exc()
-    async def __call__(self, input: PreProcessedResult) -> ProcessedResult | None:
+    async def __call__(self, input: PreProcessedResult, include_pdf: bool, include_image: bool) -> ProcessedResult | None:
         ssl = bool(os.getenv("WEB_SEARCH_SSL", "True"))
         # Implement here
         headers = {
@@ -101,22 +101,24 @@ class Processor:
         }
         pdf_tasks = []
         image_tasks = []
-        for info in input["pdf_urls"]:
-            task = asyncio.create_task(self._process_file(
-                ssl=ssl, headers=headers, 
-                parent_url=input["url"],
-                info=info, 
-                file_type="pdf"
-            ))
-            pdf_tasks.append(task)
-        for info in input["image_urls"]:
-            task = asyncio.create_task(self._process_file(
-                ssl=ssl, headers=headers, 
-                parent_url=input["url"],
-                info=info, 
-                file_type="image"
-            ))
-            image_tasks.append(task)
+        if include_pdf:
+            for info in input["pdf_urls"]:
+                task = asyncio.create_task(self._process_file(
+                    ssl=ssl, headers=headers, 
+                    parent_url=input["url"],
+                    info=info, 
+                    file_type="pdf"
+                ))
+                pdf_tasks.append(task)
+        if include_image:
+            for info in input["image_urls"]:
+                task = asyncio.create_task(self._process_file(
+                    ssl=ssl, headers=headers, 
+                    parent_url=input["url"],
+                    info=info, 
+                    file_type="image"
+                ))
+                image_tasks.append(task)
         pdf_contents, image_contents = await asyncio.gather(asyncio.gather(*pdf_tasks), asyncio.gather(*image_tasks))
         valid_pdfs: list[FileContent] = []
         valid_images: list[FileContent] = []

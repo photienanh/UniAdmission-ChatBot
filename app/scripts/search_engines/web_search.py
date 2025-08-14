@@ -41,9 +41,17 @@ class Websearch:
     def __del__(self):
         del self.embedding
         del self.splitter
-    async def _search_to_docs(self, query: str, k_pages: int, in_domain: bool, engine: Literal["google", "brave"] = "brave") -> list[Document]:
+    async def _search_to_docs(
+        self, 
+        query: str, 
+        k_pages: int, 
+        in_domain: bool, 
+        engine: Literal["google", "brave"] = "brave",
+        include_pdf: bool = False,
+        include_image: bool = False
+    ) -> list[Document]:
         self.logger.start()
-        search_results = await self.web_search.call_fast(query, k_pages, in_domain, engine)
+        search_results = await self.web_search.call_fast(query, k_pages, in_domain, engine, include_pdf, include_image)
         self.logger.end("Web search")
         docs: list[Document] = []
         for search_result in search_results:
@@ -60,9 +68,19 @@ class Websearch:
             )
             docs.append(doc)
         return docs
-    async def _search_to_chunks(self, web_query: str, rag_query: str, k_pages: int, k_chunks: int, in_domain: bool, engine: Literal["google", "brave"] = "brave") -> tuple[list[dict], list[Document]]: 
+    async def _search_to_chunks(
+        self, 
+        web_query: str, 
+        rag_query: str, 
+        k_pages: int, 
+        k_chunks: int, 
+        in_domain: bool, 
+        engine: Literal["google", "brave"] = "brave",
+        include_pdf: bool = False,
+        include_image: bool = False
+    ) -> tuple[list[dict], list[Document]]: 
         docs_metadata: list[dict] = []
-        docs = await self._search_to_docs(web_query, k_pages, in_domain, engine)
+        docs = await self._search_to_docs(web_query, k_pages, in_domain, engine, include_pdf, include_image)
         lens = []
         for doc in docs:
             doc_meta: dict = copy.deepcopy(doc.metadata) #type:ignore
@@ -75,5 +93,15 @@ class Websearch:
         self.logger.log(f"Splitted {len(docs)} docs to {len(chunks)} chunks")
         relevant_chunks = vector_storage.as_retriever(search_kwargs={"k": k_chunks}).invoke(rag_query)
         return (docs_metadata, relevant_chunks)
-    async def __call__(self, web_query: str, rag_query: str, k_pages: int, k_docs: int, in_domain: bool, engine: Literal["google", "brave"] = "brave") -> tuple[list[dict], list[Document]]: 
-        return await self._search_to_chunks(web_query, rag_query, k_pages, k_docs, in_domain, engine)
+    async def __call__(
+        self,
+        web_query: str, 
+        rag_query: str, 
+        k_pages: int, 
+        k_docs: int, 
+        in_domain: bool, 
+        engine: Literal["google", "brave"] = "brave",
+        include_pdf: bool = False,
+        include_image: bool = False
+    ) -> tuple[list[dict], list[Document]]: 
+        return await self._search_to_chunks(web_query, rag_query, k_pages, k_docs, in_domain, engine, include_pdf, include_image)

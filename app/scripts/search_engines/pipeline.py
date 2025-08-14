@@ -23,7 +23,16 @@ class SearchPipeline:
         self.logger = Logger("web_search_logs")
     async def close(self):
         await self._client.close()
-    async def _call(self, query: str, k: int, search_k: int, in_domain: bool = False, engine_type: Literal["brave", "google"] = "brave") -> list[ProcessedResult]:
+    async def _call(
+        self, 
+        query: str, 
+        k: int, 
+        search_k: int, 
+        in_domain: bool = False, 
+        engine_type: Literal["brave", "google"] = "brave",
+        include_pdf: bool = False,
+        include_image: bool = False
+    ) -> list[ProcessedResult]:
         result: list[ProcessedResult] = []
         self.logger.enable = True
         self.logger.start(query, k, engine_type)
@@ -42,7 +51,7 @@ class SearchPipeline:
                         if preprocess_result == None: return
                         
                         self.logger.preprocessed(preprocess_result, index)
-                        processed_result = await self.processor(preprocess_result)
+                        processed_result = await self.processor(preprocess_result, include_pdf, include_image)
                         if processed_result == None: return
                         
                         self.logger.processed(processed_result, index)
@@ -59,23 +68,51 @@ class SearchPipeline:
             if len(result) == k:
                 break
         return result
-    async def call_fast(self, query: str, k: int = 10, in_domain: bool = False, engine_type: Literal["brave", "google"] = "brave") -> list[ProcessedResult]:
+    async def call_fast(
+        self, 
+        query: str, 
+        k: int = 10, 
+        in_domain: bool = False, 
+        engine_type: Literal["brave", "google"] = "brave",
+        include_pdf: bool = False,
+        include_image: bool = False
+    ) -> list[ProcessedResult]:
         return await self._call(
             query=query,
             k=k,
             search_k=k,
             in_domain=in_domain,
-            engine_type=engine_type
+            engine_type=engine_type,
+            include_pdf=include_pdf,
+            include_image=include_image
         )
-    async def call_k_safe(self, query: str, k: int = 10, in_domain: bool = False, engine_type: Literal["brave", "google"] = "brave") -> list[ProcessedResult]:
+    async def call_k_safe(
+        self, 
+        query: str, 
+        k: int = 10, 
+        in_domain: bool = False, 
+        engine_type: Literal["brave", "google"] = "brave",
+        include_pdf: bool = False,
+        include_image: bool = False
+    ) -> list[ProcessedResult]:
         return await self._call(
             query=query,
             k=k,
             search_k=max(10, k),
             in_domain=in_domain,
-            engine_type=engine_type
+            engine_type=engine_type,
+            include_pdf=include_pdf,
+            include_image=include_image
         )
-    async def call_sequence(self, query: str, k: int = 10, in_domain: bool = False, engine_type: Literal["brave", "google"] = "brave") -> list[ProcessedResult]:
+    async def call_sequence(
+        self, 
+        query: str, 
+        k: int = 10, 
+        in_domain: bool = False, 
+        engine_type: Literal["brave", "google"] = "brave",
+        include_pdf: bool = False,
+        include_image: bool = False
+    ) -> list[ProcessedResult]:
         search_k = max(10, k) # Query at least 10
         result: list[ProcessedResult] = []
         self.logger.enable = True
@@ -95,7 +132,7 @@ class SearchPipeline:
                 if preprocess_result == None: continue
                 
                 self.logger.preprocessed(preprocess_result)
-                processed_result = await self.processor(preprocess_result)
+                processed_result = await self.processor(preprocess_result, include_pdf, include_image)
                 if processed_result == None: continue
                 
                 self.logger.processed(processed_result)
