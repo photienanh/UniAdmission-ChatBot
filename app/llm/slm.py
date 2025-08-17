@@ -9,7 +9,8 @@ class SLM:
             model_id: str, 
             question: str, 
             session_id: str,
-            web_search: WebSearchParam | None
+            web_search: WebSearchParam | None,
+            params: dict
     ) -> ModelOutput:
         # Todo: Get history
         input: ModelInput = {
@@ -20,7 +21,8 @@ class SLM:
                 }
             ],
             "model_id": model_id,
-            "web_search": web_search
+            "web_search": web_search,
+            "params": params
         }
         output = await inference(input)
         return output

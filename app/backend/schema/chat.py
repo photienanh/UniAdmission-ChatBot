@@ -12,6 +12,7 @@ class ChatRequest(TypedDict):
     model_id: str
     session_id: Optional[str]
     web_search: Optional[WebSearchParam]
+    sampling_params: dict
 
 class SessionResponse(TypedDict):
     id: str 

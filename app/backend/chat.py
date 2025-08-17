@@ -22,6 +22,7 @@ templates = Jinja2Templates(directory="templates")
 async def post_chat(request: Request, data: ChatRequest) -> MessageResponse:
     user = check_login(request)
     session_id: str | None = data.get("session_id", None)
+    params = data["sampling_params"]
     # Tạo session mới nếu chưa có
     if session_id == None:
         chat_session = create_chat_session(user.id)
@@ -37,7 +38,8 @@ async def post_chat(request: Request, data: ChatRequest) -> MessageResponse:
             question=data["message"],
             session_id=session_id,
             model_id=data["model_id"],
-            web_search_params=data.get("web_search", None)
+            web_search_params=data.get("web_search", None),
+            params=params
         )
         bot_message = create_message(session_id, "bot", **bot_response)
         chat_session.updated_at = datetime.now(timezone.utc)
