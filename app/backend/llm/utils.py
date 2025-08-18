@@ -1,0 +1,5 @@
+import uuid
+import time
+
+def generate_id() -> str:
+    return str(uuid.uuid4())

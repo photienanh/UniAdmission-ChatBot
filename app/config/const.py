@@ -1,0 +1,2 @@
+class ConstConfig:
+    pass    
