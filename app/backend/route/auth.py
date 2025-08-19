@@ -1,6 +1,4 @@
-from fastapi import APIRouter, Request, HTTPException
-from fastapi.responses import Response, JSONResponse, RedirectResponse
-from typing import Union
+from fastapi import APIRouter, Request
 
 from database import check_login, login_user, register_user, logout_user, delete_user
 from backend.schema import LoginRequest, RegisterRequest, DeleteAccountRequest

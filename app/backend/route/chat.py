@@ -3,7 +3,7 @@ from fastapi.responses import StreamingResponse
 from typing import Union
 
 from database import check_login, add_conversation, get_user_sessions, get_session_with_messages, create_chat_session, delete_chat_session, get_chat_session
-from backend.schema import ChatRequest, MessageResponse, SessionResponse, SessionMessagesResponse, PreChatResponse
+from backend.schema import ChatRequest, SessionResponse, SessionMessagesResponse, PreChatResponse
 from backend.llm import ModelManager
 
 from .utils import NO_CACHE_HEADERS, get_timestamp

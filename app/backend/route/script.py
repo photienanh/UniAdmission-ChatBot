@@ -1,6 +1,5 @@
-from fastapi import APIRouter, Request, BackgroundTasks
+from fastapi import APIRouter, BackgroundTasks
 from fastapi.responses import StreamingResponse
-import os
 import tarfile
 import io
 from .utils import NO_CACHE_HEADERS

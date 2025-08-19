@@ -1,7 +1,6 @@
 from typing import cast
 from jwt import ExpiredSignatureError
 from fastapi import Request, HTTPException
-from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 import traceback
 

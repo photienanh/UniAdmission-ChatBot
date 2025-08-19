@@ -1,5 +1,4 @@
 from pydantic import BaseModel, Field, EmailStr
-from urllib.parse import parse_qsl
 
 class LoginRequest(BaseModel):
     username: str = Field(..., min_length=1, max_length=100)
