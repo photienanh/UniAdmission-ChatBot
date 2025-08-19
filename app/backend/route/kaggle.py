@@ -8,12 +8,11 @@ router = APIRouter()
 
 @router.get("/models")
 async def get_models(request: Request) -> list[ModelInfo]:
-    return ModelManager.get_models()
+    return await ModelManager.get_models()
 
 @router.post("/kaggle")
 async def kaggle_init(request: Request, data: KaggleServerInfo):
     try:
-        print(f"[Kaggle] {data["domain"]}")
         KaggleManager.update_server(data)
         return Response(status_code=200, content="OK")
     except Exception as e:

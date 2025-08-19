@@ -1,8 +1,8 @@
-from openai import OpenAI, AsyncOpenAI
+from openai import AsyncOpenAI
 import os
 from typing import AsyncGenerator
 
-from .schema import APIJobInfo, APIJobResult
+from .schema import APIJobInfo
 
 class GPTAPIModel:
     def __init__(self) -> None:

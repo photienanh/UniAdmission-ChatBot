@@ -75,7 +75,7 @@ class ModelManager:
         cls._jobs[job_id] = job_info
         return pre_output
     @classmethod
-    def get_models(cls) -> list[ModelInfo]:
+    async def get_models(cls) -> list[ModelInfo]:
         result: list[ModelInfo] = [
             {
                 "name": "Gemini (Server)",
@@ -84,5 +84,5 @@ class ModelManager:
                 "source": "server"
             }
         ]
-        result.extend(KaggleManager.get_models())
+        result.extend(await KaggleManager.get_models())
         return result

@@ -8,8 +8,6 @@ class VLLMJobInfo(TypedDict):
     message: str
     lora_request: Optional[dict]
     sampling_params: dict
-class VLLMJobResult(TypedDict):
-    text: list[str]
 class VLLMEngine:
     def __init__(self) -> None:
         self.controller = VLLMController()

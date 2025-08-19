@@ -3,7 +3,7 @@ from google.genai.types import GenerateContentConfig
 import os
 from typing import AsyncGenerator
 
-from .schema import APIJobInfo, APIJobResult
+from .schema import APIJobInfo
 
 class GeminiAPIModel:
     def __init__(self) -> None:
@@ -14,7 +14,7 @@ class GeminiAPIModel:
             temperature=params.get("temperature", 0.8),
             top_p=params.get("top_p", 0.9),
             top_k=params.get("top_k", 16),
-            max_output_tokens=params.get("max_tokens", 4096)
+            max_output_tokens=params.get("max_tokens", 2048)
         )
         stream = await self.client.aio.models.generate_content_stream(
             model=info["model_id"],
