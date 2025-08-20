@@ -75,13 +75,17 @@ class KaggleManager:
         to_be_remove: list[ServerStatus] = []
         now = time.time()
         result: list[ModelInfo] = []
+        model_ids = set([])
         for server in cls._servers:
             alive = now - server["timestamp"]<= KAGGLE_SERVER_TIMEOUT # Check if timeout
             if not alive:
                 alive = await cls._check_connection(server) # Reconnect
             if not alive:
                 to_be_remove.append(server)
-            result.extend(server["info"]["models"])
+            for model in server["info"]["models"]:
+                if model["id"] not in model_ids:
+                    model_ids.add(model["id"])
+                    result.append(model)
         for server in to_be_remove:
             cls._servers.remove(server)
             print(f"[Kaggle] Disconnect: {server["info"]["domain"]}")

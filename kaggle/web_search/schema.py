@@ -1,9 +1,5 @@
 import sys
-if sys.version_info.minor >= 12:
-    from typing import TypedDict
-else:
-    from typing_extensions import TypedDict
-from typing import NamedTuple, Optional, Literal
+from typing import TypedDict, NamedTuple, Optional, Literal
 
 class FileContent(TypedDict):
     title: str
@@ -40,6 +36,18 @@ class ProcessedResult(HtmlResult):
     main_content: str
     image_content: list[FileContent]
     pdf_content: list[FileContent]
+    
+SearchEngineType = Literal["google", "brave"]
+
+class RagSource(TypedDict):
+    url: str
+    title: str
+    text: str
+class WebSource(TypedDict):
+    url: str
+    title: str
+    description: str
+    text: str
     
 class AbstractSearchEngine:
     def __init__(self) -> None:

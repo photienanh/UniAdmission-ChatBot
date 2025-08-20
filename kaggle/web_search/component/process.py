@@ -94,7 +94,7 @@ class Processor:
                 print(e)
                 traceback.print_exc()
     async def __call__(self, input: PreProcessedResult, include_pdf: bool, include_image: bool) -> ProcessedResult | None:
-        ssl = bool(os.getenv("WEB_SEARCH_SSL", "True"))
+        ssl = os.getenv("WEB_SEARCH_SSL", "True").lower() in ("true", "1")
         # Implement here
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'

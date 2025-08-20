@@ -1,6 +1,6 @@
 from aiohttp.client import ClientSession
 import asyncio
-from typing import TypedDict, Optional, AsyncGenerator
+from typing import TypedDict, Optional, AsyncGenerator, Callable
 
 from .vllm_controller import VLLMController
 class VLLMJobInfo(TypedDict):
@@ -9,13 +9,14 @@ class VLLMJobInfo(TypedDict):
     lora_request: Optional[dict]
     sampling_params: dict
 class VLLMEngine:
-    def __init__(self) -> None:
+    def __init__(self, on_model_active: Callable[[str], None]) -> None:
         self.controller = VLLMController()
         self.job_queue: list[VLLMJobInfo] = []
         self.current_model_id = ""
         self.busy = False
         self.job_poll = 0.1
         self.busy_poll = 0.1
+        self.on_model_active = on_model_active
     async def delete(self):
         await self.controller._unload()
     def _available(self, info: VLLMJobInfo):
@@ -38,6 +39,7 @@ class VLLMEngine:
             await asyncio.sleep(self.busy_poll)
         if self.current_model_id != info["model_id"]:
             self.current_model_id = info["model_id"]
+            self.on_model_active(info["model_id"])
             await self.controller.load(info["model_id"])
         url = await self.controller.get_url()
         payload = {

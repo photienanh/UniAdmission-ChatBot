@@ -85,7 +85,7 @@ class PreProcessor:
                     "title": title,
                     "url": url
                 })
-        fit_markdown = self.__processs_lines(fit_markdown, 5)
+        fit_markdown = self.__processs_lines(raw_markdown, 5) # Changed this
         result: PreProcessedResult = {
             **input,
             "extracted_content": fit_markdown,

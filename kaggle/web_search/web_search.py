@@ -7,6 +7,7 @@ from typing import Literal
 import copy
 import os
 
+from .schema import RagSource, WebSource, SearchEngineType
 from .pipeline import SearchPipeline
 
 FILE_TEMPLATE = "[**{source_title}**]({source_url}):[{title}]({url})\n"
@@ -26,19 +27,24 @@ class CmdLogger:
         if self._enable:
             print(f"[{self._prefix}] {message}")
 class Websearch:
-    def __init__(self, embedding_name: str, chunk_size: int = 1024, chunk_overlap: int = 128) -> None:
-        os.environ["WEB_SEARCH_SSL"] = str(False)
-        os.environ["GOOGLE_SEARCH_API_KEY"] = "AIzaSyAtItbzZTJQijvT4A5ynzEWhY1YNXYWKNY"
-        os.environ["GOOGLE_SEARCH_CX"] = "9501a956284f141ab"
-        os.environ["BRAVE_SEARCH_API_KEY"] = "BSAbUIq8YC6VrPhwp688ST6Vtz7cyrH"
-        self.embedding = HuggingFaceEmbeddings(model_name=embedding_name, model_kwargs={"device":"cpu"})
+    def __init__(self,
+            embedding_name: str, 
+            device: str = "cpu",
+            chunk_size: int = 1024, 
+            chunk_overlap: int = 128,
+            page_timeout: float = 10,
+            file_timeout: float = 10,
+            concurrent_page: int = 4,
+            concurrent_file_download: int = 16
+        ) -> None:
+        self.embedding = HuggingFaceEmbeddings(model_name=embedding_name, model_kwargs={"device":device})
         self.web_search = SearchPipeline(
-            page_timeout=10,
-            file_timeout=10,
-            concurrent_page=4,
-            concurrent_processor_download=16
+            page_timeout=page_timeout,
+            file_timeout=file_timeout,
+            concurrent_page=concurrent_page,
+            concurrent_processor_download=concurrent_file_download
         )
-        self.splitter = TokenTextSplitter(chunk_size=1024, chunk_overlap=128)
+        self.splitter = TokenTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         self.logger = CmdLogger("Web search")
     def __del__(self):
         del self.embedding
@@ -50,7 +56,7 @@ class Websearch:
         query: str, 
         k_pages: int, 
         in_domain: bool, 
-        engine: Literal["google", "brave"] = "brave",
+        engine: SearchEngineType = "brave",
         include_pdf: bool = False,
         include_image: bool = False
     ) -> list[Document]:
@@ -68,7 +74,6 @@ class Websearch:
             }
             pdf_content = []
             image_content = []
-            prefix = f"[**{search_result['title']}**]({search_result['url']}):"
             for file in search_result["pdf_content"]:
                 content = FILE_TEMPLATE.format(
                     source_title=search_result["title"],
@@ -127,10 +132,37 @@ class Websearch:
         rag_query: str, 
         k_pages: int, 
         k_docs: int, 
-        in_domain: bool, 
+        domain_restrict: bool, 
         engine: Literal["google", "brave"] = "brave",
         include_pdf: bool = False,
         include_image: bool = False
-    ) -> tuple[list[dict], list[Document]]: 
-        return await self._search_to_chunks(web_query, rag_query, k_pages, k_docs, in_domain, engine, include_pdf, include_image)
-    
+    ) -> tuple[list[WebSource], list[RagSource]]: 
+        docs = await self._search_to_docs(web_query, k_pages, domain_restrict, engine, include_pdf, include_image)
+        chunks = self.splitter.split_documents(docs)
+        vector_storage = FAISS.from_documents(chunks, self.embedding)
+        lens = [len(doc.page_content) for doc in docs]
+        self.logger.log(f"Page length: {lens}")
+        self.logger.log(f"Splitted {len(docs)} docs to {len(chunks)} chunks")
+        relevant_chunks = vector_storage.as_retriever(search_kwargs={"k": k_docs}).invoke(rag_query)
+        
+        web_sources: list[WebSource] = []
+        rag_sources: list[RagSource] = []
+        
+        for doc in docs:
+            web_source: WebSource = {
+                "url": doc.metadata["url"],
+                "title": doc.metadata["title"],
+                "description": doc.metadata["description"],
+                "text": doc.page_content
+            }
+            web_sources.append(web_source)
+            
+        for chunk in relevant_chunks:
+            rag_source: RagSource = {
+                "url": chunk.metadata["url"],
+                "title": chunk.metadata["title"],
+                "text": chunk.page_content
+            }
+            rag_sources.append(rag_source)
+            
+        return web_sources, rag_sources

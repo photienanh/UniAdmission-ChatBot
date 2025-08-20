@@ -8,7 +8,7 @@ class PageDowloader:
         self.timeout = aiohttp.ClientTimeout(timeout)
         self.session = session
     async def __call__(self, input: SearchResult) -> HtmlResult | None:
-        ssl = os.getenv("WEB_SEARCH_SSL", "True") == "True"
+        ssl = os.getenv("WEB_SEARCH_SSL", "True").lower() in ("true", "1")
         try:
             async with self.session.get(url=input["url"], timeout=self.timeout, ssl=ssl) as response:
                 if response.ok:
