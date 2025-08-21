@@ -1,4 +1,9 @@
-from typing import TypedDict, Literal, Optional, NotRequired
+import sys
+if sys.version_info.minor >= 12:
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
+from typing import Literal, Optional, NotRequired
 from .rag import WebSource, RagSource, SearchEngineType
 
 ModelSource = Literal["server", "kaggle"]

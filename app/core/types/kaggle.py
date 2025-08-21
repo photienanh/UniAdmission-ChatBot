@@ -1,5 +1,8 @@
-from typing import TypedDict
-
+import sys
+if sys.version_info.minor >= 12:
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
 from .model import ModelInfo, ModelPreOutput, GenerationParams
 
 class ModelStatus(ModelInfo):

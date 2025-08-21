@@ -1,5 +1,5 @@
-from google import genai
-from google.genai.types import GenerateContentConfig
+import google.generativeai as genai
+from google.generativeai.types import GenerationConfig
 import os
 from typing import AsyncGenerator
 
@@ -7,21 +7,28 @@ from .schema import APIJobInfo
 
 class GeminiAPIModel:
     def __init__(self) -> None:
-        self.client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
+        genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+        
     async def inference(self, info: APIJobInfo) -> AsyncGenerator[str, None]:
         params = info["sampling_params"]
-        config = GenerateContentConfig(
+        config = GenerationConfig(
             temperature=params.get("temperature", 0.8),
             top_p=params.get("top_p", 0.9),
             top_k=params.get("top_k", 16),
             max_output_tokens=params.get("max_tokens", 4096)
         )
-        stream = await self.client.aio.models.generate_content_stream(
-            model=info["model_id"],
+        
+        # Tạo model instance
+        model = genai.GenerativeModel(info["model_id"])
+        
+        # Generate content với streaming (sync)
+        response = model.generate_content(
             contents=info["text"],
-            config=config,
+            generation_config=config,
+            stream=True
         )
-        async for chunk in stream:
-            text = chunk.text
-            if text != None:
-                yield text
+        
+        # Iterate through chunks synchronously trong async function
+        for chunk in response:
+            if hasattr(chunk, 'text') and chunk.text:
+                yield chunk.text

@@ -58,8 +58,10 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
     const password = document.getElementById('password').value;
     const errorDiv = document.getElementById('error-message');
     
-    // Hide previous errors
+    // Hide previous messages
     errorDiv.style.display = 'none';
+    errorDiv.className = 'error-message'; // Reset to default class
+    
     fetch('/login', {
         method: 'POST',
         headers: {
@@ -83,7 +85,16 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
     })
     .then(data => {
         errorDiv.textContent = data.detail;
+        
+        // Change class based on success/failure
+        if (data.success) {
+            errorDiv.className = 'success-message';
+        } else {
+            errorDiv.className = 'error-message';
+        }
+        
         errorDiv.style.display = 'block';
+        
         if (data.success) {
             setTimeout(() => {
                 window.location.href = data.next;
@@ -93,6 +104,7 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
     .catch(error => {
         console.log(error);
         errorDiv.textContent = 'Đã xảy ra lỗi. Vui lòng thử lại.';
+        errorDiv.className = 'error-message';
         errorDiv.style.display = 'block';
     });
 });

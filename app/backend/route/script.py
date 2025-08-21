@@ -19,3 +19,17 @@ async def get_kaggle_client(package_name: str, background_tasks: BackgroundTasks
     )
     response.headers.update(NO_CACHE_HEADERS)
     return response
+
+@router.get("/script_dedicated/{package_name}", response_class=StreamingResponse)
+async def get_kaggle_dedicated_client(package_name: str, background_tasks: BackgroundTasks):
+    tar_buffer = io.BytesIO()
+    with tarfile.open(fileobj=tar_buffer, mode='w:gz') as tar:
+        tar.add(f"../kaggle_dedicated/{package_name}", arcname='')
+    tar_buffer.seek(0)    
+    background_tasks.add_task(tar_buffer.close)
+    response = StreamingResponse(
+        content=tar_buffer, 
+        media_type="application/x-tar"
+    )
+    response.headers.update(NO_CACHE_HEADERS)
+    return response

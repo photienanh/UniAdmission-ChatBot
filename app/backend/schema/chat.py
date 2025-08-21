@@ -1,5 +1,10 @@
 from pydantic import BaseModel
-from typing import Optional, TypedDict
+import sys
+if sys.version_info.minor >= 12:
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
+from typing import Optional
 from datetime import datetime
 
 from core.types import GenerationParams, ChatMessageRole, RagSource, WebSource

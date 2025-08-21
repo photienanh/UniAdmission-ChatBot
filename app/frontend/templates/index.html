@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chatbot đại học</title>
+    <title>UniAdmission Chatbot</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="{{ url_for('static', path='favicon.svg') }}">
@@ -55,19 +55,19 @@
                 <button class="sidebar-toggle" id="sidebar-toggle">
                     <i class="fas fa-bars"></i>
                 </button>
-                <h1 id="chat-title">Chatbot đại học</h1>
+                <h1 id="chat-title">UniAdmission Chatbot</h1>
             </div>
             
             <!-- Chat Messages Area -->
             <div class="chat-messages" id="chat-messages">
                 <div class="welcome-screen">
                     <div class="welcome-content">
-                        <h2>Chatbot đại học</h2>
-                        <p>Xin chào! Tôi là Chatbot thông tin đại học. Bạn có thể hỏi tôi bất kỳ thông tin gì về tuyển sinh đại học.</p>
+                        <h2>UniAdmission Chatbot</h2>
+                        <p>Xin chào! Tôi là UniAdmission Bot. Bạn có thể hỏi tôi bất kỳ thông tin gì về tuyển sinh đại học.</p>
                         <div class="example-prompts">
-                            <div class="prompt-card" onclick="fillPrompt('Điểm chuẩn đại học Bách Khoa Hà Nội')">
+                            <div class="prompt-card" onclick="fillPrompt('Điểm chuẩn Trường Đại học Công nghệ - Đại học Quốc gia Hà Nội')">
                                 <i class="fas fa-graduation-cap"></i>
-                                <span>Điểm chuẩn đại học Bách Khoa Hà Nội</span>
+                                <span>Điểm chuẩn Trường Đại học Công nghệ - Đại học Quốc gia Hà Nội</span>
                             </div>
                             <div class="prompt-card" onclick="fillPrompt('Các trường đào tạo ngành Trí tuệ nhân tạo')">
                                 <i class="fas fa-brain"></i>
@@ -215,7 +215,7 @@
                         </button>
                         <textarea 
                             id="user-input" 
-                            placeholder="Message Chatbot đại học..." 
+                            placeholder="Message UniAdmission Chatbot..." 
                             rows="1"
                             autofocus
                         ></textarea>

@@ -49,7 +49,7 @@ class KaggleManager:
                             })
         for server in to_be_remove:
             cls._servers.remove(server)
-            print(f"[Kaggle] Disconnect: {server["info"]["domain"]}")
+            print(f"[Kaggle] Disconnect: {server['info']['domain']}")
         if len(active_servers) > 0:
             # Send to server where have more jobs => To prevent switching model
             max_count = active_servers[0]["count"]
@@ -88,7 +88,7 @@ class KaggleManager:
                     result.append(model)
         for server in to_be_remove:
             cls._servers.remove(server)
-            print(f"[Kaggle] Disconnect: {server["info"]["domain"]}")
+            print(f"[Kaggle] Disconnect: {server['info']['domain']}")
         return result
     @classmethod
     async def pre_inference(cls, stream_id: str, text: str, model_id: str, params: GenerationParams) -> tuple[str, ModelPreOutput] | None:
@@ -107,7 +107,7 @@ class KaggleManager:
             retry = 0
             while retry < KAGGLE_MAX_RETRY:
                 if server != None:
-                    url = f"{server["info"]["domain"]}/pre_inference"
+                    url = f"{server['info']['domain']}/pre_inference"
                     # Try to connect
                     try:
                         async with ss.post(url=url, json=request) as response:
@@ -138,7 +138,7 @@ class KaggleManager:
     @classmethod
     async def _check_connection(cls, server: ServerStatus) -> bool:
         async with aiohttp.ClientSession() as ss:
-            url = f"{server["info"]["domain"]}/info"
+            url = f"{server['info']['domain']}/info"
             async with ss.get(url=url) as response:
                 if response.ok:
                     info: KaggleServerInfo = await response.json()
@@ -158,6 +158,6 @@ class KaggleManager:
             "info": info,
             "timestamp": now
         })
-        print(f"[Kaggle] New connection {info["domain"]}")
+        print(f"[Kaggle] New connection {info['domain']}")
 
             

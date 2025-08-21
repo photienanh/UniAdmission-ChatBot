@@ -1,4 +1,9 @@
-from typing import TypedDict, Literal
+import sys
+if sys.version_info.minor >= 12:
+    from typing import TypedDict
+else:
+    from typing_extensions import TypedDict
+from typing import Literal
 
 SearchEngineType = Literal["google", "brave"]
 
