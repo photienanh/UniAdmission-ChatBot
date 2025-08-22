@@ -20,9 +20,12 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
         if session_id is None:
             raise HTTPException(status_code=500, detail=f"Failed to create new chat session")
     user_timestamp = get_timestamp()
-    async def finish_call(text: str):
+    async def finish_call(text: str, web_sources: list = None):
         if model_output != None:
             bot_timestamp = get_timestamp()
+            # Cập nhật web_sources từ inference result
+            if web_sources:
+                model_output["web_sources"] = web_sources
             user_msg_id, bot_msg_id = await add_conversation(
                 user_id=user.id,
                 session_id=session_id,

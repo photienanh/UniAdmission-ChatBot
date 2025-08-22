@@ -10,6 +10,7 @@ class APIJobInfo(TypedDict):
     model_id: str
     text: str
     sampling_params: GenerationParams
+    web_sources: list  # For storing web search results
     
 class ServerStatus(TypedDict):
     info: KaggleServerInfo
