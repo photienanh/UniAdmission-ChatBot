@@ -64,25 +64,93 @@ Câu hỏi: {question}
         domain_restrict = params.get("domain_restrict", False)
         
         # Tạo prompt với web search nếu cần
-        prompt, web_sources = self.build_prompt_with_web_search(info["text"], k_pages, domain_restrict)
+        current_question = info["text"]
+        prompt, web_sources = self.build_prompt_with_web_search(current_question, k_pages, domain_restrict)
         
         # Lưu web_sources vào info để sử dụng sau này
         info["web_sources"] = web_sources
         
-        # Tạo model instance với system instruction
+        # Build conversation history if session_id exists
+        conversation_history = []
+        session_id = info.get("session_id")
+        if session_id:
+            try:
+                from database.crud.chat import get_session_with_messages
+                chat_session = await get_session_with_messages(session_id)
+                if chat_session and chat_session.messages:
+                    # Convert messages to Gemini format (exclude current message)
+                    for msg in chat_session.messages[:-1]:  # Exclude the current user message
+                        if msg.role == "user":
+                            # For historical messages, use question as-is (no web search)
+                            conversation_history.append({"role": "user", "parts": [msg.text]})
+                        elif msg.role == "bot":
+                            conversation_history.append({"role": "model", "parts": [msg.text]})
+            except Exception as e:
+                # If can't load history, continue with single turn
+                pass
+        
+        # Add current question to conversation (web context will be in system instruction)
+        conversation_history.append({"role": "user", "parts": [current_question]})
+        
+        # Build system instruction with web context if available
+        system_instruction_text = SYSTEM_INSTRUCTION
+        if web_sources:
+            context = ""
+            for source in web_sources:
+                context += f"{source['text']}\n\n" + 100 * '-' + "\n\n"
+            system_instruction_text += f"\n\nThông tin tham khảo:\n{context}"
+        
+        # Tạo model instance với system instruction (bao gồm web context)
         model = genai.GenerativeModel(
             info["model_id"],
-            system_instruction=SYSTEM_INSTRUCTION
+            system_instruction=system_instruction_text
         )
         
-        # Generate content với streaming (sync)
+        # Generate content với conversation history và streaming
         response = model.generate_content(
-            contents=prompt,
+            contents=conversation_history,
             generation_config=config,
             stream=True
         )
         
         # Iterate through chunks synchronously trong async function
+        response_received = False
         for chunk in response:
-            if hasattr(chunk, 'text') and chunk.text:
-                yield chunk.text
+            try:
+                # Check if chunk has parts and candidates
+                if hasattr(chunk, 'candidates') and chunk.candidates:
+                    candidate = chunk.candidates[0]
+                    if hasattr(candidate, 'content') and candidate.content and candidate.content.parts:
+                        # Try to get text from parts
+                        text_content = ""
+                        for part in candidate.content.parts:
+                            if hasattr(part, 'text') and part.text:
+                                text_content += part.text
+                        
+                        if text_content:
+                            response_received = True
+                            yield text_content
+                        
+                # Fallback to original method if above doesn't work
+                elif hasattr(chunk, 'text'):
+                    text = chunk.text
+                    if text:
+                        response_received = True
+                        yield text
+                        
+            except ValueError as e:
+                # Handle case where chunk.text is invalid (finish_reason != None)
+                if "finish_reason" in str(e):
+                    # This chunk finished without text, skip it
+                    continue
+                else:
+                    # Re-raise other ValueError
+                    raise e
+            except Exception as e:
+                # Handle other potential errors
+                print(f"Error processing chunk: {e}")
+                continue
+        
+        # If no response was received, yield empty string to prevent hanging
+        if not response_received:
+            yield ""

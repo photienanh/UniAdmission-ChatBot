@@ -40,7 +40,7 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
                 user_extra_data={},
                 bot_extra_data=model_output["extra_data"]
             )
-    model_output = await ModelManager.pre_inference(data.text, data.model_id, data.params, finish_call)
+    model_output = await ModelManager.pre_inference(data.text, data.model_id, data.params, finish_call, session_id)
     if model_output == None:
         raise HTTPException(status_code=500, detail="Failed to inference model")
     text = ""

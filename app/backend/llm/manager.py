@@ -30,7 +30,8 @@ class ModelManager:
                 "model_id": model_id,
                 "sampling_params": params,
                 "text": text,
-                "web_sources": []  # Initialize empty, will be filled by gemini
+                "web_sources": [],  # Initialize empty, will be filled by gemini
+                "session_id": kwargs.get("session_id")  # Add session_id
             }
             total = ""
             async for chunk in cls._gemini_api.inference(api_job_info):
@@ -47,7 +48,7 @@ class ModelManager:
                 yield chunk
             await job_info["finish_call"](total, [])
     @classmethod
-    async def pre_inference(cls, text: str, model_id: str, params: GenerationParams, finish_call: Callable[[str], Awaitable]) -> ModelPreOutput | None:
+    async def pre_inference(cls, text: str, model_id: str, params: GenerationParams, finish_call: Callable[[str], Awaitable], session_id: Optional[str] = None) -> ModelPreOutput | None:
         job_id = generate_id()
         server_kwargs: dict | None = None
         if model_id.startswith("api:"):
@@ -77,7 +78,8 @@ class ModelManager:
             server_kwargs = {
                 "model_id": GEMINI_MODEL,
                 "text": text,
-                "generation_params": params
+                "generation_params": params,
+                "session_id": session_id  # Add session_id
             }
         else:
             pack = await KaggleManager.pre_inference(job_id, text, model_id, params)
