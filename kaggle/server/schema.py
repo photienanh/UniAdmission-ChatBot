@@ -21,7 +21,7 @@ class GenerationParams(TypedDict):
     engine_type: NotRequired[SearchEngineType]
     query_rewrite: NotRequired[bool]
     hyde: NotRequired[bool]
-    domain_restric: NotRequired[bool]
+    domain_restrict: NotRequired[bool]
     k_docs: NotRequired[int]
     k_pages: NotRequired[int]
     max_tokens: NotRequired[int]
