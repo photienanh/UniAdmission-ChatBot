@@ -18,13 +18,13 @@ class GeminiAPIModel:
         if k_pages > 0:
             # Thực hiện web search
             try:
-                search_sources = get_source(question, k_pages)
+                search_sources = get_source(question, k_pages, domain_restrict)
             except Exception as e:
                 return question, []
-                
+            
             if search_sources is None:
                 return question, []
-                
+            
             # Thêm timestamp cho sources
             for source in search_sources:
                 source["timestamp"] = datetime.now(timezone.utc).isoformat()
@@ -63,9 +63,16 @@ Câu hỏi: {question}
         k_pages = params.get("k_pages", 0)
         domain_restrict = params.get("domain_restrict", False)
         
-        # Tạo prompt với web search nếu cần
-        current_question = info["text"]
-        prompt, web_sources = self.build_prompt_with_web_search(current_question, k_pages, domain_restrict)
+        # Check if web sources are already cached from pre-inference
+        cached_web_sources = info.get("cached_web_sources")
+        if cached_web_sources is not None:
+            # Use cached web sources to avoid duplicate search
+            web_sources = cached_web_sources
+            current_question = info["text"]  # Use original question
+        else:
+            # Perform fresh web search if no cached sources
+            current_question = info["text"]
+            prompt, web_sources = self.build_prompt_with_web_search(current_question, k_pages, domain_restrict)
         
         # Lưu web_sources vào info để sử dụng sau này
         info["web_sources"] = web_sources
@@ -148,7 +155,6 @@ Câu hỏi: {question}
                     raise e
             except Exception as e:
                 # Handle other potential errors
-                print(f"Error processing chunk: {e}")
                 continue
         
         # If no response was received, yield empty string to prevent hanging

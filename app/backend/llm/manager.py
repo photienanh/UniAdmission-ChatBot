@@ -31,7 +31,8 @@ class ModelManager:
                 "sampling_params": params,
                 "text": text,
                 "web_sources": [],  # Initialize empty, will be filled by gemini
-                "session_id": kwargs.get("session_id")  # Add session_id
+                "session_id": kwargs.get("session_id"),  # Add session_id
+                "cached_web_sources": kwargs.get("cached_web_sources")  # Pass cached sources
             }
             total = ""
             async for chunk in cls._gemini_api.inference(api_job_info):
@@ -79,7 +80,8 @@ class ModelManager:
                 "model_id": GEMINI_MODEL,
                 "text": text,
                 "generation_params": params,
-                "session_id": session_id  # Add session_id
+                "session_id": session_id,  # Add session_id
+                "cached_web_sources": web_sources  # Cache web sources to avoid duplicate search
             }
         else:
             pack = await KaggleManager.pre_inference(job_id, text, model_id, params)

@@ -14,20 +14,17 @@ GPT_API_KEY = os.getenv("GPT_API_KEY")
 
 def initialize_openai_client():
     return OpenAI(
-        base_url="https://models.inference.ai.azure.com",
-        api_key=GPT_API_KEY  # Sử dụng GitHub Models
+        api_key=GPT_API_KEY
     )
 
-def generate_search_keywords(question, model="openai/gpt-4o-mini"):
+def generate_search_keywords(question, model="gpt-4o-mini"):
     
     # Check API key
     if not GPT_API_KEY:
-        # print("[DEBUG] GPT_API_KEY not found, using original question as keywords")
         return question
         
     try:
         client = initialize_openai_client()
-        # print(f"[DEBUG] Making request to OpenAI API...")
         
         response = client.chat.completions.create(
             model=model,
@@ -77,7 +74,7 @@ Chỉ trả về từ khóa, không giải thích."""
     except Exception as e:
         return question
 
-def web_search(question, max_results):
+def web_search(question, max_results, domain_restrict=False):
     """Tìm kiếm thông tin từ web sử dụng Brave Search API"""
     
     # Check API key
@@ -115,9 +112,7 @@ def web_search(question, max_results):
             title = result.get("title", "")
             description = result.get("description", "")
             url_result = result.get("url", "")
-            
-            # print(f"[DEBUG] Result {i+1}: {title[:50]}... - {url_result}")
-            
+                        
             if title and description:
                 item = {
                     "title": title,
@@ -126,7 +121,6 @@ def web_search(question, max_results):
                 }
                 pages.append(item)
                 
-        # print(f"[DEBUG] web_search returning {len(pages)} valid pages")
         return pages
     except Exception:
         return None
@@ -160,18 +154,16 @@ def extract_main_content(url):
         if tables:
             main_content += "\n\n" + "\n\n".join([table.to_string(index=False) for table in tables])
         if main_content:
-            # print(f"[DEBUG] Extracted content successfully")
             return main_content
         else:
             return "Không tìm được nội dung có thể xử lý."    
     except Exception as e:
-        # print(f"[DEBUG] extract_main_content exception: {e}")
         return f"Lỗi khi xử lý URL: {e}"
 
-def get_source(query, max_results):
+def get_source(query, max_results, domain_restrict=False):
     try:
         search_source = []
-        pages = web_search(query, max_results)
+        pages = web_search(query, max_results, domain_restrict)
         
         if pages is None:
             return None
