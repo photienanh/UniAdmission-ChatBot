@@ -33,6 +33,7 @@ class ModelInput(TypedDict):
     context: list[UserMessage | BotMessage]
     model_id: str
     web_search: Optional[WebSearchParam]
+    params: dict
 
 class ModelOutput(ModelInput):
     # ModelInput +

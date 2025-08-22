@@ -1,4 +1,4 @@
-from ..engines import (
+from ..schema import (
     SearchResult,
     HtmlResult,
     PreProcessedResult,
@@ -32,19 +32,21 @@ class Logger:
                 print(f"Failed to log Query: {e}")
     def count(self):
         self._count += 1
-    def search(self, data: SearchResult):
+    def search(self, data: SearchResult, index: int = -1):
         if not self.enable: return
+        if index == -1: index = self._count
         try:
-            folder_path = os.path.join(self.folder_path, f"{self._count}")
+            folder_path = os.path.join(self.folder_path, f"{index}")
             os.makedirs(folder_path, exist_ok=True)
             with open(os.path.join(folder_path, f"search.json"), 'w', encoding='utf-8') as file:
                 file.write(json.dumps(data))
         except Exception as e:
-            print(f"Failed to log Search {self._count}: {e}")
-    def html(self, data: HtmlResult):
+            print(f"Failed to log Search {index}: {e}")
+    def html(self, data: HtmlResult, index: int = -1):
         if not self.enable: return
+        if index == -1: index = self._count
         try:
-            folder_path = os.path.join(self.folder_path, f"{self._count}")
+            folder_path = os.path.join(self.folder_path, f"{index}")
             os.makedirs(folder_path, exist_ok=True)
             copied_data = deepcopy(data)
             copied_data.pop("html")
@@ -53,11 +55,12 @@ class Logger:
             with open(os.path.join(folder_path, f"html.html"), 'w', encoding='utf-8') as file:
                 file.write(data['html'])
         except Exception as e:
-            print(f"Failed to log Html {self._count}: {e}")
-    def preprocessed(self, data: PreProcessedResult):
+            print(f"Failed to log Html {index}: {e}")
+    def preprocessed(self, data: PreProcessedResult, index: int = -1):
         if not self.enable: return
+        if index == -1: index = self._count
         try:
-            folder_path = os.path.join(self.folder_path, f"{self._count}")
+            folder_path = os.path.join(self.folder_path, f"{index}")
             os.makedirs(folder_path, exist_ok=True)
             copied_data = deepcopy(data)
             copied_data.pop("html")
@@ -67,11 +70,12 @@ class Logger:
             with open(os.path.join(folder_path, f"preprocess.txt"), 'w', encoding='utf-8') as file:
                 file.write(data["extracted_content"])
         except Exception as e:
-            print(f"Failed to log Preprocessed {self._count}: {e}")
-    def processed(self, data: ProcessedResult):
+            print(f"Failed to log Preprocessed {index}: {e}")
+    def processed(self, data: ProcessedResult, index: int = -1):
         if not self.enable: return
+        if index == -1: index = self._count
         try:
-            folder_path = os.path.join(self.folder_path, f"{self._count}")
+            folder_path = os.path.join(self.folder_path, f"{index}")
             os.makedirs(folder_path, exist_ok=True)
             copied_data = deepcopy(data)
             copied_data.pop("html")
@@ -87,15 +91,15 @@ class Logger:
                 
             image_path = os.path.join(folder_path, f"image")
             os.makedirs(image_path, exist_ok=True)
-            for index, image_content in enumerate(data["image_content"]):
-                with open(os.path.join(image_path, f"image_{index}.txt"), 'w', encoding='utf-8') as file:
+            for i, image_content in enumerate(data["image_content"]):
+                with open(os.path.join(image_path, f"image_{i}.txt"), 'w', encoding='utf-8') as file:
                     file.write(image_content["text"])
                     
             pdf_path = os.path.join(folder_path, f"pdf")
             os.makedirs(pdf_path, exist_ok=True)
-            for index, pdf_content in enumerate(data["pdf_content"]):
-                with open(os.path.join(pdf_path, f"pdf_{index}.txt"), 'w', encoding='utf-8') as file:
+            for i, pdf_content in enumerate(data["pdf_content"]):
+                with open(os.path.join(pdf_path, f"pdf_{i}.txt"), 'w', encoding='utf-8') as file:
                     file.write(pdf_content["text"])
             
         except Exception as e:
-            print(f"Failed to log Processed {self._count}: {e}")
+            print(f"Failed to log Processed {index}: {e}")

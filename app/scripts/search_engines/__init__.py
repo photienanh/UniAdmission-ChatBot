@@ -1,1 +1,1 @@
-from .pipeline import SearchPipeline, ProcessedResult
+from .web_search import Websearch, CmdLogger

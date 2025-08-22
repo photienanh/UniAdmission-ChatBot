@@ -16,7 +16,7 @@ def generate_search_keywords(question, model="openai/gpt-4o-mini"):
         messages=[
             {
                 "role": "system",
-                "content": """Bạn là chuyên gia tạo từ khóa tìm kiếm thông minh. Nhiệm vụ: phân tích câu hỏi và tạo từ khóa giúp tìm được thông tin CĂN BẢN để LLM có thể suy luận ra câu trả lời. Hiện tại là năm 2025.
+                "content": """Bạn là chuyên gia tạo từ khóa tìm kiếm thông minh. Nhiệm vụ: phân tích câu hỏi và tạo từ khóa giúp tìm được thông tin CĂN BẢN để LLM có thể suy luận ra câu trả lời.
 
 CHIẾN LƯỢC TÌM KIẾM:
 
@@ -30,13 +30,13 @@ Câu hỏi: "Số tiến sĩ trong viện trí tuệ nhân tạo UET là bao nhi
 → Cần: Danh sách giảng viên để đếm tiến sĩ
 → Từ khóa: "danh sách giảng viên viện trí tuệ nhân tạo UET"
 
-Câu hỏi: "Điểm chuẩn ngành CNTT Bách Khoa 2025?"  
+Câu hỏi: "Điểm chuẩn ngành CNTT Bách Khoa 2024?"  
 → Cần: Bảng điểm chuẩn chính thức
-→ Từ khóa: "điểm chuẩn đại học Bách Khoa Hà Nội 2025"
+→ Từ khóa: "điểm chuẩn đại học Bách Khoa Hà Nội 2024"
 
 Câu hỏi: "Học phí ngành AI VNU-UET như thế nào?"
 → Cần: Bảng học phí chính thức  
-→ Từ khóa: "học phí đại học công nghệ VNU-UET 2025"
+→ Từ khóa: "học phí đại học công nghệ VNU-UET 2024"
 
 Câu hỏi: "Chương trình đào tạo ngành CNTT có môn gì?"
 → Cần: Khung chương trình chi tiết

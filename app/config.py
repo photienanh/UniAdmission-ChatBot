@@ -1,0 +1,8 @@
+DOMAIN = "http://localhost:8000"
+SECRET_KEY = "dhjowiu4910nuviocq3jorxmhoimfjfjajkjif0mx"
+SERVICE_REGISTER_TOKEN = "hmmmwdawdaj9i1y2y3ch8nq8aiojcnhawasadsa"
+GEMINI_API_KEY = "AIzaSyDaQWFtNjn_kD_N6ZdklJQhQMZfY4krv-8"
+GEMINI_MODEL = "gemini-2.0-flash-lite-preview-02-05"
+GPT_API_KEY = "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"
+BRAVE_API_KEY = "BSAbUIq8YC6VrPhwp688ST6Vtz7cyrH"
+SYSTEM_INSTRUCTION = "Bạn là một AI tư vấn tuyển sinh đại học chuyên nghiệp. Hãy trả lời các câu hỏi một cách chính xác, hữu ích và thân thiện. Có thể sử dụng những thông tin được cung cấp để đưa ra câu trả lời hoặc lời khuyên tốt nhất."

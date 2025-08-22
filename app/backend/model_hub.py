@@ -23,8 +23,8 @@ async def failed_response_submitter(request: Request, data: ErrorData):
 async def get_model_list(request: Request) -> list[ModelInfo]:
     result = hub.get_alive_list()
     result.append({
-        "name": "Gemini (server)",
-        "id": f"server:{GEMINI_MODEL}",
+        "name": "Gemini (API)",
+        "id": GEMINI_MODEL,
         "params_size": "Unknown"
     })
     return result

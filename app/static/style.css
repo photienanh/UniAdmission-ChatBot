@@ -603,131 +603,15 @@ body {
     padding: 20px 24px 24px 24px;
     background-color: #ffffff;
     border-top: 1px solid #e5e5e5;
+    position: relative;
 }
 
-.input-controls {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    margin-bottom: 16px;
-    justify-content: center;
-    opacity: 0;
-    transform: translateY(-20px);
-    animation: slideInControls 0.6s ease-out forwards;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-/* Control Row Layout */
-.control-row {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    flex-wrap: wrap;
-    margin-bottom: 8px;
-    flex-direction: column;
-    transition: all 0.3s ease;
-}
-
-.control-row:last-child {
-    margin-bottom: 0;
-}
-
-/* First row - always visible */
-.control-row .main-controls {
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    width: 100%;
-    justify-content: center;
-}
-
-/* Web Search Options - chỉ hiện khi web search được bật */
-.web-search-options {
-    display: none;
-    opacity: 0;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-    width: 100%;
-    justify-content: center;
-    margin-top: 12px;
-    gap: 40px;
-}
-
-.web-search-options.show {
-    display: flex;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-@keyframes slideInControls {
-    from {
-        opacity: 0;
-        transform: translateY(-20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.input-controls.show {
-    max-height: 200px;
-    opacity: 1;
-    transform: translateY(0);
-}
-
-.input-controls.hide {
-    max-height: 0;
-    opacity: 0;
-    transform: translateY(-20px);
-    margin-bottom: 0;
-    overflow: hidden;
-}
-
+/* General control group styles */
 .control-group {
     display: flex;
     align-items: center;
     gap: 8px;
-    opacity: 0;
-    transform: translateX(-15px);
-    animation: slideInGroup 0.4s ease-out forwards;
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.control-group:nth-child(1) {
-    animation-delay: 0.1s;
-}
-
-.control-group:nth-child(2) {
-    animation-delay: 0.2s;
-}
-
-.control-group:nth-child(3) {
-    animation-delay: 0.3s;
-}
-
-.control-group:nth-child(4) {
-    animation-delay: 0.4s;
-}
-
-.control-group:nth-child(5) {
-    animation-delay: 0.5s;
-}
-
-@keyframes slideInGroup {
-    from {
-        opacity: 0;
-        transform: translateX(-15px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-.control-group:hover {
-    transform: translateX(0) scale(1.02);
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .control-group label {
@@ -753,23 +637,17 @@ body {
     background-repeat: no-repeat;
     background-size: 16px;
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transform: translateY(0);
 }
 
 .control-group select:hover {
     border-color: #3b82f6;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(59, 130, 246, 0.1);
     background-color: #fafbff;
-    transform: translateY(-2px);
 }
 
 .control-group select:focus {
     outline: none;
     border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
-    transform: translateY(-1px);
 }
 
 /* Number input styles */
@@ -782,25 +660,19 @@ body {
     font-size: 14px;
     min-width: 140px;
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-    transform: translateY(0);
     text-align: center;
     font-weight: 500;
 }
 
 .control-group input[type="number"]:hover {
     border-color: #3b82f6;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1), 0 0 0 1px rgba(59, 130, 246, 0.1);
     background-color: #fafbff;
-    transform: translateY(-2px);
 }
 
 .control-group input[type="number"]:focus {
     outline: none;
     border-color: #3b82f6;
-    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1), 0 1px 3px rgba(0, 0, 0, 0.1);
     background-color: #ffffff;
-    transform: translateY(-1px);
 }
 
 /* Hide spinner arrows in number input */
@@ -813,14 +685,12 @@ body {
 /* Invalid input styles - red border */
 .control-group input[type="number"].invalid {
     border-color: #ef4444;
-    box-shadow: 0 1px 3px rgba(239, 68, 68, 0.1), 0 0 0 1px rgba(239, 68, 68, 0.1);
     background-color: #fef2f2;
 }
 
 .control-group input[type="number"].invalid:focus {
     outline: none;
     border-color: #ef4444;
-    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1), 0 1px 3px rgba(239, 68, 68, 0.1);
     background-color: #fef2f2;
 }
 
@@ -848,10 +718,6 @@ body {
     transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     transform: scale(1);
     cursor: pointer;
-}
-
-.slider-switch:hover {
-    transform: scale(1.05);
 }
 
 .slider-switch input {
@@ -886,7 +752,7 @@ body {
 
 /* Khi bật */
 .slider-switch input:checked + .slider-track {
-    background-color: #007AFF;
+    background-color: #000000;
 }
 
 .slider-switch input:checked + .slider-track .slider-thumb {
@@ -900,41 +766,6 @@ body {
 
 .slider-switch:hover .slider-thumb {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-}
-
-/* Responsive cho Web Search Settings */
-@media (max-width: 768px) {
-    .input-controls {
-        flex-direction: column;
-        gap: 12px;
-        align-items: stretch;
-    }
-    
-    .control-row .main-controls {
-        flex-direction: column;
-        gap: 12px;
-        align-items: stretch;
-    }
-    
-    .web-search-options {
-        flex-direction: column;
-        gap: 12px;
-        align-items: stretch;
-        margin-top: 8px;
-    }
-    
-    .control-group {
-        justify-content: space-between;
-    }
-    
-    .control-group label {
-        min-width: auto;
-        font-size: 13px;
-    }
-    
-    .control-group select {
-        min-width: 100px;
-    }
 }
 
 .chat-form {
@@ -952,6 +783,27 @@ body {
     padding: 12px 16px;
     transition: border-color 0.2s;
     box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+}
+
+/* Ensure settings popup aligns with settings button regardless of sidebar state */
+.settings-popup {
+    position: absolute;
+    bottom: 60px;
+    left: 8px; /* Same as settings button left position */
+    background: #ffffff;
+    border: 2px solid #000000;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    padding: 20px;
+    min-width: 280px;
+    max-width: 280px;
+    z-index: 1001;
+    opacity: 0;
+    visibility: hidden;
+    transform: scale(0.95) translateY(10px);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 .input-container:focus-within {
@@ -995,6 +847,559 @@ body {
 
 #settings-toggle.active:hover {
     transform: translateY(-50%) rotate(180deg) scale(1.1);
+}
+
+.settings-popup.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.settings-popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.settings-popup-header h3 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #000000;
+    margin: 0;
+}
+
+.settings-close-btn {
+    background: none;
+    border: none;
+    color: #666666;
+    cursor: pointer;
+    font-size: 18px;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+}
+
+.settings-close-btn:hover {
+    background-color: #f0f0f0;
+    color: #000000;
+}
+
+.settings-popup .main-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.settings-popup .settings-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.settings-popup .settings-item {
+    position: relative;
+    border: none;
+    border-radius: 8px;
+    overflow: visible;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    background: #ffffff;
+    box-shadow: 0 0 0 1px #e5e5e5;
+}
+
+.settings-popup .settings-item:hover,
+.settings-popup .settings-item:hover .settings-item-content:hover {
+    background: #f8f9fa;
+    border-radius: 8px;
+}
+
+.settings-popup .settings-item-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    cursor: pointer;
+    background: #f8f9fa;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.settings-popup .settings-item:hover .settings-item-header {
+    background: #000000;
+    color: #ffffff;
+    border-radius: 8px;
+}
+
+.settings-popup .settings-item-header i:first-child {
+    font-size: 14px;
+    color: #666666;
+    transition: color 0.2s ease;
+}
+
+.settings-popup .settings-item:hover .settings-item-header i:first-child {
+    color: #ffffff;
+}
+
+.settings-popup .settings-item-header span {
+    flex: 1;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+.settings-popup .settings-item-header .arrow {
+    font-size: 12px;
+    color: #999999;
+    transition: all 0.3s ease;
+}
+
+.settings-popup .settings-item:hover .settings-item-header .arrow {
+    color: #ffffff;
+    transform: rotate(90deg);
+}
+
+.settings-popup .settings-item-content {
+    position: absolute;
+    left: 100%;
+    top: 0;
+    width: 320px;
+    min-height: 120px;
+    padding: 16px;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(-10px);
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    transition-delay: 0.1s;
+    z-index: 1001;
+    margin-left: 2px;
+    pointer-events: none;
+}
+
+/* Thêm khu vực cầu nối invisible */
+.settings-popup .settings-item-content::before {
+    content: '';
+    position: absolute;
+    right: 100%;
+    top: 0;
+    width: 2px;
+    height: 100%;
+    background: transparent;
+    pointer-events: auto;
+}
+
+/* Models popup - nrang bằng với Models item, compact */
+#model-settings-item .settings-item-content {
+    top: 0;
+    width: 260px;
+    min-height: 100px;
+}
+
+/* Web Search popup - rộng vừa phải và cao hơn để chứa nhiều controls */
+#web-search-settings-item .settings-item-content {
+    top: -50px;
+    width: 340px;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    text-align: left;
+    padding: 20px;
+}
+
+/* Sampling Parameters popup - cao hơn, vừa phải */
+#sampling-settings-item .settings-item-content {
+    top: -50px;
+    width: 340px;
+    min-height: 140px;
+}
+
+/* Căn giữa nội dung cho Web Search popup */
+#web-search-settings-item .control-group {
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+#web-search-settings-item .slider-label {
+    text-align: left;
+    margin: 0;
+}
+
+#web-search-settings-item .slider-container {
+    display: flex;
+}
+
+#web-search-settings-item .web-search-options {
+    align-items: center;
+    width: 100%;
+}
+
+#web-search-settings-item .web-search-options .control-group {
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+    max-width: 300px;
+    margin: 0 auto;
+    display: flex;
+}
+
+/* Căn giữa text trong select boxes của Web Search */
+#web-search-settings-item select {
+    text-align: center;
+    text-align-last: center;
+    font-weight: 600;
+}
+
+/* Bold text in select options */
+#web-search-settings-item select option {
+    font-weight: 600;
+}
+
+/* Custom black thin sliders for temperature and top-p */
+#temperature-slider,
+#top-p-slider {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 3px;
+    border-radius: 2px;
+    background: #e5e5e5;
+    outline: none;
+    margin: 8px 0;
+}
+
+#temperature-slider::-webkit-slider-thumb,
+#top-p-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #000000;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+}
+
+#temperature-slider::-webkit-slider-thumb:hover,
+#top-p-slider::-webkit-slider-thumb:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+#temperature-slider::-moz-range-track,
+#top-p-slider::-moz-range-track {
+    width: 100%;
+    height: 3px;
+    background: #e5e5e5;
+    border-radius: 2px;
+    border: none;
+}
+
+#temperature-slider::-moz-range-thumb,
+#top-p-slider::-moz-range-thumb {
+    height: 14px;
+    width: 14px;
+    border-radius: 50%;
+    background: #000000;
+    cursor: pointer;
+    border: none;
+    transition: all 0.2s ease;
+    box-shadow: none;
+}
+
+#temperature-slider::-moz-range-thumb:hover,
+#top-p-slider::-moz-range-thumb:hover {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* Max tokens input validation */
+#max-tokens-input.invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+}
+
+#max-tokens-input.invalid:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.25);
+}
+
+/* Search docs count input validation */
+#search-docs-count.invalid {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+}
+
+#search-docs-count.invalid:focus {
+    border-color: #dc3545;
+}
+
+/* Bold labels in Web Search options */
+#web-search-settings-item .web-search-options label {
+    font-weight: 600;
+}
+
+.settings-popup .settings-item:hover .settings-item-content {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+}
+
+/* Giữ popup hiển thị khi hover vào chính nó */
+.settings-popup .settings-item-content:hover {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* Models List Styling */
+.settings-popup .models-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 200px; /* Giới hạn chiều cao */
+    overflow-y: auto; /* Cho phép cuộn dọc */
+    padding-right: 4px; /* Tạo khoảng cách với thanh cuộn */
+}
+
+/* Custom scrollbar for models list */
+.settings-popup .models-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.settings-popup .models-list::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 3px;
+}
+
+.settings-popup .models-list::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 3px;
+}
+
+.settings-popup .models-list::-webkit-scrollbar-thumb:hover {
+    background: #a1a1a1;
+}
+
+.settings-popup .model-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    background: #f8f9fa;
+    flex-shrink: 0; /* Không co lại khi cuộn */
+}
+
+.settings-popup .model-item:hover {
+    border-color: #d1d5db;
+    background: #ffffff;
+}
+
+.settings-popup .model-item.active {
+    background: #ffffff;
+    color: #000000;
+    border: 2px solid #000000; /* Viền đen đậm cho model được chọn */
+    font-weight: 600;
+}
+
+.settings-popup .model-item.active:hover {
+    background: #f8f9fa;
+    border: 2px solid #000000; /* Giữ viền đen đậm khi hover */
+}
+
+.settings-popup .model-item span {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.settings-popup .settings-item-content .control-group {
+    margin-bottom: 16px;
+}
+
+.settings-popup .settings-item-content .control-group:last-child {
+    margin-bottom: 0;
+}
+
+.settings-popup .settings-item-content .web-search-options {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid #e5e5e5;
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.settings-popup .settings-item-content .web-search-options.show {
+    display: flex;
+}
+
+.settings-popup .control-group {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.settings-popup .control-group label {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000000;
+    margin: 0;
+    flex: 1;
+}
+
+.settings-popup .control-group select,
+.settings-popup .control-group input[type="number"] {
+    min-width: 80px;
+    padding: 6px 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 14px;
+    background: #ffffff;
+    color: #000000;
+}
+
+.settings-popup .control-group select:focus,
+.settings-popup .control-group input[type="number"]:focus {
+    outline: none;
+    border-color: #000000;
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+/* Range slider styles */
+.settings-popup .control-group input[type="range"] {
+    flex: 1;
+    margin: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.settings-popup .control-group input[type="range"]::-webkit-slider-track {
+    width: 100%;
+    height: 4px;
+    background: #e5e5e5;
+    border-radius: 2px;
+}
+
+.settings-popup .control-group input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #000000;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    transition: all 0.2s ease;
+}
+
+.settings-popup .control-group input[type="range"]::-webkit-slider-thumb:hover {
+    background: #333333;
+}
+
+.settings-popup .control-group input[type="range"]::-moz-range-track {
+    width: 100%;
+    height: 4px;
+    background: #e5e5e5;
+    border-radius: 2px;
+    border: none;
+}
+
+.settings-popup .control-group input[type="range"]::-moz-range-thumb {
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    background: #000000;
+    cursor: pointer;
+    border: 2px solid #ffffff;
+    transition: all 0.2s ease;
+}
+
+/* Value display styles */
+.settings-popup .control-group label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.settings-popup .control-group label span {
+    font-weight: 600;
+    color: #000000;
+    background: #f8f9fa;
+    padding: 2px 8px;
+    border-radius: 4px;
+    min-width: 40px;
+    text-align: center;
+    font-size: 12px;
+}
+
+/* Responsive for settings popup */
+@media (max-width: 768px) {
+    .settings-popup {
+        left: 50%;
+        transform: translateX(-50%) scale(0.95) translateY(10px);
+        min-width: 320px;
+        max-width: calc(100vw - 32px);
+        padding: 16px;
+    }
+    
+    .settings-popup.show {
+        transform: translateX(-50%) scale(1) translateY(0);
+    }
+    
+    .settings-popup .settings-item-content {
+        position: relative;
+        left: 0;
+        top: auto;
+        width: 100% !important;
+        min-height: auto !important;
+        margin-left: 0;
+        margin-top: 8px;
+        transform: none;
+        visibility: visible;
+        opacity: 1;
+        max-height: 0;
+        overflow: hidden;
+        padding: 0 12px;
+        transition: all 0.3s ease, max-height 0.3s ease;
+    }
+    
+    .settings-popup .settings-item:hover .settings-item-content {
+        max-height: 300px;
+        padding: 12px;
+        transform: none;
+    }
+    
+    .settings-popup .control-group {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 8px;
+    }
+    
+    .settings-popup .control-group label {
+        justify-content: flex-start;
+        gap: 8px;
+    }
+    
+    .settings-popup .settings-item-header {
+        padding: 10px 12px;
+    }
 }
 
 #user-input {
@@ -1505,13 +1910,10 @@ body {
 .show-context-btn:hover {
     background: #e5e7eb;
     border-color: #9ca3af;
-    transform: scale(1.08);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .show-context-btn:active {
-    transform: scale(1.02);
-    transition: all 0.1s ease;
+    background: #d1d5db;
 }
 
 .show-context-btn i {
@@ -1543,4 +1945,81 @@ body {
     max-height: 200px;
     overflow-y: auto;
     white-space: pre-wrap;
+}
+
+/* Override all transform and box-shadow effects within settings popup */
+.settings-popup * {
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+/* But keep transform and transitions for slider components */
+.settings-popup .slider-switch,
+.settings-popup .slider-switch *,
+.settings-popup .slider-track,
+.settings-popup .slider-track *,
+.settings-popup .slider-thumb,
+.settings-popup .slider-thumb *,
+.settings-popup .slider-container,
+.settings-popup .slider-container * {
+    transform: unset !important;
+    box-shadow: unset !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+/* Specifically ensure slider thumb transform works */
+.settings-popup .slider-switch input:checked + .slider-track .slider-thumb {
+    transform: translateX(24px) !important;
+    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94) !important;
+}
+
+.settings-popup .slider-switch:hover .slider-track {
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+.settings-popup .slider-switch:hover .slider-thumb {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Re-enable only necessary styles for settings popup */
+.settings-popup {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+}
+
+.settings-popup .settings-item {
+    box-shadow: 0 0 0 1px #e5e5e5 !important;
+    border-radius: 8px !important;
+}
+
+.settings-popup .settings-item:hover {
+    background: #f8f9fa !important;
+    border-radius: 8px !important;
+}
+
+.settings-popup .settings-item-header {
+    border-radius: 8px !important;
+}
+
+.settings-popup .settings-item:hover .settings-item-header {
+    background: #000000 !important;
+    color: #ffffff !important;
+    border-radius: 8px !important;
+}
+
+/* Override for model items to ensure scrollable list and bold border for selected */
+.settings-popup .models-list {
+    max-height: 200px !important;
+    overflow-y: auto !important;
+}
+
+.settings-popup .model-item.active {
+    border: 2px solid #000000 !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 600 !important;
+}
+
+.settings-popup .model-item.active:hover {
+    border: 2px solid #000000 !important;
+    background: #f8f9fa !important;
 }
