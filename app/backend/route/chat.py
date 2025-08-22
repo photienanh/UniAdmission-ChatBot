@@ -6,7 +6,7 @@ from database import check_login, add_conversation, get_user_sessions, get_sessi
 from backend.schema import ChatRequest, SessionResponse, SessionMessagesResponse, PreChatResponse
 from backend.llm import ModelManager
 
-from .utils import NO_CACHE_HEADERS, get_timestamp
+from .utils import NO_CACHE_HEADERS, get_timestamp, CommonResponse
 
 
 router = APIRouter()
@@ -82,6 +82,6 @@ async def delete_session(request: Request, session_id: str):
     chat_session = await get_chat_session(session_id)
     if chat_session and chat_session.user_id == user.id:
         chat_session = await delete_chat_session(chat_session)
-        return Response(status_code=200, content="OK")
+        return CommonResponse(200, True, "Ok")
     else:
         raise HTTPException(status_code=404, detail=f"Not found session with id: {session_id}")

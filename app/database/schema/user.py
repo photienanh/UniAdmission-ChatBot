@@ -22,7 +22,7 @@ class User(Base): #type:ignore
     def to_dict(self):
         return {
             "id": self.id,
-            "uesrname": self.username,
+            "username": self.username,
             "email": self.email,
             "full_name": self.full_name
         }

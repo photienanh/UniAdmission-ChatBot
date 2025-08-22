@@ -414,14 +414,17 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(data.stream_id);
         console.log('Server response datax:', data);
         currentSessionId = data.session_id;
-        // addMessage("", 'bot', data.web_sources || null);
-
         // Tạo message rỗng để append dần text stream
-        const botMessageDiv = document.createElement('div');
-        botMessageDiv.className = 'message bot-message';
-        botMessageDiv.innerHTML = `<div class="message-content markdown-content"></div>`;
-        chatMessages.appendChild(botMessageDiv);
-        const contentDiv = botMessageDiv.querySelector('.message-content');
+        // const botMessageDiv = document.createElement('div');
+        // botMessageDiv.className = 'message bot-message';
+        // botMessageDiv.innerHTML = `<div class="message-content markdown-content"></div>`;
+        // chatMessages.appendChild(botMessageDiv);
+
+        // Generate a timestamp string
+        const timestampId = 'element-' + Date.now();
+
+        addMessage_with_id("", 'bot', timestampId, data.web_sources || null);
+        const contentDiv = document.getElementById(timestampId);
         // Gọi API stream với stream_id
         let speed = 1; // 1/(1) s to flush buffer
         let max_speed = 300; // 300 char/s
@@ -491,6 +494,72 @@ document.addEventListener('DOMContentLoaded', function() {
         messageDiv.innerHTML = `
             <div class="message-content ${contentClass}">
                 ${processedContent}
+                ${sourcesButton}
+                <div class="message-actions">
+                    <button class="copy-button" onclick="copyMessageContent(this)" title="Copy message">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+        chatMessages.appendChild(messageDiv);
+        
+        // Apply correct padding for bot messages based on sidebar state
+        if (role === 'bot') {
+            const messageContent = messageDiv.querySelector('.message-content');
+            const isSidebarCollapsed = sidebar.classList.contains('collapsed');
+            
+            if (isSidebarCollapsed) {
+                messageContent.style.paddingLeft = '24px';
+            } else {
+                messageContent.style.paddingLeft = '40px'; // Gần lề sidebar hơn nữa
+            }
+        }
+        
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+    function addMessage_with_id(content, role, id, sources = null) {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${role}-message`;
+        // Parse markdown cho bot messages, plain text cho user messages
+        let processedContent;
+        let contentClass = '';
+        
+        if (role === 'bot') {
+            // Parse markdown và clean up
+            processedContent = marked.parse(content);
+            contentClass = 'markdown-content';
+        } else {
+            // User messages - just replace newlines with <br>
+            processedContent = `<p>${content.replace(/\n/g, '<br>')}</p>`;
+        }
+        
+        // Tạo nút nguồn nếu có sources
+        let sourcesButton = '';
+        console.log('Creating sources button for role:', role, 'sources:', sources); // Debug log
+        if (role === 'bot' && sources && sources.length > 0) {
+            console.log('Creating sources button with', sources.length, 'sources'); // Debug log
+            try {
+                const sourcesJson = JSON.stringify(sources);
+                console.log('Sources JSON:', sourcesJson); // Debug log
+                sourcesButton = `
+                    <div class="sources-button-container">
+                        <button class="sources-button" onclick="showSources(this)" data-sources='${sourcesJson.replace(/'/g, '&#39;')}'>
+                            <i class="fas fa-link"></i>
+                            <span>Nguồn (${sources.length})</span>
+                        </button>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Error creating sources JSON:', error);
+            }
+        }
+        
+        messageDiv.innerHTML = `
+            <div class="message-content ${contentClass}">
+                <div id=${id}>
+                    ${processedContent}
+                </div>
                 ${sourcesButton}
                 <div class="message-actions">
                     <button class="copy-button" onclick="copyMessageContent(this)" title="Copy message">

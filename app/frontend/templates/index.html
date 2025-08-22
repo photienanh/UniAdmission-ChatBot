@@ -31,7 +31,7 @@
                 <div class="user-menu" id="user-menu">
                     <div class="user-info" onclick="toggleUserDropdown()">
                         <i class="fas fa-user-circle"></i>
-                        <span class="username">{{ current_user.username if current_user.is_authenticated else 'Guest' }}</span>
+                        <span class="username">{{ current_user.username }}</span>
                         <i class="fas fa-chevron-up dropdown-icon" id="dropdown-icon"></i>
                     </div>
                 </div>
