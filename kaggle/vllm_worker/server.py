@@ -61,7 +61,26 @@ async def _generate(request_dict: dict, raw_request: Request) -> StreamingRespon
     sampling_params = msgspec.convert(request_dict.pop("params"), type=SamplingParams)
     if not sampling_params.extra_args:
         sampling_params.extra_args = {}
-    results_generator = await engine.chat_quick(prompt, sampling_params, lora_request)
+    history = request_dict.pop("history", None)
+    results_generator = None
+    if history:
+        # Map history to OpenAI-style chat messages
+        messages = []
+        for m in history:
+            role = m.get("role", "user")
+            # normalize roles: DB/backend may send "bot"
+            if role == "bot":
+                role = "assistant"
+            elif role not in ("user", "assistant"):
+                role = "user"
+            messages.append({"role": role, "content": m.get("content", "")})
+        # append current user prompt as the latest turn
+        messages.append({"role": "user", "content": prompt})
+        # Use full chat API for multi-turn
+        results_generator = await engine.chat(messages=messages, sampling_params=sampling_params, lora_request=lora_request)
+    else:
+        # Single-turn fallback
+        results_generator = await engine.chat_quick(prompt, sampling_params, lora_request)
     # Streaming case
     async def stream_results() -> AsyncGenerator[str, None]:
         last_length = 0

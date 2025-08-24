@@ -91,7 +91,7 @@ class KaggleManager:
             print(f"[Kaggle] Disconnect: {server['info']['domain']}")
         return result
     @classmethod
-    async def pre_inference(cls, stream_id: str, text: str, model_id: str, params: GenerationParams) -> tuple[str, ModelPreOutput] | None:
+    async def pre_inference(cls, stream_id: str, text: str, model_id: str, params: GenerationParams, history: list[dict] | None = None) -> tuple[str, ModelPreOutput] | None:
         """
         Pre inference model to get `domain` and `ModelPreOutput`.\n
         Return `None` when does not find any available server or when error occur.
@@ -102,6 +102,8 @@ class KaggleManager:
             "text": text,
             "params": params
         }
+        if history:
+            request["history"] = history
         async with aiohttp.ClientSession() as ss:
             server = await cls.get_available_server(model_id)
             retry = 0

@@ -7,6 +7,10 @@ ModelSource = Literal["server", "kaggle"]
 SearchEngineType = Literal["google", "brave"]
 ChatMessageRole = Literal["user", "bot"] # System instruction should stored per user message
 
+class ChatMessage(TypedDict):
+    role: ChatMessageRole
+    content: str
+
 class RagSource(TypedDict):
     url: str
     title: str
@@ -63,4 +67,5 @@ class KaggleRequest(TypedDict):
     model_id: str
     stream_id: str
     params: GenerationParams
+    history: NotRequired[list[ChatMessage]]
     
