@@ -18,9 +18,9 @@ from .server_setup import serve_http
 app = FastAPI()
 engine = AsyncLLMEngineWrapper()
 
-@app.get("/heath")
-async def heath() -> Response:
-    """Heath check"""
+@app.get("/health")
+async def health() -> Response:
+    """Health check"""
     return Response(200)
 @app.post("/init")
 async def initialize_engine(request_dict: dict, raw_request: Request):
