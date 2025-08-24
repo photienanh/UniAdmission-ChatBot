@@ -11,7 +11,7 @@ import psutil
 from typing import Optional, Any
 # import torch.distributed as dist
 from vllm.transformers_utils.tokenizers import MistralTokenizer
-from openai.types.chat import ChatCompletionMessageParam, ChatCompletionUserMessageParam, ChatCompletionAssistantMessageParam
+from openai.types.chat import ChatCompletionMessageParam, ChatCompletionUserMessageParam
 from vllm.entrypoints.chat_utils import (
     ChatTemplateContentFormatOption, 
     resolve_chat_template_content_format, 
@@ -73,7 +73,7 @@ class AsyncLLMEngineWrapper:
         )
     async def chat(
         self,
-        messages: list[ChatCompletionUserMessageParam | ChatCompletionUserMessageParam],
+        messages: list[ChatCompletionMessageParam],
         sampling_params: SamplingParams,
         lora_request: LoRARequest | None,
         chat_template_content_format: ChatTemplateContentFormatOption = "auto",

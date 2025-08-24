@@ -76,8 +76,6 @@ kaggle/
 │  ├─ vllm_engine.py
 │  └─ vllm_runner.py
 ├─ vllm_kaggle_v2.ipynb
-├─ vllm_kaggle_v2_api_only.ipynb
-├─ vllm_kaggle_v2_backup.ipynb
 └─ web_search/
   ├─ component/
   ├─ engines/

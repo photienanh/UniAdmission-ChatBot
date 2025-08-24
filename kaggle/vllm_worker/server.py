@@ -77,7 +77,12 @@ async def _generate(request_dict: dict, raw_request: Request) -> StreamingRespon
         # append current user prompt as the latest turn
         messages.append({"role": "user", "content": prompt})
         # Use full chat API for multi-turn
-        results_generator = await engine.chat(messages=messages, sampling_params=sampling_params, lora_request=lora_request)
+        results_generator = await engine.chat(
+            messages=messages,
+            sampling_params=sampling_params,
+            lora_request=lora_request,
+            chat_template_kwargs={"enable_thinking": False},
+        )
     else:
         # Single-turn fallback
         results_generator = await engine.chat_quick(prompt, sampling_params, lora_request)

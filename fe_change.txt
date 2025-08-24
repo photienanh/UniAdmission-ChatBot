@@ -1,7 +1,0 @@
-Separate js, css from html
-Change static route from Flash to FastAPI
-Change expectd respones of POST /login from JSON to Redirect
-Prevent default Form submit behaviour, force use fetch instead of Form
-Change POST /register from Form to Fetch. Add error handling, invalid data (gmail) handling
-Add error handling for POST /delete_account
-Improve text streaming

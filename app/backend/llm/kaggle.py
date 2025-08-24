@@ -104,7 +104,15 @@ class KaggleManager:
             "params": params
         }
         if history:
-            request["history"] = history
+            normalized_history: list[ChatMessage] = []
+            for m in history:
+                role = m.get("role", "user")
+                if role == "assistant":
+                    role = "bot"
+                elif role not in ("user", "bot"):
+                    role = "user"
+                normalized_history.append({"role": role, "content": m.get("content", "")})
+            request["history"] = normalized_history
         async with aiohttp.ClientSession() as ss:
             server = await cls.get_available_server(model_id)
             retry = 0
