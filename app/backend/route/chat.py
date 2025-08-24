@@ -40,6 +40,15 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
                 user_extra_data={},
                 bot_extra_data=model_output["extra_data"]
             )
+            try:
+                from backend.llm.history_cache import append_user_and_bot, Msg
+                await append_user_and_bot(
+                    session_id,
+                    user_msg=Msg(role="user", text=data.text, timestamp=user_timestamp),
+                    bot_msg=Msg(role="bot", text=text, timestamp=bot_timestamp)
+                )
+            except Exception:
+                pass
     model_output = await ModelManager.pre_inference(data.text, data.model_id, data.params, finish_call, session_id)
     if model_output == None:
         raise HTTPException(status_code=500, detail="Failed to inference model")

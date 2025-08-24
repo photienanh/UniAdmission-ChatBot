@@ -7,5 +7,6 @@ __all__ = [
     "ModelInfo", "GenerationParams", "ModelPreOutput",
     "RagSource", "WebSource",
     "UserRole", "ChatMessageRole",
-    "KaggleServerInfo", "ModelStatus", "KagglePreInferenceResponse"
+    "KaggleServerInfo", "ModelStatus", "KagglePreInferenceResponse",
+    "KaggleRequest", "ChatMessage"
 ]

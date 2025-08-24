@@ -4,7 +4,7 @@ import time
 import asyncio
 
 from config import KAGGLE_SERVER_TIMEOUT, KAGGLE_MAX_RETRY, KAGGLE_RETRY_DELAY
-from core.types import GenerationParams, ModelInfo, ModelPreOutput, KagglePreInferenceResponse, KaggleServerInfo, KaggleRequest
+from core.types import GenerationParams, ModelInfo, ModelPreOutput, KagglePreInferenceResponse, KaggleServerInfo, KaggleRequest, ChatMessage
 from .schema import ServerStatus
 
 class ServerCountDict(TypedDict):
@@ -65,8 +65,9 @@ class KaggleManager:
             max_count = scheduled_servers[0]["count"]
             target_server = scheduled_servers[0]["server"]
             for info in scheduled_servers:
-                if info["count"] > min_count:
-                    min_count = info["count"]
+                if info["count"] > max_count:
+                    max_count = info["count"]
+                    target_server = info["server"]
             return target_server
         if len(available_servers) > 0:
             return available_servers[0]["server"]
@@ -91,7 +92,7 @@ class KaggleManager:
             print(f"[Kaggle] Disconnect: {server['info']['domain']}")
         return result
     @classmethod
-    async def pre_inference(cls, stream_id: str, text: str, model_id: str, params: GenerationParams) -> tuple[str, ModelPreOutput] | None:
+    async def pre_inference(cls, stream_id: str, text: str, model_id: str, params: GenerationParams, history: list[ChatMessage] | None = None) -> tuple[str, ModelPreOutput] | None:
         """
         Pre inference model to get `domain` and `ModelPreOutput`.\n
         Return `None` when does not find any available server or when error occur.
@@ -102,6 +103,16 @@ class KaggleManager:
             "text": text,
             "params": params
         }
+        if history:
+            normalized_history: list[ChatMessage] = []
+            for m in history:
+                role = m.get("role", "user")
+                if role == "assistant":
+                    role = "bot"
+                elif role not in ("user", "bot"):
+                    role = "user"
+                normalized_history.append({"role": role, "content": m.get("content", "")})
+            request["history"] = normalized_history
         async with aiohttp.ClientSession() as ss:
             server = await cls.get_available_server(model_id)
             retry = 0

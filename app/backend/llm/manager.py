@@ -3,6 +3,8 @@ from typing import AsyncGenerator, Callable, Awaitable, TypedDict, Optional
 from core.types import ModelInfo, GenerationParams, ModelPreOutput
 from config import GEMINI_MODEL
 
+from .history_cache import get_history, Msg
+from .utils import load_history_from_db
 from .schema import APIJobInfo
 from .gemini import GeminiAPIModel
 from .utils import generate_id
@@ -61,7 +63,6 @@ class ModelManager:
             web_sources = []
             if k_pages > 0:
                 try:
-                    from .gemini import GeminiAPIModel
                     gemini_temp = GeminiAPIModel()
                     _, web_sources = gemini_temp.build_prompt_with_web_search(text, k_pages, domain_restrict)
                 except Exception as e:
@@ -84,7 +85,19 @@ class ModelManager:
                 "cached_web_sources": web_sources  # Cache web sources to avoid duplicate search
             }
         else:
-            pack = await KaggleManager.pre_inference(job_id, text, model_id, params)
+            # If we have a session_id, try to include past messages as history
+            history = None
+            if session_id:
+                try:
+                    msgs = await get_history(session_id, loader=load_history_from_db)
+                    history = [
+                        {"role": ("assistant" if m.role == "bot" else "user"), "content": m.text}
+                        for m in msgs
+                    ]
+                except Exception:
+                    history = None
+                    
+            pack = await KaggleManager.pre_inference(job_id, text, model_id, params, history)
             if pack != None:
                 domain, pre_output = pack
             else:

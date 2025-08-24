@@ -6,8 +6,8 @@ from .schema import KaggleServerInfo, KaggleRequest, ModelPreOutput, KagglePreIn
 
 router = APIRouter()
 
-@router.get("/heath")
-async def heath_check(request: Request):
+@router.get("/health")
+async def health_check(request: Request):
     return Response(status_code=200, content="ok")
 
 @router.get("/info")
