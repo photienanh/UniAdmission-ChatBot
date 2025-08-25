@@ -8,6 +8,7 @@ URL_PATTERN_2 = re.compile(r'(?:\*\s|\])\((.*?)\)', re.DOTALL)
 # URL_PATTERN = re.compile(r'\[\!\[\]\((.*?)\)\]\((.*?)\)')
 URL_PATTERN_REMOVE = re.compile(r'\[.*?\]\(.*?\)', re.DOTALL)
 URL_PATTERN_REMOVE_2 = re.compile(r'(?:\*\s|\])\(.*?\)', re.DOTALL)
+ENCODED_IMAGE_REMOVE = re.compile(r'\(data:image.*?\)', re.DOTALL)
 WHITE_SPACE = re.compile(r'\s+', re.DOTALL)
 IMAGE_EXTENSION = (".jpg", ".jpeg", ".png", ".avif", ".webp", ".svg")
 # .ico is usually contain no information
@@ -64,6 +65,9 @@ class PreProcessor:
         fit_markdown = re.sub(URL_PATTERN_REMOVE, "", raw_markdown)
         url_infos.extend([("", url) for url in re.findall(URL_PATTERN_2, fit_markdown)])
         fit_markdown = re.sub(URL_PATTERN_REMOVE_2, "", fit_markdown)
+        
+        fit_markdown = re.sub(ENCODED_IMAGE_REMOVE, "(image_bytes)", raw_markdown)
+        
         ref_urls: list[UrlContent] = []
         image_urls: list[UrlContent] = []
         pdf_urls: list[UrlContent] = []
@@ -85,7 +89,7 @@ class PreProcessor:
                     "title": title,
                     "url": url
                 })
-        fit_markdown = self.__processs_lines(raw_markdown, 5) # Changed this
+        fit_markdown = self.__processs_lines(fit_markdown, 5) # Changed this
         result: PreProcessedResult = {
             **input,
             "extracted_content": fit_markdown,
