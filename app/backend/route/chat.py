@@ -20,9 +20,12 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
         if session_id is None:
             raise HTTPException(status_code=500, detail=f"Failed to create new chat session")
     user_timestamp = get_timestamp()
-    async def finish_call(text: str):
+    async def finish_call(text: str, web_sources: list = None):
         if model_output != None:
             bot_timestamp = get_timestamp()
+            # Cập nhật web_sources từ inference result
+            if web_sources:
+                model_output["web_sources"] = web_sources
             user_msg_id, bot_msg_id = await add_conversation(
                 user_id=user.id,
                 session_id=session_id,
@@ -37,7 +40,16 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
                 user_extra_data={},
                 bot_extra_data=model_output["extra_data"]
             )
-    model_output = await ModelManager.pre_inference(data.text, data.model_id, data.params, finish_call)
+            try:
+                from backend.llm.history_cache import append_user_and_bot, Msg
+                await append_user_and_bot(
+                    session_id,
+                    user_msg=Msg(role="user", text=data.text, timestamp=user_timestamp),
+                    bot_msg=Msg(role="bot", text=text, timestamp=bot_timestamp)
+                )
+            except Exception:
+                pass
+    model_output = await ModelManager.pre_inference(data.text, data.model_id, data.params, finish_call, session_id)
     if model_output == None:
         raise HTTPException(status_code=500, detail="Failed to inference model")
     text = ""

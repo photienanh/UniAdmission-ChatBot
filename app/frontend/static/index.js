@@ -317,9 +317,9 @@ document.addEventListener('DOMContentLoaded', function() {
                     <h2>UniAdmission ChatBot</h2>
                     <p>Xin chào! Tôi là UniAdmission Bot. Bạn có thể hỏi tôi bất kỳ thông tin gì về tuyển sinh đại học.</p>
                     <div class="example-prompts">
-                        <div class="prompt-card" onclick="fillPrompt('Điểm chuẩn đại học Bách Khoa Hà Nội')">
+                        <div class="prompt-card" onclick="fillPrompt('Điểm chuẩn Trường Đại học Công nghệ - Đại học Quốc gia Hà Nội')">
                             <i class="fas fa-graduation-cap"></i>
-                            <span>Điểm chuẩn đại học Bách Khoa Hà Nội</span>
+                            <span>Điểm chuẩn Trường Đại học Công nghệ - Đại học Quốc gia Hà Nội</span>
                         </div>
                         <div class="prompt-card" onclick="fillPrompt('Các trường đào tạo ngành Trí tuệ nhân tạo')">
                             <i class="fas fa-brain"></i>
@@ -804,7 +804,7 @@ document.addEventListener('DOMContentLoaded', function() {
                                         <strong>Nội dung đầy đủ:</strong>
                                     </div>
                                     <div class="context-content">
-                                        ${source.content && source.content.trim() !== '' && source.content !== 'We cannot provide a description for this page right now' ? source.content : 'Không có nội dung'}
+                                        ${source.text && source.text.trim() !== '' && source.text !== 'We cannot provide a description for this page right now' ? source.text : 'Không có nội dung'}
                                     </div>
                                 </div>
                                 <div class="source-footer">

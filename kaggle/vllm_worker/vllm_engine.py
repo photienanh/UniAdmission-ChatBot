@@ -8,6 +8,7 @@ class VLLMJobInfo(TypedDict):
     message: str
     lora_request: Optional[dict]
     sampling_params: dict
+    history: Optional[list[dict]]
 class VLLMEngine:
     def __init__(self, on_model_active: Callable[[str], None]) -> None:
         self.controller = VLLMController()
@@ -44,8 +45,10 @@ class VLLMEngine:
         url = await self.controller.get_url()
         payload = {
             "prompt": info["message"],
-            "params": info["sampling_params"]
+            "params": info["sampling_params"],
         }
+        if info.get("history"):
+            payload["history"] = info["history"]
         if info["lora_request"] != None:
             payload["lora"] = info["lora_request"]
             

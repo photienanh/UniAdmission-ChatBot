@@ -1,9 +1,14 @@
 import sys
 if sys.version_info.minor >= 12:
-    from typing import TypedDict
+    from typing import TypedDict, NotRequired
 else:
-    from typing_extensions import TypedDict
+    from typing_extensions import TypedDict, NotRequired
 from .model import ModelInfo, ModelPreOutput, GenerationParams
+from .role import ChatMessageRole
+
+class ChatMessage(TypedDict):
+    role: ChatMessageRole
+    content: str
 
 class ModelStatus(ModelInfo):
     active: bool
@@ -25,3 +30,4 @@ class KaggleRequest(TypedDict):
     model_id: str
     stream_id: str
     params: GenerationParams
+    history: NotRequired[list[ChatMessage]]
