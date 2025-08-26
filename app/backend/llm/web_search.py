@@ -1,102 +1,29 @@
 import requests
 import pandas as pd
-import ast
 import time
-from openai import OpenAI
 from bs4 import BeautifulSoup
 from newspaper import Article
 from io import StringIO
 import os
 import urllib3
+
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+from .search_router import route_search
+from .database_search import search_from_database
 
 # Get API keys from environment
 BRAVE_API_KEY = os.getenv("BRAVE_API_KEY")
-GPT_API_KEY = os.getenv("GPT_API_KEY")
-
-def initialize_openai_client():
-    return OpenAI(
-        api_key=GPT_API_KEY
-    )
-
-def generate_search_keywords(question, model="gpt-4o-mini"):
-    
-    # Check API key
-    if not GPT_API_KEY:
-        return question
-        
-    try:
-        client = initialize_openai_client()
-        
-        response = client.chat.completions.create(
-            model=model,
-            messages=[
-                {
-                    "role": "system",
-                    "content": """Bạn là chuyên gia tạo từ khóa tìm kiếm thông minh. Nhiệm vụ: phân tích câu hỏi và tạo từ khóa giúp tìm được thông tin CĂN BẢN để LLM có thể suy luận ra câu trả lời.
-
-CHIẾN LƯỢC TÌM KIẾM:
-
-1. **Phân tích ý định câu hỏi**: Xác định thông tin gì cần thiết để trả lời
-2. **Tìm nguồn thông tin gốc**: Thay vì tìm trực tiếp câu trả lời, tìm dữ liệu để suy luận
-3. **Tối ưu từ khóa**: Dùng thuật ngữ chính thức, tên đầy đủ
-4. **Trả lời đúng định dạng**: Định dạng câu trả lời như sau: ["từ khóa tìm kiếm 1", "từ khóa tìm kiếm 2", ...]
-
-VÍ DỤ THÔNG MINH:
-
-Câu hỏi: "Số tiến sĩ trong viện trí tuệ nhân tạo UET là bao nhiêu?"
-→ Cần: Danh sách giảng viên để đếm tiến sĩ
-→ Từ khóa: "danh sách giảng viên viện trí tuệ nhân tạo UET"
-→ Trả về: ["danh sách giảng viên viện trí tuệ nhân tạo UET"]
-
-Câu hỏi: "Điểm chuẩn ngành CNTT Bách Khoa 2024?"  
-→ Cần: Bảng điểm chuẩn chính thức
-→ Từ khóa: "điểm chuẩn đại học Bách Khoa Hà Nội 2024"
-→ Trả về: ["điểm chuẩn đại học Bách Khoa Hà Nội 2024"]
-
-Câu hỏi: "Học phí ngành AI VNU-UET như thế nào?"
-→ Cần: Bảng học phí chính thức  
-→ Từ khóa: "học phí đại học công nghệ VNU-UET 2024"
-→ Trả về: ["học phí đại học công nghệ VNU-UET 2024"]
-
-Câu hỏi: "Chương trình đào tạo ngành CNTT có môn gì?"
-→ Cần: Khung chương trình chi tiết
-→ Từ khóa: "chương trình đào tạo ngành công nghệ thông tin UET"
-→ Trả về: ["chương trình đào tạo ngành công nghệ thông tin UET"]
-
-Câu hỏi: "So sánh điểm chuẩn CNTT Bách Khoa và UET?"
-→ Cần: Bảng điểm chuẩn chính thức của cả hai trường
-→ Từ khóa: "điểm chuẩn đại học Bách Khoa Hà Nội 2024", "điểm chuẩn đại học công nghệ VNU-UET 2024"
-→ Trả về: ["điểm chuẩn đại học Bách Khoa Hà Nội 2024", "điểm chuẩn đại học công nghệ VNU-UET 2024"]
-
-NGUYÊN TẮC:
-- Thêm năm học nếu cần thông tin mới nhất
-- Tìm "danh sách", "bảng", "chương trình" thay vì câu hỏi trực tiếp
-
-Chỉ trả về từ khóa, không giải thích."""
-                },
-                {   "role": "user",
-                    "content": question
-                }
-            ],
-        )
-        keywords = response.choices[0].message.content.strip()
-        keywords = ast.literal_eval(keywords)
-        return keywords
-    except Exception:
-        return [question]
-
-def web_search(question, max_results, domain_restrict=False):
-    """Tìm kiếm thông tin từ web sử dụng Brave Search API"""
+def web_search_keywords(keywords, max_results, domain_restrict=False):
+    """Tìm kiếm thông tin từ web với danh sách keywords"""
     
     # Check API key
     if not BRAVE_API_KEY:
         return None
         
     try:
-        query = generate_search_keywords(question)
         pages = []
-        for q in query:
+        for q in keywords:
             # Brave Search API endpoint
             url = "https://api.search.brave.com/res/v1/web/search"
             headers = {
@@ -115,7 +42,7 @@ def web_search(question, max_results, domain_restrict=False):
             time.sleep(1)
         
             if response.status_code != 200:
-                return None
+                continue
                 
             data = response.json()
             
@@ -137,6 +64,73 @@ def web_search(question, max_results, domain_restrict=False):
         return pages
     except Exception:
         return None
+
+def search_from_vector_db(vector_keywords):
+    """Tìm kiếm từ vector database với danh sách keywords"""
+    try:
+        vector_results = []
+        
+        for kw in vector_keywords:
+            school_id = kw.get("school_id")
+            section = kw.get("section")
+            if school_id and section:
+                docs = search_from_database(school_id, section)
+                
+                if docs:
+                    combined_content = "\n\n".join([doc.page_content for doc in docs])
+                    description = combined_content[:200] + "..." if len(combined_content) > 200 else combined_content
+                    
+                    # Tạo title có tên trường để phân biệt
+                    title = f"Tìm trường ĐH-CĐ - Cốc Cốc ({school_id})"
+                    
+                    vector_results.append({
+                        "title": title,
+                        "description": description,
+                        "url": "https://hoctap.coccoc.com/tim-truong-dh-cd",
+                        "text": combined_content,
+                        "source": "vector_db"
+                    })
+        
+        return vector_results
+    except Exception as e:
+        return []
+
+def unified_search(question, max_results, domain_restrict=False):
+    """
+    Tìm kiếm thống nhất sử dụng router để quyết định nguồn
+    
+    Returns:
+        tuple: (search_results, source_type)
+    """
+    try:
+        # Sử dụng router để quyết định hướng tìm kiếm
+        search_strategy = route_search(question)
+        
+        search_type = search_strategy.get("type_search")
+        keywords = search_strategy.get("key_word", [])
+        
+        if search_type == "vector_db":
+            results = search_from_vector_db(keywords)
+            return results, "vector_db"
+            
+        elif search_type == "web_search":
+            results = web_search_keywords(keywords, max_results, domain_restrict)
+            return results, "web_search"
+            
+        else:
+            results = web_search_keywords([question], max_results, domain_restrict)
+            return results, "web_search"
+            
+    except Exception as e:
+        # Fallback to web search
+        results = web_search_keywords([question], max_results, domain_restrict)
+        return results, "web_search"
+
+# Backward compatibility - keep old function name but use new logic
+def web_search(question, max_results, domain_restrict=False):
+    """Backward compatibility wrapper"""
+    results, source_type = unified_search(question, max_results, domain_restrict)
+    return results
     
 def extract_tables(soup):
     tables = soup.find_all("table")
@@ -174,26 +168,57 @@ def extract_main_content(url):
         return None
 
 def get_source(query, max_results, domain_restrict=False):
+    """
+    Lấy nguồn thông tin - tự động chọn từ vector DB hoặc web search
+    
+    Returns:
+        List[dict] với format:
+        - url: URL nguồn
+        - title: Tiêu đề
+        - description: Mô tả  
+        - text: Nội dung đầy đủ
+        - source: "vector_db" hoặc "web_search"
+    """
     try:
         search_source = []
-        pages = web_search(query, max_results, domain_restrict)
+        results, source_type = unified_search(query, max_results, domain_restrict)
         
-        if pages is None:
+        if results is None:
             return None
             
-        for page in pages:
-            url = page["url"]
-            try:
-                content = extract_main_content(url)
+        for result in results:
+            if source_type == "vector_db":
+                # Vector DB results đã có đầy đủ thông tin
                 search_source.append({
-                    "url": url,
-                    "title": page["title"],
-                    "description": page["description"],
-                    "text": content
+                    "url": result["url"],
+                    "title": result["title"], 
+                    "description": result["description"],
+                    "text": result["text"],
+                    "source": "vector_db"
                 })
-            except Exception as e:
-                pass
+            else:
+                # Web search results cần extract content
+                url = result["url"]
+                try:
+                    content = extract_main_content(url)
+                    search_source.append({
+                        "url": url,
+                        "title": result["title"],
+                        "description": result["description"],
+                        "text": content,
+                        "source": "web_search"
+                    })
+                except Exception as e:
+                    # Vẫn thêm với description làm content
+                    search_source.append({
+                        "url": url,
+                        "title": result["title"],
+                        "description": result["description"],
+                        "text": result["description"],
+                        "source": "web_search"
+                    })
                 
         return search_source
-    except Exception:
+        
+    except Exception as e:
         return None

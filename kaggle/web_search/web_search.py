@@ -5,7 +5,6 @@ import time
 from langchain_core.documents import Document
 from typing import Literal
 import copy
-import os
 
 from .schema import RagSource, WebSource, SearchEngineType
 from .pipeline import SearchPipeline
@@ -35,14 +34,18 @@ class Websearch:
             page_timeout: float = 10,
             file_timeout: float = 10,
             concurrent_page: int = 4,
-            concurrent_file_download: int = 16
+            concurrent_file_download: int = 16,
+            use_smart_keywords: bool = True,
+            gpt_api_key: str = None
         ) -> None:
         self.embedding = HuggingFaceEmbeddings(model_name=embedding_name, model_kwargs={"device":device})
         self.web_search = SearchPipeline(
             page_timeout=page_timeout,
             file_timeout=file_timeout,
             concurrent_page=concurrent_page,
-            concurrent_processor_download=concurrent_file_download
+            concurrent_processor_download=concurrent_file_download,
+            use_smart_keywords=use_smart_keywords,
+            gpt_api_key=gpt_api_key
         )
         self.splitter = TokenTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         self.logger = CmdLogger("Web search")

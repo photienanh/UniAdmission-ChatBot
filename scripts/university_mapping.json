@@ -1,0 +1,1876 @@
+{
+  "HUST": {
+    "ten_truong": "Đại học Bách khoa Hà Nội",
+    "ma_truong": "BKA",
+    "ten_viet_tat": "HUST",
+    "search_keywords": [
+      "hust",
+      "đại học bách khoa hà nội",
+      "bách khoa hà nội",
+      "bách khoa"
+    ],
+    "source_file": "BKA.md"
+  },
+  "BMTU": {
+    "ten_truong": "Đại học Buôn Ma Thuột",
+    "ma_truong": "BMU",
+    "ten_viet_tat": "BMTU",
+    "search_keywords": [
+      "bmtu",
+      "đại học buôn ma thuột",
+      "buôn ma thuột"
+    ],
+    "source_file": "BMU.md"
+  },
+  "PTIT": {
+    "ten_truong": "Học viện Công nghệ Bưu chính Viễn thông",
+    "ma_truong": "BVH",
+    "ten_viet_tat": "PTIT",
+    "search_keywords": [
+      "ptit",
+      "học viện công nghệ bưu chính viễn thông"
+    ],
+    "source_file": "BVS.md"
+  },
+  "BVU": {
+    "ten_truong": "Đại học Bà Rịa - Vũng Tàu",
+    "ma_truong": "BVU",
+    "ten_viet_tat": "BVU",
+    "search_keywords": [
+      "bvu",
+      "đại học bà rịa - vũng tàu",
+      "bà rịa - vũng tàu"
+    ],
+    "source_file": "BVU.md"
+  },
+  "None": {
+    "ten_truong": "Đại học Kỹ thuật Y - Dược Đà Nẵng",
+    "ma_truong": "YDN",
+    "ten_viet_tat": "None",
+    "search_keywords": [
+      "none",
+      "đại học kỹ thuật y - dược đà nẵng",
+      "kỹ thuật y - dược đà nẵng"
+    ],
+    "source_file": "YDN.md"
+  },
+  "HTU": {
+    "ten_truong": "Đại học Hà Tĩnh",
+    "ma_truong": "HHT",
+    "ten_viet_tat": "HTU",
+    "search_keywords": [
+      "htu",
+      "đại học hà tĩnh",
+      "hà tĩnh"
+    ],
+    "source_file": "HHT.md"
+  },
+  "HTC": {
+    "ten_truong": "Cao đẳng Du lịch Hà Nội",
+    "ma_truong": "CDT0126",
+    "ten_viet_tat": "HTC",
+    "search_keywords": [
+      "htc",
+      "cao đẳng du lịch hà nội"
+    ],
+    "source_file": "CDT0126.md"
+  },
+  "NACE": {
+    "ten_truong": "Đại học Kinh tế Nghệ An",
+    "ma_truong": "CEA",
+    "ten_viet_tat": "NACE",
+    "search_keywords": [
+      "nace",
+      "đại học kinh tế nghệ an",
+      "kinh tế nghệ an"
+    ],
+    "source_file": "CEA.md"
+  },
+  "BDU": {
+    "ten_truong": "Đại học Bình Dương",
+    "ma_truong": "DBD",
+    "ten_viet_tat": "BDU",
+    "search_keywords": [
+      "bdu",
+      "đại học bình dương",
+      "bình dương"
+    ],
+    "source_file": "DBD.md"
+  },
+  "BAFU": {
+    "ten_truong": "Đại học Nông Lâm Bắc Giang",
+    "ma_truong": "DBG",
+    "ten_viet_tat": "BAFU",
+    "search_keywords": [
+      "bafu",
+      "đại học nông lâm bắc giang",
+      "nông lâm bắc giang"
+    ],
+    "source_file": "DBG.md"
+  },
+  "BHIU": {
+    "ten_truong": "Đại học Quốc tế Bắc Hà",
+    "ma_truong": "DBH",
+    "ten_viet_tat": "BHIU",
+    "search_keywords": [
+      "bhiu",
+      "đại học quốc tế bắc hà",
+      "quốc tế bắc hà"
+    ],
+    "source_file": "DBH.md"
+  },
+  "BLU": {
+    "ten_truong": "Đại học Bạc Liêu",
+    "ma_truong": "DBL",
+    "ten_viet_tat": "BLU",
+    "search_keywords": [
+      "blu",
+      "đại học bạc liêu",
+      "bạc liêu"
+    ],
+    "source_file": "DBL.md"
+  },
+  "DNTU": {
+    "ten_truong": "Đại học Công nghệ Đồng Nai",
+    "ma_truong": "DCD",
+    "ten_viet_tat": "DNTU",
+    "search_keywords": [
+      "dntu",
+      "đại học công nghệ đồng nai",
+      "công nghệ đồng nai"
+    ],
+    "source_file": "DCD.md"
+  },
+  "MKU": {
+    "ten_truong": "Đại học Cửu Long",
+    "ma_truong": "DCL",
+    "ten_viet_tat": "MKU",
+    "search_keywords": [
+      "mku",
+      "đại học cửu long",
+      "cửu long"
+    ],
+    "source_file": "DCL.md"
+  },
+  "HaUI": {
+    "ten_truong": "Đại học Công nghiệp Hà Nội",
+    "ma_truong": "DCN",
+    "ten_viet_tat": "HaUI",
+    "search_keywords": [
+      "haui",
+      "đại học công nghiệp hà nội",
+      "công nghiệp hà nội"
+    ],
+    "source_file": "DCN.md"
+  },
+  "UTM": {
+    "ten_truong": "Đại học Công nghệ và Quản lý Hữu Nghị",
+    "ma_truong": "DCQ",
+    "ten_viet_tat": "UTM",
+    "search_keywords": [
+      "utm",
+      "đại học công nghệ và quản lý hữu nghị",
+      "công nghệ và quản lý hữu nghị"
+    ],
+    "source_file": "DCQ.md"
+  },
+  "HUFI": {
+    "ten_truong": "Đại học Công nghiệp Thực phẩm Thành phố Hồ Chí Minh",
+    "ma_truong": "DCT",
+    "ten_viet_tat": "HUFI",
+    "search_keywords": [
+      "hufi",
+      "đại học công nghiệp thực phẩm thành phố hồ chí minh",
+      "công nghiệp thực phẩm thành phố hồ chí minh"
+    ],
+    "source_file": "DCT.md"
+  },
+  "IUV": {
+    "ten_truong": "Đại học Công nghiệp Vinh",
+    "ma_truong": "DCV",
+    "ten_viet_tat": "IUV",
+    "search_keywords": [
+      "iuv",
+      "đại học công nghiệp vinh",
+      "công nghiệp vinh"
+    ],
+    "source_file": "DCV.md"
+  },
+  "EAUT": {
+    "ten_truong": "Đại học Công nghệ Đông Á",
+    "ma_truong": "DDA",
+    "ten_viet_tat": "EAUT",
+    "search_keywords": [
+      "eaut",
+      "đại học công nghệ đông á",
+      "công nghệ đông á"
+    ],
+    "source_file": "DDA.md"
+  },
+  "TDU": {
+    "ten_truong": "Đại học Thành Đô",
+    "ma_truong": "TDD",
+    "ten_viet_tat": "TDU",
+    "search_keywords": [
+      "tdu",
+      "đại học thành đô",
+      "thành đô"
+    ],
+    "source_file": "TDD.md"
+  },
+  "UFLS": {
+    "ten_truong": "Đại học Ngoại ngữ - Đại học Đà Nẵng",
+    "ma_truong": "DDF",
+    "ten_viet_tat": "UFLS",
+    "search_keywords": [
+      "ufls",
+      "đại học ngoại ngữ - đại học đà nẵng",
+      "ngoại ngữ -  đà nẵng"
+    ],
+    "source_file": "DDF.md"
+  },
+  "SICT": {
+    "ten_truong": "Khoa Công nghệ thông tin và Truyền thông - Đại học Đà Nẵng",
+    "ma_truong": "DDI",
+    "ten_viet_tat": "SICT",
+    "search_keywords": [
+      "sict",
+      "khoa công nghệ thông tin và truyền thông - đại học đà nẵng",
+      "khoa công nghệ thông tin và truyền thông -  đà nẵng"
+    ],
+    "source_file": "DDI.md"
+  },
+  "DUT": {
+    "ten_truong": "Đại học Bách khoa - Đại học Đà Nẵng",
+    "ma_truong": "DDK",
+    "ten_viet_tat": "DUT",
+    "search_keywords": [
+      "dut",
+      "đại học bách khoa - đại học đà nẵng",
+      "bách khoa -  đà nẵng"
+    ],
+    "source_file": "DDK.md"
+  },
+  "EPU": {
+    "ten_truong": "Đại học Điện lực",
+    "ma_truong": "DDL",
+    "ten_viet_tat": "EPU",
+    "search_keywords": [
+      "epu",
+      "đại học điện lực",
+      "điện lực"
+    ],
+    "source_file": "DDL.md"
+  },
+  "QUI": {
+    "ten_truong": "Đại học Công nghiệp Quảng Ninh",
+    "ma_truong": "DDM",
+    "ten_viet_tat": "QUI",
+    "search_keywords": [
+      "qui",
+      "đại học công nghiệp quảng ninh",
+      "công nghiệp quảng ninh"
+    ],
+    "source_file": "DDM.md"
+  },
+  "DNU": {
+    "ten_truong": "Đại học Đồng Nai",
+    "ma_truong": "DNU",
+    "ten_viet_tat": "DNU",
+    "search_keywords": [
+      "dnu",
+      "đại học đồng nai",
+      "đồng nai"
+    ],
+    "source_file": "DNU.md"
+  },
+  "UDCK": {
+    "ten_truong": "Phân hiệu Đại học Đà Nẵng tại Kon Tum",
+    "ma_truong": "DDP",
+    "ten_viet_tat": "UDCK",
+    "search_keywords": [
+      "udck",
+      "phân hiệu đại học đà nẵng tại kon tum",
+      "phân hiệu  đà nẵng tại kon tum"
+    ],
+    "source_file": "DDP.md"
+  },
+  "DUE": {
+    "ten_truong": "Đại học Kinh tế - Đại học Đà Nẵng",
+    "ma_truong": "DDQ",
+    "ten_viet_tat": "DUE",
+    "search_keywords": [
+      "due",
+      "đại học kinh tế - đại học đà nẵng",
+      "kinh tế -  đà nẵng"
+    ],
+    "source_file": "DDQ.md"
+  },
+  "UED": {
+    "ten_truong": "Đại học Sư phạm - Đại học Đà Nẵng",
+    "ma_truong": "DDS",
+    "ten_viet_tat": "UED",
+    "search_keywords": [
+      "ued",
+      "đại học sư phạm - đại học đà nẵng",
+      "sư phạm -  đà nẵng"
+    ],
+    "source_file": "DDS.md"
+  },
+  "DTU": {
+    "ten_truong": "Đại học Duy Tân",
+    "ma_truong": "DDT",
+    "ten_viet_tat": "DTU",
+    "search_keywords": [
+      "dtu",
+      "đại học duy tân",
+      "duy tân"
+    ],
+    "source_file": "DDT.md"
+  },
+  "SMP": {
+    "ten_truong": "Khoa Y dược - Đại học Đà Nẵng",
+    "ma_truong": "DDY",
+    "ten_viet_tat": "SMP",
+    "search_keywords": [
+      "smp",
+      "khoa y dược - đại học đà nẵng",
+      "khoa y dược -  đà nẵng"
+    ],
+    "source_file": "DDY.md"
+  },
+  "UFBA": {
+    "ten_truong": "Đại học Tài chính Quản trị kinh doanh",
+    "ma_truong": "DFA",
+    "ten_viet_tat": "UFBA",
+    "search_keywords": [
+      "ufba",
+      "đại học tài chính quản trị kinh doanh",
+      "tài chính quản trị kinh doanh"
+    ],
+    "source_file": "DFA.md"
+  },
+  "HAT": {
+    "ten_truong": "Khoa Du lịch - Đại học Huế",
+    "ma_truong": "DHD",
+    "ten_viet_tat": "HAT",
+    "search_keywords": [
+      "hat",
+      "khoa du lịch - đại học huế",
+      "khoa du lịch -  huế"
+    ],
+    "source_file": "DHD.md"
+  },
+  "HUAF": {
+    "ten_truong": "Đại học Nông lâm - Đại học Huế",
+    "ma_truong": "DHL",
+    "ten_viet_tat": "HUAF",
+    "search_keywords": [
+      "huaf",
+      "đại học nông lâm - đại học huế",
+      "nông lâm -  huế"
+    ],
+    "source_file": "DHL.md"
+  },
+  "HU-QTC": {
+    "ten_truong": "Phân hiệu Đại học Huế tại Quảng Trị",
+    "ma_truong": "DHQ",
+    "ten_viet_tat": "HU-QTC",
+    "search_keywords": [
+      "hu-qtc",
+      "phân hiệu đại học huế tại quảng trị",
+      "phân hiệu  huế tại quảng trị"
+    ],
+    "source_file": "DHQ.md"
+  },
+  "HUCE": {
+    "ten_truong": "Đại học Sư phạm - Đại học Huế",
+    "ma_truong": "DHS",
+    "ten_viet_tat": "HUCE",
+    "search_keywords": [
+      "huce",
+      "đại học sư phạm - đại học huế",
+      "sư phạm -  huế"
+    ],
+    "source_file": "DHS.md"
+  },
+  "Hue UMP": {
+    "ten_truong": "Đại học Y dược - Đại học Huế",
+    "ma_truong": "DHY",
+    "ten_viet_tat": "Hue UMP",
+    "search_keywords": [
+      "hue ump",
+      "đại học y dược - đại học huế",
+      "y dược -  huế"
+    ],
+    "source_file": "DHY.md"
+  },
+  "BETU": {
+    "ten_truong": "Đại học Kinh tế Kỹ thuật Bình Dương",
+    "ma_truong": "DKB",
+    "ten_viet_tat": "BETU",
+    "search_keywords": [
+      "betu",
+      "đại học kinh tế kỹ thuật bình dương",
+      "kinh tế kỹ thuật bình dương"
+    ],
+    "source_file": "DKB.md"
+  },
+  "HUTECH": {
+    "ten_truong": "Đại học Công nghệ Thành phố Hồ Chí Minh",
+    "ma_truong": "DKC",
+    "ten_viet_tat": "HUTECH",
+    "search_keywords": [
+      "hutech",
+      "đại học công nghệ thành phố hồ chí minh",
+      "công nghệ thành phố hồ chí minh"
+    ],
+    "source_file": "DKC.md"
+  },
+  "UNETI": {
+    "ten_truong": "Đại học Kinh tế Kỹ thuật - Công nghiệp (Cơ sở Hà Nội)",
+    "ma_truong": "DKK",
+    "ten_viet_tat": "UNETI",
+    "search_keywords": [
+      "uneti",
+      "đại học kinh tế kỹ thuật - công nghiệp (cơ sở hà nội)",
+      "kinh tế kỹ thuật - công nghiệp (cơ sở hà nội)"
+    ],
+    "source_file": "DKK.md"
+  },
+  "HUP": {
+    "ten_truong": "Đại học Dược Hà Nội",
+    "ma_truong": "DKH",
+    "ten_viet_tat": "HUP",
+    "search_keywords": [
+      "hup",
+      "đại học dược hà nội",
+      "dược hà nội"
+    ],
+    "source_file": "DKH.md"
+  },
+  "HPU": {
+    "ten_truong": "Đại học Hải Phòng",
+    "ma_truong": "THP",
+    "ten_viet_tat": "HPU",
+    "search_keywords": [
+      "hpu",
+      "đại học hải phòng",
+      "hải phòng"
+    ],
+    "source_file": "THP.md"
+  },
+  "UHD": {
+    "ten_truong": "Đại học Hải Dương",
+    "ma_truong": "DKT",
+    "ten_viet_tat": "UHD",
+    "search_keywords": [
+      "uhd",
+      "đại học hải dương",
+      "hải dương"
+    ],
+    "source_file": "DKT.md"
+  },
+  "HMTU": {
+    "ten_truong": "Đại học Kỹ thuật Y tế Hải Dương",
+    "ma_truong": "DKY",
+    "ten_viet_tat": "HMTU",
+    "search_keywords": [
+      "hmtu",
+      "đại học kỹ thuật y tế hải dương",
+      "kỹ thuật y tế hải dương"
+    ],
+    "source_file": "DKY.md"
+  },
+  "LHU": {
+    "ten_truong": "Đại học dân lập Lạc Hồng",
+    "ma_truong": "DLH",
+    "ten_viet_tat": "LHU",
+    "search_keywords": [
+      "lhu",
+      "đại học dân lập lạc hồng",
+      "dân lập lạc hồng"
+    ],
+    "source_file": "DLH.md"
+  },
+  "ULSA": {
+    "ten_truong": "Đại học Lao động Xã hội (Cơ sở Hà Nội)",
+    "ma_truong": "DLX",
+    "ten_viet_tat": "ULSA",
+    "search_keywords": [
+      "ulsa",
+      "đại học lao động xã hội (cơ sở hà nội)",
+      "lao động xã hội (cơ sở hà nội)"
+    ],
+    "source_file": "DLX.md"
+  },
+  "MUT": {
+    "ten_truong": "Đại học Công nghệ Miền Đông",
+    "ma_truong": "DMD",
+    "ten_viet_tat": "MUT",
+    "search_keywords": [
+      "mut",
+      "đại học công nghệ miền đông",
+      "công nghệ miền đông"
+    ],
+    "source_file": "DMD.md"
+  },
+  "HUNRE": {
+    "ten_truong": "Đại học Tài nguyên và Môi trường Hà Nội",
+    "ma_truong": "DMT",
+    "ten_viet_tat": "HUNRE",
+    "search_keywords": [
+      "hunre",
+      "đại học tài nguyên và môi trường hà nội",
+      "tài nguyên và môi trường hà nội"
+    ],
+    "source_file": "DMT.md"
+  },
+  "HLUV": {
+    "ten_truong": "Đại học Hoa Lư",
+    "ma_truong": "DNB",
+    "ten_viet_tat": "HLUV",
+    "search_keywords": [
+      "hluv",
+      "đại học hoa lư",
+      "hoa lư"
+    ],
+    "source_file": "DNB.md"
+  },
+  "NCTU": {
+    "ten_truong": "Đại học Nam Cần Thơ",
+    "ma_truong": "DNC",
+    "ten_viet_tat": "NCTU",
+    "search_keywords": [
+      "nctu",
+      "đại học nam cần thơ",
+      "nam cần thơ"
+    ],
+    "source_file": "DNC.md"
+  },
+  "HUFLIT": {
+    "ten_truong": "Đại học Ngoại ngữ - Tin học TP.HCM",
+    "ma_truong": "DNT",
+    "ten_viet_tat": "HUFLIT",
+    "search_keywords": [
+      "huflit",
+      "đại học ngoại ngữ - tin học tp.hcm",
+      "ngoại ngữ - tin học tp.hcm"
+    ],
+    "source_file": "DNT.md"
+  },
+  "HUHA": {
+    "ten_truong": "Đại học Nội vụ Hà Nội (cơ sở Tp.HCM)",
+    "ma_truong": "DNV",
+    "ten_viet_tat": "HUHA",
+    "search_keywords": [
+      "huha",
+      "đại học nội vụ hà nội (cơ sở tp.hcm)",
+      "nội vụ hà nội (cơ sở tp.hcm)"
+    ],
+    "source_file": "DNV.md"
+  },
+  "PCTU": {
+    "ten_truong": "Đại học Phan Châu Trinh",
+    "ma_truong": "DPC",
+    "ten_viet_tat": "PCTU",
+    "search_keywords": [
+      "pctu",
+      "đại học phan châu trinh",
+      "phan châu trinh"
+    ],
+    "source_file": "DPC.md"
+  },
+  "PDU": {
+    "ten_truong": "Đại học Phạm Văn Đồng",
+    "ma_truong": "DPQ",
+    "ten_viet_tat": "PDU",
+    "search_keywords": [
+      "pdu",
+      "đại học phạm văn đồng",
+      "phạm văn đồng"
+    ],
+    "source_file": "DPQ.md"
+  },
+  "UPT": {
+    "ten_truong": "Đại học Phan Thiết",
+    "ma_truong": "DPT",
+    "ten_viet_tat": "UPT",
+    "search_keywords": [
+      "upt",
+      "đại học phan thiết",
+      "phan thiết"
+    ],
+    "source_file": "DPT.md"
+  },
+  "PYU": {
+    "ten_truong": "Đại học Phú Yên",
+    "ma_truong": "DPY",
+    "ten_viet_tat": "PYU",
+    "search_keywords": [
+      "pyu",
+      "đại học phú yên",
+      "phú yên"
+    ],
+    "source_file": "DPY.md"
+  },
+  "QBU": {
+    "ten_truong": "Đại học Quảng Bình",
+    "ma_truong": "DQB",
+    "ten_viet_tat": "QBU",
+    "search_keywords": [
+      "qbu",
+      "đại học quảng bình",
+      "quảng bình"
+    ],
+    "source_file": "DQB.md"
+  },
+  "HUBT": {
+    "ten_truong": "Đại học Kinh doanh và Công nghệ Hà Nội",
+    "ma_truong": "DQK",
+    "ten_viet_tat": "HUBT",
+    "search_keywords": [
+      "hubt",
+      "đại học kinh doanh và công nghệ hà nội",
+      "kinh doanh và công nghệ hà nội"
+    ],
+    "source_file": "DQK.md"
+  },
+  "QNU": {
+    "ten_truong": "Đại học Quy Nhơn",
+    "ma_truong": "DQN",
+    "ten_viet_tat": "QNU",
+    "search_keywords": [
+      "qnu",
+      "đại học quy nhơn",
+      "quy nhơn"
+    ],
+    "source_file": "DQN.md"
+  },
+  "QTU": {
+    "ten_truong": "Đại học Quang Trung",
+    "ma_truong": "DQT",
+    "ten_viet_tat": "QTU",
+    "search_keywords": [
+      "qtu",
+      "đại học quang trung",
+      "quang trung"
+    ],
+    "source_file": "DQT.md"
+  },
+  "STU": {
+    "ten_truong": "Đại học Công nghệ Sài Gòn",
+    "ma_truong": "DSG",
+    "ten_viet_tat": "STU",
+    "search_keywords": [
+      "stu",
+      "đại học công nghệ sài gòn",
+      "công nghệ sài gòn"
+    ],
+    "source_file": "DSG.md"
+  },
+  "UTE": {
+    "ten_truong": "Đại học Sư phạm Kỹ thuật - Đại học Đà Nẵng",
+    "ma_truong": "DSK",
+    "ten_viet_tat": "UTE",
+    "search_keywords": [
+      "ute",
+      "đại học sư phạm kỹ thuật - đại học đà nẵng",
+      "sư phạm kỹ thuật -  đà nẵng"
+    ],
+    "source_file": "DSK.md"
+  },
+  "TBU": {
+    "ten_truong": "Đại học Thái Bình",
+    "ma_truong": "DTB",
+    "ten_viet_tat": "TBU",
+    "search_keywords": [
+      "tbu",
+      "đại học thái bình",
+      "thái bình"
+    ],
+    "source_file": "DTB.md"
+  },
+  "ICTU": {
+    "ten_truong": "Đại học Công nghệ Thông tin và Truyền thông - Đại học Thái Nguyên",
+    "ma_truong": "DTC",
+    "ten_viet_tat": "ICTU",
+    "search_keywords": [
+      "ictu",
+      "đại học công nghệ thông tin và truyền thông - đại học thái nguyên",
+      "công nghệ thông tin và truyền thông -  thái nguyên"
+    ],
+    "source_file": "DTC.md"
+  },
+  "TUEBA": {
+    "ten_truong": "Đại học Kinh tế - Quản trị kinh doanh (thuộc ĐH Thái Nguyên)",
+    "ma_truong": "DTE",
+    "ten_viet_tat": "TUEBA",
+    "search_keywords": [
+      "tueba",
+      "đại học kinh tế - quản trị kinh doanh (thuộc đh thái nguyên)",
+      "kinh tế - quản trị kinh doanh (thuộc đh thái nguyên)"
+    ],
+    "source_file": "DTE.md"
+  },
+  "SFL": {
+    "ten_truong": "Đại học Ngoại ngữ - Đại học Thái Nguyên",
+    "ma_truong": "DTF",
+    "ten_viet_tat": "SFL",
+    "search_keywords": [
+      "sfl",
+      "đại học ngoại ngữ - đại học thái nguyên",
+      "ngoại ngữ -  thái nguyên"
+    ],
+    "source_file": "DTF.md"
+  },
+  "TLU": {
+    "ten_truong": "Đại học Thăng Long",
+    "ma_truong": "DTL",
+    "ten_viet_tat": "TLU",
+    "search_keywords": [
+      "tlu",
+      "đại học thăng long",
+      "thăng long"
+    ],
+    "source_file": "DTL.md"
+  },
+  "HCMUNRE": {
+    "ten_truong": "Đại học Tài nguyên và Môi trường Thành phố Hồ Chí Minh",
+    "ma_truong": "DTM",
+    "ten_viet_tat": "HCMUNRE",
+    "search_keywords": [
+      "hcmunre",
+      "đại học tài nguyên và môi trường thành phố hồ chí minh",
+      "tài nguyên và môi trường thành phố hồ chí minh"
+    ],
+    "source_file": "DTM.md"
+  },
+  "TUAF": {
+    "ten_truong": "Đại học Nông Lâm - Đại học Thái Nguyên",
+    "ma_truong": "DTN",
+    "ten_viet_tat": "TUAF",
+    "search_keywords": [
+      "tuaf",
+      "đại học nông lâm - đại học thái nguyên",
+      "nông lâm -  thái nguyên",
+      "nông lâm"
+    ],
+    "source_file": "DTN.md"
+  },
+  "ISTNU": {
+    "ten_truong": "Khoa Quốc tế - Đại học Thái Nguyên",
+    "ma_truong": "DTQ",
+    "ten_viet_tat": "ISTNU",
+    "search_keywords": [
+      "istnu",
+      "khoa quốc tế - đại học thái nguyên",
+      "khoa quốc tế -  thái nguyên"
+    ],
+    "source_file": "DTQ.md"
+  },
+  "TUE": {
+    "ten_truong": "Đại học Sư phạm - Đại học Thái Nguyên",
+    "ma_truong": "DTS",
+    "ten_viet_tat": "TUE",
+    "search_keywords": [
+      "tue",
+      "đại học sư phạm - đại học thái nguyên",
+      "sư phạm -  thái nguyên"
+    ],
+    "source_file": "DTS.md"
+  },
+  "TDTU": {
+    "ten_truong": "Đại học Tôn Đức Thắng",
+    "ma_truong": "DTT",
+    "ten_viet_tat": "TDTU",
+    "search_keywords": [
+      "tdtu",
+      "đại học tôn đức thắng",
+      "tôn đức thắng"
+    ],
+    "source_file": "DTT.md"
+  },
+  "LTVU": {
+    "ten_truong": "Đại học Dân lập Lương Thế Vinh",
+    "ma_truong": "DTV",
+    "ten_viet_tat": "LTVU",
+    "search_keywords": [
+      "ltvu",
+      "đại học dân lập lương thế vinh",
+      "dân lập lương thế vinh"
+    ],
+    "source_file": "DTV.md"
+  },
+  "TUMP": {
+    "ten_truong": "Đại học Y Dược - Đại học Thái Nguyên",
+    "ma_truong": "DTY",
+    "ten_viet_tat": "TUMP",
+    "search_keywords": [
+      "tump",
+      "đại học y dược - đại học thái nguyên",
+      "y dược -  thái nguyên"
+    ],
+    "source_file": "DTY.md"
+  },
+  "TNUS": {
+    "ten_truong": "Đại học Khoa học - Đại học Thái Nguyên",
+    "ma_truong": "DTZ",
+    "ten_viet_tat": "TNUS",
+    "search_keywords": [
+      "tnus",
+      "đại học khoa học - đại học thái nguyên",
+      "khoa học -  thái nguyên"
+    ],
+    "source_file": "DTZ.md"
+  },
+  "VBU": {
+    "ten_truong": "Đại học Việt Bắc",
+    "ma_truong": "DVB",
+    "ten_viet_tat": "VBU",
+    "search_keywords": [
+      "vbu",
+      "đại học việt bắc",
+      "việt bắc"
+    ],
+    "source_file": "DVB.md"
+  },
+  "TUCST": {
+    "ten_truong": "Đại học Văn Hóa, Thể thao và Du lịch Thanh Hóa",
+    "ma_truong": "DVD",
+    "ten_viet_tat": "TUCST",
+    "search_keywords": [
+      "tucst",
+      "đại học văn hóa, thể thao và du lịch thanh hóa",
+      "văn hóa, thể thao và du lịch thanh hóa"
+    ],
+    "source_file": "DVD.md"
+  },
+  "VHU": {
+    "ten_truong": "Đại học Văn Hiến",
+    "ma_truong": "DVH",
+    "ten_viet_tat": "VHU",
+    "search_keywords": [
+      "vhu",
+      "đại học văn hiến",
+      "văn hiến"
+    ],
+    "source_file": "DVH.md"
+  },
+  "VLU": {
+    "ten_truong": "Đại học Văn Lang",
+    "ma_truong": "DVL",
+    "ten_viet_tat": "VLU",
+    "search_keywords": [
+      "vlu",
+      "đại học văn lang",
+      "văn lang"
+    ],
+    "source_file": "DVL.md"
+  },
+  "TVU": {
+    "ten_truong": "Đại học Trà Vinh",
+    "ma_truong": "DVT",
+    "ten_viet_tat": "TVU",
+    "search_keywords": [
+      "tvu",
+      "đại học trà vinh",
+      "trà vinh"
+    ],
+    "source_file": "DVT.md"
+  },
+  "VXUT": {
+    "ten_truong": "Đại học Công nghệ Vạn Xuân",
+    "ma_truong": "DVX",
+    "ten_viet_tat": "VXUT",
+    "search_keywords": [
+      "vxut",
+      "đại học công nghệ vạn xuân",
+      "công nghệ vạn xuân"
+    ],
+    "source_file": "DVX.md"
+  },
+  "EIU": {
+    "ten_truong": "Đại học Quốc tế Miền Đông",
+    "ma_truong": "EIU",
+    "ten_viet_tat": "EIU",
+    "search_keywords": [
+      "eiu",
+      "đại học quốc tế miền đông",
+      "quốc tế miền đông"
+    ],
+    "source_file": "EIU.md"
+  },
+  "HBU": {
+    "ten_truong": "Đại học Hòa Bình",
+    "ma_truong": "ETU",
+    "ten_viet_tat": "HBU",
+    "search_keywords": [
+      "hbu",
+      "đại học hòa bình",
+      "hòa bình"
+    ],
+    "source_file": "ETU.md"
+  },
+  "FBU": {
+    "ten_truong": "Đại học Tài chính Ngân hàng Hà Nội",
+    "ma_truong": "FBU",
+    "ten_viet_tat": "FBU",
+    "search_keywords": [
+      "fbu",
+      "đại học tài chính ngân hàng hà nội",
+      "tài chính ngân hàng hà nội"
+    ],
+    "source_file": "FBU.md"
+  },
+  "UTC": {
+    "ten_truong": "Đại học Giao thông Vận tải",
+    "ma_truong": "GHA",
+    "ten_viet_tat": "UTC",
+    "search_keywords": [
+      "utc",
+      "đại học giao thông vận tải",
+      "giao thông vận tải"
+    ],
+    "source_file": "GHA.md"
+  },
+  "NUAE": {
+    "ten_truong": "Đại học Sư phạm Nghệ thuật Trung ương Hà Nội (ĐHSP Nghệ thuật TW)",
+    "ma_truong": "GNT",
+    "ten_viet_tat": "NUAE",
+    "search_keywords": [
+      "nuae",
+      "đại học sư phạm nghệ thuật trung ương hà nội (đhsp nghệ thuật tw)",
+      "sư phạm nghệ thuật trung ương hà nội (đhsp nghệ thuật tw)"
+    ],
+    "source_file": "GNT.md"
+  },
+  "UTC2": {
+    "ten_truong": "Phân hiệu Đại học Giao thông vận tải tại TP.HCM",
+    "ma_truong": "GSA",
+    "ten_viet_tat": "UTC2",
+    "search_keywords": [
+      "utc2",
+      "phân hiệu đại học giao thông vận tải tại tp.hcm",
+      "phân hiệu  giao thông vận tải tại tp.hcm",
+      "giao thông vận tải"
+    ],
+    "source_file": "GSA.md"
+  },
+  "UTT": {
+    "ten_truong": "Đại học Công nghệ Giao thông Vận tải",
+    "ma_truong": "GTA",
+    "ten_viet_tat": "UTT",
+    "search_keywords": [
+      "utt",
+      "đại học công nghệ giao thông vận tải",
+      "công nghệ giao thông vận tải",
+      "giao thông vận tải"
+    ],
+    "source_file": "GTA.md"
+  },
+  "AJC": {
+    "ten_truong": "Học viện Báo chí và Tuyên truyền",
+    "ma_truong": "HBT",
+    "ten_viet_tat": "AJC",
+    "search_keywords": [
+      "ajc",
+      "học viện báo chí và tuyên truyền"
+    ],
+    "source_file": "HBT.md"
+  },
+  "T36": {
+    "ten_truong": "Đại học Kỹ thuật - Hậu cần Công an nhân dân",
+    "ma_truong": "HCB",
+    "ten_viet_tat": "T36",
+    "search_keywords": [
+      "t36",
+      "đại học kỹ thuật - hậu cần công an nhân dân",
+      "kỹ thuật - hậu cần công an nhân dân"
+    ],
+    "source_file": "HCB.md"
+  },
+  "APD": {
+    "ten_truong": "Học viện Chính sách và Phát triển",
+    "ma_truong": "HCP",
+    "ten_viet_tat": "APD",
+    "search_keywords": [
+      "apd",
+      "học viện chính sách và phát triển"
+    ],
+    "source_file": "HCP.md"
+  },
+  "HDU": {
+    "ten_truong": "Đại học Hồng Đức",
+    "ma_truong": "HDT",
+    "ten_viet_tat": "HDU",
+    "search_keywords": [
+      "hdu",
+      "đại học hồng đức",
+      "hồng đức"
+    ],
+    "source_file": "HDT.md"
+  },
+  "VMU": {
+    "ten_truong": "Đại học Y khoa Vinh",
+    "ma_truong": "YKV",
+    "ten_viet_tat": "VMU",
+    "search_keywords": [
+      "vmu",
+      "đại học y khoa vinh",
+      "y khoa vinh"
+    ],
+    "source_file": "YKV.md"
+  },
+  "VAA": {
+    "ten_truong": "Học viện Hàng không Việt Nam",
+    "ma_truong": "HHK",
+    "ten_viet_tat": "VAA",
+    "search_keywords": [
+      "vaa",
+      "học viện hàng không việt nam"
+    ],
+    "source_file": "HHK.md"
+  },
+  "HMU": {
+    "ten_truong": "Phân hiệu Trường Đại học Y Hà Nội tại Thanh Hóa",
+    "ma_truong": "YHT",
+    "ten_viet_tat": "HMU",
+    "search_keywords": [
+      "hmu",
+      "phân hiệu trường đại học y hà nội tại thanh hóa",
+      "phân hiệu trường  y hà nội tại thanh hóa"
+    ],
+    "source_file": "YHT.md"
+  },
+  "VWA": {
+    "ten_truong": "Học viện Phụ nữ Việt Nam",
+    "ma_truong": "HPN",
+    "ten_viet_tat": "VWA",
+    "search_keywords": [
+      "vwa",
+      "học viện phụ nữ việt nam"
+    ],
+    "source_file": "HPN.md"
+  },
+  "DAV": {
+    "ten_truong": "Học viện Ngoại giao Việt Nam",
+    "ma_truong": "HQT",
+    "ten_viet_tat": "DAV",
+    "search_keywords": [
+      "dav",
+      "học viện ngoại giao việt nam"
+    ],
+    "source_file": "HQT.md"
+  },
+  "VYA": {
+    "ten_truong": "Học viện Thanh thiếu niên Việt Nam",
+    "ma_truong": "HTN",
+    "ten_viet_tat": "VYA",
+    "search_keywords": [
+      "vya",
+      "học viện thanh thiếu niên việt nam"
+    ],
+    "source_file": "HTN.md"
+  },
+  "HCA": {
+    "ten_truong": "Học viện Cán bộ Thành phố Hồ Chí Minh",
+    "ma_truong": "HVC",
+    "ten_viet_tat": "HCA",
+    "search_keywords": [
+      "hca",
+      "học viện cán bộ thành phố hồ chí minh"
+    ],
+    "source_file": "HVC.md"
+  },
+  "VNUA": {
+    "ten_truong": "Học viện Nông nghiệp Việt Nam",
+    "ma_truong": "HVN",
+    "ten_viet_tat": "VNUA",
+    "search_keywords": [
+      "vnua",
+      "học viện nông nghiệp việt nam"
+    ],
+    "source_file": "HVN.md"
+  },
+  "NAEM": {
+    "ten_truong": "Học viện Quản lý Giáo dục",
+    "ma_truong": "HVQ",
+    "ten_viet_tat": "NAEM",
+    "search_keywords": [
+      "naem",
+      "học viện quản lý giáo dục"
+    ],
+    "source_file": "HVQ.md"
+  },
+  "VUTM": {
+    "ten_truong": "Học viện Y dược học cổ truyền Việt Nam",
+    "ma_truong": "HYD",
+    "ten_viet_tat": "VUTM",
+    "search_keywords": [
+      "vutm",
+      "học viện y dược học cổ truyền việt nam"
+    ],
+    "source_file": "HYD.md"
+  },
+  "IUH": {
+    "ten_truong": "Đại học Công nghiệp Thành phố Hồ Chí Minh",
+    "ma_truong": "IUH",
+    "ten_viet_tat": "IUH",
+    "search_keywords": [
+      "iuh",
+      "đại học công nghiệp thành phố hồ chí minh",
+      "công nghiệp thành phố hồ chí minh"
+    ],
+    "source_file": "IUH.md"
+  },
+  "CTUT": {
+    "ten_truong": "Đại học Kỹ thuật Công nghệ Cần Thơ",
+    "ma_truong": "KCC",
+    "ten_viet_tat": "CTUT",
+    "search_keywords": [
+      "ctut",
+      "đại học kỹ thuật công nghệ cần thơ",
+      "kỹ thuật công nghệ cần thơ"
+    ],
+    "source_file": "KCC.md"
+  },
+  "USTH": {
+    "ten_truong": "Đại học Khoa học và Công nghệ Hà Nội",
+    "ma_truong": "KCN",
+    "ten_viet_tat": "USTH",
+    "search_keywords": [
+      "usth",
+      "đại học khoa học và công nghệ hà nội",
+      "khoa học và công nghệ hà nội"
+    ],
+    "source_file": "KCN.md"
+  },
+  "NEU": {
+    "ten_truong": "Đại học Kinh tế Quốc dân",
+    "ma_truong": "KHA",
+    "ten_viet_tat": "NEU",
+    "search_keywords": [
+      "neu",
+      "đại học kinh tế quốc dân",
+      "kinh tế quốc dân"
+    ],
+    "source_file": "KHA.md"
+  },
+  "UEH": {
+    "ten_truong": "Đại học Kinh tế Thành phố Hồ Chí Minh",
+    "ma_truong": "KSA",
+    "ten_viet_tat": "UEH",
+    "search_keywords": [
+      "ueh",
+      "đại học kinh tế thành phố hồ chí minh",
+      "kinh tế thành phố hồ chí minh"
+    ],
+    "source_file": "KSA.md"
+  },
+  "HAU": {
+    "ten_truong": "Đại học Kiến trúc Hà Nội",
+    "ma_truong": "KTA",
+    "ten_viet_tat": "HAU",
+    "search_keywords": [
+      "hau",
+      "đại học kiến trúc hà nội",
+      "kiến trúc hà nội"
+    ],
+    "source_file": "KTA.md"
+  },
+  "DAU": {
+    "ten_truong": "Đại học Kiến trúc Đà Nẵng",
+    "ma_truong": "KTD",
+    "ten_viet_tat": "DAU",
+    "search_keywords": [
+      "dau",
+      "đại học kiến trúc đà nẵng",
+      "kiến trúc đà nẵng"
+    ],
+    "source_file": "KTD.md"
+  },
+  "TUU": {
+    "ten_truong": "Đại học Công đoàn",
+    "ma_truong": "LDA",
+    "ten_viet_tat": "TUU",
+    "search_keywords": [
+      "tuu",
+      "đại học công đoàn",
+      "công đoàn"
+    ],
+    "source_file": "LDA.md"
+  },
+  "VNUF": {
+    "ten_truong": "Phân hiệu Trường Đại học Lâm nghiệp tại tỉnh Đồng Nai",
+    "ma_truong": "LNS",
+    "ten_viet_tat": "VNUF",
+    "search_keywords": [
+      "vnuf",
+      "phân hiệu trường đại học lâm nghiệp tại tỉnh đồng nai",
+      "phân hiệu trường  lâm nghiệp tại tỉnh đồng nai"
+    ],
+    "source_file": "LNS.md"
+  },
+  "HLU": {
+    "ten_truong": "Đại học Luật Hà Nội",
+    "ma_truong": "LPH",
+    "ten_viet_tat": "HLU",
+    "search_keywords": [
+      "hlu",
+      "đại học luật hà nội",
+      "luật hà nội"
+    ],
+    "source_file": "LPH.md"
+  },
+  "HCMUL": {
+    "ten_truong": "Đại học Luật TP.HCM",
+    "ma_truong": "LPS",
+    "ten_viet_tat": "HCMUL",
+    "search_keywords": [
+      "hcmul",
+      "đại học luật tp.hcm",
+      "luật tp.hcm"
+    ],
+    "source_file": "LPS.md"
+  },
+  "OU": {
+    "ten_truong": "Đại học Mở Thành phố Hồ Chí Minh",
+    "ma_truong": "MBS",
+    "ten_viet_tat": "OU",
+    "search_keywords": [
+      "ou",
+      "đại học mở thành phố hồ chí minh",
+      "mở thành phố hồ chí minh"
+    ],
+    "source_file": "MBS.md"
+  },
+  "HUMG": {
+    "ten_truong": "Đại học Mỏ - Địa chất (cơ sở Hà Nội)",
+    "ma_truong": "MDA",
+    "ten_viet_tat": "HUMG",
+    "search_keywords": [
+      "humg",
+      "đại học mỏ - địa chất (cơ sở hà nội)",
+      "mỏ - địa chất (cơ sở hà nội)"
+    ],
+    "source_file": "MDA.md"
+  },
+  "HOU": {
+    "ten_truong": "Đại học Mở Hà Nội",
+    "ma_truong": "MHN",
+    "ten_viet_tat": "HOU",
+    "search_keywords": [
+      "hou",
+      "đại học mở hà nội",
+      "mở hà nội"
+    ],
+    "source_file": "MHN.md"
+  },
+  "UIFA": {
+    "ten_truong": "Đại học Mỹ thuật Công nghiệp",
+    "ma_truong": "MTC",
+    "ten_viet_tat": "UIFA",
+    "search_keywords": [
+      "uifa",
+      "đại học mỹ thuật công nghiệp",
+      "mỹ thuật công nghiệp"
+    ],
+    "source_file": "MTC.md"
+  },
+  "VUFA": {
+    "ten_truong": "Đại học Mỹ thuật Việt Nam",
+    "ma_truong": "MTH",
+    "ten_viet_tat": "VUFA",
+    "search_keywords": [
+      "vufa",
+      "đại học mỹ thuật việt nam",
+      "mỹ thuật việt nam"
+    ],
+    "source_file": "MTH.md"
+  },
+  "HCMUFA": {
+    "ten_truong": "Đại học Mỹ thuật Thành phố Hồ Chí Minh",
+    "ma_truong": "MTS",
+    "ten_viet_tat": "HCMUFA",
+    "search_keywords": [
+      "hcmufa",
+      "đại học mỹ thuật thành phố hồ chí minh",
+      "mỹ thuật thành phố hồ chí minh"
+    ],
+    "source_file": "MTS.md"
+  },
+  "MTU": {
+    "ten_truong": "Đại học Xây dựng Miền Tây",
+    "ma_truong": "MTU",
+    "ten_viet_tat": "MTU",
+    "search_keywords": [
+      "mtu",
+      "đại học xây dựng miền tây",
+      "xây dựng miền tây",
+      "xây dựng"
+    ],
+    "source_file": "MTU.md"
+  },
+  "BA": {
+    "ten_truong": "Học viện ngân hàng (Phân viện Bắc Ninh)",
+    "ma_truong": "NHB",
+    "ten_viet_tat": "BA",
+    "search_keywords": [
+      "ba",
+      "học viện ngân hàng (phân viện bắc ninh)"
+    ],
+    "source_file": "NHB.md"
+  },
+  "NLU": {
+    "ten_truong": "Đại học Nông Lâm Thành phố Hồ Chí Minh",
+    "ma_truong": "NLS",
+    "ten_viet_tat": "NLU",
+    "search_keywords": [
+      "nlu",
+      "đại học nông lâm thành phố hồ chí minh",
+      "nông lâm thành phố hồ chí minh",
+      "nông lâm"
+    ],
+    "source_file": "NLS.md"
+  },
+  "FTU": {
+    "ten_truong": "Đại học Ngoại thương (Cơ sở Quảng Ninh)",
+    "ma_truong": "NTH",
+    "ten_viet_tat": "FTU",
+    "search_keywords": [
+      "ftu",
+      "đại học ngoại thương (cơ sở quảng ninh)",
+      "ngoại thương (cơ sở quảng ninh)"
+    ],
+    "source_file": "NTH.md"
+  },
+  "NTTU": {
+    "ten_truong": "Đại học Nguyễn Tất Thành",
+    "ma_truong": "NTT",
+    "ten_viet_tat": "NTTU",
+    "search_keywords": [
+      "nttu",
+      "đại học nguyễn tất thành",
+      "nguyễn tất thành"
+    ],
+    "source_file": "NTT.md"
+  },
+  "NTU": {
+    "ten_truong": "Đại học Nha Trang",
+    "ma_truong": "TSN",
+    "ten_viet_tat": "NTU",
+    "search_keywords": [
+      "ntu",
+      "đại học nha trang",
+      "nha trang"
+    ],
+    "source_file": "TSN.md"
+  },
+  "PVU": {
+    "ten_truong": "Đại học Dầu khí Việt Nam",
+    "ma_truong": "PVU",
+    "ten_viet_tat": "PVU",
+    "search_keywords": [
+      "pvu",
+      "đại học dầu khí việt nam",
+      "dầu khí việt nam"
+    ],
+    "source_file": "PVU.md"
+  },
+  "VNU - UEB": {
+    "ten_truong": "Đại học Kinh tế - Đại học Quốc gia Hà Nội",
+    "ma_truong": "QHE",
+    "ten_viet_tat": "VNU - UEB",
+    "search_keywords": [
+      "vnu - ueb",
+      "đại học kinh tế - đại học quốc gia hà nội",
+      "kinh tế -  quốc gia hà nội"
+    ],
+    "source_file": "QHE.md"
+  },
+  "ULIS": {
+    "ten_truong": "Đại học Ngoại ngữ (ĐHQG Hà Nội)",
+    "ma_truong": "QHF",
+    "ten_viet_tat": "ULIS",
+    "search_keywords": [
+      "ulis",
+      "đại học ngoại ngữ (đhqg hà nội)",
+      "ngoại ngữ (đhqg hà nội)"
+    ],
+    "source_file": "QHF.md"
+  },
+  "UET": {
+    "ten_truong": "Đại học Công nghệ - Đại học Quốc gia Hà Nội",
+    "ma_truong": "QHI",
+    "ten_viet_tat": "UET",
+    "search_keywords": [
+      "uet",
+      "đại học công nghệ - đại học quốc gia hà nội",
+      "đại học công nghệ"
+    ],
+    "source_file": "QHI.md"
+  },
+  "VNU - LS": {
+    "ten_truong": "Khoa Luật (ĐHQG Hà Nội)",
+    "ma_truong": "QHL",
+    "ten_viet_tat": "VNU - LS",
+    "search_keywords": [
+      "vnu - ls",
+      "khoa luật (đhqg hà nội)"
+    ],
+    "source_file": "QHL.md"
+  },
+  "VNU - IS": {
+    "ten_truong": "Khoa Quốc tế (ĐHQG Hà Nội)",
+    "ma_truong": "QHQ",
+    "ten_viet_tat": "VNU - IS",
+    "search_keywords": [
+      "vnu - is",
+      "khoa quốc tế (đhqg hà nội)"
+    ],
+    "source_file": "QHQ.md"
+  },
+  "VNU - UED": {
+    "ten_truong": "Đại học Giáo dục - Đại học Quốc gia Hà Nội",
+    "ma_truong": "QHS",
+    "ten_viet_tat": "VNU - UED",
+    "search_keywords": [
+      "vnu - ued",
+      "đại học giáo dục - đại học quốc gia hà nội",
+      "giáo dục -  quốc gia hà nội"
+    ],
+    "source_file": "QHS.md"
+  },
+  "VNU - US": {
+    "ten_truong": "Đại học Khoa học Tự nhiên - Đại học Quốc gia Hà Nội",
+    "ma_truong": "QHT",
+    "ten_viet_tat": "VNU - US",
+    "search_keywords": [
+      "vnu - us",
+      "đại học khoa học tự nhiên - đại học quốc gia hà nội",
+      "khoa học tự nhiên -  quốc gia hà nội",
+      "khoa học tự nhiên"
+    ],
+    "source_file": "QHT.md"
+  },
+  "USSH": {
+    "ten_truong": "Đại học Khoa học Xã hội và Nhân văn - Đại học Quốc gia Hà Nội",
+    "ma_truong": "QHX",
+    "ten_viet_tat": "USSH",
+    "search_keywords": [
+      "ussh",
+      "đại học khoa học xã hội và nhân văn - đại học quốc gia hà nội",
+      "khoa học xã hội và nhân văn -  quốc gia hà nội"
+    ],
+    "source_file": "QHX.md"
+  },
+  "VNU - SMP": {
+    "ten_truong": "Khoa Y Dược - Đại học Quốc gia Hà Nội",
+    "ma_truong": "QHY",
+    "ten_viet_tat": "VNU - SMP",
+    "search_keywords": [
+      "vnu - smp",
+      "khoa y dược - đại học quốc gia hà nội",
+      "khoa y dược -  quốc gia hà nội"
+    ],
+    "source_file": "QHY.md"
+  },
+  "AGU": {
+    "ten_truong": "Đại học An Giang",
+    "ma_truong": "QSA",
+    "ten_viet_tat": "AGU",
+    "search_keywords": [
+      "agu",
+      "đại học an giang",
+      "an giang"
+    ],
+    "source_file": "QSA.md"
+  },
+  "SGU": {
+    "ten_truong": "Đại học Sài Gòn",
+    "ma_truong": "SGD",
+    "ten_viet_tat": "SGU",
+    "search_keywords": [
+      "sgu",
+      "đại học sài gòn",
+      "sài gòn"
+    ],
+    "source_file": "SGD.md"
+  },
+  "UTEHY": {
+    "ten_truong": "Đại học Sư phạm Kỹ thuật Hưng Yên",
+    "ma_truong": "SKH",
+    "ten_viet_tat": "UTEHY",
+    "search_keywords": [
+      "utehy",
+      "đại học sư phạm kỹ thuật hưng yên",
+      "sư phạm kỹ thuật hưng yên"
+    ],
+    "source_file": "SKH.md"
+  },
+  "VUTE": {
+    "ten_truong": "Đại học Sư phạm Kỹ thuật Vinh",
+    "ma_truong": "SKV",
+    "ten_viet_tat": "VUTE",
+    "search_keywords": [
+      "vute",
+      "đại học sư phạm kỹ thuật vinh",
+      "sư phạm kỹ thuật vinh"
+    ],
+    "source_file": "SKV.md"
+  },
+  "không tìm thấy tên viết tắt": {
+    "ten_truong": "Đại học Sư phạm Hà Nội 2",
+    "ma_truong": "SP2",
+    "ten_viet_tat": "không tìm thấy tên viết tắt",
+    "search_keywords": [
+      "không tìm thấy tên viết tắt",
+      "đại học sư phạm hà nội 2",
+      "sư phạm hà nội 2"
+    ],
+    "source_file": "SP2.md"
+  },
+  "DTHU": {
+    "ten_truong": "Đại học Đồng Tháp",
+    "ma_truong": "SPD",
+    "ten_viet_tat": "DTHU",
+    "search_keywords": [
+      "dthu",
+      "đại học đồng tháp",
+      "đồng tháp"
+    ],
+    "source_file": "SPD.md"
+  },
+  "HCMUTE": {
+    "ten_truong": "Đại học Sư phạm Kỹ thuật TP.HCM",
+    "ma_truong": "SPK",
+    "ten_viet_tat": "HCMUTE",
+    "search_keywords": [
+      "hcmute",
+      "đại học sư phạm kỹ thuật tp.hcm",
+      "sư phạm kỹ thuật tp.hcm"
+    ],
+    "source_file": "SPK.md"
+  },
+  "HCMUE": {
+    "ten_truong": "Đại học Sư phạm TP. HCM",
+    "ma_truong": "SPS",
+    "ten_viet_tat": "HCMUE",
+    "search_keywords": [
+      "hcmue",
+      "đại học sư phạm tp. hcm",
+      "sư phạm tp. hcm"
+    ],
+    "source_file": "SPS.md"
+  },
+  "UPES": {
+    "ten_truong": "Đại học Sư phạm Thể dục Thể thao TP.HCM",
+    "ma_truong": "STS",
+    "ten_viet_tat": "UPES",
+    "search_keywords": [
+      "upes",
+      "đại học sư phạm thể dục thể thao tp.hcm",
+      "sư phạm thể dục thể thao tp.hcm"
+    ],
+    "source_file": "STS.md"
+  },
+  "POU": {
+    "ten_truong": "Đại học Thái Bình Dương",
+    "ma_truong": "TBD",
+    "ten_viet_tat": "POU",
+    "search_keywords": [
+      "pou",
+      "đại học thái bình dương",
+      "thái bình dương"
+    ],
+    "source_file": "TBD.md"
+  },
+  "CTU": {
+    "ten_truong": "Đại học Cần Thơ",
+    "ma_truong": "TCT",
+    "ten_viet_tat": "CTU",
+    "search_keywords": [
+      "ctu",
+      "đại học cần thơ",
+      "cần thơ"
+    ],
+    "source_file": "TCT.md"
+  },
+  "TDMU": {
+    "ten_truong": "Đại học Thủ Dầu Một",
+    "ma_truong": "TDM",
+    "ten_viet_tat": "TDMU",
+    "search_keywords": [
+      "tdmu",
+      "đại học thủ dầu một",
+      "thủ dầu một"
+    ],
+    "source_file": "TDM.md"
+  },
+  "THUV": {
+    "ten_truong": "Đại học Y khoa Tokyo Việt Nam",
+    "ma_truong": "THU",
+    "ten_viet_tat": "THUV",
+    "search_keywords": [
+      "thuv",
+      "đại học y khoa tokyo việt nam",
+      "y khoa tokyo việt nam"
+    ],
+    "source_file": "THU.md"
+  },
+  "HVU": {
+    "ten_truong": "Đại học Hùng Vương",
+    "ma_truong": "THV",
+    "ten_viet_tat": "HVU",
+    "search_keywords": [
+      "hvu",
+      "đại học hùng vương",
+      "hùng vương"
+    ],
+    "source_file": "THV.md"
+  },
+  "KGU": {
+    "ten_truong": "Đại học Kiên Giang",
+    "ma_truong": "TKG",
+    "ten_viet_tat": "KGU",
+    "search_keywords": [
+      "kgu",
+      "đại học kiên giang",
+      "kiên giang"
+    ],
+    "source_file": "TKG.md"
+  },
+  "VUC": {
+    "ten_truong": "Đại học Thương mại",
+    "ma_truong": "TMA",
+    "ten_viet_tat": "VUC",
+    "search_keywords": [
+      "vuc",
+      "đại học thương mại",
+      "thương mại"
+    ],
+    "source_file": "TMA.md"
+  },
+  "TTU": {
+    "ten_truong": "Đại học Tân Tạo",
+    "ma_truong": "TTU",
+    "ten_viet_tat": "TTU",
+    "search_keywords": [
+      "ttu",
+      "đại học tân tạo",
+      "tân tạo"
+    ],
+    "source_file": "TTU.md"
+  },
+  "UTB": {
+    "ten_truong": "Đại học Tây Bắc",
+    "ma_truong": "TTB",
+    "ten_viet_tat": "UTB",
+    "search_keywords": [
+      "utb",
+      "đại học tây bắc",
+      "tây bắc"
+    ],
+    "source_file": "TTB.md"
+  },
+  "TGU": {
+    "ten_truong": "Đại học Tiền Giang",
+    "ma_truong": "TTG",
+    "ten_viet_tat": "TGU",
+    "search_keywords": [
+      "tgu",
+      "đại học tiền giang",
+      "tiền giang"
+    ],
+    "source_file": "TTG.md"
+  },
+  "SIU": {
+    "ten_truong": "Đại học Quốc tế Sài Gòn",
+    "ma_truong": "TTQ",
+    "ten_viet_tat": "SIU",
+    "search_keywords": [
+      "siu",
+      "đại học quốc tế sài gòn",
+      "quốc tế sài gòn"
+    ],
+    "source_file": "TTQ.md"
+  },
+  "UEF": {
+    "ten_truong": "Đại học Kinh tế - Tài chính TP.HCM",
+    "ma_truong": "UEF",
+    "ten_viet_tat": "UEF",
+    "search_keywords": [
+      "uef",
+      "đại học kinh tế - tài chính tp.hcm",
+      "kinh tế - tài chính tp.hcm"
+    ],
+    "source_file": "UEF.md"
+  },
+  "UKB": {
+    "ten_truong": "Đại học Kinh Bắc",
+    "ma_truong": "UKB",
+    "ten_viet_tat": "UKB",
+    "search_keywords": [
+      "ukb",
+      "đại học kinh bắc",
+      "kinh bắc"
+    ],
+    "source_file": "UKB.md"
+  },
+  "UKH": {
+    "ten_truong": "Đại học Khánh Hòa",
+    "ma_truong": "UKH",
+    "ten_viet_tat": "UKH",
+    "search_keywords": [
+      "ukh",
+      "đại học khánh hòa",
+      "khánh hòa"
+    ],
+    "source_file": "UKH.md"
+  },
+  "VGU": {
+    "ten_truong": "Đại học Việt - Đức (Cơ sở Bình Dương)",
+    "ma_truong": "VGU",
+    "ten_viet_tat": "VGU",
+    "search_keywords": [
+      "vgu",
+      "đại học việt - đức (cơ sở bình dương)",
+      "việt - đức (cơ sở bình dương)"
+    ],
+    "source_file": "VGU.md"
+  },
+  "VIU": {
+    "ten_truong": "Đại học Công nghiệp Việt Hung",
+    "ma_truong": "VHD",
+    "ten_viet_tat": "VIU",
+    "search_keywords": [
+      "viu",
+      "đại học công nghiệp việt hung",
+      "công nghiệp việt hung"
+    ],
+    "source_file": "VHD.md"
+  },
+  "HUC": {
+    "ten_truong": "Đại học văn hóa Hà Nội",
+    "ma_truong": "VHH",
+    "ten_viet_tat": "HUC",
+    "search_keywords": [
+      "huc",
+      "đại học văn hóa hà nội",
+      "văn hóa hà nội"
+    ],
+    "source_file": "VHH.md"
+  },
+  "HCMUC": {
+    "ten_truong": "Đại học văn hóa thành phố Hồ Chí Minh",
+    "ma_truong": "VHS",
+    "ten_viet_tat": "HCMUC",
+    "search_keywords": [
+      "hcmuc",
+      "đại học văn hóa thành phố hồ chí minh",
+      "văn hóa thành phố hồ chí minh"
+    ],
+    "source_file": "VHS.md"
+  },
+  "VLUTE": {
+    "ten_truong": "Đại học Sư phạm Kỹ thuật Vĩnh Long",
+    "ma_truong": "VLU",
+    "ten_viet_tat": "VLUTE",
+    "search_keywords": [
+      "vlute",
+      "đại học sư phạm kỹ thuật vĩnh long",
+      "sư phạm kỹ thuật vĩnh long"
+    ],
+    "source_file": "VLU.md"
+  },
+  "VTTU": {
+    "ten_truong": "Đại học Võ Trường Toản",
+    "ma_truong": "VTT",
+    "ten_viet_tat": "VTTU",
+    "search_keywords": [
+      "vttu",
+      "đại học võ trường toản",
+      "võ trường toản"
+    ],
+    "source_file": "VTT.md"
+  },
+  "VUI": {
+    "ten_truong": "Đại học Công nghiệp Việt Trì",
+    "ma_truong": "VUI",
+    "ten_viet_tat": "VUI",
+    "search_keywords": [
+      "vui",
+      "đại học công nghiệp việt trì",
+      "công nghiệp việt trì"
+    ],
+    "source_file": "VUI.md"
+  },
+  "MUCE": {
+    "ten_truong": "Đại học Xây dựng miền Trung",
+    "ma_truong": "XDT",
+    "ten_viet_tat": "MUCE",
+    "search_keywords": [
+      "muce",
+      "đại học xây dựng miền trung",
+      "xây dựng miền trung",
+      "xây dựng"
+    ],
+    "source_file": "XDT.md"
+  },
+  "CTUMP": {
+    "ten_truong": "Đại học Y Dược Cần Thơ",
+    "ma_truong": "YCT",
+    "ten_viet_tat": "CTUMP",
+    "search_keywords": [
+      "ctump",
+      "đại học y dược cần thơ",
+      "y dược cần thơ"
+    ],
+    "source_file": "YCT.md"
+  },
+  "NDUN": {
+    "ten_truong": "Đại học Điều dưỡng Nam Định",
+    "ma_truong": "YDD",
+    "ten_viet_tat": "NDUN",
+    "search_keywords": [
+      "ndun",
+      "đại học điều dưỡng nam định",
+      "điều dưỡng nam định"
+    ],
+    "source_file": "YDD.md"
+  },
+  "HPMU": {
+    "ten_truong": "Đại học Y Dược Hải Phòng",
+    "ma_truong": "YPB",
+    "ten_viet_tat": "HPMU",
+    "search_keywords": [
+      "hpmu",
+      "đại học y dược hải phòng",
+      "y dược hải phòng"
+    ],
+    "source_file": "YPB.md"
+  },
+  "TBUMP": {
+    "ten_truong": "Đại học Y Dược Thái Bình",
+    "ma_truong": "YTB",
+    "ten_viet_tat": "TBUMP",
+    "search_keywords": [
+      "tbump",
+      "đại học y dược thái bình",
+      "y dược thái bình"
+    ],
+    "source_file": "YTB.md"
+  },
+  "HUPH": {
+    "ten_truong": "Đại học Y tế Công cộng",
+    "ma_truong": "YTC",
+    "ten_viet_tat": "HUPH",
+    "search_keywords": [
+      "huph",
+      "đại học y tế công cộng",
+      "y tế công cộng"
+    ],
+    "source_file": "YTC.md"
+  }
+}

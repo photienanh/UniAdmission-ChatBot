@@ -1,12 +1,10 @@
 import os
+from dotenv import load_dotenv
 
-# Set environment variables directly
-os.environ["IS_DEVELOPMENT"] = "True"
-os.environ["JWT_DURATION"] = str(60 * 60)
-os.environ["GEMINI_API_KEY"] = "AIzaSyDaQWFtNjn_kD_N6ZdklJQhQMZfY4krv-8"
-os.environ["BRAVE_API_KEY"] = "BSAqc_JfqRcQCwHzNL3G2Y7p6XBWbhC"
-os.environ["GPT_API_KEY"] = "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"
+# Load environment variables from .env file
+load_dotenv()
 
+# Get API keys from environment variables
 GEMINI_MODEL = "gemini-2.5-flash-lite"
 GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
