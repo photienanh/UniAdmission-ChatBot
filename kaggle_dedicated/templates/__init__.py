@@ -1,0 +1,1 @@
+from .template import search_query_rewrite_template
