@@ -52,6 +52,34 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
     model_output = await ModelManager.pre_inference(data.text, data.model_id, data.params, finish_call, session_id)
     if model_output == None:
         raise HTTPException(status_code=500, detail="Failed to inference model")
+    
+    # SỬA: Đảm bảo vector sources được hiển thị trong frontend
+    web_sources = model_output["web_sources"] or []
+    rag_sources = model_output["rag_sources"] or []
+    
+    # Nếu có vector sources trong rag_sources nhưng không có web_sources, copy sang web_sources
+    if not web_sources and rag_sources:
+        # Check nếu có vector sources (detect bằng URL pattern hoặc source field)
+        vector_sources = []
+        for src in rag_sources:
+            # Check multiple ways to identify vector sources
+            is_vector_source = (
+                src.get("source") == "vector_db" or  # Explicit source field
+                (src.get("url", "").startswith("vector_db://")) or  # URL pattern từ notebook
+                (src.get("url") == "https://hoctap.coccoc.com/tim-truong-dh-cd")  # Cốc Cốc URL pattern
+            )
+            if is_vector_source:
+                vector_sources.append(src)
+        
+        if vector_sources:
+            # Copy vector sources sang web_sources để frontend hiển thị nút nguồn
+            web_sources = [{
+                "url": src.get("url", "https://hoctap.coccoc.com/tim-truong-dh-cd"), 
+                "title": src.get("title", "Vector Database Source"),
+                "description": src.get("description", src.get("text", "")[:200] + "..." if len(src.get("text", "")) > 200 else src.get("text", "")),
+                "text": src.get("text", "")
+            } for src in vector_sources]
+    
     text = ""
     # async for chunk in llm_manager.inference(model_output["stream_id"]):
     #     text += chunk
@@ -60,7 +88,7 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
         "stream_id": model_output["stream_id"],
         "session_id": session_id,
         "role": "bot",
-        "web_sources": model_output["web_sources"],
+        "web_sources": web_sources,  # Đã được sửa để bao gồm vector sources
         "rag_sources": model_output["rag_sources"],
         "extra_data": model_output["extra_data"]
     }    
