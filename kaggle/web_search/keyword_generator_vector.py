@@ -33,12 +33,12 @@ def generate_search_keywords(question: str, model: str = "gpt-4o-mini") -> Dict[
 CHIẾN LƯỢC TÌM KIẾM:
 
 1. **Phân tích ý định câu hỏi**: Xác định thông tin gì cần thiết để trả lời
-2. **Xác định nguồn tìm kiếm**: Tìm kiếm từ local vector database hoặc tìm kiếm trên web. Vector DB có chứa thông tin về điểm chuẩn các năm trước, thông tin chung của trường, học phí và thông tin tuyển sinh. Với những câu hỏi có chứa từ khóa cần thông tin mới như "mới nhất", "năm 2025", "2025" thì sẽ tìm kiếm trên web. Các câu hỏi ngoài phạm vi của Vector DB cũng sẽ tìm kiếm trên web.
+2. **Xác định nguồn tìm kiếm**: Tìm kiếm từ local vector database hoặc tìm kiếm trên web. Vector DB có chứa thông tin về điểm chuẩn các năm, thông tin chung của trường, học phí và thông tin tuyển sinh. Các câu hỏi ngoài phạm vi của Vector DB sẽ tìm kiếm trên web.
 2. **Tìm nguồn thông tin gốc**: Thay vì tìm trực tiếp câu trả lời, tìm dữ liệu để suy luận
 3. **Tối ưu từ khóa**: Dùng thuật ngữ chính thức, tên đầy đủ
 4. **Trả lời đúng định dạng**: Định dạng câu trả lời như sau:
 - Nếu sử dụng web search: {"type_search": "web_search", "key_word": ["từ khóa 1", "từ khóa 2", ...]}
-- Nếu sử dụng local vector DB: {"type_search": "vector_db", "key_word": [{"school_id": "tên trường 1", "section": "section1"},{"school_id": "tên trường 2", "section": "section2"},...]}. Lưu ý: section là 1 trong 3 mục: "thong_tin_chung", "diem_chuan", "tuyen_sinh", trong đó "thong_tin_chung" bao gồm thông tin chung của trường như tên, địa chỉ, liên hệ..., "diem_chuan" bao gồm điểm chuẩn các năm trước và học phí, "tuyen_sinh" bao gồm các ngành đào tạo của trường, thông tin tuyển sinh của truờng.
+- Nếu sử dụng local vector DB: {"type_search": "vector_db", "key_word": [{"school_id": "tên trường 1", "section": "section1"},{"school_id": "tên trường 2", "section": "section2"},...]}. Lưu ý: section là 1 trong 4 mục: "thong_tin_chung", "hoc_phi", "diem_chuan", "tuyen_sinh", trong đó "thong_tin_chung" bao gồm thông tin chung của trường như tên, địa chỉ, liên hệ..., "hoc_phi" bao gồm thông tin học phí của trường, "diem_chuan" bao gồm điểm chuẩn các năm, "tuyen_sinh" bao gồm các ngành đào tạo của trường, thông tin tuyển sinh của truờng.
 
 VÍ DỤ THÔNG MINH:
 
@@ -49,39 +49,33 @@ Câu hỏi: "Số tiến sĩ trong viện trí tuệ nhân tạo UET là bao nhi
 → Trả về: {"type_search": "web_search", "key_word": ["danh sách giảng viên viện trí tuệ nhân tạo UET"]}
 
 Câu hỏi: "Điểm chuẩn UET 2024?"
-→ Vector DB có thông tin điểm chuẩn các năm trước nên tìm trong DB
+→ Vector DB có thông tin điểm chuẩn các năm nên tìm trong DB
 → Cần: Điểm chuẩn của Đại học Công nghệ - Đại học Quốc gia Hà Nội (UET)
 → Trả về: {"type_search": "vector_db", "key_word": [{"school_id": "UET", "section": "diem_chuan"}]}
 
-Câu hỏi: "Điểm chuẩn ngành CNTT Bách Khoa 2024?"
-→ Vector DB có thông tin điểm chuẩn các năm trước nên tìm trong DB
+Câu hỏi: "Điểm chuẩn ngành CNTT Bách Khoa 2025?"
+→ Vector DB có thông tin điểm chuẩn các năm nên tìm trong DB
 → Cần: Điểm chuẩn của Đại học Bách Khoa (HUST)
 → Trả về: {"type_search": "vector_db", "key_word": [{"school_id": "HUST", "section": "diem_chuan"}]}
 
-Câu hỏi: "Học phí ngành AI VNU-UET như thế nào?"
-→ Vector DB có thông tin học phí nên tìm trong DB, học phí nằm trong section diem_chuan
-→ Cần: Học phí của Đại học Công nghệ - Đại học Quốc gia Hà Nội (UET)
-→ Trả về: {"type_search": "vector_db", "key_word": [{"school_id": "UET", "section": "diem_chuan"}]}
+Câu hỏi: "Học phí ngành Luật kinh doanh VNU-LS như thế nào?"
+→ Vector DB có thông tin học phí nên tìm trong DB
+→ Cần: Học phí của Trường Đại học Luật - Đại học Quốc gia Hà Nội (LS)
+→ Trả về: {"type_search": "vector_db", "key_word": [{"school_id": "LS", "section": "hoc_phi"}]}
 
-Câu hỏi: "Chương trình đào tạo ngành trí tuệ nhân tạo UET?"
+Câu hỏi: "Chương trình đào tạo ngành Ngôn ngữ Anh Trường Đại học Ngoại ngữ - Đại học Quốc gia Hà Nội?"
 → Vector DB không có thông tin cụ thể về chương trình đào tạo của từng ngành nên cần tìm kiếm trên web
-→ Cần: Toàn bộ học phần chương trình đào tạo ngành trí tuệ nhân tạo của Đại học Công ng nghệ - Đại học Quốc gia Hà Nội (UET)
-→ Từ khóa: "toàn bộ học phần chương trình đào tạo ngành trí tuệ nhân tạo UET" hoặc "chương trình đào tạo ngành trí tuệ nhân tạo UET"
-→ Trả về: {"type_search": "web_search", "key_word": ["toàn bộ học phần chương trình đào tạo ngành trí tuệ nhân tạo UET"]} hoặc {"type_search": "web_search", "key_word": ["chương trình đào tạo ngành trí tuệ nhân tạo UET"]}
+→ Cần: Toàn bộ học phần chương trình đào tạo ngành Ngôn ngữ Anh của Trường Đại học Ngoại ngữ - Đại học Quốc gia Hà Nội (ULIS)
+→ Từ khóa: "toàn bộ học phần chương trình đào tạo ngành Ngôn ngữ Anh ULIS" hoặc "chương trình đào tạo ngành Ngôn ngữ Anh ULIS"
+→ Trả về (chỉ 1 trong 2 tùy trường hợp): {"type_search": "web_search", "key_word": ["toàn bộ học phần chương trình đào tạo ngành Ngôn ngữ Anh ULIS"]} hoặc {"type_search": "web_search", "key_word": ["chương trình đào tạo ngành Ngôn ngữ Anh ULIS"]}
 
-Câu hỏi: "Địa chỉ của UET và Học viện Công nghệ Bưu chính Viễn thông?"
+Câu hỏi: "Địa chỉ của UEB và Học viện Công nghệ Bưu chính Viễn thông?"
 → Vector DB có thông tin chung như địa chỉ nên tìm trong DB
-→ Trả về: {"type_search": "vector_db", "key_word": [{"school_id": "UET", "section": "thong_tin_chung"},{"school_id": "PTIT", "section": "thong_tin_chung"}]}
-
-Câu hỏi: "Điểm chuẩn đại học Bách Khoa Hà Nội 2025"
-→ Vector DB có lưu điểm chuẩn nhưng là của các năm trước, câu hỏi có từ khóa "2025" nên ưu tiên tìm kiếm trên web
-→ Cần: Bảng điểm chuẩn chính thức của đại học Bách Khoa 2025
-→ Từ khóa: "điểm chuẩn đại học Bách Khoa Hà Nội 2025"
-→ Trả về: {"type_search": "web_search", "key_word": ["điểm chuẩn đại học Bách Khoa Hà Nội 2025"]}
+→ Trả về: {"type_search": "vector_db", "key_word": [{"school_id": "UEB", "section": "thong_tin_chung"},{"school_id": "PTIT", "section": "thong_tin_chung"}]}
 
 NGUYÊN TẮC:
-- Nếu câu hỏi điểm chuẩn không có năm thì tìm năm mới nhất trên web
-- Các câu hỏi điểm chuẩn nếu là năm 2024 trở về trước thì ưu tiên tìm trong vector DB
+- Các câu hỏi ngoài phạm vi vector DB (thông tin chung (gồm tên trường, giới thiệu, mã trường, địa chỉ, thông tin liên hệ như điện thoại, web ...), điểm chuẩn các năm, học phí, thông tin tuyển sinh) thì tìm kiếm trên web
+- Nếu câu hỏi cần tìm thông tin mới nhất, ví dụ trong câu hỏi có từ khóa như "mới nhất", "cập nhật",... thì ưu tiên tìm kiếm trên web
 - Tìm "danh sách", "bảng", "chương trình" thay vì câu hỏi trực tiếp
 
 Chỉ trả về từ khóa, không giải thích."""

@@ -1,0 +1,614 @@
+{
+  "0103": {
+    "name": "Trung cấp Công Nghệ Hà Nội",
+    "acronym": null
+  },
+  "0116": {
+    "name": "Trung cấp kinh tế- Kỹ thuật Bắc Thăng Long",
+    "acronym": null
+  },
+  "0129": {
+    "name": "Trung cấp Kỹ thuật Y dược Hà Nội",
+    "acronym": null
+  },
+  "0134": {
+    "name": "Trung cấp Xây dựng Hà Nội",
+    "acronym": null
+  },
+  "ANH": {
+    "name": "Học viện An ninh nhân dân",
+    "acronym": "PSA"
+  },
+  "BKA": {
+    "name": "Đại học Bách khoa Hà Nội",
+    "acronym": "HUST"
+  },
+  "BPH": {
+    "name": "Học viện Biên phòng",
+    "acronym": "HVBP"
+  },
+  "BTECFPT": {
+    "name": "Cao đẳng Quốc tế BTEC FPT (Cơ sở Hà Nội)",
+    "acronym": null
+  },
+  "BVH": {
+    "name": "Học viện Công nghệ Bưu chính Viễn thông",
+    "acronym": "PTIT"
+  },
+  "C20": {
+    "name": "Cao đẳng Sư phạm Hà Tây",
+    "acronym": null
+  },
+  "CBM": {
+    "name": "Cao đẳng Y tế Bạch Mai",
+    "acronym": "BMMC"
+  },
+  "CCI": {
+    "name": "Cao đẳng Công nghiệp In",
+    "acronym": null
+  },
+  "CCK": {
+    "name": "Cao đẳng Kinh tế Công nghiệp Hà Nội",
+    "acronym": "HIEC"
+  },
+  "CCM": {
+    "name": "Đại học Công nghiệp Dệt may Hà Nội",
+    "acronym": "HTU"
+  },
+  "CDD00139": {
+    "name": "Cao đẳng Công nghệ và Thương mại Hà Nội",
+    "acronym": "HTT"
+  },
+  "CDD0101": {
+    "name": "Cao đẳng nghề Công nghiệp Hà Nội",
+    "acronym": null
+  },
+  "CDD0114": {
+    "name": "Cao đẳng Hùng Vương Hà Nội",
+    "acronym": null
+  },
+  "CDD0118": {
+    "name": "Cao đẳng nghề Công nghệ cao Hà Nội",
+    "acronym": "HHT"
+  },
+  "CDD0121": {
+    "name": "Cao đẳng Kinh tế Công nghệ Hà Nội",
+    "acronym": "HATECO"
+  },
+  "CDD0122": {
+    "name": "Cao đẳng Y Hà Nội",
+    "acronym": null
+  },
+  "CDD0123": {
+    "name": "Cao đẳng Quốc tế Hà Nội",
+    "acronym": "HIC"
+  },
+  "CDD0126": {
+    "name": "Cao đẳng nghề Việt Nam - Hàn Quốc thành phố Hà Nội",
+    "acronym": null
+  },
+  "CDD0132": {
+    "name": "Cao đẳng Cộng đồng Hà Tây",
+    "acronym": null
+  },
+  "CDD0133": {
+    "name": "Cao đẳng Cộng đồng Hà Nội",
+    "acronym": "HACO"
+  },
+  "CDD0134": {
+    "name": "Cao đẳng Y tế Hà Nội",
+    "acronym": "HMC"
+  },
+  "CDD0135": {
+    "name": "Cao đẳng Y tế Hà Đông",
+    "acronym": null
+  },
+  "CDD0136": {
+    "name": "Cao đẳng Nghệ thuật Hà Nội",
+    "acronym": null
+  },
+  "CDD0138": {
+    "name": "Cao đẳng Công nghệ Hà Nội",
+    "acronym": "HITECH"
+  },
+  "CDD0141": {
+    "name": "Cao đẳng Công thương Hà Nội",
+    "acronym": "HCIT"
+  },
+  "CDD0146": {
+    "name": "Cao đẳng KT Y Dược Hà Nội",
+    "acronym": null
+  },
+  "CDD1204": {
+    "name": "Cao đẳng nghề Công thương Việt Nam (Cơ sở Hà Nội)",
+    "acronym": null
+  },
+  "CDD1301": {
+    "name": "Cao đẳng Y Dược Pasteur",
+    "acronym": null
+  },
+  "CDD1907": {
+    "name": "Cao đẳng Đại Việt",
+    "acronym": "DVC"
+  },
+  "CDD2105": {
+    "name": "Cao Đẳng Ngoại Ngữ Và Công Nghệ Việt Nam",
+    "acronym": null
+  },
+  "CDT0104": {
+    "name": "Cao đẳng Nghề Kỹ thuật Công nghệ",
+    "acronym": null
+  },
+  "CDT0110": {
+    "name": "Cao đẳng Kỹ thuật - Mỹ nghệ Việt Nam",
+    "acronym": "VCTH"
+  },
+  "CDT0124": {
+    "name": "Cao đẳng nghề Kỹ thuật và Nghiệp vụ Hà Nội",
+    "acronym": null
+  },
+  "CDT0126": {
+    "name": "Cao đẳng Du lịch Hà Nội",
+    "acronym": "HTC"
+  },
+  "CDT0127": {
+    "name": "Cao đẳng Nông nghiệp và Phát triển nông thôn Bắc Bộ",
+    "acronym": "VCARD"
+  },
+  "CDT0128": {
+    "name": "Cao đẳng Xây dựng Công trình Đô thị (Cơ sở Hà Nội)",
+    "acronym": "CUWC"
+  },
+  "CDT0129": {
+    "name": "Cao đẳng Xây dựng số 1",
+    "acronym": "CTC1"
+  },
+  "CDT0131": {
+    "name": "Cao đẳng Truyền hình Việt Nam",
+    "acronym": null
+  },
+  "CDT0133": {
+    "name": "Cao đẳng Múa Việt Nam",
+    "acronym": null
+  },
+  "CDT0140": {
+    "name": "Cao đẳng Kinh tế - Kỹ thuật Trung ương",
+    "acronym": "NETC"
+  },
+  "CDT0141": {
+    "name": "Cao đẳng Y tế Đặng Văn Ngữ",
+    "acronym": null
+  },
+  "CDT0142": {
+    "name": "Cao đẳng Kinh tế - Kỹ thuật Thương mại",
+    "acronym": "CTET"
+  },
+  "CKN": {
+    "name": "Cao đẳng Kinh tế Kỹ thuật Hà Nội",
+    "acronym": "HCET"
+  },
+  "CLH": {
+    "name": "Cao đẳng Điện tử - Điện lạnh Hà Nội",
+    "acronym": null
+  },
+  "CM1": {
+    "name": "Cao đẳng Sư phạm Trung ương",
+    "acronym": null
+  },
+  "CMC": {
+    "name": "Đại học CMC",
+    "acronym": null
+  },
+  "CMT": {
+    "name": "Cao đẳng Công nghệ và Môi trường Hà Nội",
+    "acronym": "HTEC"
+  },
+  "COT": {
+    "name": "Cao đẳng Công nghệ Và Kỹ thuật ô tô",
+    "acronym": null
+  },
+  "CSH": {
+    "name": "Học viện Cảnh sát nhân dân",
+    "acronym": "PPA"
+  },
+  "CĐT0105": {
+    "name": "Cao đẳng Cơ điện Hà Nội",
+    "acronym": null
+  },
+  "CĐĐ0109": {
+    "name": "Cao đẳng nghề Trần Hưng Đạo",
+    "acronym": null
+  },
+  "CĐĐ0208": {
+    "name": "Cao đẳng Việt Mỹ",
+    "acronym": "APC"
+  },
+  "DBH": {
+    "name": "Đại học Quốc tế Bắc Hà",
+    "acronym": "BHIU"
+  },
+  "DCH": {
+    "name": "Sĩ quan Đặc công",
+    "acronym": "OVSF"
+  },
+  "DCQ": {
+    "name": "Đại học Công nghệ và Quản lý Hữu Nghị",
+    "acronym": "UTM"
+  },
+  "DDA": {
+    "name": "Đại học Công nghệ Đông Á",
+    "acronym": "EAUT"
+  },
+  "DDL": {
+    "name": "Đại học Điện lực",
+    "acronym": "EPU"
+  },
+  "DDN": {
+    "name": "Đại học Đại Nam",
+    "acronym": "DNU"
+  },
+  "DDU": {
+    "name": "Đại học Đông Đô",
+    "acronym": "HDIU"
+  },
+  "DKH": {
+    "name": "Đại học Dược Hà Nội",
+    "acronym": "HUP"
+  },
+  "DKK": {
+    "name": "Đại học Kinh tế Kỹ thuật - Công nghiệp (Cơ sở Hà Nội)",
+    "acronym": "UNETI"
+  },
+  "DKS": {
+    "name": "Đại học Kiểm sát Hà Nội",
+    "acronym": "HPU"
+  },
+  "DLT": {
+    "name": "Đại học Lao động Xã hội (Cơ sở Sơn Tây)",
+    "acronym": "ULSA"
+  },
+  "DLX": {
+    "name": "Đại học Lao động Xã hội (Cơ sở Hà Nội)",
+    "acronym": "ULSA"
+  },
+  "DMT": {
+    "name": "Đại học Tài nguyên và Môi trường Hà Nội",
+    "acronym": "HUNRE"
+  },
+  "DNV": {
+    "name": "Đại học Nội vụ Hà Nội",
+    "acronym": "HUHA"
+  },
+  "DPD": {
+    "name": "Đại học Phương Đông",
+    "acronym": null
+  },
+  "DQK": {
+    "name": "Đại học Kinh doanh và Công nghệ Hà Nội",
+    "acronym": "HUBT"
+  },
+  "DTL": {
+    "name": "Đại học Thăng Long",
+    "acronym": "TLU"
+  },
+  "ETU": {
+    "name": "Đại học Hòa Bình",
+    "acronym": "HBU"
+  },
+  "FBU": {
+    "name": "Đại học Tài chính Ngân hàng Hà Nội",
+    "acronym": null
+  },
+  "FPT": {
+    "name": "Đại học FPT (Cơ sở Hà Nội)",
+    "acronym": "FPTU"
+  },
+  "GHA": {
+    "name": "Đại học Giao thông Vận tải",
+    "acronym": "UTC"
+  },
+  "GNT": {
+    "name": "Đại học Sư phạm Nghệ thuật Trung ương Hà Nội (ĐHSP Nghệ thuật TW)",
+    "acronym": "NUAE"
+  },
+  "GRE": {
+    "name": "Đại học Greenwich Việt Nam (cơ sở Hà Nội)",
+    "acronym": null
+  },
+  "GTA": {
+    "name": "Đại học Công nghệ Giao thông Vận tải",
+    "acronym": "UTT"
+  },
+  "HBT": {
+    "name": "Học viện Báo chí và Tuyên truyền",
+    "acronym": "AJC"
+  },
+  "HCA": {
+    "name": "Học viện Chính trị Công an nhân dân",
+    "acronym": null
+  },
+  "HCP": {
+    "name": "Học viện Chính sách và Phát triển",
+    "acronym": "APD"
+  },
+  "HEH": {
+    "name": "Học viện Hậu cần",
+    "acronym": "MAL"
+  },
+  "HGH": {
+    "name": "Sĩ quan Phòng hóa",
+    "acronym": "CCE"
+  },
+  "HNM": {
+    "name": "Đại học Thủ đô Hà Nội",
+    "acronym": "HMU"
+  },
+  "HPN": {
+    "name": "Học viện Phụ nữ Việt Nam",
+    "acronym": "VWA"
+  },
+  "HQT": {
+    "name": "Học viện Ngoại giao Việt Nam",
+    "acronym": "DAV"
+  },
+  "HTA": {
+    "name": "Học viện Tòa án",
+    "acronym": null
+  },
+  "HVN": {
+    "name": "Học viện Nông nghiệp Việt Nam",
+    "acronym": "VNUA"
+  },
+  "HVQ": {
+    "name": "Học viện Quản lý Giáo dục",
+    "acronym": "NAEM"
+  },
+  "HYD": {
+    "name": "Học viện Y dược học cổ truyền Việt Nam",
+    "acronym": "VUTM"
+  },
+  "KCN": {
+    "name": "Đại học Khoa học và Công nghệ Hà Nội",
+    "acronym": "USTH"
+  },
+  "KHA": {
+    "name": "Đại học Kinh tế Quốc dân",
+    "acronym": "NEU"
+  },
+  "KMA": {
+    "name": "Học viện Kỹ thuật Mật mã (cơ sở phía Bắc)",
+    "acronym": "ACT"
+  },
+  "KQH": {
+    "name": "Học viện Kỹ thuật Quân sự",
+    "acronym": "MTA"
+  },
+  "KTA": {
+    "name": "Đại học Kiến trúc Hà Nội",
+    "acronym": "HAU"
+  },
+  "LAH": {
+    "name": "Đại học Trần Quốc Tuấn (Sĩ quan Lục quân 1)",
+    "acronym": "TQT Uni"
+  },
+  "LBH": {
+    "name": "Sĩ quan Pháo binh",
+    "acronym": "SQPB"
+  },
+  "LCFS": {
+    "name": "Học viện Thiết kế và Thời trang London",
+    "acronym": "LCDF"
+  },
+  "LCH": {
+    "name": "Sĩ quan Chính trị (Tên dân sự: Trường Đại học Chính trị)",
+    "acronym": null
+  },
+  "LDA": {
+    "name": "Đại học Công đoàn",
+    "acronym": "TUU"
+  },
+  "LNH": {
+    "name": "Đại học Lâm nghiệp",
+    "acronym": "VNUF"
+  },
+  "LPH": {
+    "name": "Đại học Luật Hà Nội",
+    "acronym": "HLU"
+  },
+  "MDA": {
+    "name": "Đại học Mỏ - Địa chất (cơ sở Hà Nội)",
+    "acronym": "HUMG"
+  },
+  "MHN": {
+    "name": "Đại học Mở Hà Nội",
+    "acronym": "HOU"
+  },
+  "MTC": {
+    "name": "Đại học Mỹ thuật Công nghiệp",
+    "acronym": "UIFA"
+  },
+  "MTH": {
+    "name": "Đại học Mỹ thuật Việt Nam",
+    "acronym": "VUFA"
+  },
+  "NHF": {
+    "name": "Đại học Hà Nội",
+    "acronym": null
+  },
+  "NHH": {
+    "name": "Học viện Ngân hàng",
+    "acronym": null
+  },
+  "NQH": {
+    "name": "Học viện Khoa học Quân sự",
+    "acronym": "MSA"
+  },
+  "NTH": {
+    "name": "Đại học Ngoại thương",
+    "acronym": "FTU"
+  },
+  "NTU": {
+    "name": "Đại học Nguyễn Trãi",
+    "acronym": null
+  },
+  "NVH": {
+    "name": "Học viện Âm nhạc Quốc gia Việt Nam",
+    "acronym": "VNAM"
+  },
+  "PKA": {
+    "name": "Đại học Phenikaa (Tên cũ là Đại học Thành Tây)",
+    "acronym": null
+  },
+  "PKH": {
+    "name": "Học viện Phòng không - Không quân",
+    "acronym": "ADAFA"
+  },
+  "QH": {
+    "name": "Đại học Quốc gia Hà Nội",
+    "acronym": "VNU"
+  },
+  "QHE": {
+    "name": "Đại học Kinh tế - Đại học Quốc gia Hà Nội",
+    "acronym": "VNU - UEB"
+  },
+  "QHF": {
+    "name": "Đại học Ngoại ngữ (ĐHQG Hà Nội)",
+    "acronym": "ULIS"
+  },
+  "QHI": {
+    "name": "Đại học Công nghệ - Đại học Quốc gia Hà Nội",
+    "acronym": "UET"
+  },
+  "QHJ": {
+    "name": "Đại học Việt Nhật – ĐHQG Hà Nội",
+    "acronym": null
+  },
+  "QHL": {
+    "name": "Khoa Luật (ĐHQG Hà Nội)",
+    "acronym": "VNU - LS"
+  },
+  "QHQ": {
+    "name": "Khoa Quốc tế (ĐHQG Hà Nội)",
+    "acronym": "VNU - IS"
+  },
+  "QHS": {
+    "name": "Đại học Giáo dục - Đại học Quốc gia Hà Nội",
+    "acronym": "VNU - UED"
+  },
+  "QHT": {
+    "name": "Đại học Khoa học Tự nhiên - Đại học Quốc gia Hà Nội",
+    "acronym": "VNU - US"
+  },
+  "QHX": {
+    "name": "Đại học Khoa học Xã hội và Nhân văn - Đại học Quốc gia Hà Nội",
+    "acronym": "USSH"
+  },
+  "QHY": {
+    "name": "Khoa Y Dược - Đại học Quốc gia Hà Nội",
+    "acronym": "VNU - SMP"
+  },
+  "QP04": {
+    "name": "Cao Đẳng Quân Y 1",
+    "acronym": null
+  },
+  "RMU": {
+    "name": "Đại học RMIT",
+    "acronym": "RMIT"
+  },
+  "SKD": {
+    "name": "Đại học Sân khấu - Điện ảnh Hà Nội",
+    "acronym": "SKDA"
+  },
+  "SPH": {
+    "name": "Đại học Sư phạm Hà Nội",
+    "acronym": "HNUE"
+  },
+  "TCD 0123": {
+    "name": "Trung cấp Giao thông Vận tải Miền Bắc",
+    "acronym": null
+  },
+  "TCD 0156.": {
+    "name": "Trung cấp Bách nghệ Hà Nội",
+    "acronym": null
+  },
+  "TCD 0169": {
+    "name": "Trung cấp Cộng đồng Hà Nội",
+    "acronym": null
+  },
+  "TCD0125": {
+    "name": "Trung Cấp Kinh Tế - Tài Chính Hà Nội",
+    "acronym": null
+  },
+  "TCD0132": {
+    "name": "Trung cấp nghề số I Hà Nội",
+    "acronym": null
+  },
+  "TCD0153": {
+    "name": "Trung cấp Kinh tế Kỹ thuật Hà Nội I",
+    "acronym": null
+  },
+  "TCT0108": {
+    "name": "Trung cấp nghề cơ khí xây dựng",
+    "acronym": null
+  },
+  "TCT0109": {
+    "name": "Trung cấp nghề Giao thông công chính Hà Nội",
+    "acronym": null
+  },
+  "TDD": {
+    "name": "Đại học Thành Đô",
+    "acronym": "TDU"
+  },
+  "TDH": {
+    "name": "Đại học Sư phạm Thể dục thể thao Hà Nội",
+    "acronym": null
+  },
+  "TL 06": {
+    "name": "Trung cấp Nghiệp vụ Công đoàn Giao thông Vận tải",
+    "acronym": null
+  },
+  "TLA": {
+    "name": "Đại học Thủy lợi",
+    "acronym": null
+  },
+  "TMA": {
+    "name": "Đại học Thương mại",
+    "acronym": "VUC"
+  },
+  "UKB": {
+    "name": "Đại học Kinh Bắc",
+    "acronym": null
+  },
+  "VHD": {
+    "name": "Đại học Công nghiệp Việt Hung",
+    "acronym": "VIU"
+  },
+  "VHH": {
+    "name": "Đại học văn hóa Hà Nội",
+    "acronym": "HUC"
+  },
+  "VJU": {
+    "name": "Đại học Việt Nhật",
+    "acronym": null
+  },
+  "XDA": {
+    "name": "Đại học Xây dựng",
+    "acronym": null
+  },
+  "YHB": {
+    "name": "Đại học Y Hà Nội",
+    "acronym": "HMU"
+  },
+  "YQH": {
+    "name": "Học viện Quân y",
+    "acronym": "VMMA"
+  },
+  "YTC": {
+    "name": "Đại học Y tế Công cộng",
+    "acronym": "HUPH"
+  },
+  "ZNH": {
+    "name": "Đại học Văn hóa - Nghệ thuật Quân đội",
+    "acronym": null
+  }
+}

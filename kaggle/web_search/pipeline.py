@@ -6,7 +6,7 @@ import asyncio
 
 from .component import *
 from .schema import *
-from .keyword_generator import KeywordGenerator
+from .keyword_generator_vector import generate_search_keywords
 
 class SearchPipeline:
     def __init__(self, 
@@ -24,8 +24,7 @@ class SearchPipeline:
             "concurrent_page": concurrent_page
         }
         self.use_smart_keywords = use_smart_keywords
-        if use_smart_keywords:
-            self.keyword_generator = KeywordGenerator(gpt_api_key=gpt_api_key)
+        self.gpt_api_key = gpt_api_key
     async def start(self):
         self._client = aiohttp.ClientSession()
         self.querier = WebQuery()
@@ -53,11 +52,22 @@ class SearchPipeline:
         search_queries = [query]  # Default to original query
         if self.use_smart_keywords:
             try:
-                smart_keywords = self.keyword_generator.generate_keywords(query)
+                # Set GPT API key in environment if provided
+                if self.gpt_api_key:
+                    os.environ["GPT_API_KEY"] = self.gpt_api_key
                 
-                if smart_keywords and len(smart_keywords) > 0:
-                    search_queries = smart_keywords
-                    print(f"[SearchPipeline] Generated {len(smart_keywords)} keywords: {smart_keywords}")
+                search_strategy = generate_search_keywords(query)
+                
+                # Extract keywords based on search type
+                if search_strategy.get("type_search") == "web_search":
+                    smart_keywords = search_strategy.get("key_word", [query])
+                    if smart_keywords and len(smart_keywords) > 0:
+                        search_queries = smart_keywords
+                        print(f"[SearchPipeline] Generated {len(smart_keywords)} web search keywords: {smart_keywords}")
+                else:
+                    # For vector_db search, use original query as fallback
+                    print(f"[SearchPipeline] Vector DB search strategy detected, using original query for web search")
+                    
             except Exception as e:
                 print(f"[SearchPipeline] Keyword generation failed: {e}, using original query")
         

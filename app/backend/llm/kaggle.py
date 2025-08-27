@@ -125,6 +125,13 @@ class KaggleManager:
                             if response.ok:
                                 result: KagglePreInferenceResponse = await response.json() #TODO: Handle error
                                 cls.update_server(result["info"])
+                                
+                                # Store sources for later use during inference
+                                pre_output = result["pre_output"]
+                                web_sources = pre_output.get("web_sources", [])
+                                rag_sources = pre_output.get("rag_sources", [])
+                                cls.store_sources(stream_id, web_sources, rag_sources)
+                                
                                 return server["info"]["domain"], result["pre_output"]
                             # 404 not found, error, ...
                     except:
@@ -146,6 +153,23 @@ class KaggleManager:
                 if response.ok:
                     async for chunk in response.content.iter_any():
                         yield chunk.decode("utf-8")
+    
+    @classmethod
+    def get_stored_sources(cls, job_id: str) -> tuple[list, list]:
+        """
+        Get stored web_sources and rag_sources for a job_id
+        Returns: (web_sources, rag_sources)
+        """
+        return getattr(cls, '_stored_sources', {}).get(job_id, ([], []))
+    
+    @classmethod
+    def store_sources(cls, job_id: str, web_sources: list, rag_sources: list):
+        """
+        Store web_sources and rag_sources for later use
+        """
+        if not hasattr(cls, '_stored_sources'):
+            cls._stored_sources = {}
+        cls._stored_sources[job_id] = (web_sources, rag_sources)
     @classmethod
     async def _check_connection(cls, server: ServerStatus) -> bool:
         async with aiohttp.ClientSession() as ss:

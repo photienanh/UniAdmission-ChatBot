@@ -46,10 +46,16 @@ class ModelManager:
             await job_info["finish_call"](total, web_sources)
         else:
             total = ""
+            job_info_id = job_info["id"]
             async for chunk in KaggleManager.inference(job_info["domain"], job_id):
                 total += chunk
                 yield chunk
-            await job_info["finish_call"](total, [])
+            
+            # Get stored sources from KaggleManager
+            web_sources, rag_sources = KaggleManager.get_stored_sources(job_info_id)
+            # Combine web_sources and rag_sources into one list for compatibility
+            all_sources = web_sources + rag_sources
+            await job_info["finish_call"](total, all_sources)
     @classmethod
     async def pre_inference(cls, text: str, model_id: str, params: GenerationParams, finish_call: Callable[[str], Awaitable], session_id: Optional[str] = None) -> ModelPreOutput | None:
         job_id = generate_id()

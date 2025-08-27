@@ -20,25 +20,35 @@ def get_university_abbr(filename: str, mapping: Dict) -> Optional[str]:
     """Get university abbreviation from filename"""
     code = filename.replace('.md', '')
     
-    # Find abbreviation by code
-    for abbr, data in mapping.items():
-        if data.get("ma_truong") == code:
-            return abbr
+    # Check if code exists in mapping and has valid acronym
+    if code in mapping:
+        acronym = mapping[code].get("acronym")
+        # Only return if acronym is not null
+        if acronym is not None:
+            # Remove "VNU - " prefix if exists
+            if acronym.startswith("VNU - "):
+                acronym = acronym.replace("VNU - ","")  # Remove "VNU - " (6 characters)
+            return acronym
     
     return None
 
 def create_documents_for_university(content: str, school_id: str, university_name: str) -> List[Document]:
     documents = []
     
-    # Split content into sections với regex pattern matching
+    # Split content into 4 sections
     sections = split_content_by_structure(content)
     
-    # Create 3 documents với nội dung được phân chia rõ ràng
+    # Create 4 documents với nội dung được phân chia rõ ràng
     section_configs = [
         {
             "section": "thong_tin_chung",
             "title": f"Thông tin chung - {university_name}",
             "content": sections["thong_tin_chung"]
+        },
+        {
+            "section": "hoc_phi",
+            "title": f"Học phí - {university_name}",
+            "content": sections["hoc_phi"]
         },
         {
             "section": "diem_chuan", 
@@ -47,7 +57,7 @@ def create_documents_for_university(content: str, school_id: str, university_nam
         },
         {
             "section": "tuyen_sinh",
-            "title": f"Tuyển sinh - {university_name}", 
+            "title": f"Thông tin tuyển sinh - {university_name}", 
             "content": sections["tuyen_sinh"]
         }
     ]
@@ -56,7 +66,7 @@ def create_documents_for_university(content: str, school_id: str, university_nam
         # Ensure each section has meaningful content
         if not config["content"].strip():
             # If section is empty, create placeholder with university name
-            text = f"{config['title']}:\n\n{university_name} - Thông tin {config['section']}"
+            text = f"{config['title']}:\n\n{university_name} - Thông tin {config['section']} không có sẵn"
         else:
             text = f"{config['title']}:\n\n{config['content']}"
         
@@ -75,59 +85,71 @@ def create_documents_for_university(content: str, school_id: str, university_nam
 def split_content_by_structure(content: str) -> Dict[str, str]:
     sections = {
         "thong_tin_chung": "",
+        "hoc_phi": "",
         "diem_chuan": "",
         "tuyen_sinh": ""
     }
     
-    # Define split markers
-    diem_chuan_marker = "Ngành đào tạo và điểm chuẩn"
-    tuyen_sinh_marker1 = "### **II. Các ngành tuyển sinh"
-    tuyen_sinh_marker2 = "Đối tượng tuyển sinh"
+    # Define split markers theo thứ tự
+    hoc_phi_marker = "HỌC PHÍ:"
+    diem_chuan_marker = "NGÀNH ĐÀO TẠO VÀ ĐIỂM CHUẨN:"
+    tuyen_sinh_marker = "THÔNG TIN TUYỂN SINH:"
     
-    # Find positions of markers
+    # Find positions
+    hoc_phi_pos = content.find(hoc_phi_marker)
     diem_chuan_pos = content.find(diem_chuan_marker)
-    tuyen_sinh_pos1 = content.find(tuyen_sinh_marker1)
-    tuyen_sinh_pos2 = content.find(tuyen_sinh_marker2)
+    tuyen_sinh_pos = content.find(tuyen_sinh_marker)
     
-    # Logic quyết định marker tuyển sinh:
-    # - Ưu tiên "### **II. Các ngành tuyển sinh" nếu có
-    # - CHỈ dùng "Đối tượng tuyển sinh" khi KHÔNG có marker1
-    if tuyen_sinh_pos1 != -1:
-        tuyen_sinh_pos = tuyen_sinh_pos1
-    elif tuyen_sinh_pos2 != -1:
-        tuyen_sinh_pos = tuyen_sinh_pos2
+    # Chia theo thứ tự: thong_tin_chung -> hoc_phi -> diem_chuan -> tuyen_sinh
+    
+    # 1. Thông tin chung: từ đầu đến "HỌC PHÍ:"
+    if hoc_phi_pos != -1:
+        sections["thong_tin_chung"] = content[:hoc_phi_pos].strip()
     else:
-        tuyen_sinh_pos = -1
+        # Nếu không có HỌC PHÍ, thì từ đầu đến NGÀNH ĐÀO TẠO
+        if diem_chuan_pos != -1:
+            sections["thong_tin_chung"] = content[:diem_chuan_pos].strip()
+        else:
+            # Nếu không có cả hai, thì từ đầu đến THÔNG TIN TUYỂN SINH
+            if tuyen_sinh_pos != -1:
+                sections["thong_tin_chung"] = content[:tuyen_sinh_pos].strip()
+            else:
+                # Nếu không có marker nào, đưa tất cả vào thông tin chung
+                sections["thong_tin_chung"] = content.strip()
+                return sections
     
-    if diem_chuan_pos == -1:
-        # No "Ngành đào tạo và điểm chuẩn" found - put everything in thông tin chung
+    # 2. Học phí: từ "HỌC PHÍ:" đến "NGÀNH ĐÀO TẠO VÀ ĐIỂM CHUẨN:"
+    if hoc_phi_pos != -1:
+        if diem_chuan_pos != -1:
+            sections["hoc_phi"] = content[hoc_phi_pos:diem_chuan_pos].strip()
+        else:
+            # Nếu không có NGÀNH ĐÀO TẠO, thì đến THÔNG TIN TUYỂN SINH
+            if tuyen_sinh_pos != -1:
+                sections["hoc_phi"] = content[hoc_phi_pos:tuyen_sinh_pos].strip()
+            else:
+                # Nếu không có marker sau, lấy đến hết
+                sections["hoc_phi"] = content[hoc_phi_pos:].strip()
+    
+    # 3. Điểm chuẩn: từ "NGÀNH ĐÀO TẠO VÀ ĐIỂM CHUẨN:" đến "THÔNG TIN TUYỂN SINH:"
+    if diem_chuan_pos != -1:
         if tuyen_sinh_pos != -1:
-            sections["thong_tin_chung"] = content[:tuyen_sinh_pos].strip()
-            sections["tuyen_sinh"] = content[tuyen_sinh_pos:].strip()
-        else:
-            sections["thong_tin_chung"] = content.strip()
-    else:
-        # Found "Ngành đào tạo và điểm chuẩn"
-        # Section 1: Thông tin chung (from start to điểm chuẩn marker)
-        sections["thong_tin_chung"] = content[:diem_chuan_pos].strip()
-        
-        if tuyen_sinh_pos == -1:
-            # No tuyển sinh marker - everything after điểm chuẩn is điểm chuẩn
-            sections["diem_chuan"] = content[diem_chuan_pos:].strip()
-        else:
-            # Section 2: Điểm chuẩn (from điểm chuẩn marker to tuyển sinh marker)  
             sections["diem_chuan"] = content[diem_chuan_pos:tuyen_sinh_pos].strip()
-            # Section 3: Tuyển sinh (from tuyển sinh marker to end)
-            sections["tuyen_sinh"] = content[tuyen_sinh_pos:].strip()
+        else:
+            # Nếu không có THÔNG TIN TUYỂN SINH, lấy đến hết
+            sections["diem_chuan"] = content[diem_chuan_pos:].strip()
     
-    # Clean up empty sections - ensure each has some content
+    # 4. Thông tin tuyển sinh: từ "THÔNG TIN TUYỂN SINH:" đến hết
+    if tuyen_sinh_pos != -1:
+        sections["tuyen_sinh"] = content[tuyen_sinh_pos:].strip()
+    
+    # Clean up empty sections
     for section_name, section_content in sections.items():
         if not section_content.strip():
             sections[section_name] = f"Thông tin {section_name} không có sẵn."
     
     return sections
 
-def build_vectorstore(data_dir: str = "../uni_data/output", 
+def build_vectorstore(data_dir: str = "crawl/data/output", 
                      mapping_file: str = "university_mapping.json",
                      model_name: str = "intfloat/multilingual-e5-small") -> FAISS:
     """
@@ -157,28 +179,32 @@ def build_vectorstore(data_dir: str = "../uni_data/output",
     
     for file_path in md_files:
         try:
-            # Get university abbreviation
+            # Get university code from filename
+            university_code = file_path.name.replace('.md', '')
+            
+            # Get university abbreviation 
             abbr = get_university_abbr(file_path.name, mapping)
             if not abbr:
                 print(f"Skipping {file_path.name}: No abbreviation found")
                 continue
             
-            # Get university name
-            university_name = mapping[abbr]["ten_truong"]
+            # Get university name from mapping using university code
+            university_name = mapping[university_code]["name"]
             
             # Read file content
             with open(file_path, 'r', encoding='utf-8') as f:
                 content = f.read()
             
-            # Create 3 documents
+            # Create 4 documents using abbr as school_id
             docs = create_documents_for_university(content, abbr, university_name)
             all_documents.extend(docs)
             processed_count += 1
             
         except Exception as e:
-            print(f"Error: {e}")
+            print(f"Error processing {file_path.name}: {e}")
     
     print(f"Total documents: {len(all_documents)} from {processed_count} universities")
+    print(f"Average documents per university: {len(all_documents)/processed_count:.1f}" if processed_count > 0 else "")
     
     if not all_documents:
         print("No documents created!")
@@ -194,7 +220,7 @@ def build_vectorstore(data_dir: str = "../uni_data/output",
 def main():
     # Build vectorstore
     vectorstore = build_vectorstore(
-        data_dir="../uni_data/output",
+        data_dir="crawl/data/output",
         mapping_file="university_mapping.json"
     )
     

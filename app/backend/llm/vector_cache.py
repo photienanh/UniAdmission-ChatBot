@@ -7,7 +7,7 @@ from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
 
 # Default vector index path - absolute path
-VECTOR_INDEX_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "..", "scripts", "vectordb")
+VECTOR_INDEX_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "..", "vector_database", "vectordb")
 
 def load_model_embedding():
     """Load HuggingFace embedding model"""
