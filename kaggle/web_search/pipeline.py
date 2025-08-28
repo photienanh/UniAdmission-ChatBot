@@ -14,7 +14,7 @@ class SearchPipeline:
             file_timeout: float,
             concurrent_page: int = 4,
             concurrent_processor_download: int = 16,
-            use_smart_keywords: bool = True,
+            use_internal_generation: bool = True,
             gpt_api_key: str = None
         ) -> None:
         self._kwargs: dict[str, Any] = {
@@ -23,7 +23,7 @@ class SearchPipeline:
             "concurrent_processor_download": concurrent_processor_download,
             "concurrent_page": concurrent_page
         }
-        self.use_smart_keywords = use_smart_keywords
+        self.use_internal_generation = use_internal_generation
         self.gpt_api_key = gpt_api_key
     async def start(self):
         self._client = aiohttp.ClientSession()
@@ -43,14 +43,18 @@ class SearchPipeline:
         in_domain: bool = False, 
         engine_type: Literal["brave", "google"] = "brave",
         include_pdf: bool = False,
-        include_image: bool = False
+        include_image: bool = False,
+        external_keywords: list[str] = None
     ) -> list[ProcessedResult]:
         result: list[ProcessedResult] = []
         self.logger.enable = True
         
-        # Generate smart keywords if enabled
+        # Generate smart keywords if enabled and no external keywords provided
         search_queries = [query]  # Default to original query
-        if self.use_smart_keywords:
+        if external_keywords and len(external_keywords) > 0:
+            # Use external keywords provided by caller (e.g., QueryRewrite)
+            search_queries = external_keywords
+        elif self.use_internal_generation:
             try:
                 # Set GPT API key in environment if provided
                 if self.gpt_api_key:
@@ -60,17 +64,18 @@ class SearchPipeline:
                 
                 # Extract keywords based on search type
                 if search_strategy.get("type_search") == "web_search":
-                    smart_keywords = search_strategy.get("key_word", [query])
-                    if smart_keywords and len(smart_keywords) > 0:
-                        search_queries = smart_keywords
-                        print(f"[SearchPipeline] Generated {len(smart_keywords)} web search keywords: {smart_keywords}")
+                    generated_keywords = search_strategy.get("key_word", [query])
+                    if generated_keywords and len(generated_keywords) > 0:
+                        search_queries = generated_keywords
                 else:
                     # For vector_db search, use original query as fallback
                     print(f"[SearchPipeline] Vector DB search strategy detected, using original query for web search")
+                    search_queries = [query]  # Use original query for fallback
                     
             except Exception as e:
                 print(f"[SearchPipeline] Keyword generation failed: {e}, using original query")
-        
+                search_queries = [query]  # Fallback to original query
+                
         self.logger.start(f"Keywords: {search_queries}", k, engine_type)
         
         # k is pages per keyword, calculate total target pages
@@ -154,7 +159,8 @@ class SearchPipeline:
         in_domain: bool = False, 
         engine_type: Literal["brave", "google"] = "brave",
         include_pdf: bool = False,
-        include_image: bool = False
+        include_image: bool = False,
+        external_keywords: list[str] = None
     ) -> list[ProcessedResult]:
         # k is pages per keyword
         # Let _call handle the calculation after keyword generation
@@ -165,7 +171,8 @@ class SearchPipeline:
             in_domain=in_domain,
             engine_type=engine_type,
             include_pdf=include_pdf,
-            include_image=include_image
+            include_image=include_image,
+            external_keywords=external_keywords
         )
     async def call_k_safe(
         self, 

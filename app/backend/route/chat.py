@@ -8,6 +8,57 @@ from backend.llm import ModelManager
 
 from .utils import NO_CACHE_HEADERS, get_timestamp, CommonResponse
 
+def fix_web_source_backward_compatibility(web_source: dict) -> dict:
+    """Fix WebSource that might be missing 'description' field for backward compatibility."""
+    if 'description' not in web_source:
+        text = web_source.get('text', '')
+        description = text[:200] + "..." if len(text) > 200 else text
+        web_source['description'] = description
+    return web_source
+
+def fix_message_web_sources(message: dict) -> dict:
+    """Fix web_sources in a message for backward compatibility and ensure consistent source grouping."""
+    # Fix web_sources if they exist
+    if 'web_sources' in message and isinstance(message['web_sources'], list):
+        message['web_sources'] = [fix_web_source_backward_compatibility(source) for source in message['web_sources']]
+    
+    # Fix rag_sources if they exist
+    if 'rag_sources' in message and isinstance(message['rag_sources'], list):
+        message['rag_sources'] = [fix_web_source_backward_compatibility(source) for source in message['rag_sources']]
+    
+    # Always group sources by URL to ensure consistent display
+    # This ensures both live chat and reloaded sessions show the same number of sources
+    web_sources = message.get('web_sources', []) or []
+    rag_sources = message.get('rag_sources', []) or []
+        
+    # Combine all sources and group by URL
+    all_sources = web_sources + rag_sources
+    unique_sources = {}
+    
+    for source in all_sources:
+        url = source.get('url', '')
+        if url:
+            if url not in unique_sources:
+                # Use the source as is, but ensure description exists
+                unique_sources[url] = {
+                    'url': url,
+                    'title': source.get('title', ''),
+                    'description': source.get('description', source.get('text', '')[:200] + "..." if len(source.get('text', '')) > 200 else source.get('text', '')),
+                    'text': source.get('text', '')
+                }
+            else:
+                # If we already have this URL, combine the text content
+                existing = unique_sources[url]
+                if not existing.get('title') and source.get('title'):
+                    existing['title'] = source.get('title')
+                if len(source.get('text', '')) > len(existing.get('text', '')):
+                    existing['text'] = source.get('text', '')
+                    existing['description'] = source.get('description', source.get('text', '')[:200] + "..." if len(source.get('text', '')) > 200 else source.get('text', ''))
+    
+    # Update web_sources with grouped results
+    message['web_sources'] = list(unique_sources.values())
+    return message
+
 
 router = APIRouter()
     
@@ -53,42 +104,19 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
     if model_output == None:
         raise HTTPException(status_code=500, detail="Failed to inference model")
     
-    # SỬA: Đảm bảo vector sources được hiển thị trong frontend
-    web_sources = model_output["web_sources"] or []
-    rag_sources = model_output["rag_sources"] or []
-    
-    # Nếu có vector sources trong rag_sources nhưng không có web_sources, copy sang web_sources
-    if not web_sources and rag_sources:
-        # Check nếu có vector sources (detect bằng URL pattern hoặc source field)
-        vector_sources = []
-        for src in rag_sources:
-            # Check multiple ways to identify vector sources
-            is_vector_source = (
-                src.get("source") == "vector_db" or  # Explicit source field
-                (src.get("url", "").startswith("vector_db://")) or  # URL pattern từ notebook
-                (src.get("url") == "https://hoctap.coccoc.com/tim-truong-dh-cd")  # Cốc Cốc URL pattern
-            )
-            if is_vector_source:
-                vector_sources.append(src)
-        
-        if vector_sources:
-            # Copy vector sources sang web_sources để frontend hiển thị nút nguồn
-            web_sources = [{
-                "url": src.get("url", "https://hoctap.coccoc.com/tim-truong-dh-cd"), 
-                "title": src.get("title", "Vector Database Source"),
-                "description": src.get("description", src.get("text", "")[:200] + "..." if len(src.get("text", "")) > 200 else src.get("text", "")),
-                "text": src.get("text", "")
-            } for src in vector_sources]
+    # Apply the same logic as session reload to ensure consistency
+    fixed_output = fix_message_web_sources({
+        "web_sources": model_output["web_sources"],
+        "rag_sources": model_output["rag_sources"]
+    })
     
     text = ""
-    # async for chunk in llm_manager.inference(model_output["stream_id"]):
-    #     text += chunk
     response: PreChatResponse = {
         "text": text,
         "stream_id": model_output["stream_id"],
         "session_id": session_id,
         "role": "bot",
-        "web_sources": web_sources,  # Đã được sửa để bao gồm vector sources
+        "web_sources": fixed_output["web_sources"],  # Use fixed sources
         "rag_sources": model_output["rag_sources"],
         "extra_data": model_output["extra_data"]
     }    
@@ -109,9 +137,11 @@ async def session_messages(request: Request, session_id: str) -> SessionMessages
     user = await check_login(request)
     chat_session = await get_session_with_messages(session_id)
     if chat_session and chat_session.user_id == user.id:
+        # Fix web_sources in messages for backward compatibility
+        messages = [fix_message_web_sources(msg.to_dict()) for msg in chat_session.messages]
         result: SessionMessagesResponse = {
             "session": chat_session.to_dict(), #type:ignore
-            "messages": [msg.to_dict() for msg in chat_session.messages]
+            "messages": messages
         }
         return result
     raise HTTPException(status_code=404, detail=f"Not found session with id: {session_id}")
