@@ -110,7 +110,6 @@ def initialize_vector_cache_client(app_domain: str):
     """Initialize global vector cache client"""
     global vector_cache_client
     vector_cache_client = VectorCacheClient(app_domain)
-    print(f"[VectorCache] Initialized with domain: {app_domain}")
 
 def get_vector_cache_client() -> Optional[VectorCacheClient]:
     """Get global vector cache client"""
