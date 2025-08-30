@@ -22,9 +22,9 @@ async def kaggle_init(request: Request, data: KaggleServerInfo):
 @router.get("/api/cache/search")
 async def api_search_from_database(school_id: str, section: str):
     """API endpoint để Kaggle có thể truy cập cache"""
-    from backend.llm.database_search import search_from_database
+    from ..search.vectordb_search import documents_search
     
-    results = search_from_database(school_id, section)
+    results = documents_search(school_id, section)
     
     # Convert documents thành format JSON-serializable
     return {
@@ -42,7 +42,7 @@ async def api_search_from_database(school_id: str, section: str):
 @router.get("/api/cache/all-docs")
 async def api_get_all_cached_docs():
     """Lấy tất cả cached documents"""
-    from backend.llm.vector_cache import get_vector_cache
+    from ..cache.vector_cache import get_vector_cache
     
     cache = get_vector_cache()
     if not cache or not cache.is_cache_ready():
@@ -63,7 +63,7 @@ async def api_get_all_cached_docs():
 @router.get("/api/cache/status")
 async def api_cache_status():
     """Kiểm tra trạng thái vector cache"""
-    from backend.llm.vector_cache import get_vector_cache
+    from ..cache.vector_cache import get_vector_cache
     
     cache = get_vector_cache()
     if not cache:

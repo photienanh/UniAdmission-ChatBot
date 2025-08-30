@@ -2,11 +2,13 @@ import ast
 from openai import OpenAI
 import os
 from typing import Dict, List, Union
+from .vectordb_search import search_from_vector_db
+from .web_search import search_from_web
 
 # Get API key from environment
 GPT_API_KEY = os.getenv("GPT_API_KEY")
 
-def initialize_openai_client():
+def initialize_openai_client() -> OpenAI:
     """Initialize OpenAI client"""
     return OpenAI(api_key=GPT_API_KEY)
 
@@ -107,3 +109,40 @@ def route_search(question: str) -> Dict[str, Union[str, List]]:
     except Exception as e:
         # Fallback
         return {"type_search": "web_search", "key_word": [question]}
+
+def search(question: str, max_results: int, domain_restrict: bool =False) -> Union[List[dict], None]:
+    """
+    Tìm kiếm thống nhất sử dụng router để quyết định nguồn
+    
+    Returns:
+        tuple: (search_results, source_type)
+    """
+    try:
+        # Sử dụng router để quyết định hướng tìm kiếm
+        search_strategy = route_search(question)
+        
+        type_search = search_strategy.get("type_search")
+        keywords = search_strategy.get("key_word", [])
+        
+        if type_search == "vector_db":
+            results = search_from_vector_db(keywords)
+            if results:
+                return results
+            else:
+                # Fallback to web search with original question
+                results = search_from_web([question], max_results, domain_restrict)
+                return results
+            
+        elif type_search == "web_search":
+            results = search_from_web(keywords, max_results, domain_restrict)
+            return results
+            
+        else:
+            # Fallback to web search with original question
+            results = search_from_web([question], max_results, domain_restrict)
+            return results
+            
+    except Exception as e:
+        # Fallback to web search with original question
+        results = search_from_web([question], max_results, domain_restrict)
+        return results

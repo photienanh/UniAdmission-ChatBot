@@ -1,83 +1,56 @@
 import google.generativeai as genai
 from google.generativeai.types import GenerationConfig
 import os
-from typing import AsyncGenerator
+from typing import AsyncGenerator, List, Tuple, Union, Optional
 
-from .history_cache import get_history, Msg
-from .utils import load_history_from_db
 from .schema import APIJobInfo
-from .web_search import get_source
+from ..search.search_router import search
 from config import SYSTEM_INSTRUCTION
 
 class GeminiAPIModel:
     def __init__(self) -> None:
         genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
     
-    def compose_prompt(self, question: str, web_sources: list[dict]) -> str:
+    def merge_context(self, question: str, web_sources: Optional[List[dict]]) -> str:
         """Ghép prompt từ câu hỏi + nguồn tham khảo"""
         if web_sources:
             context = ""
             for source in web_sources:
-                context += f"{source['text']}\n\n" + 100 * "-" + "\n\n"
+                context += f"{source['text']}\n\n" + 100 * "-" + "\n\n" if source['text'] != "Không thể trích xuất nội dung" else ""
             return f"Thông tin tham khảo:\n{context}\nCâu hỏi: {question}"
         return f"Câu hỏi: {question}"
     
-    def build_prompt_with_web_search(self, question: str, k_pages: int, domain_restrict: bool = False):
+    def build_prompt(self, question: str, k_pages: int, domain_restrict: bool = False) -> Tuple[str, Union[List[dict], None]]:
         """Tạo prompt với web search context"""
         
         if k_pages > 0:
             # Thực hiện web search
             try:
-                search_sources = get_source(question, k_pages, domain_restrict)
+                search_sources = search(question, k_pages, domain_restrict)
             except Exception as e:
-                return question, []
+                return question, None
             if domain_restrict:
                 edu_sources = [s for s in search_sources if '.edu.vn' in s.get('url', '')]
                 if edu_sources:
                     search_sources = edu_sources
             if search_sources is None:
-                return question, []
-                
-            prompt = self.compose_prompt(question, search_sources)
+                prompt = self.merge_context(question, [])
+                return prompt, None
+            
+            prompt = self.merge_context(question, search_sources)
             return prompt, search_sources
         else:
-            return self.compose_prompt(question, []), []
+            return self.merge_context(question, []), None
         
     async def inference(self, info: APIJobInfo) -> AsyncGenerator[str, None]:
-        params = info["sampling_params"]
+        sampling_params = info["sampling_params"]
         config = GenerationConfig(
-            temperature=params.get("temperature", 0.8),
-            top_p=params.get("top_p", 0.9),
-            max_output_tokens=params.get("max_tokens", 4096)
+            temperature=sampling_params.get("temperature", 0.8),
+            top_p=sampling_params.get("top_p", 0.9),
+            max_output_tokens=sampling_params.get("max_tokens", 4096)
         )
-        
-        # Lấy thông tin web search từ params
-        k_pages = params.get("k_pages", 0)
-        domain_restrict = params.get("domain_restrict", False)
-        
-        # Build conversation history: prefer explicit `history` in info, else load from session_id
-        current_question = info["text"]
-        if info.get("cached_web_sources") is not None:
-            web_sources = info["cached_web_sources"]
-        else:
-            _, web_sources = self.build_prompt_with_web_search(current_question, k_pages, domain_restrict)
 
-        conversation_history = []
-        session_id = info.get("session_id")
-        if session_id:
-            try:
-                msgs = await get_history(session_id, loader=load_history_from_db)
-                for m in msgs:
-                    if m.role == "user":
-                        conversation_history.append({"role": "user", "parts": [{"text": m.text}]})
-                    else:
-                        conversation_history.append({"role": "model", "parts": [{"text": m.text}]})
-            except Exception:
-                pass
-
-        user_message = self.compose_prompt(current_question, web_sources)
-        info["web_sources"] = web_sources
-        conversation_history.append({"role": "user", "parts": [{"text": user_message}]})
+        conversation_history = info.get("conversation", [])
 
         # Create model instance with system instruction (including web context)
         model = genai.GenerativeModel(info["model_id"], system_instruction=SYSTEM_INSTRUCTION)

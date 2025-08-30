@@ -1,5 +1,4 @@
 import asyncio
-import time
 from typing import Optional
 from pathlib import Path
 import os
@@ -14,7 +13,7 @@ def load_model_embedding():
     return HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-small")
 
 def load_database(index_path, embedding_model):
-    """Load FAISS vector database"""
+    """Load all docs từ FAISS vector database"""
     vectorstore = FAISS.load_local(index_path, embedding_model, allow_dangerous_deserialization=True)
     all_docs = list(vectorstore.docstore._dict.values())
     return all_docs
@@ -29,7 +28,6 @@ class VectorDatabaseCache:
         self.refresh_interval = refresh_interval
         self.embedding_model = None
         self.cached_docs = None
-        self.last_refresh_time = 0
         self._refresh_task = None
         self._is_running = False
         
@@ -71,15 +69,12 @@ class VectorDatabaseCache:
         try:
             if not self.index_path.exists():
                 return
-                
-            start_time = time.time()
-            
+                            
             # Load documents from vector database
             all_docs = load_database(str(self.index_path), self.embedding_model)
             
             # Cache the documents
             self.cached_docs = all_docs
-            self.last_refresh_time = time.time()
                         
         except Exception as e:
             pass

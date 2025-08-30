@@ -30,6 +30,6 @@ class ModelPreOutput(TypedDict):
     stream_id: str
     model_id: str
     generation_params: GenerationParams
-    web_sources: list[WebSource]
-    rag_sources: list[RagSource]
+    web_sources: Optional[list[WebSource]]
+    rag_sources: Optional[list[RagSource]]
     extra_data: dict

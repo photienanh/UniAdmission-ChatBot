@@ -71,6 +71,7 @@ class KaggleManager:
             return target_server
         if len(available_servers) > 0:
             return available_servers[0]["server"]
+        
     @classmethod
     async def get_models(cls) -> list[ModelInfo]:
         to_be_remove: list[ServerStatus] = []
@@ -91,6 +92,7 @@ class KaggleManager:
             cls._servers.remove(server)
             print(f"[Kaggle] Disconnect: {server['info']['domain']}")
         return result
+    
     @classmethod
     async def pre_inference(cls, stream_id: str, text: str, model_id: str, params: GenerationParams, history: list[ChatMessage] | None = None) -> tuple[str, ModelPreOutput] | None:
         """
@@ -170,6 +172,7 @@ class KaggleManager:
         if not hasattr(cls, '_stored_sources'):
             cls._stored_sources = {}
         cls._stored_sources[job_id] = (web_sources, rag_sources)
+
     @classmethod
     async def _check_connection(cls, server: ServerStatus) -> bool:
         async with aiohttp.ClientSession() as ss:
@@ -181,6 +184,7 @@ class KaggleManager:
                     server["timestamp"] = time.time()
                     return True
         return False
+    
     @classmethod
     def update_server(cls, info: KaggleServerInfo):
         now = time.time()

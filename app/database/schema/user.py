@@ -12,13 +12,14 @@ class User(Base): #type:ignore
     password_hash = cast(str, Column(String(120), nullable=False))
     full_name = cast(str, Column(Text, nullable=False))
     
-    sessions = relationship("ChatSession", backref="user", lazy=True, cascade="all, delete-orphan")
+    sessions = relationship("ChatSession", backref="user", lazy=True, cascade="all, delete-orphan") # One-to-many relationship with ChatSession
     
     def set_password(self, password: str):
-        """No auto commit"""
         self.password_hash = generate_password_hash(password)
+
     def check_password(self, password: str):
         return check_password_hash(self.password_hash, password)
+    
     def to_dict(self):
         return {
             "id": self.id,

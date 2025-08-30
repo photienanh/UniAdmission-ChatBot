@@ -71,17 +71,17 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
         if session_id is None:
             raise HTTPException(status_code=500, detail=f"Failed to create new chat session")
     user_timestamp = get_timestamp()
-    async def finish_call(text: str, web_sources: list = None):
+    async def finish_call(bot_answer: str, web_sources: list = None):
         if model_output != None:
             bot_timestamp = get_timestamp()
             # Cập nhật web_sources từ inference result
             if web_sources:
                 model_output["web_sources"] = web_sources
-            user_msg_id, bot_msg_id = await add_conversation(
+            await add_conversation(
                 user_id=user.id,
                 session_id=session_id,
                 user_text=data.text,
-                bot_text=text,
+                bot_text=bot_answer,
                 model_id=model_output["model_id"],
                 web_sources=model_output["web_sources"],
                 rag_sources=model_output["rag_sources"],
@@ -92,11 +92,11 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
                 bot_extra_data=model_output["extra_data"]
             )
             try:
-                from backend.llm.history_cache import append_user_and_bot, Msg
+                from ..cache.history_cache import append_user_and_bot, Msg
                 await append_user_and_bot(
                     session_id,
                     user_msg=Msg(role="user", text=data.text, timestamp=user_timestamp),
-                    bot_msg=Msg(role="bot", text=text, timestamp=bot_timestamp)
+                    bot_msg=Msg(role="bot", text=bot_answer, timestamp=bot_timestamp)
                 )
             except Exception:
                 pass
@@ -104,12 +104,24 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
     if model_output == None:
         raise HTTPException(status_code=500, detail="Failed to inference model")
     
-    # Apply the same logic as session reload to ensure consistency
-    fixed_output = fix_message_web_sources({
-        "web_sources": model_output["web_sources"],
-        "rag_sources": model_output["rag_sources"]
-    })
-    
+    if model_output["web_sources"]:
+        # Apply the same logic as session reload to ensure consistency
+        urls = [source["url"] for source in model_output["web_sources"]]
+        if "https://hoctap.coccoc.com/tim-truong-dh-cd" not in urls:
+            fixed_output = fix_message_web_sources({
+                "web_sources": model_output["web_sources"],
+                "rag_sources": model_output["rag_sources"]
+            })
+        else:
+            fixed_output = {
+                "web_sources": model_output["web_sources"],
+                "rag_sources": model_output["rag_sources"]
+            }
+    else:
+        fixed_output = {
+            "web_sources": [],
+            "rag_sources": model_output["rag_sources"]
+        }
     text = ""
     response: PreChatResponse = {
         "text": text,
