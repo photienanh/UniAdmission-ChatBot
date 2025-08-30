@@ -107,7 +107,7 @@ class WorkerManager:
                 "stream_id": stream_id,
                 "user_id": user_id,
                 "user_text": text,
-                "user_timestamp": datetime.now(timezone.utc)
+                "user_timestamp": datetime.now(timezone.utc).isoformat()
             }
         }
         async with aiohttp.ClientSession(timeout=cls._timeout) as ss:
@@ -125,7 +125,9 @@ class WorkerManager:
                                 cls.update_worker(result["info"])
                                 return result["pre_output"]
                             # 404 not found, error, ...
-                    except:
+                    except Exception as e:
+                        import traceback
+                        traceback.print_exc()
                         pass
                     await asyncio.sleep(WORKER_MAX_RETRY) # Wait for death server to timeout
                     await cls.get_models() # Clean death server

@@ -6,14 +6,12 @@ else:
 from typing import Literal, Optional, NotRequired
 from .rag import WebSource, RagSource, SearchEngineType
 
-ModelSource = Literal["server", "kaggle"]
 AnswerState = Literal["need_clarification", "successfully", "partially", "relevant", "not_found", "other"]
 
 class ModelInfo(TypedDict):
     name: str
     id: str
     streaming: bool
-    source: ModelSource
 
 class GenerationParams(TypedDict):
     engine_type: NotRequired[SearchEngineType]
@@ -29,7 +27,6 @@ class GenerationParams(TypedDict):
     max_history: NotRequired[int]
 
 class ModelPreOutput(TypedDict):
-    stream_id: str
     model_id: str
     generation_params: GenerationParams
     web_sources: list[WebSource]

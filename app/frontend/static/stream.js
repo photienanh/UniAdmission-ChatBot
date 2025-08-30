@@ -1,5 +1,5 @@
-export async function stream_text(stream_id, contentDiv, chatMessages, speed = 1, max_speed = 60) {
-    const streamResponse = await fetch(`/chat/${stream_id}`);
+export async function stream_text(stream_url, contentDiv, chatMessages, speed = 1, max_speed = 60) {
+    const streamResponse = await fetch(stream_url);
     const reader = streamResponse.body.getReader();
     const decoder = new TextDecoder();
     

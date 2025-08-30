@@ -37,6 +37,6 @@ class WorkerChatRequest(TypedDict):
     history: list[ChatMessage]
     forward_kwargs: dict
     
-class KaggleStoreChatData(TypedDict):
+class WorkerStoreChatData(TypedDict):
     forward_kwargs: dict
     model_output: ModelOutput

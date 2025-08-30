@@ -411,7 +411,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if (data.error) {
         addMessage('Xin lỗi, có lỗi xảy ra: ' + data.error, 'bot');
     } else {
-        console.log(data.stream_id);
+        console.log(data.result_url);
         console.log('Server response datax:', data);
         currentSessionId = data.session_id;
         // Tạo message rỗng để append dần text stream
@@ -428,7 +428,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // Gọi API stream với stream_id
         let speed = 1; // 1/(1) s to flush buffer
         let max_speed = 300; // 300 char/s
-        await stream_text(data.stream_id, contentDiv, chatMessages, speed, max_speed);
+        await stream_text(data.result_url, contentDiv, chatMessages, speed, max_speed);
 
         // Reload chat history nếu là session mới
         if (!document.querySelector(`[data-session-id="${data.session_id}"]`)) {

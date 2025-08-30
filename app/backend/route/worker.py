@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Request, Response
 import traceback
 
-from core.types import ModelInfo, WorkerServerInfo, KaggleStoreChatData
+from core.types import ModelInfo, WorkerServerInfo, WorkerStoreChatData
 from backend.llm import ModelManager, WorkerManager
 
 router = APIRouter()
@@ -22,7 +22,7 @@ async def kaggle_init(data: WorkerServerInfo):
         return Response(status_code=500, content=str(e))
 
 @router.post("/worker/store_chat")
-async def kaggle_store_chat(data: KaggleStoreChatData):
+async def kaggle_store_chat(data: WorkerStoreChatData):
     """Used to update chat on database. Internal user only"""
     await ModelManager.store_chat(
         user_id=data["forward_kwargs"]["user_id"],

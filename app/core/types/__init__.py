@@ -8,5 +8,5 @@ __all__ = [
     "RagSource", "WebSource",
     "UserRole", "ChatMessageRole",
     "WorkerServerInfo", "ModelStatus", "WorkerPreInferenceResponse",
-    "WorkerChatRequest", "ChatMessage", "KaggleStoreChatData"
+    "WorkerChatRequest", "ChatMessage", "WorkerStoreChatData"
 ]
