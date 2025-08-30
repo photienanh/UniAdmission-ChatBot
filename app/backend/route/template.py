@@ -6,6 +6,7 @@ from database import check_login
 
 from .utils import NO_CACHE_HEADERS
 
+# Template routes
 router = APIRouter()
 templates = Jinja2Templates(directory="frontend/templates")
 

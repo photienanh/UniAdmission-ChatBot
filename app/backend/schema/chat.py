@@ -16,13 +16,12 @@ class ChatRequest(BaseModel):
     params: GenerationParams
     
 class PreChatResponse(TypedDict):
-    text: str #To be removed
-    stream_id: str
     session_id: str
     role: ChatMessageRole
     rag_sources: list[RagSource]
     web_sources: list[WebSource]
     extra_data: dict
+    result_url: str
     
 class MessageResponse(TypedDict):
     id: str

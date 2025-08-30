@@ -7,6 +7,7 @@ from typing import Literal, Optional, NotRequired
 from .rag import WebSource, RagSource, SearchEngineType
 
 ModelSource = Literal["server", "kaggle"]
+AnswerState = Literal["need_clarification", "successfully", "partially", "relevant", "not_found", "other"]
 
 class ModelInfo(TypedDict):
     name: str
@@ -25,6 +26,7 @@ class GenerationParams(TypedDict):
     temperature: NotRequired[float]
     top_p: NotRequired[float]
     top_k: NotRequired[int]
+    max_history: NotRequired[int]
 
 class ModelPreOutput(TypedDict):
     stream_id: str
@@ -33,3 +35,14 @@ class ModelPreOutput(TypedDict):
     web_sources: list[WebSource]
     rag_sources: list[RagSource]
     extra_data: dict
+    user_summary: str
+    user_intent: str
+    user_keywords: list[str]
+    result_url: str
+
+    
+class ModelOutput(ModelPreOutput):
+    answer_state: AnswerState
+    bot_summary: str
+    bot_keywords: list[str]
+    text: str

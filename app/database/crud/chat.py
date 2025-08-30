@@ -1,4 +1,4 @@
-from typing import cast
+from typing import cast, Optional
 from sqlalchemy import Column, DateTime, select
 from sqlalchemy.orm import selectinload
 import traceback
@@ -6,7 +6,7 @@ import datetime
 
 from database.manager import session
 from database.schema import ChatSession, ChatMessage
-from core.types import ChatMessageRole, WebSource, RagSource, GenerationParams
+from core.types import ChatMessageRole, AnswerState, WebSource, RagSource, GenerationParams
 
 async def get_chat_session(session_id: str) -> ChatSession | None:
     """Get `ChatSession` with `session_id`"""
@@ -55,6 +55,10 @@ def __create_message(
     session_id: str,
     role: ChatMessageRole,
     text: str,
+    summary: str,
+    user_intent: Optional[str],
+    answer_state: Optional[str],
+    entities: list[str],
     model_id: str,
     web_sources: list[WebSource],
     rag_sources: list[RagSource],
@@ -99,7 +103,13 @@ async def add_conversation(
     session_id: str,
     user_text: str,
     bot_text: str,
+    user_summary: str,
+    bot_summary: str,
+    user_keywords: list[str],
+    bot_keywords: list[str],
     model_id: str,
+    user_intent: str,
+    answer_state: AnswerState,
     web_sources: list[WebSource],
     rag_sources: list[RagSource],
     params: GenerationParams,
@@ -115,6 +125,10 @@ async def add_conversation(
             session_id=session_id,
             role="user",
             text=user_text,
+            summary=user_summary,
+            user_intent=user_intent,
+            answer_state=None,
+            entities=user_keywords,
             model_id=model_id,
             web_sources=[], #Maybe user can provide sources ?
             rag_sources=[],
@@ -126,6 +140,10 @@ async def add_conversation(
             session_id=session_id,  
             role="bot",
             text=bot_text,
+            summary=bot_summary,
+            user_intent=None,
+            answer_state=answer_state,
+            entities=bot_keywords,
             model_id=model_id,
             web_sources=web_sources,
             rag_sources=rag_sources,

@@ -1,4 +1,4 @@
-from core.types import *
+from core.types import ChatMessageRole, AnswerState, WebSource, RagSource, GenerationParams
 from .base import *
 
 class ChatMessage(Base): #type:ignore
@@ -8,11 +8,18 @@ class ChatMessage(Base): #type:ignore
     session_id = cast(str, Column(String(36), ForeignKey("chat_session.id"), nullable=False))
     role = cast(ChatMessageRole, Column(String(10), nullable=False))
     text = cast(str, Column(Text, nullable=False))
+    
+    # For multi turn
+    summary = cast(str, Column(Text, nullable=False)) # Message summary
+    user_intent = cast(Optional[str], Column(Text)) # User intent
+    answer_state = cast(Optional[AnswerState], Column[Text]) # Bot answer status [clarification_needed, answer_successfully, answer_related, not_found, off_topic]
+    keywords = cast(list[str], Column(JSON, nullable=False)) # Entity listed in message
+    # End
     timestamp = cast(datetime, Column(DateTime, default=datetime_now))
     
     model_id = cast(str, Column(Text, nullable=False)) # user message should have model id too
-    web_sources = cast(Optional[list[WebSource]], Column(JSON, nullable=True))
-    rag_sources = cast(Optional[list[RagSource]], Column(JSON, nullable=True))
+    web_sources = cast(Optional[list[WebSource]], Column(JSON))
+    rag_sources = cast(Optional[list[RagSource]], Column(JSON))
     generation_params = cast(GenerationParams, Column(JSON, nullable=False)) # user message should have generation params too
 
     extra_data = cast(dict[str, Any], Column(JSON, default=extra_data)) # System instruction, query, hyde, ...
@@ -27,6 +34,9 @@ class ChatMessage(Base): #type:ignore
             "rag_sources": self.rag_sources,
             "web_sources": self.web_sources,
             "generation_params": self.generation_params,
-            "extra_data": self.extra_data
+            "extra_data": self.extra_data,
+            "summary": self.summary,
+            "user_intent": self.user_intent,
+            "answer_state": self.answer_state,
+            "keywords": self.keywords,
         }
-        

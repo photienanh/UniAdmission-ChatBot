@@ -4,9 +4,9 @@ from .kaggle import *
 from .role import UserRole, ChatMessageRole
 
 __all__ = [
-    "ModelInfo", "GenerationParams", "ModelPreOutput",
+    "ModelInfo", "GenerationParams", "ModelPreOutput", "ModelOutput", "AnswerState",
     "RagSource", "WebSource",
     "UserRole", "ChatMessageRole",
-    "KaggleServerInfo", "ModelStatus", "KagglePreInferenceResponse",
-    "KaggleRequest", "ChatMessage"
+    "WorkerServerInfo", "ModelStatus", "WorkerPreInferenceResponse",
+    "WorkerChatRequest", "ChatMessage", "KaggleStoreChatData"
 ]

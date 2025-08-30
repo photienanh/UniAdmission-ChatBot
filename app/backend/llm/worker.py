@@ -1,29 +1,30 @@
 import aiohttp
-from typing import AsyncGenerator, TypedDict
+from typing import TypedDict
 import time
 import asyncio
+from datetime import datetime, timezone
 
-from config import KAGGLE_SERVER_TIMEOUT, KAGGLE_MAX_RETRY, KAGGLE_RETRY_DELAY
-from core.types import GenerationParams, ModelInfo, ModelPreOutput, KagglePreInferenceResponse, KaggleServerInfo, KaggleRequest, ChatMessage
-from .schema import ServerStatus
+from config import WORKER_TIMEOUT, WORKER_MAX_RETRY, WORKER_REQUEST_TIMEOUT
+from core.types import GenerationParams, ModelInfo, ModelPreOutput, WorkerPreInferenceResponse, WorkerServerInfo, WorkerChatRequest, ChatMessage
+from .schema import WorkerStatus
 
-class ServerCountDict(TypedDict):
-    server: ServerStatus
+class WorkerCountDict(TypedDict):
+    server: WorkerStatus
     count: int
-
-class KaggleManager:
-    _servers: list[ServerStatus] = []
+class WorkerManager:
+    _servers: list[WorkerStatus] = []
+    _timeout = aiohttp.ClientTimeout(WORKER_REQUEST_TIMEOUT)
     @classmethod
-    async def get_available_server(cls, model_id: str) -> ServerStatus | None:
+    async def get_available_worker(cls, model_id: str) -> WorkerStatus | None:
         """Find best suitable domain to run this model with `model_id`"""
         # May have timelag because synchronize between servers, kaggle should send response when received server request
-        available_servers: list[ServerCountDict] = []
-        active_servers: list[ServerCountDict] = []
-        scheduled_servers: list[ServerCountDict] = []
+        available_servers: list[WorkerCountDict] = []
+        active_servers: list[WorkerCountDict] = []
+        scheduled_servers: list[WorkerCountDict] = []
         now = time.time()
         to_be_remove = []
         for server in cls._servers:
-            alive = now - server["timestamp"] <= KAGGLE_SERVER_TIMEOUT # Check if timeout
+            alive = now - server["timestamp"] <= WORKER_TIMEOUT # Check if timeout
             if not alive:
                 alive = await cls._check_connection(server) # Reconnect
             if not alive:
@@ -65,20 +66,19 @@ class KaggleManager:
             max_count = scheduled_servers[0]["count"]
             target_server = scheduled_servers[0]["server"]
             for info in scheduled_servers:
-                if info["count"] > max_count:
-                    max_count = info["count"]
-                    target_server = info["server"]
+                if info["count"] > min_count:
+                    min_count = info["count"]
             return target_server
         if len(available_servers) > 0:
             return available_servers[0]["server"]
     @classmethod
     async def get_models(cls) -> list[ModelInfo]:
-        to_be_remove: list[ServerStatus] = []
+        to_be_remove: list[WorkerStatus] = []
         now = time.time()
         result: list[ModelInfo] = []
         model_ids = set([])
         for server in cls._servers:
-            alive = now - server["timestamp"]<= KAGGLE_SERVER_TIMEOUT # Check if timeout
+            alive = now - server["timestamp"] <= WORKER_TIMEOUT # Check if timeout
             if not alive:
                 alive = await cls._check_connection(server) # Reconnect
             if not alive:
@@ -92,97 +92,58 @@ class KaggleManager:
             print(f"[Kaggle] Disconnect: {server['info']['domain']}")
         return result
     @classmethod
-    async def pre_inference(cls, stream_id: str, text: str, model_id: str, params: GenerationParams, history: list[ChatMessage] | None = None) -> tuple[str, ModelPreOutput] | None:
+    async def pre_inference(cls, user_id: str, stream_id: str, text: str, model_id: str, history: list[ChatMessage], params: GenerationParams) -> ModelPreOutput | None:
         """
         Pre inference model to get `domain` and `ModelPreOutput`.\n
         Return `None` when does not find any available server or when error occur.
         """
-        request: KaggleRequest = {
+        request: WorkerChatRequest = {
             "stream_id": stream_id,
             "model_id": model_id,
             "text": text,
-            "params": params
+            "params": params,
+            "history": history,
+            "forward_kwargs": {
+                "stream_id": stream_id,
+                "user_id": user_id,
+                "user_text": text,
+                "user_timestamp": datetime.now(timezone.utc)
+            }
         }
-        if history:
-            normalized_history: list[ChatMessage] = []
-            for m in history:
-                role = m.get("role", "user")
-                if role == "assistant":
-                    role = "bot"
-                elif role not in ("user", "bot"):
-                    role = "user"
-                normalized_history.append({"role": role, "content": m.get("content", "")})
-            request["history"] = normalized_history
-        async with aiohttp.ClientSession() as ss:
-            server = await cls.get_available_server(model_id)
+        async with aiohttp.ClientSession(timeout=cls._timeout) as ss:
+            server = await cls.get_available_worker(model_id)
+            if server is None: return
             retry = 0
-            while retry < KAGGLE_MAX_RETRY:
+            while retry < WORKER_MAX_RETRY:
                 if server != None:
                     url = f"{server['info']['domain']}/pre_inference"
                     # Try to connect
                     try:
                         async with ss.post(url=url, json=request) as response:
                             if response.ok:
-                                result: KagglePreInferenceResponse = await response.json() #TODO: Handle error
-                                cls.update_server(result["info"])
-                                
-                                # Store sources for later use during inference
-                                pre_output = result["pre_output"]
-                                web_sources = pre_output.get("web_sources", [])
-                                rag_sources = pre_output.get("rag_sources", [])
-                                cls.store_sources(stream_id, web_sources, rag_sources)
-                                
-                                return server["info"]["domain"], result["pre_output"]
+                                result: WorkerPreInferenceResponse = await response.json() #TODO: Handle error
+                                cls.update_worker(result["info"])
+                                return result["pre_output"]
                             # 404 not found, error, ...
                     except:
                         pass
-                    await asyncio.sleep(KAGGLE_RETRY_DELAY) # Wait for death server to timeout
+                    await asyncio.sleep(WORKER_MAX_RETRY) # Wait for death server to timeout
                     await cls.get_models() # Clean death server
-                    server = await cls.get_available_server(model_id)
+                    server = await cls.get_available_worker(model_id)
                     retry += 1
-                   
     @classmethod
-    async def inference(cls, domain: str, job_id: str) -> AsyncGenerator[str, None]:
-        """
-        Need this to store result in server.\n
-        Otherwise user redirect would be better.
-        """
-        async with aiohttp.ClientSession() as ss:
-            url = f"{domain}/inference/{job_id}"
-            async with ss.post(url=url) as response:
-                if response.ok:
-                    async for chunk in response.content.iter_any():
-                        yield chunk.decode("utf-8")
-    
-    @classmethod
-    def get_stored_sources(cls, job_id: str) -> tuple[list, list]:
-        """
-        Get stored web_sources and rag_sources for a job_id
-        Returns: (web_sources, rag_sources)
-        """
-        return getattr(cls, '_stored_sources', {}).get(job_id, ([], []))
-    
-    @classmethod
-    def store_sources(cls, job_id: str, web_sources: list, rag_sources: list):
-        """
-        Store web_sources and rag_sources for later use
-        """
-        if not hasattr(cls, '_stored_sources'):
-            cls._stored_sources = {}
-        cls._stored_sources[job_id] = (web_sources, rag_sources)
-    @classmethod
-    async def _check_connection(cls, server: ServerStatus) -> bool:
-        async with aiohttp.ClientSession() as ss:
+    async def _check_connection(cls, server: WorkerStatus) -> bool:
+        async with aiohttp.ClientSession(timeout=cls._timeout) as ss:
             url = f"{server['info']['domain']}/info"
             async with ss.get(url=url) as response:
                 if response.ok:
-                    info: KaggleServerInfo = await response.json()
+                    info: WorkerServerInfo = await response.json()
                     server["info"] = info
                     server["timestamp"] = time.time()
                     return True
         return False
     @classmethod
-    def update_server(cls, info: KaggleServerInfo):
+    def update_worker(cls, info: WorkerServerInfo):
         now = time.time()
         for server in cls._servers:
             if server["info"]["domain"] == info["domain"]:
@@ -193,6 +154,6 @@ class KaggleManager:
             "info": info,
             "timestamp": now
         })
-        print(f"[Kaggle] New connection {info['domain']}")
+        print(f"[Kaggle] New connection: {info['domain']}")
 
             
