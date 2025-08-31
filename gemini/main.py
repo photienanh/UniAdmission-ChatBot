@@ -31,8 +31,7 @@ async def pre_inference_function(request: WorkerChatRequest) -> ModelPreOutput:
         "web_sources": web_sources,
         "rag_sources": [],
         "extra_data": {},
-        # Use local host when run in local
-        "result_url": f"http://127.0.0.1:8002/inference/{stream_id}"#f"http://13.215.102.203:8002/inference/{stream_id}"
+        "result_url": stream_id # Auto add domain and route when send back, just put stream id here
     }
     REQUEST_STORAGE[request["stream_id"]] = (prompt, request, pre_output)
     return pre_output

@@ -13,7 +13,7 @@ class WorkerCountDict(TypedDict):
     count: int
 class WorkerManager:
     _servers: list[WorkerStatus] = []
-    _timeout = aiohttp.ClientTimeout(WORKER_REQUEST_TIMEOUT)
+    _timeout = aiohttp.ClientTimeout(connect=WORKER_REQUEST_TIMEOUT)
     @classmethod
     async def get_available_worker(cls, model_id: str) -> WorkerStatus | None:
         """Find best suitable domain to run this model with `model_id`"""

@@ -91,6 +91,7 @@ class GeminiAPIModel:
         
         # Iterate through chunks synchronously trong async function
         response_received = False
+        # May raise StopAyncIteration
         async for chunk in response:
             text = chunk.text
             if text != None:

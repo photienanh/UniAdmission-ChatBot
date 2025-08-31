@@ -1,5 +1,5 @@
 export async function stream_text(stream_url, contentDiv, chatMessages, speed = 1, max_speed = 60) {
-    const streamResponse = await fetch(stream_url);
+    const streamResponse = await fetch(stream_url, {method: 'POST'}); // POST to bypass ngrok
     const reader = streamResponse.body.getReader();
     const decoder = new TextDecoder();
     
