@@ -92,7 +92,7 @@ class WorkerManager:
             print(f"[Kaggle] Disconnect: {server['info']['domain']}")
         return result
     @classmethod
-    async def pre_inference(cls, user_id: str, stream_id: str, text: str, model_id: str, history: list[ChatMessage], params: GenerationParams) -> ModelPreOutput | None:
+    async def pre_inference(cls, user_id: str,  session_id: str, stream_id: str, text: str, model_id: str, history: list[ChatMessage], params: GenerationParams) -> ModelPreOutput | None:
         """
         Pre inference model to get `domain` and `ModelPreOutput`.\n
         Return `None` when does not find any available server or when error occur.
@@ -104,7 +104,7 @@ class WorkerManager:
             "params": params,
             "history": history,
             "forward_kwargs": {
-                "stream_id": stream_id,
+                "session_id": session_id,
                 "user_id": user_id,
                 "user_text": text,
                 "user_timestamp": datetime.now(timezone.utc).isoformat()
@@ -124,6 +124,8 @@ class WorkerManager:
                                 result: WorkerPreInferenceResponse = await response.json() #TODO: Handle error
                                 cls.update_worker(result["info"])
                                 return result["pre_output"]
+                            else:
+                                print(await response.text())
                             # 404 not found, error, ...
                     except Exception as e:
                         import traceback

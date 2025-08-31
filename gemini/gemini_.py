@@ -3,7 +3,7 @@ from google.generativeai.types import GenerationConfig
 import os
 from typing import AsyncGenerator
 
-from history_cache import get_history, Msg
+# from history_cache import get_history, Msg
 from web_search import get_source
 from config import SYSTEM_INSTRUCTION
 from server import WorkerChatRequest
@@ -60,16 +60,14 @@ class GeminiAPIModel:
             web_sources = info["cached_web_sources"] #type:ignore
         else:
             _, web_sources = self.build_prompt_with_web_search(current_question, k_pages, domain_restrict)
-
         conversation_history = []
         try:
             history = info["history"]
-            msgs: list[Msg] = [Msg(item["role"], item["text"]) for item in history]
-            for m in msgs:
-                if m.role == "user":
-                    conversation_history.append({"role": "user", "parts": [{"text": m.text}]})
+            for m in history:
+                if m["role"] == "user":
+                    conversation_history.append({"role": "user", "parts": [{"text": m["text"]}]})
                 else:
-                    conversation_history.append({"role": "model", "parts": [{"text": m.text}]})
+                    conversation_history.append({"role": "model", "parts": [{"text": m["text"]}]})
         except Exception:
             pass
 
@@ -80,7 +78,12 @@ class GeminiAPIModel:
         model = genai.GenerativeModel(info["model_id"], system_instruction=SYSTEM_INSTRUCTION) #type:ignore
         
         # Generate content với conversation history và streaming
-        response = model.generate_content(
+        # response = model.generate_content(
+        #     contents=conversation_history,
+        #     generation_config=config,
+        #     stream=True
+        # ) # Call with stream still block thread
+        response = await model.generate_content_async(
             contents=conversation_history,
             generation_config=config,
             stream=True
@@ -88,40 +91,47 @@ class GeminiAPIModel:
         
         # Iterate through chunks synchronously trong async function
         response_received = False
-        for chunk in response:
-            try:
-                # Check if chunk has parts and candidates
-                if hasattr(chunk, 'candidates') and chunk.candidates:
-                    candidate = chunk.candidates[0]
-                    if hasattr(candidate, 'content') and candidate.content and candidate.content.parts:
-                        # Try to get text from parts
-                        text_content = ""
-                        for part in candidate.content.parts:
-                            if hasattr(part, 'text') and part.text:
-                                text_content += part.text
+        async for chunk in response:
+            text = chunk.text
+            if text != None:
+                # print(text)
+                response_received = True
+                yield text
+                
+            # WHAT codes below do ?
+            # try:
+            #     # Check if chunk has parts and candidates
+            #     if hasattr(chunk, 'candidates') and chunk.candidates:
+            #         candidate = chunk.candidates[0]
+            #         if hasattr(candidate, 'content') and candidate.content and candidate.content.parts:
+            #             # Try to get text from parts
+            #             text_content = ""
+            #             for part in candidate.content.parts:
+            #                 if hasattr(part, 'text') and part.text:
+            #                     text_content += part.text
                         
-                        if text_content:
-                            response_received = True
-                            yield text_content
+            #             if text_content:
+            #                 response_received = True
+            #                 yield text_content
                         
-                # Fallback to original method if above doesn't work
-                elif hasattr(chunk, 'text'):
-                    text = chunk.text
-                    if text:
-                        response_received = True
-                        yield text
+            #     # Fallback to original method if above doesn't work
+            #     elif hasattr(chunk, 'text'):
+            #         text = chunk.text
+            #         if text:
+            #             response_received = True
+            #             yield text
                         
-            except ValueError as e:
-                # Handle case where chunk.text is invalid (finish_reason != None)
-                if "finish_reason" in str(e):
-                    # This chunk finished without text, skip it
-                    continue
-                else:
-                    # Re-raise other ValueError
-                    raise e
-            except Exception as e:
-                # Handle other potential errors
-                continue
+            # except ValueError as e:
+            #     # Handle case where chunk.text is invalid (finish_reason != None)
+            #     if "finish_reason" in str(e):
+            #         # This chunk finished without text, skip it
+            #         continue
+            #     else:
+            #         # Re-raise other ValueError
+            #         raise e
+            # except Exception as e:
+            #     # Handle other potential errors
+            #     continue
         
         # If no response was received, yield empty string to prevent hanging
         if not response_received:

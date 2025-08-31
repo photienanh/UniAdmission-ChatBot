@@ -20,7 +20,6 @@ class WebSource(TypedDict):
 class ModelInfo(TypedDict):
     name: str
     id: str
-    streaming: bool
 
 class GenerationParams(TypedDict):
     engine_type: NotRequired[SearchEngineType]
@@ -45,7 +44,6 @@ class ModelPreOutput(TypedDict):
     user_intent: str
     user_keywords: list[str]
     result_url: str
-
     
 class ModelOutput(ModelPreOutput):
     answer_state: AnswerState
@@ -55,10 +53,10 @@ class ModelOutput(ModelPreOutput):
     
 class ChatMessage(TypedDict):
     role: ChatMessageRole
-    answer_state: NotRequired[AnswerState]
-    user_intent: NotRequired[str]
+    answer_state: Optional[AnswerState]
+    user_intent: Optional[str]
     summary: str
-    entities: list[str]
+    keywords: list[str]
     text: str
 
 class ModelStatus(ModelInfo):

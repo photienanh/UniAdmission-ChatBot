@@ -1,17 +1,17 @@
 import sys
 if sys.version_info.minor >= 12:
-    from typing import TypedDict, NotRequired
+    from typing import TypedDict, Optional
 else:
-    from typing_extensions import TypedDict, NotRequired
+    from typing_extensions import TypedDict, Optional
 from .model import ModelInfo, ModelPreOutput, ModelOutput, GenerationParams, AnswerState
 from .role import ChatMessageRole
 
 class ChatMessage(TypedDict):
     role: ChatMessageRole
-    answer_state: NotRequired[AnswerState]
-    user_intent: NotRequired[str]
+    answer_state: Optional[AnswerState]
+    user_intent: Optional[str]
     summary: str
-    entities: list[str]
+    keywords: list[str]
     text: str
 
 class ModelStatus(ModelInfo):

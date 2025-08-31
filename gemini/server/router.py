@@ -27,7 +27,7 @@ async def pre_inference(request: Request, data: WorkerChatRequest) -> WorkerPreI
 
 @router.get("/inference/{stream_id}")
 async def inference(request: Request, stream_id: str):
-    inference:  Callable[[str], Awaitable[AsyncGenerator[str, None]]] = request.app.state.inference
-    generator = await inference(stream_id)
+    inference:  Callable[[str], AsyncGenerator[str, None]] = request.app.state.inference
+    generator = inference(stream_id)
     return StreamingResponse(generator)
 

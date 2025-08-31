@@ -5,10 +5,14 @@ from pathlib import Path
 import os
 from langchain_community.vectorstores import FAISS
 from langchain_huggingface import HuggingFaceEmbeddings
+from huggingface_hub import login
+
+hf_token = os.getenv("HUGGING_FACE_TOKEN")
+login(hf_token)
 
 # Default vector index path - absolute path
-VECTOR_INDEX_PATH = os.path.join(os.path.dirname(__file__), "..", "..", "..", "vector_database", "vectordb")
-
+VECTOR_INDEX_PATH = os.path.join(os.path.dirname(__file__), "..", "vector_database", "vectordb")
+print(VECTOR_INDEX_PATH)
 def load_model_embedding():
     """Load HuggingFace embedding model"""
     return HuggingFaceEmbeddings(model_name="intfloat/multilingual-e5-small")

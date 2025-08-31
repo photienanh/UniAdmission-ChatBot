@@ -12,7 +12,7 @@ class ChatMessage(Base): #type:ignore
     # For multi turn
     summary = cast(str, Column(Text, nullable=False)) # Message summary
     user_intent = cast(Optional[str], Column(Text)) # User intent
-    answer_state = cast(Optional[AnswerState], Column[Text]) # Bot answer status [clarification_needed, answer_successfully, answer_related, not_found, off_topic]
+    answer_state = cast(Optional[AnswerState], Column(Text)) # Bot answer status [clarification_needed, answer_successfully, answer_related, not_found, off_topic]
     keywords = cast(list[str], Column(JSON, nullable=False)) # Entity listed in message
     # End
     timestamp = cast(datetime, Column(DateTime, default=datetime_now))
@@ -29,7 +29,7 @@ class ChatMessage(Base): #type:ignore
             "session_id": self.session_id,
             "role": self.role,
             "text": self.text,
-            "timestamp": self.timestamp,
+            "timestamp": self.timestamp.isoformat(),
             "model_id": self.model_id,
             "rag_sources": self.rag_sources,
             "web_sources": self.web_sources,

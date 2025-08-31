@@ -11,7 +11,6 @@ AnswerState = Literal["need_clarification", "successfully", "partially", "releva
 class ModelInfo(TypedDict):
     name: str
     id: str
-    streaming: bool
 
 class GenerationParams(TypedDict):
     engine_type: NotRequired[SearchEngineType]

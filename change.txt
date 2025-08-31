@@ -1,6 +1,6 @@
 Separate store chat to database to a separate route / function instead of combined inside POST /chat
 Remove in memory-cache of message history
 Change name "Kaggle Server" -> "Worker"
-Fix server freeze while worker disconnect (probly)
+Fix server freeze while worker disconnec
 Remove model job manager, turn into stateless 
 Split Gemini API to separate server

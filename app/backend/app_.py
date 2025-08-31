@@ -1,4 +1,5 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+import logging
 from starlette.middleware.sessions import SessionMiddleware
 from config import JWT_SECRET_KEY
 from .route import (
@@ -34,4 +35,13 @@ app.include_router(chat_router, tags=["Chat"])
 app.include_router(script_router, tags=["Script"])
 app.include_router(worker_router, tags=["Kaggle"])
 
-
+# Logging
+uvicorn_access = logging.getLogger("uvicorn.access")
+@app.middleware("http")
+async def silient_worker_ping(request: Request, call_next):
+    path = request.url.path
+    if path in ["/worker/register"]:
+        uvicorn_access.disabled = True
+    else:
+        uvicorn_access.disabled = False
+    return await call_next(request)

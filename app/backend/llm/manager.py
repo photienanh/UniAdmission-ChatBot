@@ -18,6 +18,7 @@ class ModelManager: # Stateless :Đ
         job_id = generate_id()
         result = await WorkerManager.pre_inference(
             user_id=user_id,
+            session_id=session_id,
             stream_id=job_id,
             text=text,
             model_id=model_id,
@@ -29,11 +30,13 @@ class ModelManager: # Stateless :Đ
     async def get_models(cls) -> list[ModelInfo]:
         return await WorkerManager.get_models()
     @classmethod
-    async def store_chat(cls, user_id: str, session_id: str, user_text: str, user_timestamp: datetime, model_output: ModelOutput):
+    async def store_chat(cls, user_id: str, session_id: str, user_text: str, user_timestamp: datetime | str, model_output: ModelOutput):
         """
-        Update chat on database. Call in worker router only. \n
+        Update chat in database. Call in worker router only. \n
         Should be used when worker finish inference on their server, then send request to this server to store in database.
         """
+        if isinstance(user_timestamp, str):
+            user_timestamp = datetime.fromisoformat(user_timestamp)
         bot_timestamp = datetime.now(timezone.utc)
         user_msg_id, bot_msg_id = await add_conversation(
             user_id=user_id,

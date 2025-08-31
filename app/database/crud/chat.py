@@ -58,7 +58,7 @@ def __create_message(
     summary: str,
     user_intent: Optional[str],
     answer_state: Optional[str],
-    entities: list[str],
+    keywords: list[str],
     model_id: str,
     web_sources: list[WebSource],
     rag_sources: list[RagSource],
@@ -73,6 +73,11 @@ def __create_message(
     msg.session_id = session_id
     msg.text = text
     msg.role = role
+    
+    msg.summary = summary
+    msg.user_intent = user_intent
+    msg.answer_state = answer_state
+    msg.keywords = keywords
     
     msg.model_id = model_id
     msg.rag_sources = rag_sources
@@ -128,7 +133,7 @@ async def add_conversation(
             summary=user_summary,
             user_intent=user_intent,
             answer_state=None,
-            entities=user_keywords,
+            keywords=user_keywords,
             model_id=model_id,
             web_sources=[], #Maybe user can provide sources ?
             rag_sources=[],
@@ -143,7 +148,7 @@ async def add_conversation(
             summary=bot_summary,
             user_intent=None,
             answer_state=answer_state,
-            entities=bot_keywords,
+            keywords=bot_keywords,
             model_id=model_id,
             web_sources=web_sources,
             rag_sources=rag_sources,
