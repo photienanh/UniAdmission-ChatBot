@@ -210,7 +210,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let value = parseInt(this.value);
         
         // Check if value is invalid and add/remove visual feedback
-        if (this.value !== '' && (!isNaN(value) && (value < 0 || value > 30))) {
+        if (this.value !== '' && (!isNaN(value) && (value < 0 || value > 100))) {
             this.classList.add('invalid');
         } else {
             this.classList.remove('invalid');
@@ -222,8 +222,8 @@ document.addEventListener('DOMContentLoaded', function() {
         let value = parseInt(this.value);
         if (this.value === '' || isNaN(value) || value < 0) {
             this.value = 0;
-        } else if (value > 30) {
-            this.value = 30;
+        } else if (value > 100) {
+            this.value = 100;
         }
         // Remove invalid class after correction
         this.classList.remove('invalid');

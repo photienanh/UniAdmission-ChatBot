@@ -80,10 +80,8 @@ class Logger:
             copied_data = deepcopy(data)
             copied_data.pop("html")
             copied_data.pop("main_content")
-            for image in copied_data["image_content"]:
-                image.pop("text")
-            for pdf in copied_data["pdf_content"]:
-                pdf.pop("text")
+            for file in copied_data["file_contents"]:
+                file.pop("text")
             with open(os.path.join(folder_path, f"process.json"), 'w', encoding='utf-8') as file:
                 file.write(json.dumps(copied_data))
             with open(os.path.join(folder_path, f"process.txt"), 'w', encoding='utf-8') as file:
@@ -91,15 +89,17 @@ class Logger:
                 
             image_path = os.path.join(folder_path, f"image")
             os.makedirs(image_path, exist_ok=True)
-            for i, image_content in enumerate(data["image_content"]):
-                with open(os.path.join(image_path, f"image_{i}.txt"), 'w', encoding='utf-8') as file:
-                    file.write(image_content["text"])
+            for i, file_content in enumerate(data["file_contents"]):
+                if file_content["file_type"] == "image":
+                    with open(os.path.join(image_path, f"image_{i}.txt"), 'w', encoding='utf-8') as file:
+                        file.write(file_content["text"])
                     
             pdf_path = os.path.join(folder_path, f"pdf")
             os.makedirs(pdf_path, exist_ok=True)
-            for i, pdf_content in enumerate(data["pdf_content"]):
-                with open(os.path.join(pdf_path, f"pdf_{i}.txt"), 'w', encoding='utf-8') as file:
-                    file.write(pdf_content["text"])
-            
+            for i, file_content in enumerate(data["file_contents"]):
+                if file_content["file_type"] == "pdf":
+                    with open(os.path.join(pdf_path, f"pdf_{i}.txt"), 'w', encoding='utf-8') as file:
+                        file.write(file_content["text"])
+                
         except Exception as e:
             print(f"Failed to log Processed {index}: {e}")

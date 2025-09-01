@@ -4,3 +4,6 @@ Change name "Kaggle Server" -> "Worker"
 Fix server freeze while worker disconnec
 Remove model job manager, turn into stateless 
 Split Gemini API to separate server
+
+Generalize pdf, image to file in websearch
+Change websearch to retriever

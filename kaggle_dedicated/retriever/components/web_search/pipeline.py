@@ -4,7 +4,7 @@ from typing import Literal, Any
 import traceback
 import asyncio
 
-from .component import *
+from .components import *
 from .schema import *
 
 class SearchPipeline:
@@ -12,12 +12,12 @@ class SearchPipeline:
             page_timeout: float, 
             file_timeout: float,
             concurrent_page: int = 4,
-            concurrent_processor_download: int = 16
+            concurrent_download: int = 16
         ) -> None:
         self._kwargs: dict[str, Any] = {
             "page_timeout": page_timeout,
             "file_timeout": file_timeout,
-            "concurrent_processor_download": concurrent_processor_download,
+            "concurrent_processor_download": concurrent_download,
             "concurrent_page": concurrent_page
         }
     async def start(self):

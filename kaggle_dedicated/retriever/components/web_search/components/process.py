@@ -39,9 +39,11 @@ class Processor:
             )
             text = self._clean_text("\n".join([pdf["text"] for pdf in pdf_docs]))
             result: FileContent = {
-                **info,
+                "file_type": "pdf",
                 "parent_url":parent_url,
-                "text": text
+                "text": text,
+                "title": info["title"],
+                "url": info["url"]
             }
             return result
         except Exception as e:
@@ -64,9 +66,11 @@ class Processor:
                 )
                 text = self._clean_text("\n".join([pdf["text"] for pdf in image_docs]))
                 result: FileContent = {
-                    **info,
+                    "file_type": "image",
                     "parent_url":parent_url,
-                    "text": text
+                    "text": text,
+                    "title": info["title"],
+                    "url": info["url"]
                 }
                 return result
         except Exception as e:
@@ -99,35 +103,29 @@ class Processor:
         headers = {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
         }
-        pdf_tasks = []
-        image_tasks = []
-        if include_pdf:
-            for info in input["pdf_urls"]:
+        file_tasks = []
+        for info in input["file_urls"]:
+            if info["url_type"] == "pdf" and include_pdf:
                 task = asyncio.create_task(self._process_file(
                     ssl=ssl, headers=headers, 
                     parent_url=input["url"],
                     info=info, 
                     file_type="pdf"
                 ))
-                pdf_tasks.append(task)
-        if include_image:
-            for info in input["image_urls"]:
+                file_tasks.append(task)
+            elif info["url_type"] == "image" and include_image:
                 task = asyncio.create_task(self._process_file(
                     ssl=ssl, headers=headers, 
                     parent_url=input["url"],
                     info=info, 
                     file_type="image"
                 ))
-                image_tasks.append(task)
-        pdf_contents, image_contents = await asyncio.gather(asyncio.gather(*pdf_tasks), asyncio.gather(*image_tasks))
-        valid_pdfs: list[FileContent] = []
-        valid_images: list[FileContent] = []
-        for file_content in pdf_contents:
+                file_tasks.append(task)
+        file_contents = await asyncio.gather(*file_tasks)
+        valid_files: list[FileContent] = []
+        for file_content in file_contents:
             if file_content is not None:
-                valid_pdfs.append(file_content)
-        for file_content in image_contents:
-            if file_content is not None:
-                valid_images.append(file_content)
+                valid_files.append(file_content)
         result: ProcessedResult = {
             "url": input["url"],
             "title": input["title"],
@@ -136,40 +134,6 @@ class Processor:
             "html": input["html"],
             "index": input["index"],
             "main_content": input["extracted_content"],
-            "image_content": valid_images,
-            "pdf_content": valid_pdfs
+            "file_contents": valid_files
         }
         return result
-
-# if __name__ == "__main__":
-#     pdf_url = "https://www.hust.edu.vn/uploads/sys/ba-cong-khai/2023/bm17_cam-ket-chat-luong-dao-tao-nam-hoc-2023-2024.pdf"
-#     pdf_processor = PDFProcessor()
-#     headers = {
-#         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36'
-#     }
-#     pdf_response = requests.get(pdf_url, headers=headers)
-#     temp_pdf_path = None
-    
-#     if pdf_response.status_code == 200:
-#         try:
-#             with tempfile.NamedTemporaryFile(delete=False, suffix='.pdf') as temp_pdf:
-#                 temp_pdf.write(pdf_response.content)
-#                 temp_pdf_path = temp_pdf.name
-            
-#             # File handle is now closed, we can safely process it
-#             pdf_docs = pdf_processor.process_pdf_to_documents(
-#                 temp_pdf_path,
-#                 parent_url='',
-#                 url=pdf_url
-#             )
-#         except Exception as e:
-#             print(f"Lỗi khi xử lý PDF {pdf_url}: {e}")
-#         finally:
-#             try:
-#                 del temp_pdf
-#                 os.unlink(temp_pdf_path)  # Xóa file tạm thời
-#             except:
-#                 pass
-#     else:
-#         print(f"Không thể tải xuống PDF từ {pdf_url}")
-#     print(pdf_docs[0]['text'][:500])

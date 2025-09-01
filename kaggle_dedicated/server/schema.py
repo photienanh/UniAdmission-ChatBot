@@ -11,11 +11,23 @@ class RagSource(TypedDict):
     url: str
     title: str
     text: str
+    file_url: NotRequired[str]
+    file_title: NotRequired[str]
+    file_type: NotRequired[str]
+
+class FileSource(TypedDict):
+    file_url: str
+    file_title: str
+    file_type: str
+    text: str
+    
 class WebSource(TypedDict):
     url: str
     title: str
     description: str
     text: str
+    files: list[FileSource]
+
 
 class ModelInfo(TypedDict):
     name: str
@@ -33,6 +45,8 @@ class GenerationParams(TypedDict):
     top_p: NotRequired[float]
     top_k: NotRequired[int]
     max_history: NotRequired[int]
+    frequency_penalty: NotRequired[float]
+    presence_penalty: NotRequired[float]
 
 class ModelPreOutput(TypedDict):
     model_id: str

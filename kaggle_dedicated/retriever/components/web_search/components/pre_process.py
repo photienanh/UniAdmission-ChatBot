@@ -69,33 +69,34 @@ class PreProcessor:
         fit_markdown = re.sub(ENCODED_IMAGE_REMOVE, "(image_bytes)", raw_markdown)
         
         ref_urls: list[UrlContent] = []
-        image_urls: list[UrlContent] = []
-        pdf_urls: list[UrlContent] = []
+        file_urls: list[UrlContent] = []
         for title, url in url_infos:
             if check_pdf(url): # To complicated
-                pdf_urls.append({
+                file_urls.append({
                     "title": title,
-                    "url": url
+                    "url": url,
+                    "url_type": "pdf"
                 })
                 # raw_markdown = raw_markdown.replace(url, f"PDF_{len(pdf_urls)}", 1)
             elif any(url.endswith(extension) for extension in IMAGE_EXTENSION):
-                image_urls.append({
+                file_urls.append({
                     "title": title,
-                    "url": url
+                    "url": url,
+                    "url_type": "image"
                 })
                 # raw_markdown = raw_markdown.replace(url, f"IMAGE_{len(image_urls)}", 1)
             else:
                 ref_urls.append({
                     "title": title,
-                    "url": url
+                    "url": url,
+                    "url_type": "ref"
                 })
         fit_markdown = self.__processs_lines(fit_markdown, 5) # Changed this
         result: PreProcessedResult = {
             **input,
             "extracted_content": fit_markdown,
             "ref_urls": ref_urls,
-            "image_urls": image_urls,
-            "pdf_urls": pdf_urls
+            "file_urls": file_urls
         }
         return result
     
