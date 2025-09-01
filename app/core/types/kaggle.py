@@ -26,8 +26,10 @@ class KagglePreInferenceResponse(TypedDict):
     info: KaggleServerInfo
     
 class KaggleRequest(TypedDict):
-    text: str
+    question: str
     model_id: str
     stream_id: str
     params: GenerationParams
-    history: NotRequired[list[ChatMessage]]
+    history: list[ChatMessage]
+    vector_sources: NotRequired[list]  # Sources from app/ vector search
+    web_search_keywords: NotRequired[list[str]]  # Keywords for kaggle web search

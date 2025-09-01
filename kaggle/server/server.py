@@ -18,6 +18,7 @@ async def kaggle_register(server_domain: str, info: KaggleServerInfo):
                 print(f"[Kaggle] Failed to update server info")
             # else:
             #     raise Exception(f"Failed to register") #TODO: Retry
+
 async def get_nrok_url() -> str:
     async with aiohttp.ClientSession() as ss:
         url = f"http://127.0.0.1:4040/api/tunnels"
@@ -27,6 +28,7 @@ async def get_nrok_url() -> str:
                 for tunnel in tunnels:
                     return tunnel["public_url"]
     raise Exception("No tunnel")
+
 async def connection_task(server_domain: str, info: KaggleServerInfo, poll: float):
     try:
         while True:
@@ -35,6 +37,7 @@ async def connection_task(server_domain: str, info: KaggleServerInfo, poll: floa
             await asyncio.sleep(poll)
     except asyncio.CancelledError:
         pass
+    
 def construct_app(
         server_domain: str,
         info: KaggleServerInfo,

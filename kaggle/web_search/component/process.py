@@ -80,7 +80,12 @@ class Processor:
     async def _process_file(self, ssl: bool, headers, parent_url: str, info: UrlContent, file_type: Literal["image", "pdf"]) -> FileContent | None:
         async with self._semaphore: # Limit number of task (async task like network, thread write/read)
             try:
-                async with self.session.get(info["url"], headers=headers, timeout=self.timeout, ssl=ssl) as response:
+                # Tăng timeout cho domain UET
+                timeout = self.timeout
+                if "uet.vnu.edu.vn" in info["url"]:
+                    timeout = aiohttp.ClientTimeout(self.timeout.total * 3)  # Tăng gấp 3 lần cho UET
+                
+                async with self.session.get(info["url"], headers=headers, timeout=timeout, ssl=ssl) as response:
                     if response.ok:
                         if file_type == "pdf":
                             return await self._pdf_task(await response.read(), parent_url, info)

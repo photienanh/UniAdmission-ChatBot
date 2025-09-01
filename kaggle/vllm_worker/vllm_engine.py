@@ -8,7 +8,8 @@ class VLLMJobInfo(TypedDict):
     message: str
     lora_request: Optional[dict]
     sampling_params: dict
-    history: Optional[list[dict]]
+    history: list[dict]
+
 class VLLMEngine:
     def __init__(self, on_model_active: Callable[[str], None]) -> None:
         self.controller = VLLMController()
@@ -18,8 +19,10 @@ class VLLMEngine:
         self.job_poll = 0.1
         self.busy_poll = 0.1
         self.on_model_active = on_model_active
+
     async def delete(self):
         await self.controller._unload()
+
     def _available(self, info: VLLMJobInfo):
         # If current loaded model match, allow job to process
         if self.current_model_id == info["model_id"]:
@@ -35,6 +38,7 @@ class VLLMEngine:
         
         # Other job with current loaded model still in queue:
         return False
+    
     async def _process_request(self, info: VLLMJobInfo) -> AsyncGenerator[str, None]:
         while self.controller.busy:
             await asyncio.sleep(self.busy_poll)
@@ -46,10 +50,9 @@ class VLLMEngine:
         payload = {
             "prompt": info["message"],
             "params": info["sampling_params"],
+            "history": info["history"]
         }
-        if info.get("history"):
-            payload["history"] = info["history"]
-        if info["lora_request"] != None:
+        if info["lora_request"] is not None:
             payload["lora"] = info["lora_request"]
             
         async with ClientSession() as session:
@@ -57,6 +60,7 @@ class VLLMEngine:
                 if response.ok:
                     async for chunk in response.content.iter_any():
                         yield chunk.decode("utf-8")
+
     async def process(self, info: VLLMJobInfo) -> AsyncGenerator[str, None]:
         self.job_queue.append(info)
         while True:

@@ -5,7 +5,7 @@ from typing import AsyncGenerator, List, Tuple, Union, Optional
 
 from .schema import APIJobInfo
 from ..search.search_router import search
-from config import SYSTEM_INSTRUCTION
+from config import GEMINI_SYSTEM_INSTRUCTION
 
 class GeminiAPIModel:
     def __init__(self) -> None:
@@ -20,7 +20,7 @@ class GeminiAPIModel:
             return f"Thông tin tham khảo:\n{context}\nCâu hỏi: {question}"
         return f"Câu hỏi: {question}"
     
-    def build_prompt(self, question: str, k_pages: int, domain_restrict: bool = False) -> Tuple[str, Union[List[dict], None]]:
+    def build_prompt(self, question: str, k_pages: int, domain_restrict: bool = False) -> Tuple[str, List[dict]]:
         """Tạo prompt với web search context"""
         
         if k_pages > 0:
@@ -28,19 +28,19 @@ class GeminiAPIModel:
             try:
                 search_sources = search(question, k_pages, domain_restrict)
             except Exception as e:
-                return question, None
+                return question, []
             if domain_restrict:
                 edu_sources = [s for s in search_sources if '.edu.vn' in s.get('url', '')]
                 if edu_sources:
                     search_sources = edu_sources
             if search_sources is None:
                 prompt = self.merge_context(question, [])
-                return prompt, None
+                return prompt, []
             
             prompt = self.merge_context(question, search_sources)
             return prompt, search_sources
         else:
-            return self.merge_context(question, []), None
+            return self.merge_context(question, []), []
         
     async def inference(self, info: APIJobInfo) -> AsyncGenerator[str, None]:
         sampling_params = info["sampling_params"]
@@ -53,7 +53,7 @@ class GeminiAPIModel:
         conversation_history = info.get("conversation", [])
 
         # Create model instance with system instruction (including web context)
-        model = genai.GenerativeModel(info["model_id"], system_instruction=SYSTEM_INSTRUCTION)
+        model = genai.GenerativeModel(info["model_id"], system_instruction=GEMINI_SYSTEM_INSTRUCTION)
         
         # Generate content với conversation history và streaming
         response = model.generate_content(
