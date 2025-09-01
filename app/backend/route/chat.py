@@ -8,58 +8,6 @@ from backend.llm import ModelManager
 
 from .utils import NO_CACHE_HEADERS, get_timestamp, CommonResponse
 
-def fix_web_source_backward_compatibility(web_source: dict) -> dict:
-    """Fix WebSource that might be missing 'description' field for backward compatibility."""
-    if 'description' not in web_source:
-        text = web_source.get('text', '')
-        description = text[:200] + "..." if len(text) > 200 else text
-        web_source['description'] = description
-    return web_source
-
-def fix_message_web_sources(message: dict) -> dict:
-    """Fix web_sources in a message for backward compatibility and ensure consistent source grouping."""
-    # Fix web_sources if they exist
-    if 'web_sources' in message and isinstance(message['web_sources'], list):
-        message['web_sources'] = [fix_web_source_backward_compatibility(source) for source in message['web_sources']]
-    
-    # Fix rag_sources if they exist
-    if 'rag_sources' in message and isinstance(message['rag_sources'], list):
-        message['rag_sources'] = [fix_web_source_backward_compatibility(source) for source in message['rag_sources']]
-    
-    # Always group sources by URL to ensure consistent display
-    # This ensures both live chat and reloaded sessions show the same number of sources
-    web_sources = message.get('web_sources', []) or []
-    rag_sources = message.get('rag_sources', []) or []
-        
-    # Combine all sources and group by URL
-    all_sources = web_sources + rag_sources
-    unique_sources = {}
-    
-    for source in all_sources:
-        url = source.get('url', '')
-        if url:
-            if url not in unique_sources:
-                # Use the source as is, but ensure description exists
-                unique_sources[url] = {
-                    'url': url,
-                    'title': source.get('title', ''),
-                    'description': source.get('description', source.get('text', '')[:200] + "..." if len(source.get('text', '')) > 200 else source.get('text', '')),
-                    'text': source.get('text', '')
-                }
-            else:
-                # If we already have this URL, combine the text content
-                existing = unique_sources[url]
-                if not existing.get('title') and source.get('title'):
-                    existing['title'] = source.get('title')
-                if len(source.get('text', '')) > len(existing.get('text', '')):
-                    existing['text'] = source.get('text', '')
-                    existing['description'] = source.get('description', source.get('text', '')[:200] + "..." if len(source.get('text', '')) > 200 else source.get('text', ''))
-    
-    # Update web_sources with grouped results
-    message['web_sources'] = list(unique_sources.values())
-    return message
-
-
 router = APIRouter()
     
 @router.post("/chat", name="chat")
@@ -71,20 +19,20 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
         if session_id is None:
             raise HTTPException(status_code=500, detail=f"Failed to create new chat session")
     user_timestamp = get_timestamp()
-    async def finish_call(text: str, web_sources: list = None):
+    async def finish_call(bot_answer: str, web_sources: list = None):
         if model_output != None:
             bot_timestamp = get_timestamp()
             # Cập nhật web_sources từ inference result
             if web_sources:
                 model_output["web_sources"] = web_sources
-            user_msg_id, bot_msg_id = await add_conversation(
+            await add_conversation(
                 user_id=user.id,
                 session_id=session_id,
                 user_text=data.text,
-                bot_text=text,
+                bot_text=bot_answer,
                 model_id=model_output["model_id"],
                 web_sources=model_output["web_sources"],
-                rag_sources=model_output["rag_sources"],
+                rag_sources=[],  # Luôn empty
                 params=data.params,
                 user_timestamp=user_timestamp,
                 bot_timestamp=bot_timestamp, # Does not prevent incorrect order
@@ -92,11 +40,11 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
                 bot_extra_data=model_output["extra_data"]
             )
             try:
-                from backend.llm.history_cache import append_user_and_bot, Msg
+                from ..cache.history_cache import append_user_and_bot, Msg
                 await append_user_and_bot(
                     session_id,
                     user_msg=Msg(role="user", text=data.text, timestamp=user_timestamp),
-                    bot_msg=Msg(role="bot", text=text, timestamp=bot_timestamp)
+                    bot_msg=Msg(role="bot", text=bot_answer, timestamp=bot_timestamp)
                 )
             except Exception:
                 pass
@@ -104,20 +52,13 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
     if model_output == None:
         raise HTTPException(status_code=500, detail="Failed to inference model")
     
-    # Apply the same logic as session reload to ensure consistency
-    fixed_output = fix_message_web_sources({
-        "web_sources": model_output["web_sources"],
-        "rag_sources": model_output["rag_sources"]
-    })
-    
-    text = ""
+    # Simplified response - sources đã clean
     response: PreChatResponse = {
-        "text": text,
         "stream_id": model_output["stream_id"],
         "session_id": session_id,
         "role": "bot",
-        "web_sources": fixed_output["web_sources"],  # Use fixed sources
-        "rag_sources": model_output["rag_sources"],
+        "web_sources": model_output["web_sources"],
+        "rag_sources": [],  # Luôn empty
         "extra_data": model_output["extra_data"]
     }    
     return response
@@ -137,8 +78,8 @@ async def session_messages(request: Request, session_id: str) -> SessionMessages
     user = await check_login(request)
     chat_session = await get_session_with_messages(session_id)
     if chat_session and chat_session.user_id == user.id:
-        # Fix web_sources in messages for backward compatibility
-        messages = [fix_message_web_sources(msg.to_dict()) for msg in chat_session.messages]
+        # Simplified - sources đã clean
+        messages = [msg.to_dict() for msg in chat_session.messages]
         result: SessionMessagesResponse = {
             "session": chat_session.to_dict(), #type:ignore
             "messages": messages

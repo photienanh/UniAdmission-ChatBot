@@ -34,18 +34,14 @@ class Websearch:
             page_timeout: float = 10,
             file_timeout: float = 10,
             concurrent_page: int = 4,
-            concurrent_file_download: int = 16,
-            use_internal_generation: bool = False,  # Default to False to avoid double query rewrite
-            gpt_api_key: str = None
+            concurrent_file_download: int = 16
         ) -> None:
         self.embedding = HuggingFaceEmbeddings(model_name=embedding_name, model_kwargs={"device":device})
         self.web_search = SearchPipeline(
             page_timeout=page_timeout,
             file_timeout=file_timeout,
             concurrent_page=concurrent_page,
-            concurrent_processor_download=concurrent_file_download,
-            use_internal_generation=use_internal_generation,  # Use the parameter passed to constructor
-            gpt_api_key=gpt_api_key
+            concurrent_processor_download=concurrent_file_download
         )
         self.splitter = TokenTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         self.logger = CmdLogger("Web search")
@@ -62,16 +58,16 @@ class Websearch:
         engine: SearchEngineType = "brave",
         include_pdf: bool = False,
         include_image: bool = False,
-        multiple_search_keywords: list[str] = None
+        web_keywords: list[str] = None
     ) -> list[Document]:
         self.logger.start()
-        # Use provided multiple_search_keywords if available, otherwise use fallback_query
-        if multiple_search_keywords and len(multiple_search_keywords) > 0:
+        # Use provided web_search_keywords if available, otherwise use fallback_query
+        if web_keywords and len(web_keywords) > 0:
             search_results = []
             # Search with each keyword separately using pipeline
             keyword_results = await self.web_search.call_fast(
                 fallback_query, k_pages, in_domain, engine, include_pdf, include_image, 
-                external_keywords=multiple_search_keywords
+                external_keywords=web_keywords
             )
             search_results = keyword_results
         else:
@@ -151,9 +147,9 @@ class Websearch:
         engine: Literal["google", "brave"] = "brave",
         include_pdf: bool = False,
         include_image: bool = False,
-        multiple_search_keywords: list[str] = None
+        web_keywords: list[str] = None
     ) -> tuple[list[WebSource], list[RagSource]]: 
-        docs = await self._search_to_docs(fallback_query, k_pages, domain_restrict, engine, include_pdf, include_image, multiple_search_keywords)
+        docs = await self._search_to_docs(fallback_query, k_pages, domain_restrict, engine, include_pdf, include_image, web_keywords)
         chunks = self.splitter.split_documents(docs)
         vector_storage = FAISS.from_documents(chunks, self.embedding)
         lens = [len(doc.page_content) for doc in docs]

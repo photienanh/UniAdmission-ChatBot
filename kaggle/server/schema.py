@@ -5,7 +5,7 @@ from typing_extensions import TypedDict
 
 ModelSource = Literal["server", "kaggle"]
 SearchEngineType = Literal["google", "brave"]
-ChatMessageRole = Literal["user", "bot"] # System instruction should stored per user message
+ChatMessageRole = Literal["user", "bot", "system"]  # Allow system role for instructions
 
 class ChatMessage(TypedDict):
     role: ChatMessageRole
@@ -15,6 +15,7 @@ class RagSource(TypedDict):
     url: str
     title: str
     text: str
+
 class WebSource(TypedDict):
     url: str
     title: str
@@ -43,8 +44,8 @@ class ModelPreOutput(TypedDict):
     stream_id: str
     model_id: str
     generation_params: GenerationParams
-    web_sources: list[WebSource]
-    rag_sources: list[RagSource]
+    web_sources: Optional[list[WebSource]]
+    rag_sources: Optional[list[RagSource]]
     extra_data: dict
     
 class ModelStatus(ModelInfo):
@@ -63,9 +64,11 @@ class KagglePreInferenceResponse(TypedDict):
     info: KaggleServerInfo
     
 class KaggleRequest(TypedDict):
-    text: str
+    question: str
     model_id: str
     stream_id: str
     params: GenerationParams
-    history: NotRequired[list[ChatMessage]]
+    history: list[ChatMessage]
+    vector_sources: NotRequired[list]  # Sources from app/ vector search
+    web_search_keywords: NotRequired[list[str]]  # Keywords for kaggle web search
     

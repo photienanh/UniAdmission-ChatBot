@@ -10,7 +10,12 @@ class PageDowloader:
     async def __call__(self, input: SearchResult) -> HtmlResult | None:
         ssl = os.getenv("WEB_SEARCH_SSL", "True").lower() in ("true", "1")
         try:
-            async with self.session.get(url=input["url"], timeout=self.timeout, ssl=ssl) as response:
+            # Tăng timeout cho domain UET
+            timeout = self.timeout
+            if "uet.vnu.edu.vn" in input["url"]:
+                timeout = aiohttp.ClientTimeout(self.timeout.total * 3)  # Tăng gấp 3 lần cho UET
+                
+            async with self.session.get(url=input["url"], timeout=timeout, ssl=ssl) as response:
                 if response.ok:
                     text = await response.text()
                     result: HtmlResult = {
@@ -19,7 +24,7 @@ class PageDowloader:
                     }
                     return result
                 else:
-                    print(f"[Page download] Error {response.status}: {await response.text()}")
+                    print(f"[Page download] Error {response.status}")
         except asyncio.TimeoutError:
             print(f"[Page downloader] Timeout: {input['url']}")
         except Exception as e:

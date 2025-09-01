@@ -28,7 +28,7 @@ def _now():
 def _expired(entry: Entry) -> bool:
     return (_now() - entry.updated_at) > timedelta(seconds=TTL_SECONDS)
 
-async def get_history(session_id: str, loader):
+async def get_history(session_id: str, loader: List[Msg]):
     """
     Trả về danh sách Msg cho session_id.
     loader: async fn(session_id, max_msgs) -> List[Msg]  (đã sort tăng dần, đã limit)

@@ -1,6 +1,6 @@
 import uuid
 from typing import List
-from .history_cache import Msg
+from ..cache.history_cache import Msg
 
 async def load_history_from_db(session_id: str, max_msgs: int) -> List[Msg]:
     from database.crud.chat import get_session_with_messages

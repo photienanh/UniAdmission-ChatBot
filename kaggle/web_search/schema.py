@@ -1,5 +1,4 @@
-import sys
-from typing import TypedDict, NamedTuple, Optional, Literal
+from typing import TypedDict, Optional, Literal
 
 class FileContent(TypedDict):
     title: str

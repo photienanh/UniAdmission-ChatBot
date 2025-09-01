@@ -1,9 +1,10 @@
 from typing import AsyncGenerator, Callable, Awaitable, TypedDict, Optional
 
 from core.types import ModelInfo, GenerationParams, ModelPreOutput
-from config import GEMINI_MODEL
+from config import GEMINI_MODEL, SYSTEM_INSTRUCTION
 
-from .history_cache import get_history, Msg
+from ..cache.history_cache import get_history
+from ..search.search_router import search  # Tận dụng hàm search có sẵn
 from .utils import load_history_from_db
 from .schema import APIJobInfo
 from .gemini import GeminiAPIModel
@@ -19,45 +20,9 @@ class JobInfo(TypedDict):
 class ModelManager:
     _gemini_api = GeminiAPIModel()
     _jobs: dict[str, JobInfo] = {} # No timeout implemented yet
+            
     @classmethod
-    async def inference(cls, job_id: str) -> AsyncGenerator[str, None]:
-        job_info = cls._jobs.pop(job_id)
-        if job_info["server_kwargs"]:
-            kwargs = job_info["server_kwargs"]
-            params: GenerationParams = kwargs["generation_params"]
-            model_id: str = kwargs["model_id"]
-            text: str = kwargs["text"]
-            
-            api_job_info: APIJobInfo = {
-                "model_id": model_id,
-                "sampling_params": params,
-                "text": text,
-                "web_sources": [],  # Initialize empty, will be filled by gemini
-                "session_id": kwargs.get("session_id"),  # Add session_id
-                "cached_web_sources": kwargs.get("cached_web_sources")  # Pass cached sources
-            }
-            total = ""
-            async for chunk in cls._gemini_api.inference(api_job_info):
-                total += chunk
-                yield chunk
-            
-            # Lấy web_sources từ api_job_info sau khi inference
-            web_sources = api_job_info.get("web_sources", [])
-            await job_info["finish_call"](total, web_sources)
-        else:
-            total = ""
-            job_info_id = job_info["id"]
-            async for chunk in KaggleManager.inference(job_info["domain"], job_id):
-                total += chunk
-                yield chunk
-            
-            # Get stored sources from KaggleManager
-            web_sources, rag_sources = KaggleManager.get_stored_sources(job_info_id)
-            # Combine web_sources and rag_sources into one list for compatibility
-            all_sources = web_sources + rag_sources
-            await job_info["finish_call"](total, all_sources)
-    @classmethod
-    async def pre_inference(cls, text: str, model_id: str, params: GenerationParams, finish_call: Callable[[str], Awaitable], session_id: Optional[str] = None) -> ModelPreOutput | None:
+    async def pre_inference(cls, question: str, model_id: str, params: GenerationParams, finish_call: Callable[[str], Awaitable], session_id: Optional[str] = None) -> ModelPreOutput | None:
         job_id = generate_id()
         server_kwargs: dict | None = None
         if model_id.startswith("api:"):
@@ -66,46 +31,88 @@ class ModelManager:
             domain_restrict = params.get("domain_restrict", False)
             
             # Pre-compute web sources to include in response
-            web_sources = []
-            if k_pages > 0:
-                try:
-                    gemini_temp = GeminiAPIModel()
-                    _, web_sources = gemini_temp.build_prompt_with_web_search(text, k_pages, domain_restrict)
-                except Exception as e:
-                    web_sources = []
+            try:
+                prompt, web_sources = cls._gemini_api.build_prompt(question, k_pages, domain_restrict)
+            except Exception as e:
+                web_sources = []
             
+            conversation_history = []
+            if session_id:
+                try:
+                    msgs = await get_history(session_id, loader=load_history_from_db)
+                    for m in msgs:
+                        conversation_history.append({"role": "model" if m.role == "bot" else "user", "parts": [{"text": m.text}]})
+                except Exception:
+                    pass
+            conversation_history.append({"role": "user", "parts": [{"text": prompt}]})
+
             pre_output: ModelPreOutput | None = {
                 "stream_id": job_id,
                 "model_id": model_id,
                 "generation_params": params,
-                "web_sources": web_sources,  # Include actual web sources
+                "web_sources": web_sources,
                 "rag_sources": [],
                 "extra_data": {}
             }
             domain = ""
             server_kwargs = {
                 "model_id": GEMINI_MODEL,
-                "text": text,
+                "text": question,
+                "conversation": conversation_history,
                 "generation_params": params,
-                "session_id": session_id,  # Add session_id
-                "cached_web_sources": web_sources  # Cache web sources to avoid duplicate search
+                "session_id": session_id,  # Add session_id,
+                "web_sources": web_sources  # Cache web sources to avoid duplicate search
             }
         else:
-            # If we have a session_id, try to include past messages as history
-            history = None
+            # Kaggle models
+            conversation_history = [{"role": "system", "content": SYSTEM_INSTRUCTION}]
             if session_id:
                 try:
                     msgs = await get_history(session_id, loader=load_history_from_db)
-                    history = [
-                        {"role": ("assistant" if m.role == "bot" else "user"), "content": m.text}
-                        for m in msgs
-                    ]
+                    for m in msgs:
+                        conversation_history.append({"role": ("bot" if m.role == "bot" else "user"), "content": m.text})
                 except Exception:
-                    history = None
+                    conversation_history = []
+
+            # Xử lý search strategy
+            k_pages = params.get("k_pages", 0)
+            domain_restrict = params.get("domain_restrict", False)
+            
+            vector_sources = None
+            web_keywords = None
+            if k_pages > 0:  # Chỉ search khi có k_pages
+                try:
+                    # Lấy search strategy từ router
+                    from ..search.search_router import route_search
+                    search_strategy = route_search(question)
+                    type_search = search_strategy.get("type_search")
+                    keywords = search_strategy.get("key_word", [])
                     
-            pack = await KaggleManager.pre_inference(job_id, text, model_id, params, history)
-            if pack != None:
-                domain, pre_output = pack
+                    if type_search == "vector_db":
+                        # Vector DB search tại app/ level
+                        from ..search.vectordb_search import search_from_vector_db
+                        vector_results = search_from_vector_db(keywords)
+                        if vector_results:
+                            vector_sources = vector_results
+                        else:
+                            # Vector search fail → fallback to web search keywords
+                            web_keywords = [question]
+                    
+                    elif type_search == "web_search":
+                        # Web search sẽ được xử lý bởi kaggle/
+                        web_keywords = keywords
+                    
+                    else:
+                        # Fallback
+                        web_keywords = [question]
+                        
+                except Exception as e:
+                    # Fallback: pass original question as keyword
+                    web_keywords = [question]
+
+            kaggle_preinference = await KaggleManager.pre_inference(job_id, question, model_id, params, conversation_history, vector_sources, web_keywords)
+            if kaggle_preinference is not None:
+                domain, pre_output = kaggle_preinference
             else:
                 return None
         job_info: JobInfo = {
@@ -116,6 +123,47 @@ class ModelManager:
         }
         cls._jobs[job_id] = job_info
         return pre_output
+    
+    @classmethod
+    async def inference(cls, job_id: str) -> AsyncGenerator[str, None]:
+        if job_id not in cls._jobs:
+            yield f"Error: Job ID '{job_id}' not found"
+            return
+            
+        job_info = cls._jobs.pop(job_id)
+        if job_info["server_kwargs"]:
+            kwargs = job_info["server_kwargs"]
+
+            params: GenerationParams = kwargs["generation_params"]
+            model_id: str = kwargs["model_id"]
+            conversation = kwargs["conversation"]
+
+            api_job_info = APIJobInfo(
+                model_id=model_id,
+                conversation=conversation,
+                sampling_params=params,
+                web_sources=kwargs.get("web_sources"),
+                session_id=kwargs.get("session_id")
+            )
+
+            total = ""
+            async for chunk in cls._gemini_api.inference(api_job_info):
+                total += chunk
+                yield chunk
+            
+            # Lấy web_sources từ api_job_info sau khi inference
+            await job_info["finish_call"](total, api_job_info.get("web_sources", []))
+        else:
+            total = ""
+            job_info_id = job_info["id"]
+            async for chunk in KaggleManager.inference(job_info["domain"], job_id):
+                total += chunk
+                yield chunk
+            
+            # Kaggle models - chỉ lấy web_sources
+            web_sources, _ = KaggleManager.get_stored_sources(job_info_id)
+            await job_info["finish_call"](total, web_sources)
+            
     @classmethod
     async def get_models(cls) -> list[ModelInfo]:
         result: list[ModelInfo] = [

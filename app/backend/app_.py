@@ -15,7 +15,7 @@ from database import init_db, close_db
 # App lifespan
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from .llm.vector_cache import vector_cache_manager, VECTOR_INDEX_PATH
+from .cache.vector_cache import vector_cache_manager, VECTOR_INDEX_PATH
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup

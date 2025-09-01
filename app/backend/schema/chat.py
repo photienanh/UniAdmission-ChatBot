@@ -16,7 +16,6 @@ class ChatRequest(BaseModel):
     params: GenerationParams
     
 class PreChatResponse(TypedDict):
-    text: str #To be removed
     stream_id: str
     session_id: str
     role: ChatMessageRole

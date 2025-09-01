@@ -16,12 +16,7 @@ class Config:
             # max_seq_len_to_capture=16384,
             # enforce_eager=True
         )
-        # if "qwen3" in model_id.lower():
-        #     model_config.rope_scaling = {
-        #             "rope_type": "yarn",
-        #             "factor" : 4.0,
-        #             "original_max_position_embedding": 32768
-        #         }
+
         observability_config = ObservabilityConfig(
             
         )

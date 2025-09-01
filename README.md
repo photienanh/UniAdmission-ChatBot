@@ -11,15 +11,15 @@ Một chatbot AI hỗ trợ tư vấn tuyển sinh đại học thông minh.
 
 ## 📋 Mục lục
 
-- [Tổng quan](#tổng-quan)
-- [Tính năng chính](#tính-năng-chính)
-- [Kiến trúc hệ thống](#kiến-trúc-hệ-thống)
-- [Cài đặt](#cài-đặt)
-- [Sử dụng](#sử-dụng)
-- [Triển khai Kaggle](#triển-khai-kaggle)
-- [API Documentation](#api-documentation)
-- [Cấu trúc thư mục](#cấu-trúc-thư-mục)
-- [Cấu hình nâng cao](#-cấu-hình-nâng-cao)
+- [🎯 Tổng quan](#-tổng-quan)
+- [✨ Tính năng chính](#-tính-năng-chính)
+- [🧩 Kiến trúc hệ thống](#-kiến-trúc-hệ-thống)
+- [🚀 Cài đặt](#-cài-đặt)
+- [🚀 Triển khai Kaggle](#-triển-khai-kaggle)
+- [📖 Sử dụng](#-sử-dụng)
+- [📚 API Documentation](#-api-documentation)
+- [📁 Cấu trúc thư mục](#-cấu-trúc-thư-mục)
+- [🔧 Cấu hình nâng cao](#-cấu-hình-nâng-cao)
 
 ## 🎯 Tổng quan
 
@@ -132,20 +132,25 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
 
 ## 🚀 Triển khai Kaggle
 
-### Setup Kaggle Notebook
+### Bước 1: Bật GPU T4 trong Kaggle
+1. Tạo hoặc mở Kaggle Notebook
+2. Vào **Settings** → **Accelerator** 
+3. Chọn **GPU T4 x2** (recommend)
+
+### Bước 2: Setup Kaggle Notebook
 Dự án sử dụng Kaggle để deploy mô hình Qwen3-4B với vLLM:
 
 1. **Upload notebook**: `kaggle/kaggle_deploy.ipynb`
 2. **Upload LoRA adapter lên Kaggle Dataset**
 3. **Cấu hình secrets** trong Kaggle:
    ```
-   NGROK_KEY: Your ngrok auth token
-   GPT_API_KEY: OpenAI API key  
+   NGROK_KEY_2: Your ngrok auth token
    BRAVE_API_KEY: Brave search API key
    GOOGLE_API_KEY: Google search API key
    ```
 
 4. **Chạy notebook** - sẽ tự động:
+   - Download và unpack các module (vllm_worker, web_search, server)
    - Load Qwen3-4B + LoRA adapter
    - Khởi động vLLM inference server
    - Tạo ngrok tunnel cho public access
@@ -237,27 +242,47 @@ UniAdmission-ChatBot/
 │   ├── main.py                 # FastAPI application entry point
 │   ├── backend/
 │   │   ├── app_.py            # FastAPI app configuration & lifespan
-│   │   ├── llm/               # LLM management và vector cache
+│   │   ├── llm/               # LLM management và integrations
+│   │   │   ├── manager.py         # Model manager với intelligent routing
+│   │   │   ├── kaggle.py          # Kaggle VLLM integration
+│   │   │   └── gemini.py          # Gemini API integration
+│   │   ├── cache/             # Caching system
 │   │   │   ├── vector_cache.py    # Vector DB cache với auto-refresh
 │   │   │   └── history_cache.py   # Chat history caching
+│   │   ├── search/            # Search strategies
+│   │   │   ├── vector_search.py   # Vector database search
+│   │   │   └── web_search.py      # Web search integration
 │   │   ├── route/             # API routes
 │   │   │   ├── chat.py           # Chat endpoints với smart routing
 │   │   │   ├── auth.py           # Authentication
+│   │   │   ├── kaggle.py         # Kaggle server management
+│   │   │   ├── script.py         # Module distribution
 │   │   │   └── template.py       # Web template serving
-│   │   └── schema/            # Pydantic models
+│   │   └── schema/            # Pydantic models và types
 │   ├── frontend/
 │   │   ├── static/            # CSS, JS, images
 │   │   └── templates/         # Jinja2 templates
 │   ├── config/                # Environment configuration
-│   ├── core/                  # Core utilities  
+│   ├── core/                  # Core utilities và types
 │   └── database/              # Database models & operations
 ├── finetune/
 │   ├── make_data.py           # Script tạo training data từ OpenAI
 │   ├── finetune_qwen3_4b.ipynb   # Jupyter notebook fine-tuning
 │   ├── data.jsonl            # Training conversations
 │   └── qwen_lora_adapter.zip  # Trained LoRA weights
-├── kaggle/                    # 🚀 Kaggle deployment
-│   └── kaggle_deploy.ipynb   # Main Kaggle inference notebook
+├── kaggle/                    # 🚀 Kaggle deployment modules
+│   ├── kaggle_deploy.py       # Clean deployment script (~80 dòng)
+│   ├── kaggle_deploy.ipynb    # Kaggle notebook
+│   ├── server/                # Server logic modules
+│   │   ├── config.py             # Model config và constants
+│   │   ├── qa.py                 # CustomQA class
+│   │   ├── schema.py             # Type definitions
+│   │   └── server.py             # FastAPI server construction
+│   ├── web_search/            # Web search pipeline
+│   │   ├── wrapper.py            # Search wrapper với default config
+│   │   ├── pipeline.py           # Search pipeline
+│   │   └── component/            # Search components
+│   └── vllm_worker/           # VLLM engine management
 ├── vector_database/
 │   ├── create_vector_db.py    # Script tạo FAISS vector DB
 │   ├── university_mapping.json   # University code mappings
@@ -299,9 +324,16 @@ python create_vector_db.py
 2. **Update notebook**: Modify `kaggle_deploy.ipynb` với model mới
 3. **Restart inference**: Kaggle sẽ auto-reload với tunnel mới
 
+### Modular Architecture Benefits
+- **Clean separation**: Logic tách rời giữa app/ và kaggle/
+- **Easy maintenance**: Mỗi module có trách nhiệm riêng biệt
+- **Scalable**: Dễ dàng thêm/sửa modules mà không ảnh hưởng toàn hệ thống
+- **Optimized deployment**: kaggle_deploy.py chỉ ~80 dòng thay vì 280+ dòng
+
 ### Performance Tuning
 - **Vector Cache**: Auto-refresh 15 phút cho real-time updates
 - **vLLM**: Optimized inference với quantization
 - **Smart Routing**: Giảm 60% response time bằng cách chọn đúng data source
+- **Clean imports**: Chỉ import những gì cần thiết, giảm dependency overhead
 
 **⭐ Nếu project này hữu ích cho bạn, hãy give star để ủng hộ nhé!**
