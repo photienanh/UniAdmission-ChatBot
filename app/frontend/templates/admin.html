@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - UniAdmission ChatBot</title>
+    <link rel="icon" type="image/svg+xml" href="/static/favicon.svg">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.5em;
+            font-weight: bold;
+        }
+        
+        .logo img {
+            width: 32px;
+            height: 32px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 30px 20px;
+        }
+        
+        .dashboard-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .dashboard-title {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #333;
+        }
+        
+        .dashboard-subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .stat-card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        .stat-label-with-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-size: 0.9em;
+            color: #666;
+        }
+        
+        .stat-label-with-icon i {
+            font-size: 1.2em;
+        }
+        
+        .text-warning { color: #ffc107; }
+        .text-success { color: #28a745; }
+        .text-info { color: #17a2b8; }
+        .text-danger { color: #dc3545; }
+        
+        /* Toast Notification System */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 9999;
+            pointer-events: none;
+        }
+        
+        .toast {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+            padding: 16px 20px;
+            margin-bottom: 10px;
+            min-width: 300px;
+            max-width: 400px;
+            border-left: 4px solid;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.3s ease;
+            pointer-events: auto;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .toast.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            border-left-color: #28a745;
+            background: #f8fff9;
+        }
+        
+        .toast.error {
+            border-left-color: #dc3545;
+            background: #fff8f8;
+        }
+        
+        .toast.info {
+            border-left-color: #17a2b8;
+            background: #f8fdff;
+        }
+        
+        .toast-icon {
+            font-size: 1.2em;
+            flex-shrink: 0;
+        }
+        
+        .toast-content {
+            flex: 1;
+        }
+        
+        .toast-close {
+            background: none;
+            border: none;
+            font-size: 1.2em;
+            color: #999;
+            cursor: pointer;
+            padding: 0;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .toast-close:hover {
+            color: #666;
+        }
+        
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 1.1em;
+        }
+        
+        .section {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+            overflow: hidden;
+        }
+        
+        .section-header {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .section-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+        
+        .btn-sm {
+            padding: 6px 12px;
+            font-size: 0.8em;
+        }
+        
+        .btn-primary {
+            background-color: #667eea;
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #5a67d8;
+        }
+        
+        .btn-success {
+            background-color: #28a745;
+            color: white;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+        
+        .btn-danger {
+            background-color: #dc3545;
+            color: white;
+        }
+        
+        .btn-danger:hover {
+            background-color: #c82333;
+        }
+        
+        .btn-warning {
+            background-color: #ffc107;
+            color: #212529;
+        }
+        
+        .btn-warning:hover {
+            background-color: #e0a800;
+        }
+        
+        .table-container {
+            overflow-x: auto;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #495057;
+        }
+        
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .status-badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .status-pending {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        
+        .status-approved {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .status-rejected {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        
+        .status-active {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        
+        .no-data {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #6c757d;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+        }
+        
+        .modal-content {
+            background-color: white;
+            margin: 5% auto;
+            padding: 30px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            line-height: 1;
+        }
+        
+        .close:hover {
+            color: black;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+        
+        .form-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            resize: vertical;
+            min-height: 100px;
+            font-family: inherit;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        
+        .tag {
+            background: #e9ecef;
+            color: #495057;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.8em;
+        }
+        
+        .tag.package {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .tag.capability {
+            background: #cce7ff;
+            color: #0056b3;
+        }
+        
+        .refresh-indicator {
+            color: #28a745;
+            font-size: 0.9em;
+            margin-left: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                padding: 20px 10px;
+            }
+        }
+        
+        /* Đảm bảo các nút action có cùng width và căn đều */
+        .btn-action {
+            min-width: 85px !important;
+            padding: 6px 8px !important;
+            font-size: 11px !important;
+            display: inline-block;
+            text-align: center;
+            margin: 0 2px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <i class="fas fa-user-shield"></i>
+                UniAdmission Admin
+            </div>
+            <div class="user-info">
+                <span><i class="fas fa-user"></i> Welcome, {{ current_user.full_name }}</span>
+                <button onclick="handleLogout()" class="btn btn-primary"><i class="fas fa-sign-out-alt"></i> Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="dashboard-header">
+            <h1 class="dashboard-title">Kaggle Worker Management</h1>
+            <p class="dashboard-subtitle">Monitor and approve Kaggle worker requests</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-number" id="pendingCount">-</div>
+                <div class="stat-label-with-icon">
+                    <i class="fas fa-clock text-warning"></i>
+                    <span>Pending Requests</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="approvedCount">-</div>
+                <div class="stat-label-with-icon">
+                    <i class="fas fa-check-circle text-success"></i>
+                    <span>Approved Servers</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="totalCount">-</div>
+                <div class="stat-label-with-icon">
+                    <i class="fas fa-list text-info"></i>
+                    <span>Total Requests</span>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-number" id="expiredCount">-</div>
+                <div class="stat-label-with-icon">
+                    <i class="fas fa-times-circle text-danger"></i>
+                    <span>Expired Requests</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Requests Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-clock text-warning"></i> Pending Requests</h2>
+                <div>
+                    <button class="btn btn-primary" onclick="refreshData()"><i class="fas fa-sync-alt"></i> Refresh</button>
+                    <span class="refresh-indicator"><i class="fas fa-clock"></i> Auto-refresh: 30s</span>
+                </div>
+            </div>
+            <div class="table-container">
+                <div id="pendingRequestsTable" class="loading">Loading...</div>
+            </div>
+        </div>
+
+        <!-- Approved Servers Section -->
+        <div class="section">
+            <div class="section-header">
+                <h2 class="section-title"><i class="fas fa-check-circle text-success"></i> Approved Servers</h2>
+                <div>
+                    <button class="btn btn-warning" onclick="checkAllServersHealth()"><i class="fas fa-heartbeat"></i> Check Health</button>
+                    <button class="btn btn-danger" onclick="cleanupUnhealthyServers()"><i class="fas fa-trash"></i> Remove Unhealthy</button>
+                </div>
+            </div>
+            <div class="table-container">
+                <div id="approvedServersTable" class="loading">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- Request Details Modal -->
+    <div id="detailModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Request Details</h3>
+            <div id="detailContent"></div>
+        </div>
+    </div>
+
+    <!-- Approve Modal -->
+    <div id="approveModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Approve Request</h3>
+            <form id="approveForm">
+                <div class="form-group">
+                    <label for="approveNotes">Admin Notes (Optional):</label>
+                    <textarea id="approveNotes" name="admin_notes" placeholder="Add any notes about this approval..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-success"><i class="fas fa-check"></i> Approve Request</button>
+                <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Reject Modal -->
+    <div id="rejectModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h3>Reject Request</h3>
+            <form id="rejectForm">
+                <div class="form-group">
+                    <label for="rejectNotes">Reason for Rejection (Optional):</label>
+                    <textarea id="rejectNotes" name="admin_notes" placeholder="Add any notes about this rejection..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-danger"><i class="fas fa-times"></i> Reject Request</button>
+                <button type="button" class="btn" onclick="closeModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        let currentRequestId = null;
+        let autoRefreshInterval;
+
+        // Toast Notification System
+        function showToast(message, type = 'info', duration = 4000) {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            const icons = {
+                success: 'fas fa-check-circle text-success',
+                error: 'fas fa-exclamation-circle text-danger',
+                info: 'fas fa-info-circle text-info'
+            };
+            
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <i class="${icons[type]} toast-icon"></i>
+                <div class="toast-content">${message}</div>
+                <button class="toast-close" onclick="closeToast(this.parentElement)">
+                    <i class="fas fa-times"></i>
+                </button>
+            `;
+            
+            container.appendChild(toast);
+            
+            // Show animation
+            setTimeout(() => toast.classList.add('show'), 100);
+            
+            // Auto remove
+            setTimeout(() => closeToast(toast), duration);
+            
+            return toast;
+        }
+        
+        function closeToast(toast) {
+            toast.classList.remove('show');
+            setTimeout(() => {
+                if (toast.parentElement) {
+                    toast.parentElement.removeChild(toast);
+                }
+            }, 300);
+        }
+
+        // Handle logout
+        async function handleLogout() {
+            try {
+                const response = await fetch('/api/auth/logout', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                if (result.success) {
+                    window.location.href = result.next; // Redirect to login
+                } else {
+                    showToast('Logout failed: ' + result.detail, 'error');
+                }
+            } catch (error) {
+                console.error('Logout error:', error);
+                showToast('Logout error occurred', 'error');
+            }
+        }
+
+        // Load dashboard data
+        async function loadDashboard() {
+            try {
+                const response = await fetch('/admin/dashboard');
+                const result = await response.json();
+                
+                if (result.success) {
+                    const data = result.next;  // Sửa từ result.data thành result.next
+                    
+                    // Update stats
+                    document.getElementById('pendingCount').textContent = data.stats.total_pending;
+                    document.getElementById('approvedCount').textContent = data.stats.total_approved;
+                    document.getElementById('totalCount').textContent = data.stats.total_requests;
+                    document.getElementById('expiredCount').textContent = data.stats.total_expired;
+                    
+                    // Update tables
+                    renderPendingRequests(data.pending_requests);
+                    renderApprovedServers(data.approved_servers);
+                } else {
+                    throw new Error(result.detail);
+                }
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+                document.getElementById('pendingRequestsTable').innerHTML = 
+                    '<div class="no-data"><i class="fas fa-exclamation-triangle text-warning"></i> Error loading data</div>';
+            }
+        }
+
+        function renderPendingRequests(requests) {
+            const container = document.getElementById('pendingRequestsTable');
+            
+            if (requests.length === 0) {
+                container.innerHTML = '<div class="no-data">No pending requests</div>';
+                return;
+            }
+
+            const pendingRequests = requests.filter(r => r.status === 'pending');
+            
+            if (pendingRequests.length === 0) {
+                container.innerHTML = '<div class="no-data">No pending requests</div>';
+                return;
+            }
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Request ID</th>
+                            <th>Server ID</th>
+                            <th>Type</th>
+                            <th>Packages</th>
+                            <th>Submitted</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            pendingRequests.forEach(request => {
+                const packages = request.data.requested_packages || [];
+                html += `
+                    <tr>
+                        <td><code>${request.request_id}</code></td>
+                        <td>
+                            <a href="https://${request.server_id}" target="_blank" style="color: #4CAF50; text-decoration: none;">
+                                <code>${request.server_id}</code>
+                                <i class="fas fa-external-link-alt" style="margin-left: 5px; font-size: 12px;"></i>
+                            </a>
+                        </td>
+                        <td>${request.request_type.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())}</td>
+                        <td>
+                            <div class="tags">
+                                ${packages.map(pkg => `<span class="tag package">${pkg}</span>`).join('')}
+                            </div>
+                        </td>
+                        <td>${new Date(request.submitted_at).toLocaleString()}</td>
+                        <td>
+                            <button class="btn btn-success btn-action" onclick="approveRequest('${request.request_id}')"><i class="fas fa-check"></i> Approve</button>
+                            <button class="btn btn-danger btn-action" onclick="rejectRequest('${request.request_id}')"><i class="fas fa-times"></i> Reject</button>
+                            <button class="btn btn-primary btn-action" onclick="viewDetails('${request.request_id}')"><i class="fas fa-eye"></i> Details</button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        function renderApprovedServers(servers) {
+            const container = document.getElementById('approvedServersTable');
+            
+            if (servers.length === 0) {
+                container.innerHTML = '<div class="no-data">No approved servers yet</div>';
+                return;
+            }
+
+            let html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Server ID</th>
+                            <th>Approved At</th>
+                            <th>Packages</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+            `;
+
+            servers.forEach(server => {
+                const packages = server.approved_packages || [];
+                html += `
+                    <tr>
+                        <td>
+                            <a href="https://${server.server_id}" target="_blank" style="color: #4CAF50; text-decoration: none;">
+                                <code>${server.server_id}</code>
+                                <i class="fas fa-external-link-alt" style="margin-left: 5px; font-size: 12px;"></i>
+                            </a>
+                        </td>
+                        <td>${new Date(server.approved_at).toLocaleString()}</td>
+                        <td>
+                            <div class="tags">
+                                ${packages.map(pkg => `<span class="tag package">${pkg}</span>`).join('')}
+                            </div>
+                        </td>
+                        <td><span class="status-badge status-active">approved</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" onclick="removeServer('${server.server_id}')" title="Remove Server">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                `;
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        async function viewDetails(requestId) {
+            try {
+                const response = await fetch('/admin/requests');
+                const result = await response.json();
+                
+                if (result.success) {
+                    const request = result.next.requests.find(r => r.request_id === requestId);
+                    if (request) {
+                        const content = `
+                            <div>
+                                <p><strong>Request ID:</strong> ${request.request_id}</p>
+                                <p><strong>Server URL:</strong> 
+                                    <a href="https://${request.server_id}" target="_blank" style="color: #4CAF50; text-decoration: none;">
+                                        ${request.server_id}
+                                        <i class="fas fa-external-link-alt" style="margin-left: 5px; font-size: 12px;"></i>
+                                    </a>
+                                </p>
+                                <p><strong>Type:</strong> ${request.request_type}</p>
+                                <p><strong>Submitted:</strong> ${new Date(request.submitted_at).toLocaleString()}</p>
+                                <p><strong>Contact Info:</strong> ${request.data.contact_info || 'Not provided'}</p>
+                                <p><strong>Ngrok URL:</strong> ${request.data.ngrok_url || 'Not provided'}</p>
+                                <p><strong>Reason:</strong></p>
+                                <div style="background: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                                    ${request.data.reason || 'No reason provided'}
+                                </div>
+                                <p><strong>Requested Packages:</strong></p>
+                                <div class="tags" style="margin: 10px 0;">
+                                    ${(request.data.requested_packages || []).map(pkg => `<span class="tag package">${pkg}</span>`).join('')}
+                                </div>
+                            </div>
+                        `;
+                        document.getElementById('detailContent').innerHTML = content;
+                        document.getElementById('detailModal').style.display = 'block';
+                    }
+                }
+            } catch (error) {
+                console.error('Error loading request details:', error);
+            }
+        }
+
+        function approveRequest(requestId) {
+            currentRequestId = requestId;
+            document.getElementById('approveModal').style.display = 'block';
+        }
+
+        function rejectRequest(requestId) {
+            currentRequestId = requestId;
+            document.getElementById('rejectModal').style.display = 'block';
+        }
+
+        function closeModal() {
+            document.getElementById('detailModal').style.display = 'none';
+            document.getElementById('approveModal').style.display = 'none';
+            document.getElementById('rejectModal').style.display = 'none';
+            currentRequestId = null;
+        }
+
+        function refreshData() {
+            loadDashboard();
+        }
+
+        // Health Check Functions
+        async function checkAllServersHealth() {
+            showToast('Checking health of all servers...', 'info');
+            
+            try {
+                const response = await fetch('/admin/servers/health-check', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    const healthResults = result.next;
+                    let healthyCount = 0;
+                    let unhealthyCount = 0;
+                    
+                    for (const [serverId, health] of Object.entries(healthResults)) {
+                        if (health.status === 'healthy') {
+                            healthyCount++;
+                        } else {
+                            unhealthyCount++;
+                        }
+                    }
+                    
+                    showToast(`Health check completed: ${healthyCount} healthy, ${unhealthyCount} unhealthy`, 'success');
+                    
+                    // Hiển thị detail nếu có server unhealthy
+                    if (unhealthyCount > 0) {
+                        const unhealthyServers = Object.entries(healthResults)
+                            .filter(([_, health]) => health.status === 'unhealthy')
+                            .map(([serverId, health]) => `${serverId}: ${health.error}`);
+                        
+                        console.log('Unhealthy servers details:', unhealthyServers);
+                        
+                        // Hiển thị chi tiết trong toast nếu ít servers
+                        if (unhealthyCount <= 3) {
+                            unhealthyServers.forEach(serverInfo => {
+                                showToast(`❌ ${serverInfo}`, 'error');
+                            });
+                        }
+                    }
+                } else {
+                    showToast('Error: ' + result.detail, 'error');
+                }
+            } catch (error) {
+                showToast('Error checking server health', 'error');
+            }
+        }
+        
+        async function cleanupUnhealthyServers() {
+            if (!confirm('This will remove all unhealthy servers from the approved list. Are you sure?')) {
+                return;
+            }
+            
+            showToast('Removing unhealthy servers...', 'info');
+            
+            try {
+                const response = await fetch('/admin/servers/cleanup-unhealthy', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast(`Removed ${result.next.count} unhealthy servers`, 'success');
+                    loadDashboard(); // Refresh để update UI
+                } else {
+                    showToast('Error: ' + result.detail, 'error');
+                }
+            } catch (error) {
+                showToast('Error removing unhealthy servers', 'error');
+            }
+        }
+        
+        async function removeServer(serverId) {
+            if (!confirm(`Are you sure you want to remove server "${serverId}" from the approved list?\n\nThis server will be blocked from future access.`)) {
+                return;
+            }
+            
+            showToast(`Removing server ${serverId}...`, 'info');
+            
+            try {
+                const response = await fetch(`/admin/servers/${encodeURIComponent(serverId)}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast(`Server ${serverId} has been removed and blocked`, 'success');
+                    loadDashboard(); // Refresh để update UI
+                } else {
+                    showToast('Error: ' + result.detail, 'error');
+                }
+            } catch (error) {
+                showToast('Error removing server', 'error');
+            }
+        }
+
+        async function checkSingleServerHealth(serverId) {
+            showToast(`Checking health of ${serverId}...`, 'info');
+            
+            try {
+                const response = await fetch(`/admin/servers/${encodeURIComponent(serverId)}/health`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const health = result.next;
+                    if (health.status === 'healthy') {
+                        let message = `${serverId} is healthy (${health.response_time?.toFixed(2)}s)`;
+                        
+                        // Hiển thị response type
+                        switch(health.response_type) {
+                            case 'json':
+                                message += ' ✓';
+                                break;
+                            case 'string_ok':
+                                message += ' (string "ok")';
+                                break;
+                            case 'string_contains_ok':
+                                message += ' (string with ok)';
+                                if (health.raw_response) {
+                                    console.log(`Raw response from ${serverId}:`, health.raw_response);
+                                }
+                                break;
+                            default:
+                                message += ` (${health.response_type || 'unknown'})`;
+                        }
+                        
+                        showToast(message, 'success');
+                    } else {
+                        showToast(`${serverId} is unhealthy: ${health.error}`, 'error');
+                        console.log('Health check details:', health);
+                    }
+                } else {
+                    showToast('Error: ' + result.detail, 'error');
+                }
+            } catch (error) {
+                showToast('Error checking server health', 'error');
+            }
+        }
+        
+        async function debugServerConnection(serverId) {
+            showToast(`Debugging connection to ${serverId}...`, 'info');
+            
+            try {
+                const response = await fetch(`/admin/servers/${encodeURIComponent(serverId)}/debug`);
+                const result = await response.json();
+                
+                if (result.success) {
+                    const debug = result.next;
+                    console.log('=== DEBUG CONNECTION RESULTS ===');
+                    console.log('Server ID:', serverId);
+                    console.log('HTTPS Result:', debug.https);
+                    console.log('HTTP Result:', debug.http);
+                    console.log('================================');
+                    
+                    // Hiển thị summary
+                    let httpsStatus = debug.https.error ? 'Failed' : `${debug.https.status_code}`;
+                    let httpStatus = debug.http.error ? 'Failed' : `${debug.http.status_code}`;
+                    
+                    showToast(`Debug completed - HTTPS: ${httpsStatus}, HTTP: ${httpStatus}. Check console for details.`, 'info');
+                } else {
+                    showToast('Error: ' + result.detail, 'error');
+                }
+            } catch (error) {
+                showToast('Error debugging connection', 'error');
+            }
+        }
+
+        // Form submissions
+        document.getElementById('approveForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = {
+                admin_notes: formData.get('admin_notes') || ''
+            };
+            
+            try {
+                const response = await fetch(`/admin/requests/${currentRequestId}/approve`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast('Request approved successfully', 'success');
+                    closeModal();
+                    loadDashboard();
+                } else {
+                    showToast('Error: ' + result.detail, 'error');
+                }
+            } catch (error) {
+                showToast('Error approving request', 'error');
+            }
+        });
+
+        document.getElementById('rejectForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const formData = new FormData(e.target);
+            const data = {
+                admin_notes: formData.get('admin_notes') || ''
+            };
+            
+            try {
+                const response = await fetch(`/admin/requests/${currentRequestId}/reject`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    showToast('Request rejected successfully', 'success');
+                    closeModal();
+                    loadDashboard();
+                } else {
+                    showToast('Error: ' + result.detail, 'error');
+                }
+            } catch (error) {
+                showToast('Error rejecting request', 'error');
+            }
+        });
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            const modals = ['detailModal', 'approveModal', 'rejectModal'];
+            modals.forEach(modalId => {
+                const modal = document.getElementById(modalId);
+                if (event.target == modal) {
+                    modal.style.display = 'none';
+                }
+            });
+        }
+
+        // Auto refresh every 30 seconds
+        function startAutoRefresh() {
+            autoRefreshInterval = setInterval(() => {
+                loadDashboard();
+            }, 30000);
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDashboard();
+            startAutoRefresh();
+            
+            // Ngăn admin truy cập chat pages
+            if (window.location.pathname === '/' || window.location.pathname.startsWith('/chat')) {
+                window.location.href = '/admin';
+            }
+        });
+
+        // Ngăn navigation đến chat pages
+        window.addEventListener('popstate', (event) => {
+            if (window.location.pathname === '/' || window.location.pathname.startsWith('/chat')) {
+                event.preventDefault();
+                window.location.href = '/admin';
+            }
+        });
+
+        // Cleanup
+        window.addEventListener('beforeunload', () => {
+            if (autoRefreshInterval) {
+                clearInterval(autoRefreshInterval);
+            }
+        });
+    </script>
+</body>
+</html>

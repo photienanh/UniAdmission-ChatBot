@@ -7,7 +7,8 @@ from .route import (
     auth_router,
     chat_router,
     script_router,
-    kaggle_router
+    kaggle_router,
+    admin_router
 )
 
 from database import init_db, close_db
@@ -37,7 +38,8 @@ app = FastAPI(lifespan=lifespan)
 app.add_middleware(SessionMiddleware, secret_key=JWT_SECRET_KEY)
 app.mount("/static", CacheControledStaticFiles(directory="frontend/static"), name="static")
 app.include_router(template_router, tags=["JinjaTemplate"])
-app.include_router(auth_router, tags=["Authentication"])
+app.include_router(auth_router, prefix="/api/auth", tags=["Authentication"])
 app.include_router(chat_router, tags=["Chat"])
 app.include_router(script_router, tags=["Script"])
 app.include_router(kaggle_router, tags=["Kaggle"])
+app.include_router(admin_router, prefix="/admin", tags=["Admin"])

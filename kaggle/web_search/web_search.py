@@ -102,6 +102,14 @@ class Websearch:
                 )
                 image_content.append(content)
             content = search_result["main_content"]
+            
+            # Add title at the beginning of content to help model distinguish pages
+            page_title = search_result["title"]
+            if page_title and content:
+                content = f"# {page_title}\n\n{content}"
+            elif page_title:
+                content = f"# {page_title}\n\n"
+            
             if len(pdf_content) > 0:
                 content += "\n" + "\n".join(pdf_content)
             if len(image_content) > 0:

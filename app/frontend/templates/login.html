@@ -18,8 +18,8 @@
 <body>
     <div class="login-container">
         <div class="login-header">
-            <h1>Uniadmission Chatbot</h1>
-            <p>Đăng nhập để tiếp tục</p>
+            <h1 id="login-title">Uniadmission Chatbot</h1>
+            <p id="login-subtitle">Đăng nhập để tiếp tục</p>
         </div>
         
         <form class="login-form" id="login-form">
@@ -44,12 +44,12 @@
                 <i class="fas fa-eye password-toggle" id="password-toggle"></i>
             </div>
             
-            <button type="submit" class="login-btn">
+            <button type="submit" class="login-btn" id="login-button">
                 Đăng nhập
             </button>
             
             <div class="login-footer">
-                <p>Chưa có tài khoản? <a href="{{ url_for('register') }}">Đăng ký</a></p>
+                <p id="register-link">Chưa có tài khoản? <a href="{{ url_for('register') }}">Đăng ký</a></p>
             </div>
         </form>
     </div>

@@ -64,7 +64,13 @@ class ModelManager:
                 "web_sources": web_sources  # Cache web sources to avoid duplicate search
             }
         else:
-            # Kaggle models
+            # Kaggle models - Check if any servers are blocked before doing search
+            from .kaggle import KaggleManager
+            available_servers = await KaggleManager.get_available_servers(model_id)
+            
+            if not available_servers:
+                return None
+            
             conversation_history = [{"role": "system", "content": SYSTEM_INSTRUCTION}]
             if session_id:
                 try:
@@ -127,7 +133,11 @@ class ModelManager:
     @classmethod
     async def inference(cls, job_id: str) -> AsyncGenerator[str, None]:
         if job_id not in cls._jobs:
-            yield f"Error: Job ID '{job_id}' not found"
+            # Check if job_id is undefined/None - likely due to server approval issues
+            if job_id == "undefined" or job_id == "null" or not job_id:
+                yield "Error: Server is not approved or Admin blocked this server"
+            else:
+                yield f"Error: Job ID '{job_id}' not found"
             return
             
         job_info = cls._jobs.pop(job_id)
