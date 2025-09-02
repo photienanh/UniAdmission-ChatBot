@@ -63,6 +63,7 @@ def construct_app(
     app = FastAPI(lifespan=lifespan)
     app.include_router(router, tags=["Server"])
     app.state.info = info
+    app.state.server_domain = server_domain
     app.state.pre_inference = pre_inference
     app.state.inference = inferece
     return app

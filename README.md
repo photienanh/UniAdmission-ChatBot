@@ -48,7 +48,7 @@ Hệ thống sử dụng mô hình **Qwen3-4B được fine-tune** riêng cho nh
 
 ### Frontend (Web Application)
 - **Web Interface**: HTML/CSS/JavaScript với chat interface
-- **Templates**: Jinja2 cho login, register, chat pages
+- **Templates**: Jinja2 cho login, register, chat, admin pages
 - **Real-time**: Streaming responses từ backend
 
 ### Backend API (FastAPI)
@@ -112,7 +112,7 @@ Tạo file `.env` trong thư mục `app/config/`:
 ```env
 JWT_SECRET_KEY=your_secret_key_here
 DATABASE_URL=your_database_url
-OPENAI_API_KEY=your_openai_api_key
+GPT_API_KEY=your_openai_api_key
 GOOGLE_API_KEY=your_google_api_key
 BRAVE_API_KEY=your_brave_api_key
 ```
@@ -144,7 +144,7 @@ Dự án sử dụng Kaggle để deploy mô hình Qwen3-4B với vLLM:
 2. **Upload LoRA adapter lên Kaggle Dataset**
 3. **Cấu hình secrets** trong Kaggle:
    ```
-   NGROK_KEY_2: Your ngrok auth token
+   NGROK_KEY: Your ngrok auth token
    BRAVE_API_KEY: Brave search API key
    GOOGLE_API_KEY: Google search API key
    ```
@@ -154,7 +154,8 @@ Dự án sử dụng Kaggle để deploy mô hình Qwen3-4B với vLLM:
    - Load Qwen3-4B + LoRA adapter
    - Khởi động vLLM inference server
    - Tạo ngrok tunnel cho public access
-   - Connect với main application
+   - **Đợi admin phê duyệt server**
+   - Connect với main application sau khi được approve
 
 ### Kaggle Architecture
 ```python
@@ -250,11 +251,13 @@ UniAdmission-ChatBot/
 │   │   │   ├── vector_cache.py    # Vector DB cache với auto-refresh
 │   │   │   └── history_cache.py   # Chat history caching
 │   │   ├── search/            # Search strategies
-│   │   │   ├── vector_search.py   # Vector database search
+│   │   │   ├── search_router.py   # Smart query routing
+│   │   │   ├── vectordb_search.py # Vector database search
 │   │   │   └── web_search.py      # Web search integration
 │   │   ├── route/             # API routes
 │   │   │   ├── chat.py           # Chat endpoints với smart routing
 │   │   │   ├── auth.py           # Authentication
+│   │   │   ├── admin.py          # Admin management routes
 │   │   │   ├── kaggle.py         # Kaggle server management
 │   │   │   ├── script.py         # Module distribution
 │   │   │   └── template.py       # Web template serving
@@ -271,15 +274,13 @@ UniAdmission-ChatBot/
 │   ├── data.jsonl            # Training conversations
 │   └── qwen_lora_adapter.zip  # Trained LoRA weights
 ├── kaggle/                    # 🚀 Kaggle deployment modules
-│   ├── kaggle_deploy.py       # Clean deployment script (~80 dòng)
-│   ├── kaggle_deploy.ipynb    # Kaggle notebook
+│   ├── kaggle_deploy.ipynb       # Kaggle deployment notebook
 │   ├── server/                # Server logic modules
-│   │   ├── config.py             # Model config và constants
-│   │   ├── qa.py                 # CustomQA class
+│   │   ├── router.py             # FastAPI routes
 │   │   ├── schema.py             # Type definitions
-│   │   └── server.py             # FastAPI server construction
+│   │   └── server.py             # Server construction
 │   ├── web_search/            # Web search pipeline
-│   │   ├── wrapper.py            # Search wrapper với default config
+│   │   ├── web_search.py         # Enhanced search với page titles
 │   │   ├── pipeline.py           # Search pipeline
 │   │   └── component/            # Search components
 │   └── vllm_worker/           # VLLM engine management

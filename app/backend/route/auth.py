@@ -16,9 +16,39 @@ async def check_token(request: Request):
 async def login(request: LoginRequest):
     jwt = await login_user(request.username, request.password)
     if jwt:
-        response = CommonResponse(200, True, "Đăng nhập thành công", "/")
-        set_jwt(response, jwt)
-        return response
+        # Decode JWT để check role
+        from database.utils import decode_jwt
+        decoded = decode_jwt(jwt)
+        if decoded and isinstance(decoded, tuple):
+            username, role = decoded
+            
+            # Redirect và set cookie based on role
+            if role == "admin":
+                redirect_url = "/admin"
+                response = CommonResponse(200, True, "Đăng nhập admin thành công", redirect_url)
+                # Set admin cookie với tên khác
+                response.set_cookie(
+                    key="admin_jwt",
+                    value=jwt,
+                    httponly=True,
+                    secure=False,
+                    samesite="lax"
+                )
+                # Clear user cookie nếu có
+                response.delete_cookie("jwt")
+            else:
+                redirect_url = "/"
+                response = CommonResponse(200, True, "Đăng nhập thành công", redirect_url)
+                # Set user cookie
+                set_jwt(response, jwt)
+                # Clear admin cookie nếu có
+                response.delete_cookie("admin_jwt")
+                
+            return response
+        else:
+            response = CommonResponse(200, True, "Đăng nhập thành công", "/")
+            set_jwt(response, jwt)
+            return response
     else:
         return CommonResponse(401, False, "Tên đăng nhập hoặc mật khẩu không đúng")
     
@@ -42,7 +72,9 @@ async def logout(request: Request):
     success = await logout_user(user.username)
     if success:
         response = CommonResponse(200, True, "Đăng xuất thành công", "/login")
-        response.delete_cookie("jwt") # Delete jwt, it still usable though
+        # Clear both cookies
+        response.delete_cookie("jwt") 
+        response.delete_cookie("admin_jwt")
         response.headers.update(NO_CACHE_HEADERS)
         return response
     else:

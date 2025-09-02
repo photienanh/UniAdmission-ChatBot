@@ -17,39 +17,40 @@ function togglePassword(event, inputId, toggleIcon) {
     }
 }
 
+// Check if this is admin login mode
+function isAdminMode() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('admin') === 'true';
+}
+
 // Setup event listener for password toggle
 document.addEventListener('DOMContentLoaded', function() {
-    // Prevent unwanted focus behavior
-    document.addEventListener('mousedown', function(e) {
-        // Only allow focus on inputs, textareas, and buttons
-        if (!e.target.matches('input, textarea, button, a, select')) {
-            e.preventDefault();
-        }
-    });
+    // Check if admin mode and update UI
+    if (isAdminMode()) {
+        document.getElementById('login-title').textContent = 'Admin Login';
+        document.getElementById('login-subtitle').textContent = 'Đăng nhập với quyền quản trị';
+        document.getElementById('login-button').textContent = 'Đăng nhập Admin';
+        document.getElementById('register-link').style.display = 'none';
+    }
 
+    // Simple password toggle
     const passwordToggle = document.getElementById('password-toggle');
     const passwordInput = document.getElementById('password');
     
-    passwordToggle.addEventListener('mousedown', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            passwordToggle.classList.remove('fa-eye');
-            passwordToggle.classList.add('fa-eye-slash');
-        } else {
-            passwordInput.type = 'password';
-            passwordToggle.classList.remove('fa-eye-slash');
-            passwordToggle.classList.add('fa-eye');
-        }
-    });
-    
-    // Prevent click event from bubbling to input
-    passwordToggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    });
+    if (passwordToggle && passwordInput) {
+        passwordToggle.onclick = function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                passwordToggle.className = 'fas fa-eye-slash password-toggle';
+            } else {
+                passwordInput.type = 'password';
+                passwordToggle.className = 'fas fa-eye password-toggle';
+            }
+        };
+    }
 });
 
 document.getElementById('login-form').addEventListener('submit', function(e) {
@@ -62,7 +63,7 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
     errorDiv.style.display = 'none';
     errorDiv.className = 'error-message'; // Reset to default class
     
-    fetch('/login', {
+    fetch('/api/auth/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -96,9 +97,16 @@ document.getElementById('login-form').addEventListener('submit', function(e) {
         errorDiv.style.display = 'block';
         
         if (data.success) {
-            setTimeout(() => {
-                window.location.href = data.next;
-            }, 1000);
+            // Check if we're in admin mode and redirect accordingly
+            if (isAdminMode()) {
+                setTimeout(() => {
+                    window.location.href = '/admin';
+                }, 1000);
+            } else {
+                setTimeout(() => {
+                    window.location.href = data.next;
+                }, 1000);
+            }
         }
     })
     .catch(error => {

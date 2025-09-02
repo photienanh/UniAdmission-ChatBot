@@ -30,4 +30,3 @@ async def inference(request: Request, stream_id: str):
     inference:  Callable[[str], Awaitable[AsyncGenerator[str, None]]] = request.app.state.inference
     generator = await inference(stream_id)
     return StreamingResponse(generator)
-

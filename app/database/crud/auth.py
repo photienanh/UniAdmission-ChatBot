@@ -14,8 +14,14 @@ async def check_login(request: Request, role: UserRole = "user") -> User:
     """Kiểm tra JWT trong cookie -> trả về User nếu hợp lệ, 
        ngược lại raise HTTPException 401"""
 
-    # Lấy token JWT từ cookie
-    jwt = request.cookies.get("jwt")
+    # Lấy token JWT từ cookie dựa theo role cần thiết
+    if role == "admin":
+        # Admin phải dùng admin_jwt cookie
+        jwt = request.cookies.get("admin_jwt")
+    else:
+        # User dùng jwt cookie, nhưng cũng check admin_jwt nếu không có jwt
+        jwt = request.cookies.get("jwt") or request.cookies.get("admin_jwt")
+    
     if not jwt:
         raise HTTPException(status_code=401, detail="No token found")
 
@@ -27,20 +33,19 @@ async def check_login(request: Request, role: UserRole = "user") -> User:
         raise HTTPException(status_code=401, detail="Expired token")
 
     # Nếu token OK -> unpack ra username, role
-    username, role = data
+    username, token_role = data
 
     # Kiểm tra user trong DB
     async with session() as ss:
         user = (await ss.execute(select(User).filter_by(username=username))).scalar()
         if user:
-            # Nếu chỉ yêu cầu role = "user" -> ai cũng pass
+            # Kiểm tra role phù hợp
             if role == "user":
-                return user
-            # Nếu yêu cầu admin -> check role trong DB
-            elif role == user.role:
+                return user  # User role cho phép cả user và admin
+            elif role == "admin" and user.role == "admin":
                 return user
             else:
-                raise HTTPException(status_code=401, detail="User is not admin")
+                raise HTTPException(status_code=401, detail="Insufficient permissions")
         else:
             raise HTTPException(status_code=401, detail="User not found")
 
@@ -50,12 +55,17 @@ async def login_user(username: str, password: str) -> str | None:
     async with session() as ss:
         # Tìm user trong DB theo username
         user = (await ss.execute(select(User).filter_by(username=username))).scalar()
+        
+        if not user:
+            return None
+            
         # Nếu tồn tại và password đúng
         if user and user.check_password(password):
             # Sinh JWT chứa username + role, với hạn JWT_DURATION
             jwt = generate_jwt(cast(str, user.username), user.role, JWT_DURATION)
             return jwt
-        return None
+        else:
+            return None
 
 async def logout_user(username: str) -> bool:
     """Trả về True nếu user tồn tại, False nếu không.

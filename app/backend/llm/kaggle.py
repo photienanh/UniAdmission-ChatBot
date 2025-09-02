@@ -41,6 +41,17 @@ class KaggleManager:
                 to_be_remove.append(server)
 
             if alive:
+                # Server approved và không bị block thì dùng luôn
+                server_id = server["info"].get("server_id")
+                if server_id:
+                    from backend.route.admin import AdminManager
+                    if not AdminManager.is_server_approved(server_id):
+                        # Server chưa approve → không dùng
+                        continue
+                    if AdminManager.is_server_blocked(server_id):
+                        # Server bị block → không dùng
+                        continue
+                
                 # Check server có hỗ trợ model này không
                 for model in server["info"]["models"]:
                     if model["id"] == model_id:
@@ -67,7 +78,6 @@ class KaggleManager:
         # Xóa server chết khỏi danh sách
         for server in to_be_remove:
             cls._servers.remove(server)
-            print(f"[Kaggle] Disconnect: {server['info']['domain']}")
 
         # Ưu tiên chọn server có nhiều job nhất (để giữ model "warm")
         if len(active_servers) > 0:
@@ -119,7 +129,6 @@ class KaggleManager:
         # Cleanup
         for server in to_be_remove:
             cls._servers.remove(server)
-            print(f"[Kaggle] Disconnect: {server['info']['domain']}")
 
         return result
 
@@ -135,6 +144,7 @@ class KaggleManager:
         vector_sources: sources đã search từ app/ level
         web_keywords: keywords để kaggle search nếu không có vector_sources
         """
+        
         # Chuẩn bị request gửi tới server
         request: KaggleRequest = {
             "stream_id": stream_id,
@@ -143,15 +153,8 @@ class KaggleManager:
             "params": params,
             "history": conversation_history
         }
-        
-        # Thêm vector_sources vào request nếu có
-        print(f"[KaggleManager] vector_sources received: {vector_sources}")
-        print(f"[KaggleManager] vector_sources check: {bool(vector_sources)}")
         if vector_sources:
             request["vector_sources"] = vector_sources
-            print(f"[KaggleManager] Added {len(vector_sources)} vector sources to request")
-        else:
-            print(f"[KaggleManager] No vector sources to add")
         
         # Thêm web_keywords vào request nếu có (khi app search fail)
         if web_keywords:
@@ -160,6 +163,7 @@ class KaggleManager:
         # Tạo session HTTP
         async with aiohttp.ClientSession() as ss:
             server = await cls.get_available_server(model_id)
+            
             retry = 0
             while retry < KAGGLE_MAX_RETRY:
                 if server != None:
@@ -176,15 +180,11 @@ class KaggleManager:
                                 pre_output = result["pre_output"]
                                 web_sources = pre_output.get("web_sources", [])
                                 cls.store_sources(stream_id, web_sources)
-
+                                
                                 return server["info"]["domain"], result["pre_output"]
-                            else:
-                                response_text = await response.text()
-                                print(f"[KaggleManager] Request failed with status {response.status}: {response_text}")
 
                     except Exception as e:
                         # Nếu lỗi kết nối thì retry
-                        print(f"[KaggleManager] Request exception: {e}")
                         pass
 
                     # Đợi cho server timeout rồi thử server khác
@@ -193,10 +193,8 @@ class KaggleManager:
                     server = await cls.get_available_server(model_id)
                     retry += 1
                 else:
-                    print(f"[KaggleManager] No available server found for model: {model_id}")
                     break
 
-        print(f"[KaggleManager] All retries exhausted, returning None")
         return None
 
 
@@ -205,6 +203,14 @@ class KaggleManager:
         """
         Gửi request inference tới server Kaggle và stream output về.
         """
+        # Kiểm tra domain có bị block không
+        server_id = domain.replace("https://", "").replace("http://", "")
+        from backend.route.admin import AdminManager
+        if AdminManager.is_server_blocked(server_id):
+            # Server bị block → không thực hiện inference
+            yield "[ERROR] Server is blocked and cannot be accessed."
+            return
+            
         async with aiohttp.ClientSession() as ss:
             url = f"{domain}/inference/{job_id}"
             async with ss.post(url=url) as response:
@@ -231,12 +237,55 @@ class KaggleManager:
             cls._stored_sources = {}
         cls._stored_sources[job_id] = web_sources
 
+    @classmethod
+    async def get_available_servers(cls, model_id: str) -> list:
+        """Check which servers are available (not blocked) for the given model_id"""
+        from ..route.admin import AdminManager
+        
+        # Use KaggleManager._servers which contains the actual server info with models
+        all_servers = cls._servers
+        
+        # Filter servers for the model_id (check models in the server info)
+        model_servers = []
+        for server in all_servers:
+            server_info = server.get("info", {})
+            models = server_info.get("models", [])
+            
+            # Check if this server has the requested model
+            for model in models:
+                if model.get("id") == model_id:
+                    model_servers.append(server)
+                    break
+        
+        # Filter out servers that are not approved or are blocked
+        available_servers = []
+        for server in model_servers:
+            server_info = server.get("info", {})
+            domain = server_info.get("domain", "")
+            
+            # Extract server_id from domain (remove https:// prefix)
+            domain_as_server_id = domain.replace("https://", "").replace("http://", "")
+            
+            # Check if server is approved and not blocked
+            if AdminManager.is_server_approved(domain_as_server_id) and not AdminManager.is_server_blocked(domain_as_server_id):
+                available_servers.append(server)
+        
+        return available_servers
+
 
     @classmethod
     async def _check_connection(cls, server: ServerStatus) -> bool:
         """
         Kiểm tra kết nối tới server bằng cách gọi /info.
         """
+        # Kiểm tra server có bị block không
+        server_id = server["info"].get("server_id")
+        if server_id:
+            from backend.route.admin import AdminManager
+            if AdminManager.is_server_blocked(server_id):
+                # Server bị block → không check connection
+                return False
+                
         async with aiohttp.ClientSession() as ss:
             url = f"{server['info']['domain']}/info"
             async with ss.get(url=url) as response:
@@ -252,7 +301,19 @@ class KaggleManager:
     def update_server(cls, info: KaggleServerInfo):
         """
         Cập nhật thông tin server. Nếu chưa có thì thêm mới.
+        Chỉ cho phép server đã được approve và không bị block.
         """
+        # Check server permissions - chỉ cần approve một lần và không bị block
+        server_id = info.get("server_id")
+        if server_id:
+            from backend.route.admin import AdminManager
+            if not AdminManager.is_server_approved(server_id):
+                return
+            if AdminManager.is_server_blocked(server_id):
+                # Nếu server bị block, xóa nó khỏi danh sách nếu có
+                cls._servers = [s for s in cls._servers if s["info"]["domain"] != info["domain"]]
+                return
+        
         now = time.time()
         for server in cls._servers:
             if server["info"]["domain"] == info["domain"]:

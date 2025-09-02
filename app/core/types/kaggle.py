@@ -19,6 +19,7 @@ class ModelStatus(ModelInfo):
 class KaggleServerInfo(TypedDict):
     name: str
     domain: str
+    server_id: NotRequired[str]  # Server ID for admin tracking
     models: list[ModelStatus]   
     
 class KagglePreInferenceResponse(TypedDict):

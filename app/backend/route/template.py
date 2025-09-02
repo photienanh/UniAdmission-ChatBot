@@ -45,10 +45,32 @@ async def get_delete(request: Request):
         raise HTTPException(status_code=401, detail="Admin does not allowed to delete account")
     
 
+@router.get("/admin", name="admin", response_class=HTMLResponse)
+async def get_admin(request: Request):
+    """Admin dashboard page - requires admin role"""
+    try:
+        user = await check_login(request, role="admin")
+        if user.role != "admin":
+            # Redirect to login với admin parameter
+            return RedirectResponse(url="/login?admin=true")
+    except HTTPException:
+        # Redirect to login với admin parameter
+        return RedirectResponse(url="/login?admin=true")
+    
+    response = templates.TemplateResponse(
+        "admin.html",
+        {"request": request, "current_user": user.to_dict()}
+    )
+    response.headers.update(NO_CACHE_HEADERS)
+    return response
+
 @router.get("/", name="index", response_class=HTMLResponse)
 async def get_index(request: Request):
     try:
         user = await check_login(request)
+        # Nếu là admin thì redirect về admin page
+        if user.role == "admin":
+            return RedirectResponse(url="/admin")
     except HTTPException: # Redirect to login page when user is not logged in
         return RedirectResponse(url="/login")
     response = templates.TemplateResponse(

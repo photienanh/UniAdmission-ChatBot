@@ -36,13 +36,16 @@ LORA_MAPPER = {
 
 PRELOAD_MODEL = "Qwen/Qwen3-4B"
 
-def create_client_info(domain: str = "http://127.0.0.1:8002") -> KaggleServerInfo:
-    """Create client info with the specified domain"""
-    return {
+def create_client_info(domain: str = "http://127.0.0.1:8002", server_id: str = None) -> KaggleServerInfo:
+    """Create client info with the specified domain and server_id"""
+    info = {
         "name": "Testv1",
         "domain": domain,
         "models": MODEL_STATUS
     }
+    if server_id:
+        info["server_id"] = server_id
+    return info
 
 def set_active(model_id: str):
     """Set the active model"""

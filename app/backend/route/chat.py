@@ -1,18 +1,28 @@
-from fastapi import APIRouter, Request, HTTPException, Response
+from fastapi import APIRouter, Request, HTTPException, Response, Depends
 from fastapi.responses import StreamingResponse
 from typing import Union
 
 from database import check_login, add_conversation, get_user_sessions, get_session_with_messages, create_chat_session, delete_chat_session, get_chat_session
+from database.schema import User
 from backend.schema import ChatRequest, SessionResponse, SessionMessagesResponse, PreChatResponse
 from backend.llm import ModelManager
 
 from .utils import NO_CACHE_HEADERS, get_timestamp, CommonResponse
 
 router = APIRouter()
+
+# Dependency để check user role (không cho admin truy cập chat)
+async def require_user_role(request: Request) -> User:
+    user = await check_login(request)
+    if user.role == "admin":
+        raise HTTPException(
+            status_code=403, 
+            detail="Admin accounts cannot access chat features. Please use a regular user account."
+        )
+    return user
     
 @router.post("/chat", name="chat")
-async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
-    user = await check_login(request)
+async def chat(request: Request, data: ChatRequest, user: User = Depends(require_user_role)) -> PreChatResponse:
     session_id = data.session_id
     if session_id is None:
         session_id = await create_chat_session(user.id)
@@ -50,7 +60,7 @@ async def chat(request: Request, data: ChatRequest) -> PreChatResponse:
                 pass
     model_output = await ModelManager.pre_inference(data.text, data.model_id, data.params, finish_call, session_id)
     if model_output == None:
-        raise HTTPException(status_code=500, detail="Failed to inference model")
+        raise HTTPException(status_code=503, detail="Server is not approved or Admin blocked this server")
     
     # Simplified response - sources đã clean
     response: PreChatResponse = {
@@ -68,14 +78,12 @@ async def stream_chat(request: Request, stream_id: str):
     return StreamingResponse(ModelManager.inference(stream_id))    
 
 @router.get("/sessions")
-async def sessions(request: Request) -> list[SessionResponse]:
-    user = await check_login(request)
+async def sessions(request: Request, user: User = Depends(require_user_role)) -> list[SessionResponse]:
     sessions = await get_user_sessions(user.id)
     return [session.to_dict() for session in sessions] #type:ignore
 
 @router.get("/session/{session_id}/messages")
-async def session_messages(request: Request, session_id: str) -> SessionMessagesResponse:
-    user = await check_login(request)
+async def session_messages(request: Request, session_id: str, user: User = Depends(require_user_role)) -> SessionMessagesResponse:
     chat_session = await get_session_with_messages(session_id)
     if chat_session and chat_session.user_id == user.id:
         # Simplified - sources đã clean
@@ -88,8 +96,7 @@ async def session_messages(request: Request, session_id: str) -> SessionMessages
     raise HTTPException(status_code=404, detail=f"Not found session with id: {session_id}")
 
 @router.delete("/session/{session_id}")
-async def delete_session(request: Request, session_id: str):
-    user = await check_login(request)
+async def delete_session(request: Request, session_id: str, user: User = Depends(require_user_role)):
     chat_session = await get_chat_session(session_id)
     if chat_session and chat_session.user_id == user.id:
         chat_session = await delete_chat_session(chat_session)
