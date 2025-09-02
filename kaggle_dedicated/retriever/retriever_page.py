@@ -1,14 +1,16 @@
 from dataclasses import asdict
+import math
 
 from .utils import MergeNeighbor, MergeTable, CmdLogger
 from .components import *
 from .config import *
 
-class DataRetriever:
+class DataRetrieverPage:
     """
     Has two phases:\n
     Phase 1: Take web query and download, process page. Result is `WebSource`.\n
-    Phase 2: Use retriever to get relavent documents. Result is `RagSource`.
+    Phase 2: Use retriever to get relavent documents. Result is `RagSource`.\n
+    This version retrive on each page, based on relevant score by reranker.
     """
     def __init__(
         self,
@@ -64,26 +66,32 @@ class DataRetriever:
         webpage_docs = [self.converter_2(index, web_source) for index, web_source in enumerate(web_sources)]
         self.logger.start()
         webpage_docs = await self.reranker.rerank_pages(webpage_docs, rerank_query)
+        webpage_docs = sorted(webpage_docs, key=lambda doc: doc.metadata["page_index"])
         self.logger.end("Rerank page")
         self.logger.start()
-        total_chunks = self.splitter(webpage_docs)
+        page_chunks = [self.splitter([webpage_doc]) for webpage_doc in webpage_docs]
         self.logger.end("Split")
         self.logger.start()
-        relevant_chunks = self.rag_retriever(total_chunks, rag_query, k_docs)
+        confidences = [float(doc.metadata["confidence"]) for doc in webpage_docs]
+        total_confidences = sum(confidences)
+        page_k_docs = [math.ceil(confidence/total_confidences*k_docs) for confidence in confidences]
+        page_relevant_chunks = [self.rag_retriever(page_chunk, rag_query, k) for page_chunk, k in zip(page_chunks, page_k_docs)]
         self.logger.end("Retrieve")
         if rerank_chunk:
             self.logger.start()
-            relevant_chunks = self.reranker.rerank_chunks(relevant_chunks, rerank_query)
+            page_relevant_chunks = [self.reranker.rerank_chunks(relevant_chunk, rerank_query) for relevant_chunk in page_relevant_chunks]
             self.logger.end("Rerank chunk")
-        rag_docs = relevant_chunks
+        rag_docs = page_relevant_chunks
         if merge_table:
             self.logger.start()
-            rag_docs = self.tabler_merger(total_chunks, rag_docs)
+            rag_docs = [self.tabler_merger(page_chunk, rag_doc) for page_chunk, rag_doc in zip(page_chunks, rag_docs)]
             self.logger.end("Merge table")
         if merge_neighbor:
             self.logger.start()
-            rag_docs = self.neighbor_merger(total_chunks, rag_docs)
+            rag_docs = [self.neighbor_merger(page_chunk, rag_doc) for page_chunk, rag_doc in zip(page_chunks, rag_docs)]
             self.logger.end("Merge neighbor")
-            
-        rag_sources: list[RagSource] = self.converter_3(rag_docs)
+        result_docs = []
+        for rag_doc in rag_docs:
+            result_docs.extend(rag_doc)
+        rag_sources: list[RagSource] = self.converter_3(result_docs)
         return rag_sources
