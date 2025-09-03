@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Chatbot đại học</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="{{ url_for('static', path='favicon.svg') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='login.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Chatbot đại học</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-header">
+            <h1>Chatbot đại học</h1>
+            <p>Đăng nhập để tiếp tục</p>
+        </div>
+        
+        <form class="login-form" id="login-form">
+            {% if get_flashed_messages() %}
+                <div class="error-message" style="display: block;">
+                    {% for message in get_flashed_messages() %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+            
+            <div id="error-message" class="error-message"></div>
+            
+            <div class="form-group">
+                <label for="username">Tên đăng nhập</label>
+                <input type="text" id="username" name="username" required>
+            </div>
+            
+            <div class="form-group password-field">
+                <label for="password">Mật khẩu</label>
+                <input type="password" id="password" name="password" required>
+                <i class="fas fa-eye password-toggle" id="password-toggle"></i>
+            </div>
+            
+            <button type="submit" class="login-btn">
+                Đăng nhập
+            </button>
+            
+            <div class="login-footer">
+                <p>Chưa có tài khoản? <a href="{{ url_for('register') }}">Đăng ký</a></p>
+            </div>
+        </form>
+    </div>
+    <script src="{{ url_for('static', path='login.js') }}"></script>
+</body>
+</html>

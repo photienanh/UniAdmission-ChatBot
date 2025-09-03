@@ -1,38 +1,15 @@
-import sys
-if sys.version_info.minor >= 12:
-    from typing import TypedDict
-else:
-    from typing_extensions import TypedDict
-from pydantic import BaseModel, EmailStr, Field
-from typing import Optional, Literal
-from urllib.parse import parse_qsl
+from pydantic import BaseModel, Field, EmailStr
 
 class LoginRequest(BaseModel):
-    username: str = Field(..., min_length=1)
-    password: str = Field(..., min_length=1)
-    @classmethod
-    def parse(cls, b: bytes):
-        form_data = dict(parse_qsl(b.decode()))
-        return LoginRequest(**form_data)
+    username: str = Field(..., min_length=1, max_length=100)
+    password: str = Field(..., min_length=1, max_length=256)
+    
 class RegisterRequest(BaseModel):
-    full_name: str = Field(..., min_length=1)
-    username: str = Field(..., min_length=1)
+    full_name: str = Field(..., min_length=1, max_length=1024)
+    username: str = Field(..., min_length=1, max_length=100)
     email: EmailStr
-    password: str = Field(..., min_length=1)
-    @classmethod
-    def parse(cls, b: bytes):
-        form_data = dict(parse_qsl(b.decode()))
-        return RegisterRequest(**form_data)
+    password: str = Field(..., min_length=1, max_length=256)
     
-class DeleteAccountRequest(TypedDict):
-    confirm: str
-    password: str
-    
-class AuthSuccess(TypedDict):
-    success: Literal[True]
-    redirect: str
-    
-class AuthFailed(TypedDict):
-    success: Literal[False]
-    message: str
-    
+class DeleteAccountRequest(BaseModel):
+    confirm: str = Field(..., min_length=1, max_length=100)
+    password: str = Field(..., min_length=1, max_length=256)
