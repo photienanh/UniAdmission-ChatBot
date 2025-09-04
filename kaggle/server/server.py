@@ -33,7 +33,6 @@ async def connection_task(server_domain: str, info: KaggleServerInfo, poll: floa
     try:
         while True:
             await kaggle_register(server_domain, info)
-            # print(f"[Kaggle] Ping ...")
             await asyncio.sleep(poll)
     except asyncio.CancelledError:
         pass
@@ -50,7 +49,6 @@ def construct_app(
     async def lifespan(app: FastAPI):
         # Startup
         info["domain"] = await get_nrok_url()
-        print(f"Domain: {info['domain']}")
 
         for task in init_tasks:
             await task

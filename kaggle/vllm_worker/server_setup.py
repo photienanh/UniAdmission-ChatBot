@@ -19,15 +19,11 @@ async def serve_http(
     **uvicorn_kwargs: Any
 ) -> tuple[uvicorn.Server, Any]: 
     from vllm import __version__
-    logger.info(f"[vLLM] vLLM API server version {__version__}")
-    logger.info(f"[vLLM] Server started at {os.getpid()}")
-    logger.info("Available route are:")
     for route in app.routes:
         methods = getattr(route, "methods", None)
         path = getattr(route, "path", None)
         if methods is None or path is None:
             continue
-        logger.info(f"Route: {path}, Methods: {', '.join(methods)}")
 
     config = uvicorn.Config(app, **uvicorn_kwargs)
     config.load()
@@ -45,5 +41,4 @@ async def serve_http(
         process = find_process_using_port(port)
         if process is not None:
             logger.debug(f"Port {port} is being used by process {process}")
-        logger.info("Shutting down FastAPI HTTP Server")
     return server, logger

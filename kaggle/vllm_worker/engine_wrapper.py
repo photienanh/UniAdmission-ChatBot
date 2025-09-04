@@ -9,6 +9,7 @@ from typing import AsyncGenerator
 import os
 import psutil
 from typing import Optional, Any
+import logging
 # import torch.distributed as dist
 from vllm.transformers_utils.tokenizers import MistralTokenizer
 from openai.types.chat import ChatCompletionMessageParam, ChatCompletionUserMessageParam
@@ -22,6 +23,7 @@ from vllm.entrypoints.chat_utils import (
 from vllm.inputs.data import TokensPrompt
 
 from .vllm_config import Config
+from .logging_config import setup_logging
 
 
 # Wrapper bao quanh AsyncLLMEngine của vLLM để:
@@ -61,6 +63,9 @@ class AsyncLLMEngineWrapper:
     def init(self, model_id: str):
         # Load model vào GPU bằng AsyncLLMEngine
         if not self.loaded:
+            # Tắt logs trước khi khởi tạo engine
+            setup_logging()
+            
             self.loaded = True
             vllm_config = Config.get_vllm(model_id)          # Lấy config (từ vllm_config.py)
             self.engine = AsyncLLMEngine.from_vllm_config(vllm_config)

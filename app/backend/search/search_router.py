@@ -60,11 +60,10 @@ Câu hỏi: "Học phí ngành Luật kinh doanh VNU-LS như thế nào?"
 → Cần: Học phí của Trường Đại học Luật - Đại học Quốc gia Hà Nội (LS)
 → Trả về: {"type_search": "vector_db", "key_word": [{"school_id": "LS", "section": "hoc_phi"}]}
 
-Câu hỏi: "Chương trình đào tạo ngành Ngôn ngữ Anh Trường Đại học Ngoại ngữ - Đại học Quốc gia Hà Nội?"
+Câu hỏi: "Toàn bộ học phần chương trình đào tạo ngành Ngôn ngữ Anh Trường Đại học Ngoại ngữ - Đại học Quốc gia Hà Nội?"
 → Vector DB không có thông tin cụ thể về chương trình đào tạo của từng ngành nên cần tìm kiếm trên web
-→ Cần: Toàn bộ học phần chương trình đào tạo ngành Ngôn ngữ Anh của Trường Đại học Ngoại ngữ - Đại học Quốc gia Hà Nội (ULIS)
-→ Từ khóa: "toàn bộ học phần chương trình đào tạo ngành Ngôn ngữ Anh ULIS" hoặc "chương trình đào tạo ngành Ngôn ngữ Anh ULIS"
-→ Trả về (chỉ 1 trong 2 tùy trường hợp): {"type_search": "web_search", "key_word": ["toàn bộ học phần chương trình đào tạo ngành Ngôn ngữ Anh ULIS"]} hoặc {"type_search": "web_search", "key_word": ["chương trình đào tạo ngành Ngôn ngữ Anh ULIS"]}
+→ Cần: Học phần chương trình đào tạo ngành Ngôn ngữ Anh của Trường Đại học Ngoại ngữ - Đại học Quốc gia Hà Nội (ULIS)
+→ Trả về: {"type_search": "web_search", "key_word": ["học phần chương trình đào tạo ngành Ngôn ngữ Anh ULIS"]}
 
 Câu hỏi: "Địa chỉ của UEB và Học viện Công nghệ Bưu chính Viễn thông?"
 → Vector DB có thông tin chung như địa chỉ nên tìm trong DB

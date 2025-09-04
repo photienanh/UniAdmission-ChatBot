@@ -14,9 +14,3 @@ class AdminKaggleApproval(BaseModel):
     """Schema for admin approval/rejection"""
     admin_notes: str = ""
 
-class AdminKaggleServer(BaseModel):
-    """Schema for approved server info"""
-    server_id: str
-    approved_packages: List[str]
-    contact_info: str = ""
-    reason: str = ""

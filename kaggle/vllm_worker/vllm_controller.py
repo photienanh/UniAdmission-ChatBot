@@ -77,11 +77,9 @@ class VLLMController:
             try:
                 async with ClientSession() as session:
                     async with session.post(f"{url}/init", json=payload) as response:
-                        print(f"[VLLM Controller] Server started {response.status}: {await response.text()}")
                         self.busy = False
                         return
             except aiohttp.ClientConnectionError as e:
-                print(f"[VLLM Engine] Server is starting: {e}")
                 await asyncio.sleep(self.init_poll)
     async def get_url(self):
         while self.busy:

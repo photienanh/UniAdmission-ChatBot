@@ -2,7 +2,7 @@
 
 from typing import AsyncGenerator
 from vllm_worker.vllm_engine import VLLMEngine, VLLMJobInfo
-from web_search import CmdLogger, WebSearchWrapper
+from web_search import WebSearchWrapper
 from .schema import KaggleRequest, GenerationParams, ModelPreOutput, WebSource, RagSource
 from .config import DOC_TEMPLATE, PROMPT_TEMPLATE, SEP, LORA_MAPPER
 
@@ -11,17 +11,14 @@ class CustomQA:
     
     def __init__(self, set_active_callback) -> None:
         self.engine = VLLMEngine(set_active_callback)
-        self.logger = CmdLogger("QA")
         self.web_search = WebSearchWrapper()
     
     async def start(self):
         """Initialize the QA system"""
         await self.web_search.start()
-        print(f"[CustomQA] Initialized successfully")
     
     async def preload(self, model_id: str):
         """Preload model to avoid waiting time on first request"""
-        self.logger.start()
         vllm_in: VLLMJobInfo = {
             "model_id": model_id,
             "message": "Hello",
@@ -32,12 +29,9 @@ class CustomQA:
             "lora_request": None,
             "history": []
         }
-        print(f"[CustomQA] Preloading model: {model_id}")
         generator = await self.engine.process(vllm_in)
         async for _ in generator:
             pass
-        print(f"[CustomQA] Model preloaded successfully: {model_id}")
-        self.logger.end("Preload")
     
     async def inference(self, prompt: str, request: KaggleRequest) -> AsyncGenerator[str, None]:
         """Run model inference with the given prompt and request"""
@@ -94,9 +88,9 @@ class CustomQA:
                     # Update params để pass keywords xuống web search
                     params_with_keywords = params.copy()
                     params_with_keywords["web_search_keywords"] = web_search_keywords
-                    web_sources, rag_sources = await self.web_search(user_question, user_question, params_with_keywords)
+                    web_sources, rag_sources = await self.web_search(user_question, params_with_keywords)
                 else:
-                    web_sources, rag_sources = await self.web_search(user_question, user_question, params)
+                    web_sources, rag_sources = await self.web_search(user_question, params)
                 source_type = "web_search"
             
             final_question = user_question
@@ -126,7 +120,6 @@ class CustomQA:
             question=final_question,
         )
         
-        self.logger.start()
         pre_output: ModelPreOutput = {
             "stream_id": stream_id,
             "model_id": model_id,

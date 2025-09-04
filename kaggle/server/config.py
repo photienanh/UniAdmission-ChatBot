@@ -3,7 +3,7 @@
 from .schema import ModelInfo, ModelStatus, KaggleServerInfo
 
 # Templates and constants
-DOC_TEMPLATE = "[**{title}**]({url}):\n{text}\n"
+DOC_TEMPLATE = "[**{title}**]({url}):\n\n{text}\n" + "\n" + 100*"-" + "\n"
 PROMPT_TEMPLATE = """{context_block}\nCâu hỏi:\n{question}\nCâu trả lời:"""
 SEP = "$$$"
 SOURCE = "kaggle"
@@ -49,7 +49,6 @@ def create_client_info(domain: str = "http://127.0.0.1:8002", server_id: str = N
 
 def set_active(model_id: str):
     """Set the active model"""
-    print(f"[Global] Switched to model {model_id}")
     if SEP in model_id:
         model_id = model_id.split(SEP)[0]
     for model in MODEL_STATUS:
