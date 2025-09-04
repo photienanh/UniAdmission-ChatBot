@@ -335,6 +335,12 @@
             color: #155724;
         }
         
+        .status-expired {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        
         .no-data {
             text-align: center;
             padding: 40px;
@@ -626,6 +632,32 @@
             }, 300);
         }
 
+        // Format datetime to DD/MM/YYYY HH:MM:SS
+        function formatDateTime(dateString) {
+            if (!dateString) return 'N/A';
+            
+            // If already in DD/MM/YYYY format, return as is
+            if (dateString.includes('/') && dateString.split('/')[0].length === 2) {
+                return dateString;
+            }
+            
+            try {
+                const date = new Date(dateString);
+                if (isNaN(date.getTime())) return dateString; // Return original if invalid
+                
+                const day = String(date.getDate()).padStart(2, '0');
+                const month = String(date.getMonth() + 1).padStart(2, '0');
+                const year = date.getFullYear();
+                const hours = String(date.getHours()).padStart(2, '0');
+                const minutes = String(date.getMinutes()).padStart(2, '0');
+                const seconds = String(date.getSeconds()).padStart(2, '0');
+                
+                return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
+            } catch (error) {
+                return dateString; // Return original if error
+            }
+        }
+
         // Handle logout
         async function handleLogout() {
             try {
@@ -723,7 +755,7 @@
                                 ${packages.map(pkg => `<span class="tag package">${pkg}</span>`).join('')}
                             </div>
                         </td>
-                        <td>${new Date(request.submitted_at).toLocaleString()}</td>
+                        <td>${formatDateTime(request.submitted_at)}</td>
                         <td>
                             <button class="btn btn-success btn-action" onclick="approveRequest('${request.request_id}')"><i class="fas fa-check"></i> Approve</button>
                             <button class="btn btn-danger btn-action" onclick="rejectRequest('${request.request_id}')"><i class="fas fa-times"></i> Reject</button>
@@ -761,6 +793,27 @@
 
             servers.forEach(server => {
                 const packages = server.approved_packages || [];
+                
+                // Tạo status badge dựa trên health status
+                let statusBadge = '';
+                let statusDetail = '';
+                
+                if (server.health_status === 'healthy') {
+                    statusBadge = '<span class="status-badge status-active">HEALTHY</span>';
+                } else if (server.health_status === 'checking') {
+                    statusBadge = '<span class="status-badge status-pending">CHECKING...</span>';
+                } else {
+                    statusBadge = '<span class="status-badge status-expired">UNHEALTHY</span>';
+                    if (server.remaining_time_display) {
+                        statusDetail = `<small style="color: #d32f2f;">Removing in ${server.remaining_time_display}</small>`;
+                    } else if (server.will_be_removed_in_minutes) {
+                        const willRemoveIn = server.will_be_removed_in_minutes;
+                        if (willRemoveIn > 0) {
+                            statusDetail = `<small style="color: #d32f2f;">Removing in ${willRemoveIn}min</small>`;
+                        }
+                    }
+                }
+                
                 html += `
                     <tr>
                         <td>
@@ -769,13 +822,16 @@
                                 <i class="fas fa-external-link-alt" style="margin-left: 5px; font-size: 12px;"></i>
                             </a>
                         </td>
-                        <td>${new Date(server.approved_at).toLocaleString()}</td>
+                        <td>${formatDateTime(server.approved_at)}</td>
                         <td>
                             <div class="tags">
                                 ${packages.map(pkg => `<span class="tag package">${pkg}</span>`).join('')}
                             </div>
                         </td>
-                        <td><span class="status-badge status-active">approved</span></td>
+                        <td>
+                            ${statusBadge}
+                            ${statusDetail ? `<br>${statusDetail}` : ''}
+                        </td>
                         <td>
                             <button class="btn btn-sm btn-danger" onclick="removeServer('${server.server_id}')" title="Remove Server">
                                 <i class="fas fa-trash"></i>
@@ -807,7 +863,7 @@
                                     </a>
                                 </p>
                                 <p><strong>Type:</strong> ${request.request_type}</p>
-                                <p><strong>Submitted:</strong> ${new Date(request.submitted_at).toLocaleString()}</p>
+                                <p><strong>Submitted:</strong> ${formatDateTime(request.submitted_at)}</p>
                                 <p><strong>Contact Info:</strong> ${request.data.contact_info || 'Not provided'}</p>
                                 <p><strong>Ngrok URL:</strong> ${request.data.ngrok_url || 'Not provided'}</p>
                                 <p><strong>Reason:</strong></p>

@@ -6,7 +6,7 @@ import threading
 
 from database import check_login
 from database.schema import User
-from backend.schema import AdminKaggleRequest, AdminKaggleApproval, AdminKaggleServer
+from backend.schema import AdminKaggleRequest, AdminKaggleApproval
 from .utils import CommonResponse
 
 router = APIRouter()
@@ -22,6 +22,7 @@ async def require_admin(request: Request) -> User:
 pending_requests = {}
 approved_servers = {}
 request_history = {}
+server_health_status = {}  # Tracking health status với timestamp
 blocked_servers = set()  # Danh sách server_id bị block
 
 class AdminManager:
@@ -126,6 +127,10 @@ class AdminManager:
         if server_id in approved_servers:
             del approved_servers[server_id]
             removed = True
+        
+        # Xóa khỏi health tracking nếu có
+        if server_id in server_health_status:
+            del server_health_status[server_id]
         
         # Thêm vào blocked list
         blocked_servers.add(server_id)
@@ -244,24 +249,89 @@ class AdminManager:
     
     @staticmethod
     def cleanup_unhealthy_servers() -> List[str]:
-        """Xóa các server không healthy khỏi approved list"""
+        """Xóa các server không healthy khỏi approved list sau 20 phút chết"""
         unhealthy_servers = []
+        current_time = datetime.now()
         
         for server_id in list(approved_servers.keys()):
             health = AdminManager.check_server_health(server_id)
+            
+            if health["status"] == "healthy":
+                # Server healthy - reset tracking nếu có
+                if server_id in server_health_status:
+                    del server_health_status[server_id]
+                    
+            elif health["status"] == "unhealthy":
+                # Server unhealthy
+                if server_id not in server_health_status:
+                    # Lần đầu phát hiện server chết - bắt đầu tracking
+                    server_health_status[server_id] = {
+                        "first_unhealthy_time": current_time,
+                        "consecutive_failures": 1,
+                        "last_error": health.get("error", "Unknown error")
+                    }
+                else:
+                    # Server đã chết từ trước - update thông tin
+                    server_health_status[server_id]["consecutive_failures"] += 1
+                    server_health_status[server_id]["last_error"] = health.get("error", "Unknown error")
+                    
+                    # Kiểm tra xem đã chết đủ 20 phút chưa
+                    time_unhealthy = current_time - server_health_status[server_id]["first_unhealthy_time"]
+                    minutes_unhealthy = time_unhealthy.total_seconds() / 60
+                    
+                    if minutes_unhealthy >= 20:  # 20 phút
+                        # Xóa server sau 20 phút chết
+                        removal_record = {
+                            "server_id": server_id,
+                            "action": "auto_removed_unhealthy",
+                            "removed_at": current_time.strftime("%d/%m/%Y %H:%M:%S"),
+                            "reason": f"Server unhealthy for {minutes_unhealthy:.1f} minutes - auto blocked to prevent spam",
+                            "unhealthy_duration_minutes": minutes_unhealthy,
+                            "consecutive_failures": server_health_status[server_id]["consecutive_failures"],
+                            "last_error": server_health_status[server_id]["last_error"],
+                            "server_info": approved_servers[server_id],
+                            "blocked": True
+                        }
+                        request_history[f"auto_removal_{server_id}_{int(current_time.timestamp())}"] = removal_record
+                        
+                        # Xóa khỏi approved servers và health tracking
+                        del approved_servers[server_id]
+                        del server_health_status[server_id]
+                        
+                        # Thêm vào blocked list để tránh spam requests
+                        blocked_servers.add(server_id)
+                        unhealthy_servers.append(server_id)
+                
+        return unhealthy_servers
+
+    @staticmethod
+    def force_cleanup_unhealthy_servers() -> List[str]:
+        """Xóa NGAY TẤT CẢ server unhealthy (không chờ 20 phút)"""
+        unhealthy_servers = []
+        current_time = datetime.now()
+        
+        for server_id in list(approved_servers.keys()):
+            health = AdminManager.check_server_health(server_id)
+            
             if health["status"] == "unhealthy":
-                # Log việc xóa server
+                # Xóa ngay server unhealthy
                 removal_record = {
                     "server_id": server_id,
-                    "action": "auto_removed_unhealthy",
-                    "removed_at": datetime.now().strftime("%d/%m/%Y %H:%M:%S"),
-                    "reason": "Server health check failed",
+                    "action": "force_removed_unhealthy",
+                    "removed_at": current_time.strftime("%d/%m/%Y %H:%M:%S"),
+                    "reason": "Force removed by admin - server unhealthy",
+                    "health_error": health.get("error", "Unknown error"),
                     "server_info": approved_servers[server_id]
                 }
-                request_history[f"auto_removal_{server_id}_{int(datetime.now().timestamp())}"] = removal_record
+                request_history[f"force_removal_{server_id}_{int(current_time.timestamp())}"] = removal_record
                 
-                # Xóa khỏi approved servers
+                # Xóa khỏi approved servers và health tracking
                 del approved_servers[server_id]
+                if server_id in server_health_status:
+                    del server_health_status[server_id]
+                
+                # Thêm vào blocked list
+                blocked_servers.add(server_id)
                 unhealthy_servers.append(server_id)
                 
         return unhealthy_servers
@@ -273,6 +343,59 @@ async def get_admin_dashboard(admin: User = Depends(require_admin)):
     pending = AdminManager.get_pending_requests()
     approved = AdminManager.get_approved_servers()
     
+    # Sử dụng cached health status thay vì check real-time
+    approved_with_health = []
+    current_time = datetime.now()
+    
+    for server in approved:
+        server_id = server["server_id"]
+        
+        # Copy server info
+        server_with_health = server.copy()
+        
+        # Kiểm tra trong server_health_status để xem server có đang unhealthy không
+        if server_id in server_health_status:
+            # Server đang unhealthy
+            unhealthy_info = server_health_status[server_id]
+            # Tính thời gian unhealthy
+            time_unhealthy = current_time - unhealthy_info["first_unhealthy_time"]
+            total_seconds_unhealthy = time_unhealthy.total_seconds()
+            minutes_unhealthy = total_seconds_unhealthy / 60
+            
+            # Tính remaining time
+            remaining_total_seconds = max(0, (20 * 60) - total_seconds_unhealthy)  # 20 phút = 1200 giây
+            remaining_minutes = int(remaining_total_seconds // 60)
+            remaining_seconds = int(remaining_total_seconds % 60)
+            remaining_display = f"{remaining_minutes}m{remaining_seconds:02d}s"
+            
+            server_with_health.update({
+                "health_status": "unhealthy",
+                "unhealthy_since": unhealthy_info["first_unhealthy_time"].strftime("%d/%m/%Y %H:%M:%S"),
+                "minutes_unhealthy": round(minutes_unhealthy, 2),  # Hiển thị chính xác hơn với 2 decimal
+                "consecutive_failures": unhealthy_info["consecutive_failures"],
+                "will_be_removed_in_minutes": max(0, round(20 - minutes_unhealthy, 2)),  # Hiển thị chính xác hơn
+                "remaining_time_display": remaining_display,  # Format dễ đọc: "19m54s"
+                "last_error": unhealthy_info["last_error"]
+            })
+        else:
+            # Server không có trong unhealthy tracking
+            # Kiểm tra xem có phải server mới approve không (trong vòng 2 phút)
+            approved_time_str = server.get("approved_at", "")
+            try:
+                approved_time = datetime.strptime(approved_time_str, "%d/%m/%Y %H:%M:%S")
+                time_since_approval = current_time - approved_time
+                minutes_since_approval = time_since_approval.total_seconds() / 60
+                
+                if minutes_since_approval < 2:  # Newly approved trong 2 phút
+                    server_with_health["health_status"] = "checking"
+                else:
+                    server_with_health["health_status"] = "healthy"
+            except:
+                # Nếu không parse được thời gian, coi như healthy
+                server_with_health["health_status"] = "healthy"
+        
+        approved_with_health.append(server_with_health)
+    
     stats = {
         "total_pending": len([r for r in pending if r["status"] == "pending"]),
         "total_approved": len(approved),
@@ -283,7 +406,7 @@ async def get_admin_dashboard(admin: User = Depends(require_admin)):
     return CommonResponse(200, True, "Dashboard data retrieved", {
         "stats": stats,
         "pending_requests": pending,
-        "approved_servers": approved
+        "approved_servers": approved_with_health
     })
 
 @router.get("/requests")
@@ -349,10 +472,10 @@ async def check_all_servers_health(admin: User = Depends(require_admin)):
 
 @router.post("/servers/cleanup-unhealthy")
 async def cleanup_unhealthy_servers(admin: User = Depends(require_admin)):
-    """Xóa các server không healthy"""
-    removed_servers = AdminManager.cleanup_unhealthy_servers()
+    """Xóa NGAY tất cả server unhealthy và block chúng"""
+    removed_servers = AdminManager.force_cleanup_unhealthy_servers()
     
-    return CommonResponse(200, True, f"Removed {len(removed_servers)} unhealthy servers", {
+    return CommonResponse(200, True, f"Force removed {len(removed_servers)} unhealthy servers", {
         "removed_servers": removed_servers,
         "count": len(removed_servers)
     })
@@ -364,7 +487,55 @@ async def check_single_server_health(server_id: str, admin: User = Depends(requi
         return CommonResponse(404, False, "Server not found")
     
     health = AdminManager.check_server_health(server_id)
-    return CommonResponse(200, True, "Health check completed", health)
+    
+    # Thêm thông tin tracking nếu có
+    response_data = health.copy()
+    if server_id in server_health_status:
+        unhealthy_info = server_health_status[server_id]
+        current_time = datetime.now()
+        time_unhealthy = current_time - unhealthy_info["first_unhealthy_time"]
+        minutes_unhealthy = time_unhealthy.total_seconds() / 60
+        
+        response_data.update({
+            "unhealthy_since": unhealthy_info["first_unhealthy_time"].strftime("%d/%m/%Y %H:%M:%S"),
+            "minutes_unhealthy": round(minutes_unhealthy, 1),
+            "consecutive_failures": unhealthy_info["consecutive_failures"],
+            "will_be_removed_in_minutes": max(0, 20 - minutes_unhealthy),
+            "last_error": unhealthy_info["last_error"]
+        })
+    
+    return CommonResponse(200, True, "Health check completed", response_data)
+
+@router.get("/servers/health-status")
+async def get_all_servers_health_status(admin: User = Depends(require_admin)):
+    """Lấy trạng thái health của tất cả servers với thông tin tracking"""
+    results = {}
+    current_time = datetime.now()
+    
+    for server_id in approved_servers.keys():
+        health = AdminManager.check_server_health(server_id)
+        server_info = health.copy()
+        
+        # Thêm thông tin tracking nếu server đang unhealthy
+        if server_id in server_health_status:
+            unhealthy_info = server_health_status[server_id]
+            time_unhealthy = current_time - unhealthy_info["first_unhealthy_time"]
+            minutes_unhealthy = time_unhealthy.total_seconds() / 60
+            
+            server_info.update({
+                "unhealthy_since": unhealthy_info["first_unhealthy_time"].strftime("%d/%m/%Y %H:%M:%S"),
+                "minutes_unhealthy": round(minutes_unhealthy, 1),
+                "consecutive_failures": unhealthy_info["consecutive_failures"],
+                "will_be_removed_in_minutes": max(0, round(20 - minutes_unhealthy, 1)),
+                "last_error": unhealthy_info["last_error"]
+            })
+        else:
+            # Server healthy hoặc mới được approve
+            server_info["tracking_status"] = "healthy" if health["status"] == "healthy" else "first_check"
+        
+        results[server_id] = server_info
+    
+    return CommonResponse(200, True, "All servers health status retrieved", results)
 
 @router.get("/history")
 async def get_request_history(admin: User = Depends(require_admin)):
@@ -483,7 +654,7 @@ async def download_package(package_name: str, server_id: str):
 
 # Background health monitoring
 def start_health_monitoring():
-    """Bắt đầu monitoring health của servers mỗi 10 phút"""
+    """Bắt đầu monitoring health của servers liên tục"""
     def health_check_worker():
         while True:
             try:
@@ -493,9 +664,9 @@ def start_health_monitoring():
             except Exception as e:
                 pass
             
-            # Chờ 10 phút (600 seconds)
+            # Chờ 30s
             import time
-            time.sleep(600)
+            time.sleep(30)
     
     # Chạy trong background thread
     health_thread = threading.Thread(target=health_check_worker, daemon=True)
