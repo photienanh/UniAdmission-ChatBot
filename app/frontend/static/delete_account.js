@@ -55,7 +55,7 @@ document.getElementById('delete-form').addEventListener('submit', function(e) {
     deleteBtn.textContent = 'Đang xóa...';
     
     // Send request
-    fetch('/delete_account', {
+    fetch('/api/auth/delete_account', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
