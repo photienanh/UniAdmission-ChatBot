@@ -46,7 +46,7 @@ class DataRetriever:
     ) -> list[WebSource]:
         """Use web_query to search then return list of `WebSource`."""
         self.logger.start()
-        search_results = await self.search_pipeline.call_fast(web_query, k_pages, domain_restrict, engine, include_pdf, include_image)
+        search_results = await self.search_pipeline.call_k_safe(web_query, k_pages, domain_restrict, engine, include_pdf, include_image)
         self.logger.end("Websearch")
         web_sources = [self.converter_1(search_result) for search_result in search_results]
         return web_sources

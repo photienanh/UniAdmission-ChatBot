@@ -5,7 +5,6 @@ from typing_extensions import TypedDict
 
 SearchEngineType = Literal["google", "brave"]
 ChatMessageRole = Literal["user", "bot"] # System instruction should stored per user message
-AnswerState = Literal["need_clarification", "successfully", "partially", "relevant", "not_found", "other"]
 
 class RagSource(TypedDict):
     url: str
@@ -40,23 +39,13 @@ class ModelPreOutput(TypedDict):
     web_sources: list[WebSource]
     rag_sources: list[RagSource]
     extra_data: dict
-    user_summary: str
-    user_intent: str
-    user_keywords: list[str]
     result_url: str
     
 class ModelOutput(ModelPreOutput):
-    answer_state: AnswerState
-    bot_summary: str
-    bot_keywords: list[str]
     text: str
     
 class ChatMessage(TypedDict):
     role: ChatMessageRole
-    answer_state: Optional[AnswerState]
-    user_intent: Optional[str]
-    summary: str
-    keywords: list[str]
     text: str
 
 class ModelStatus(ModelInfo):

@@ -7,7 +7,7 @@ from .route import (
     template_router,
     auth_router,
     chat_router,
-    script_router,
+    package_router,
     worker_router
 )
 
@@ -32,7 +32,7 @@ app.mount("/static", CacheControledStaticFiles(directory="frontend/static"), nam
 app.include_router(template_router, tags=["JinjaTemplate"])
 app.include_router(auth_router, tags=["Authentication"])
 app.include_router(chat_router, tags=["Chat"])
-app.include_router(script_router, tags=["Script"])
+app.include_router(package_router, tags=["Package"])
 app.include_router(worker_router, tags=["Kaggle"])
 
 # Logging

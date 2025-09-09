@@ -48,7 +48,7 @@ class DataRetrieverPage:
     ) -> list[WebSource]:
         """Use web_query to search then return list of `WebSource`."""
         self.logger.start()
-        search_results = await self.search_pipeline.call_fast(web_query, k_pages, domain_restrict, engine, include_pdf, include_image)
+        search_results = await self.search_pipeline.call_k_safe(web_query, k_pages, domain_restrict, engine, include_pdf, include_image)
         self.logger.end("Websearch")
         web_sources = [self.converter_1(search_result) for search_result in search_results]
         return web_sources
@@ -73,8 +73,11 @@ class DataRetrieverPage:
         self.logger.end("Split")
         self.logger.start()
         confidences = [float(doc.metadata["confidence"]) for doc in webpage_docs]
-        total_confidences = sum(confidences)
-        page_k_docs = [math.ceil(confidence/total_confidences*k_docs) for confidence in confidences]
+        total_confidences = sum(confidences) 
+        if total_confidences == 0: # When reranker fail
+            page_k_docs = [math.ceil(k_docs/len(confidences)) for _ in confidences]
+        else:
+            page_k_docs = [math.ceil(confidence/total_confidences*k_docs) for confidence in confidences]
         page_relevant_chunks = [self.rag_retriever(page_chunk, rag_query, k) for page_chunk, k in zip(page_chunks, page_k_docs)]
         self.logger.end("Retrieve")
         if rerank_chunk:

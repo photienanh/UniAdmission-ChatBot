@@ -3,25 +3,31 @@ from datetime import datetime, timezone
 from core import ModelInfo, GenerationParams, ModelPreOutput, ModelOutput, ChatMessage
 from database import add_conversation, get_session_with_messages
 
-from .utils import generate_id
 from .worker import WorkerManager
 
-class ModelManager: # Stateless :Đ
+import uuid
+
+def generate_id() -> str:
+    return str(uuid.uuid4())
+class ModelManager:
+    """Stateless Manager class. Depend on `WorkerManager` whichs is statefull.""" 
     @classmethod
-    async def pre_inference(cls, session_id: str, user_id: str, text: str, model_id: str, params: GenerationParams) -> ModelPreOutput | None:
+    async def pre_inference(cls, session_id: str, user_id: str, text: str, params: GenerationParams) -> ModelPreOutput | None:
         """Auto select suitable worker according to model id and return `ModelPreOutput`. Return `None` when failed."""
         # Performance can worry later
         session = await get_session_with_messages(session_id)
         if session is None: raise Exception("Unknown error while pre inference")
-        messages_history = session.messages[-params.get("max_history", 5):]
-        history: list[ChatMessage] = [message.to_dict() for message in messages_history] #type:ignore
-        job_id = generate_id()
+        messages_history = session.messages[-params.get("max_history", 0):]
+        history: list[ChatMessage] = [
+            ChatMessage(
+                role=message.role, #type:ignore
+                text=message.text
+            ) for message in messages_history
+        ] 
         result = await WorkerManager.pre_inference(
             user_id=user_id,
             session_id=session_id,
-            stream_id=job_id,
             text=text,
-            model_id=model_id,
             history=history,
             params=params   
         )
@@ -42,14 +48,7 @@ class ModelManager: # Stateless :Đ
             user_id=user_id,
             session_id=session_id,
             user_text=user_text,
-            user_summary=model_output["user_summary"],
-            user_keywords=model_output["user_keywords"],
-            user_intent=model_output["user_intent"],
             bot_text=model_output["text"],
-            bot_summary=model_output["bot_summary"],
-            bot_keywords=model_output["bot_keywords"],
-            answer_state=model_output["answer_state"],
-            model_id=model_output["model_id"],
             web_sources=model_output["web_sources"],
             rag_sources=model_output["rag_sources"],
             params=model_output["generation_params"],

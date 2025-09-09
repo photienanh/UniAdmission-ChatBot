@@ -24,9 +24,6 @@ async def pre_inference_function(request: WorkerChatRequest) -> ModelPreOutput:
     prompt, web_sources = gemini_model.build_prompt_with_web_search(text, k_pages, domain_restrict)
     pre_output: ModelPreOutput = {
         "model_id": GEMINI_MODEL,
-        "user_summary": text[:50],
-        "user_intent": text[:50],
-        "user_keywords": [],
         "generation_params": params,
         "web_sources": web_sources,
         "rag_sources": [],
@@ -48,9 +45,6 @@ async def inference_function(stream_id: str) -> AsyncGenerator[str, None]:
         # Store chat data when finish
         model_output: ModelOutput = {
             **pre_output,
-            "answer_state": "successfully",
-            "bot_summary": total[:50],
-            "bot_keywords": [],
             "text": total
         }
         data: WorkerStoreChatData = {

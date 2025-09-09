@@ -6,7 +6,7 @@ import datetime
 
 from database.manager import session
 from database.schema import ChatSession, ChatMessage
-from core.types import ChatMessageRole, AnswerState, WebSource, RagSource, GenerationParams
+from core.types import ChatMessageRole, WebSource, RagSource, GenerationParams
 
 async def get_chat_session(session_id: str) -> ChatSession | None:
     """Get `ChatSession` with `session_id`"""
@@ -55,10 +55,6 @@ def __create_message(
     session_id: str,
     role: ChatMessageRole,
     text: str,
-    summary: str,
-    user_intent: Optional[str],
-    answer_state: Optional[str],
-    keywords: list[str],
     model_id: str,
     web_sources: list[WebSource],
     rag_sources: list[RagSource],
@@ -73,11 +69,6 @@ def __create_message(
     msg.session_id = session_id
     msg.text = text
     msg.role = role
-    
-    msg.summary = summary
-    msg.user_intent = user_intent
-    msg.answer_state = answer_state
-    msg.keywords = keywords
     
     msg.model_id = model_id
     msg.rag_sources = rag_sources
@@ -108,13 +99,6 @@ async def add_conversation(
     session_id: str,
     user_text: str,
     bot_text: str,
-    user_summary: str,
-    bot_summary: str,
-    user_keywords: list[str],
-    bot_keywords: list[str],
-    model_id: str,
-    user_intent: str,
-    answer_state: AnswerState,
     web_sources: list[WebSource],
     rag_sources: list[RagSource],
     params: GenerationParams,
@@ -130,11 +114,7 @@ async def add_conversation(
             session_id=session_id,
             role="user",
             text=user_text,
-            summary=user_summary,
-            user_intent=user_intent,
-            answer_state=None,
-            keywords=user_keywords,
-            model_id=model_id,
+            model_id=params["model_id"],
             web_sources=[], #Maybe user can provide sources ?
             rag_sources=[],
             params=params,
@@ -145,11 +125,7 @@ async def add_conversation(
             session_id=session_id,  
             role="bot",
             text=bot_text,
-            summary=bot_summary,
-            user_intent=None,
-            answer_state=answer_state,
-            keywords=bot_keywords,
-            model_id=model_id,
+            model_id=params["model_id"],
             web_sources=web_sources,
             rag_sources=rag_sources,
             params=params,

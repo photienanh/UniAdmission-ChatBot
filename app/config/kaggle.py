@@ -1,4 +1,9 @@
+import os
+
 WORKER_TIMEOUT = 10
-WORKER_MAX_RETRY = 3
+WORKER_MAX_RETRY = 0
 WORKER_RETRY_DELAY = 5
 WORKER_REQUEST_TIMEOUT = 15
+WORKER_WAIT_TIMEOUT = 1800
+WORKER_ENV_PATH = os.getenv("WORKER_ENV_PATH", "worker.env")
+STATIC_DB_PATH = os.getenv("STATIC_DB_PATH", "../vector_database/vectordb/static.pkl")

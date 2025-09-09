@@ -20,7 +20,7 @@ def check_pdf(url: str) -> bool:
     if url.endswith(".pdf"):
         return True
     elif "drive.google.com/file" in url:
-        return True # Tempory, as there is hardly anyway to check
+        return False # Tempory, as there is hardly anyway to check
     return False
 
 class PreProcessor:

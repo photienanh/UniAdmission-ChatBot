@@ -43,6 +43,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const topPValue = document.getElementById('top-p-value');
     const maxTokensInput = document.getElementById('max-tokens-input');
     
+    const settingSidebarToggle = document.getElementById('setting-sidebar-button');
+    const settingBar = document.getElementById('settings-sidebar');
+    const settingSidebarClose = document.getElementById('settings-close-btn');
     // Web Search Options Toggle
     webSearchButton.addEventListener('change', function() {
         if (this.checked) {
@@ -171,6 +174,21 @@ document.addEventListener('DOMContentLoaded', function() {
         hideSettingsPopup();
     });
     
+    // Toggle setting side bar
+    settingSidebarToggle.addEventListener('click', toggleSettingbar);
+    // Close setting side bar
+    settingSidebarClose.addEventListener('click', function() {
+        hideSettingsSidebar();
+    });
+    function toggleSettingbar() {
+        settingBar.classList.toggle('collapsed');
+        // Update bot message spacing when sidebar toggles on desktop
+        updateBotMessageSpacing();
+    }
+    function hideSettingsSidebar() {
+        settingBar.classList.remove('collapsed');
+    }
+
     // Close popup when clicking outside
     document.addEventListener('click', function(e) {
         if (!settingsPopup.contains(e.target) && !settingsToggle.contains(e.target)) {
@@ -267,12 +285,18 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateBotMessageSpacing() {
         const botMessages = document.querySelectorAll('.message.bot-message .message-content');
         const isSidebarCollapsed = sidebar.classList.contains('collapsed');
+        const isSettingbarCollapsed = settingBar.classList.contains('collapsed');
         
         botMessages.forEach(messageContent => {
             if (isSidebarCollapsed) {
                 messageContent.style.paddingLeft = '24px';
             } else {
                 messageContent.style.paddingLeft = '40px'; // Gần lề sidebar hơn nữa
+            }
+            if (isSettingbarCollapsed) {
+                messageContent.style.paddingRight = '24px';
+            } else {
+                messageContent.style.paddingRight = '40px'; // Gần lề sidebar hơn nữa
             }
         });
     }
@@ -388,8 +412,8 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify({
                 text: message,
                 session_id: currentSessionId,
-                model_id: selectedModelType,
                 params: {
+                    model_id: selectedModelType,
                     temperature: temperature,
                     top_p: topP,
                     max_tokens: maxTokens,
