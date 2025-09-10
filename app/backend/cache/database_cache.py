@@ -18,9 +18,9 @@ def load_database(index_path, embedding_model):
     all_docs = list(vectorstore.docstore._dict.values())
     return all_docs
 
-class VectorDatabaseCache:
+class DatabaseCache:
     """
-    Vector Database Cache Manager với auto-refresh mỗi 15 phút
+    Database Cache Manager với auto-refresh mỗi 15 phút
     """
     
     def __init__(self, index_path: str, refresh_interval: int = 900):  # 15 minutes = 900 seconds
@@ -100,44 +100,60 @@ class VectorDatabaseCache:
         return self.cached_docs is not None
 
 # Global cache instance
-vector_cache: Optional[VectorDatabaseCache] = None
+database_cache: Optional[DatabaseCache] = None
 
-def get_vector_cache() -> Optional[VectorDatabaseCache]:
-    """Get global vector cache instance"""
-    return vector_cache
+# Global embedding model instance
+global_embedding_model = None
+
+def get_database_cache() -> Optional[DatabaseCache]:
+    """Get global cache instance"""
+    return database_cache
+
+def get_global_embedding_model():
+    """Get global embedding model instance"""
+    return global_embedding_model
 
 # Cache manager for app lifespan
-class VectorCacheManager:
-    """Manager for vector cache lifecycle"""
+class DatabaseCacheManager:
+    """Manager for cache lifecycle"""
     
     def __init__(self):
-        self.cache: Optional[VectorDatabaseCache] = None
+        self.cache: Optional[DatabaseCache] = None
     
     async def startup(self, index_path: str = VECTOR_INDEX_PATH, refresh_interval: int = 900):
-        """Startup vector cache"""
+        """Startup database cache"""
         try:
-            self.cache = VectorDatabaseCache(index_path, refresh_interval)
+            self.cache = DatabaseCache(index_path, refresh_interval)
             await self.cache.start()
             
             # Set global cache instance
-            global vector_cache
-            vector_cache = self.cache
+            global database_cache
+            database_cache = self.cache
+            
+            # Set global embedding model
+            global global_embedding_model
+            if self.cache.embedding_model:
+                global_embedding_model = self.cache.embedding_model
             
         except Exception as e:
             pass
     
     async def shutdown(self):
-        """Shutdown vector cache"""
+        """Shutdown database cache"""
         try:
             if self.cache:
                 await self.cache.stop()
                 
             # Clear global cache instance
-            global vector_cache
-            vector_cache = None
+            global database_cache
+            database_cache = None
+            
+            # Clear global embedding model
+            global global_embedding_model
+            global_embedding_model = None
             
         except Exception as e:
             pass
 
 # Global cache manager instance
-vector_cache_manager = VectorCacheManager()
+database_cache_manager = DatabaseCacheManager()

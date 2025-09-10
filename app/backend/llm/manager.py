@@ -84,7 +84,7 @@ class ModelManager:
             k_pages = params.get("k_pages", 0)
             domain_restrict = params.get("domain_restrict", False)
             
-            vector_sources = None
+            localdb_sources = None
             web_keywords = None
             if k_pages > 0:  # Chỉ search khi có k_pages
                 try:
@@ -94,14 +94,23 @@ class ModelManager:
                     type_search = search_strategy.get("type_search")
                     keywords = search_strategy.get("key_word", [])
                     
-                    if type_search == "vector_db":
-                        # Vector DB search tại app/ level
-                        from ..search.vectordb_search import search_from_vector_db
-                        vector_results = search_from_vector_db(keywords)
-                        if vector_results:
-                            vector_sources = vector_results
+                    if type_search == "local_db":
+                        # Local DB search tại app/ level
+                        from ..search.localdb_search import search_from_local_database
+                        localdb_results = search_from_local_database(keywords)
+                        if localdb_results:
+                            for result in localdb_results:
+                                if any("tuyen_sinh" in kw.get("section", "") for kw in keywords) and len(result["text"].split()) <= 50:
+                                    web_keywords = [question]
+                                    localdb_results = None
+                                    break
+                                elif any("hoc_phi" in kw.get("section", "") for kw in keywords) and len(result["text"].split()) <= 20:
+                                    web_keywords = [question]
+                                    localdb_results = None
+                                    break
+                            localdb_sources = localdb_results
                         else:
-                            # Vector search fail → fallback to web search keywords
+                            # Local search fail → fallback to web search keywords
                             web_keywords = [question]
                     
                     elif type_search == "web_search":
@@ -116,7 +125,7 @@ class ModelManager:
                     # Fallback: pass original question as keyword
                     web_keywords = [question]
 
-            kaggle_preinference = await KaggleManager.pre_inference(job_id, question, model_id, params, conversation_history, vector_sources, web_keywords)
+            kaggle_preinference = await KaggleManager.pre_inference(job_id, question, model_id, params, conversation_history, localdb_sources, web_keywords)
             if kaggle_preinference is not None:
                 domain, pre_output = kaggle_preinference
             else:

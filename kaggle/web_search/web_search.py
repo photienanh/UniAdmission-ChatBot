@@ -4,6 +4,9 @@ from langchain.vectorstores import FAISS
 import time
 from langchain_core.documents import Document
 from typing import Literal
+import re
+import numpy as np
+import json
 
 from .schema import RagSource, WebSource, SearchEngineType
 from .pipeline import SearchPipeline
@@ -44,6 +47,14 @@ class Websearch:
         )
         self.splitter = TokenTextSplitter(chunk_size=chunk_size, chunk_overlap=chunk_overlap)
         self.logger = CmdLogger("Web search")
+        
+        # Load schools mapping if available, otherwise use empty dict
+        raw_schools = json.load(open("./web_search/schools.json", encoding="utf-8"))
+        
+        self.SCHOOLS = {
+            school: [self.normalize_text(alias) for alias in aliases]
+            for school, aliases in raw_schools.items()
+        }
     def __del__(self):
         del self.embedding
         del self.splitter
@@ -109,9 +120,102 @@ class Websearch:
                 similarity *= 1.5
             
             reranked.append((doc, similarity))
-            reranked.sort(key=lambda x: x[1], reverse=True)
-            result = [doc for doc, _ in reranked]
+        
+        reranked.sort(key=lambda x: x[1], reverse=True)
+        result = [doc for doc, _ in reranked]
         return result[:k_docs]
+    
+    def normalize_text(self, text: str) -> str:
+        """Chuẩn hóa text: bỏ dấu thừa, lowercase, giữ lại chữ/số."""
+        text = text.lower().strip()
+        text = re.sub(r"[^a-zA-Z0-9\u00C0-\u1EF9\s\.,;]", " ", text)
+        text = re.sub(r"\s+", " ", text).strip()
+        return text
+
+    def detect_school(self, query: str) -> str | None:
+        """Detect school from query using predefined keywords"""
+        for school, aliases in self.SCHOOLS.items():
+            if any(alias in query for alias in aliases):
+                return school
+        return None
+    
+    def rerank_search_results(self, search_results: list, query: str, k_pages: int) -> list:
+        """
+        Rerank search results dựa trên:
+        - Semantic similarity giữa query với title/desc/url
+        - Heuristic ưu tiên domain (tuyensinh247, .edu)
+        """
+        if not search_results:
+            return search_results
+        
+        # Chuẩn hóa query
+        query_norm = self.normalize_text(query)
+
+        # Xác định school trong query
+        detected_school = self.detect_school(query_norm)
+
+        # Embed query
+        query_emb = self.embedding.embed_query(query_norm)
+
+        scored_results = []
+        for result in search_results:
+            title = result.get("title", "") or ""
+            desc = result.get("description", "") or ""
+            url = result.get("url", "") or ""
+
+            # Chuẩn hóa
+            title_norm = self.normalize_text(title)
+            desc_norm = self.normalize_text(desc)
+            url_norm = self.normalize_text(url)
+
+            # Semantic embedding
+            title_emb = self.embedding.embed_query(title_norm) if title_norm else None
+            desc_emb = self.embedding.embed_query(desc_norm) if desc_norm else None
+            url_emb = self.embedding.embed_query(url_norm) if url_norm else None
+
+            # Cosine similarity
+            def cos_sim(a, b):
+                norm_a = np.linalg.norm(a)
+                norm_b = np.linalg.norm(b)
+                if norm_a == 0 or norm_b == 0:
+                    return 0.0
+                return float(np.dot(a, b) / (norm_a * norm_b))
+
+            score = 0.0
+            weights = {"title": 0.5, "desc": 0.3, "url": 0.2}
+            if title_emb is not None:
+                score += cos_sim(query_emb, title_emb) * weights["title"]
+            if desc_emb is not None:
+                score += cos_sim(query_emb, desc_emb) * weights["desc"]
+            if url_emb is not None:
+                score += cos_sim(query_emb, url_emb) * weights["url"]
+
+            # Heuristic ưu tiên trường trong query
+            if detected_school:
+                aliases = [self.normalize_text(a) for a in self.SCHOOLS.get(detected_school, [])]
+                if any(a in text for a in aliases for text in [url_norm, title_norm, desc_norm]):
+                    score += 0.5
+                else:
+                    for school, other_aliases in self.SCHOOLS.items():
+                        if school != detected_school:
+                            other_aliases_norm = [self.normalize_text(a) for a in other_aliases]
+                            if any(a in text for a in other_aliases_norm for text in [url_norm, title_norm, desc_norm]):
+                                score -= 0.5
+
+            # Heuristic boost
+            if any(kw in query_norm for kw in ["tuyển sinh", "ngành đào tạo"]):
+                if "tuyensinh247" in url_norm:
+                    score += 0.1
+                if url_norm.endswith(".edu") or ".edu.vn" in url_norm:
+                    score += 0.2
+
+            scored_results.append((result, score))
+
+        # Sort theo score giảm dần
+        scored_results.sort(key=lambda x: x[1], reverse=True)
+        final_results = [res for res, _ in scored_results[:k_pages]]
+
+        return final_results
 
     async def _search_to_docs(
         self, 
@@ -125,16 +229,18 @@ class Websearch:
     ) -> list[Document]:
         # Use provided web_search_keywords if available, otherwise use fallback_query
         if web_keywords and len(web_keywords) > 0:
-            search_results = []
-            # Search with each keyword separately using pipeline
-            keyword_results = await self.web_search.call_fast(
+            # Search and apply rerank BEFORE crawling (pipeline handles search_k = k*4 internally)
+            search_results = await self.web_search.call_fast(
                 fallback_query, k_pages, in_domain, engine, include_pdf, include_image, 
-                external_keywords=web_keywords
+                external_keywords=web_keywords,
+                rerank_pages=lambda q, results: self.rerank_search_results(results, q, k_pages)
             )
-            search_results = keyword_results
         else:
             print(f"[WebSearch] No generated keywords, using fallback query: '{fallback_query}'")
-            search_results = await self.web_search.call_fast(fallback_query, k_pages, in_domain, engine, include_pdf, include_image)
+            search_results = await self.web_search.call_fast(
+                fallback_query, k_pages, in_domain, engine, include_pdf, include_image,
+                rerank_pages=lambda q, results: self.rerank_search_results(results, q, k_pages)
+            )
         docs: list[Document] = []
         for search_result in search_results:
             doc_meta: dict = {
@@ -236,7 +342,7 @@ class Websearch:
         else:
             # Fallback to original query
             relevant_chunks = vector_storage.similarity_search_with_score(fallback_query, k=k_docs)
-            relevant_chunks = self.rerank_chunks(relevant_chunks)
+            relevant_chunks = self.rerank_chunks(relevant_chunks, k_docs)
         
         web_sources: list[WebSource] = []
         rag_sources: list[RagSource] = []

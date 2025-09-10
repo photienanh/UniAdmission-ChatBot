@@ -16,14 +16,14 @@ from database import init_db, close_db
 # App lifespan
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
-from .cache.vector_cache import vector_cache_manager, VECTOR_INDEX_PATH
+from .cache.database_cache import database_cache_manager, VECTOR_INDEX_PATH
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup
     await init_db()
     
-    # Khởi động vector cache với refresh 15 phút
-    await vector_cache_manager.startup(
+    # Khởi động database cache với refresh 15 phút
+    await database_cache_manager.startup(
         index_path=VECTOR_INDEX_PATH,
         refresh_interval=900  # 15 phút = 900 giây
     )
@@ -31,7 +31,7 @@ async def lifespan(app: FastAPI):
     yield # Return control to FastAPI app
     
     # Shutdown
-    await vector_cache_manager.shutdown()
+    await database_cache_manager.shutdown()
     await close_db()
 
 app = FastAPI(lifespan=lifespan)

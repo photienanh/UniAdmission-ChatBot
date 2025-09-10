@@ -8,6 +8,10 @@ PROMPT_TEMPLATE = """{context_block}\nCâu hỏi:\n{question}\nCâu trả lời:
 SEP = "$$$"
 SOURCE = "kaggle"
 
+# Embedding model configuration
+EMBEDDING_MODEL = "intfloat/multilingual-e5-small"
+EMBEDDING_DEVICE = "cpu"
+
 # Model configuration
 MODELS: list[ModelInfo] = [
     {

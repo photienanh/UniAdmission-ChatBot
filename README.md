@@ -25,23 +25,23 @@ Một chatbot AI hỗ trợ tư vấn tuyển sinh đại học thông minh.
 
 UniAdmission-ChatBot là một hệ thống chatbot AI được thiết kế đặc biệt để hỗ trợ học sinh, phụ huynh và các bên liên quan trong việc tư vấn tuyển sinh đại học tại Việt Nam. 
 
-Hệ thống sử dụng mô hình **Qwen3-4B được fine-tune** riêng cho nhiệm vụ tư vấn tuyển sinh, kết hợp với **intelligent routing system** để tự động lựa chọn giữa **Vector Database Search** và **Web Search** tùy theo loại câu hỏi.
+Hệ thống sử dụng mô hình **Qwen3-4B được fine-tune** riêng cho nhiệm vụ tư vấn tuyển sinh, kết hợp với **intelligent routing system** để tự động lựa chọn giữa **Local Database Search** và **Web Search** tùy theo loại câu hỏi.
 
 ### 🔍 **Smart Search Routing**
-- **Vector Database**: Cho câu hỏi về điểm chuẩn, học phí, thông tin cụ thể của trường/ngành
+- **Local Database**: Cho câu hỏi về điểm chuẩn, học phí, thông tin cụ thể của trường/ngành
 - **Web Search**: Cho câu hỏi về tin tức, thông tin cập nhật, xu hướng tuyển sinh, thông tin 3 công khai
 
 ## ✨ Tính năng chính
 
 - **🤖 Fine-tuned Qwen3-4B**: Mô hình AI được fine-tune đặc biệt cho lĩnh vực tư vấn tuyển sinh
 - **🧠 Intelligent Search Routing**: Tự động phân tích câu hỏi và chọn phương pháp tìm kiếm tối ưu
-  - **Vector Database Search**: Cho thông tin chuẩn về trường, ngành, điểm chuẩn
+  - **Local Database Search**: Cho thông tin chuẩn về trường, ngành, điểm chuẩn
   - **Web Search**: Cho tin tức và thông tin cập nhật
-- **📊 Vector Database**: Cơ sở dữ liệu vector chứa thông tin chi tiết của 200+ trường đại học
+- **📊 Local Database**: Cơ sở dữ liệu chứa thông tin chi tiết của 200+ trường đại học
 - **🚀 VLLM Inference**: Triển khai mô hình trên Kaggle với vLLM để tối ưu tốc độ
 - **👤 Hệ thống xác thực**: Đăng nhập/đăng ký với session management
 - **💬 Lịch sử hội thoại**: Lưu trữ và quản lý conversations với streaming response
-- **🌐 Multi-source Integration**: Kết hợp dữ liệu từ vector DB, web search và fine-tuned model
+- **🌐 Multi-source Integration**: Kết hợp dữ liệu từ local DB, web search và fine-tuned model
 - **📱 Responsive Web UI**: Giao diện thân thiện
 
 ## 🧩 Kiến trúc hệ thống
@@ -61,14 +61,14 @@ Hệ thống sử dụng mô hình **Qwen3-4B được fine-tune** riêng cho nh
 - **Qwen3-4B Fine-tuned**: Được training trên 1000+ Q&A tuyển sinh đại học tại Việt Nam
 - **Smart Query Router**: Phân loại câu hỏi và chọn data source phù hợp
   ```python
-  # Vector DB: "Điểm chuẩn CNTT UET 2024?"
+  # Local DB: "Điểm chuẩn CNTT UET 2024?"
   # Web Search: "Xu hướng tuyển sinh 2025?"
   ```
-- **Vector Database**: FAISS với multilingual-e5-small embeddings
+- **Local Database**: FAISS với multilingual-e5-small embeddings
 - **Kaggle Deployment**: vLLM inference server với ngrok tunneling
 
 ### Data Architecture
-- **Vector DB Structure**:
+- **Local DB Structure**:
   ```
   📁 vectordb/
   ├── 🏫 200+ universities × 4 sections each
@@ -78,7 +78,7 @@ Hệ thống sử dụng mô hình **Qwen3-4B được fine-tune** riêng cho nh
   │   └── tuyen_sinh (admission info)
   ```
 - **Web Search**: Brave API + Google Custom Search
-- **Cache System**: Vector cache với auto-refresh 15 phút
+- **Cache System**: Database cache với auto-refresh 15 phút
 
 ## 🚀 Cài đặt
 
@@ -163,7 +163,7 @@ Dự án sử dụng Kaggle để deploy mô hình Qwen3-4B với vLLM:
 Qwen3-4B (Base Model)
 ├── LoRA Fine-tuned Adapter (trên dữ liệu Q&A tuyển sinh)  
 ├── vLLM Inference Engine (fast generation)
-├── Smart Query Router (vector vs web search)
+├── Smart Query Router (local db vs web search)
 ├── ngrok Tunnel (public access)
 └── FastAPI Integration (seamless connection)
 ```
@@ -181,12 +181,12 @@ Qwen3-4B (Base Model)
 1. Truy cập [https://uniadmission.me](https://uniadmission.me) hoặc `http://localhost:8000`
 2. Đăng ký/Đăng nhập tài khoản
 3. Bắt đầu chat với bot:
-   - **Vector DB queries**: "Điểm chuẩn CNTT UET 2024?", "Học phí ngành Y ĐHQGHN?"
+   - **Local DB queries**: "Điểm chuẩn CNTT UET 2024?", "Học phí ngành Y ĐHQGHN?"
    - **Web search queries**: "Thông báo tuyển sinh mới nhất", "Xu hướng ngành hot 2025"
 
 ### Ví dụ câu hỏi
 ```
-🎯 Vector Database (thông tin chuẩn):
+🎯 Local Database (thông tin chuẩn):
 - "Điểm chuẩn ngành CNTT trường UET năm 2024?"
 - "Học phí các ngành của ĐHBK Hà Nội?"  
 - "Thông tin tuyển sinh trường FPT?"
@@ -199,7 +199,7 @@ Qwen3-4B (Base Model)
 
 ### Smart Routing Logic
 Hệ thống tự động phân tích câu hỏi và chọn data source:
-- **Từ khóa trường cụ thể** + **điểm chuẩn/học phí** → Vector DB
+- **Từ khóa trường cụ thể** + **điểm chuẩn/học phí** → Local DB
 - **Câu hỏi chung** + **xu hướng/tin tức** → Web Search
 
 ### API Endpoints
@@ -213,7 +213,7 @@ Hệ thống tự động phân tích câu hỏi và chọn data source:
 ```python
 import requests
 
-# Gửi tin nhắn với vector DB search
+# Gửi tin nhắn với local DB search
 response = requests.post("http://localhost:8000/chat", json={
     "text": "Điểm chuẩn ngành CNTT UET 2024?",
     "model_id": "Qwen/Qwen3-4B",
@@ -248,11 +248,11 @@ UniAdmission-ChatBot/
 │   │   │   ├── kaggle.py          # Kaggle VLLM integration
 │   │   │   └── gemini.py          # Gemini API integration
 │   │   ├── cache/             # Caching system
-│   │   │   ├── vector_cache.py    # Vector DB cache với auto-refresh
+│   │   │   ├── database_cache.py    # Local DB cache với auto-refresh
 │   │   │   └── history_cache.py   # Chat history caching
 │   │   ├── search/            # Search strategies
 │   │   │   ├── search_router.py   # Smart query routing
-│   │   │   ├── vectordb_search.py # Vector database search
+│   │   │   ├── localdb_search.py # Local database search
 │   │   │   └── web_search.py      # Web search integration
 │   │   ├── route/             # API routes
 │   │   │   ├── chat.py           # Chat endpoints với smart routing
@@ -332,7 +332,7 @@ python create_vector_db.py
 - **Optimized deployment**: kaggle_deploy.py chỉ ~80 dòng thay vì 280+ dòng
 
 ### Performance Tuning
-- **Vector Cache**: Auto-refresh 15 phút cho real-time updates
+- **Database Cache**: Auto-refresh 15 phút cho real-time updates
 - **vLLM**: Optimized inference với quantization
 - **Smart Routing**: Giảm 60% response time bằng cách chọn đúng data source
 - **Clean imports**: Chỉ import những gì cần thiết, giảm dependency overhead

@@ -137,12 +137,12 @@ class KaggleManager:
     async def pre_inference(
         cls, stream_id: str, question: str, model_id: str,
         params: GenerationParams, conversation_history: list[ChatMessage],
-        vector_sources: list = None, web_keywords: list = None
+        localdb_sources: list = None, web_keywords: list = None
     ) -> tuple[str, ModelPreOutput] | None:
         """
         Gửi request pre_inference đến server Kaggle.
-        vector_sources: sources đã search từ app/ level
-        web_keywords: keywords để kaggle search nếu không có vector_sources
+        localdb_sources: sources đã search từ app/
+        web_keywords: keywords để kaggle search nếu không có localdb_sources
         """
         
         # Chuẩn bị request gửi tới server
@@ -153,8 +153,8 @@ class KaggleManager:
             "params": params,
             "history": conversation_history
         }
-        if vector_sources:
-            request["vector_sources"] = vector_sources
+        if localdb_sources:
+            request["localdb_sources"] = localdb_sources
         
         # Thêm web_keywords vào request nếu có (khi app search fail)
         if web_keywords:
