@@ -6,11 +6,6 @@ from unidecode import unidecode
 
 from ..search_query import SEARCH_QUERY    
 from ..schema import SearchResult, AbstractSearchEngine
-# SEARCH_QUERY = "(inurl:uet.udn.vn OR inurl:edu.vn OR inurl:ajc.hcma OR inurl:hvta.toaan.gov OR inurl:hcmcons.vn OR inurl:hanu.vn OR inurl:hiu.vn OR inurl:vju.ac) {query}"# from ..schema import AbstractSearchEngine, SearchResult
-# class AbstractSearchEngine:
-#     pass
-# class SearchResult:
-#     pass
 
 class BraveSearchEngine(AbstractSearchEngine):
     def __init__(self) -> None:

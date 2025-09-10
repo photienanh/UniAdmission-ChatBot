@@ -60,21 +60,21 @@ class CustomQA:
         user_question: str,
         stream_id: str,
         params: GenerationParams,
-        vector_sources: list = None,
+        localdb_sources: list = None,
         web_search_keywords: list = None
     ) -> tuple[str, ModelPreOutput]:
         """Prepare inference by handling search and building context"""
         
-        # Check vector sources từ app/ trước
-        if vector_sources and len(vector_sources) > 0:
-            # Đã có vector sources từ app
-            web_sources = vector_sources
+        # Check sources từ app/ trước
+        if localdb_sources and len(localdb_sources) > 0:
+            # Đã có sources từ app
+            web_sources = localdb_sources
             rag_sources = []
-            source_type = "vector_db_from_app"
+            source_type = "local_db"
             final_question = user_question
             
         else:
-            # Không có vector sources từ app -> dùng web search
+            # Không có sources từ app -> dùng web search
             k_pages = params.get("k_pages", 0)
             k_docs = params.get("k_docs", 0)
             

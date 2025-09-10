@@ -2,14 +2,15 @@
 
 from .web_search import Websearch
 from .schema import WebSource, RagSource
+from server.config import EMBEDDING_MODEL, EMBEDDING_DEVICE
 
 class WebSearchWrapper:
     """Wrapper for web search functionality with default configuration"""
     
     def __init__(self) -> None:
         self.web_search = Websearch(
-            embedding_name="intfloat/multilingual-e5-small", 
-            device="cpu",
+            embedding_name=EMBEDDING_MODEL, 
+            device=EMBEDDING_DEVICE,
             chunk_size=1024, 
             chunk_overlap=128
         )

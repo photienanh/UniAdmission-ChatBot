@@ -69,6 +69,6 @@ class KaggleRequest(TypedDict):
     stream_id: str
     params: GenerationParams
     history: list[ChatMessage]
-    vector_sources: NotRequired[list]  # Sources from app/ vector search
+    localdb_sources: NotRequired[list]  # Sources from app/
     web_search_keywords: NotRequired[list[str]]  # Keywords for kaggle web search
     

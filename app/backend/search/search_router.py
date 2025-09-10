@@ -2,7 +2,7 @@ import ast
 from openai import OpenAI
 import os
 from typing import Dict, List, Union
-from .vectordb_search import search_from_vector_db
+from .localdb_search import search_from_local_database
 from .web_search import search_from_web
 
 # Get API key from environment
@@ -29,51 +29,60 @@ def generate_search_keywords(question: str, model: str = "gpt-4o-mini") -> Dict[
 
 CHIẾN LƯỢC TÌM KIẾM:
 
-1. **Phân tích ý định câu hỏi**: Xác định thông tin gì cần thiết để trả lời
-2. **Xác định nguồn tìm kiếm**: Tìm kiếm từ local vector database hoặc tìm kiếm trên web. Vector DB có chứa thông tin về điểm chuẩn các năm, thông tin chung của trường, học phí và thông tin tuyển sinh. Các câu hỏi ngoài phạm vi của Vector DB sẽ tìm kiếm trên web.
-2. **Tìm nguồn thông tin gốc**: Thay vì tìm trực tiếp câu trả lời, tìm dữ liệu để suy luận
-3. **Tối ưu từ khóa**: Dùng thuật ngữ chính thức, tên đầy đủ
-4. **Trả lời đúng định dạng**: Định dạng câu trả lời như sau:
-- Nếu sử dụng web search: {"type_search": "web_search", "key_word": ["từ khóa 1", "từ khóa 2", ...]}
-- Nếu sử dụng local vector DB: {"type_search": "vector_db", "key_word": [{"school_id": "tên trường 1", "section": "section1"},{"school_id": "tên trường 2", "section": "section2"},...]}. Lưu ý: section là 1 trong 4 mục: "thong_tin_chung", "hoc_phi", "diem_chuan", "tuyen_sinh", trong đó "thong_tin_chung" bao gồm thông tin chung của trường như tên, địa chỉ, liên hệ..., "hoc_phi" bao gồm thông tin học phí của trường, "diem_chuan" bao gồm điểm chuẩn các năm, "tuyen_sinh" bao gồm các ngành đào tạo của trường, thông tin tuyển sinh của truờng.
-
-VÍ DỤ THÔNG MINH:
-
-Câu hỏi: "Số tiến sĩ trong viện trí tuệ nhân tạo UET là bao nhiêu?"
-→ Không có trong vector DB nên cần tìm kiếm trên web
-→ Cần: Danh sách giảng viên để đếm tiến sĩ
-→ Từ khóa: "danh sách giảng viên viện trí tuệ nhân tạo UET"
-→ Trả về: {"type_search": "web_search", "key_word": ["danh sách giảng viên viện trí tuệ nhân tạo UET"]}
-
-Câu hỏi: "Điểm chuẩn UET 2024?"
-→ Vector DB có thông tin điểm chuẩn các năm nên tìm trong DB
-→ Cần: Điểm chuẩn của Đại học Công nghệ - Đại học Quốc gia Hà Nội (UET)
-→ Trả về: {"type_search": "vector_db", "key_word": [{"school_id": "UET", "section": "diem_chuan"}]}
-
-Câu hỏi: "Điểm chuẩn ngành CNTT Bách Khoa 2025?"
-→ Vector DB có thông tin điểm chuẩn các năm nên tìm trong DB
-→ Cần: Điểm chuẩn của Đại học Bách Khoa (HUST)
-→ Trả về: {"type_search": "vector_db", "key_word": [{"school_id": "HUST", "section": "diem_chuan"}]}
-
-Câu hỏi: "Học phí ngành Luật kinh doanh VNU-LS như thế nào?"
-→ Vector DB có thông tin học phí nên tìm trong DB
-→ Cần: Học phí của Trường Đại học Luật - Đại học Quốc gia Hà Nội (LS)
-→ Trả về: {"type_search": "vector_db", "key_word": [{"school_id": "LS", "section": "hoc_phi"}]}
-
-Câu hỏi: "Toàn bộ học phần chương trình đào tạo ngành Ngôn ngữ Anh Trường Đại học Ngoại ngữ - Đại học Quốc gia Hà Nội?"
-→ Vector DB không có thông tin cụ thể về chương trình đào tạo của từng ngành nên cần tìm kiếm trên web
-→ Cần: Học phần chương trình đào tạo ngành Ngôn ngữ Anh của Trường Đại học Ngoại ngữ - Đại học Quốc gia Hà Nội (ULIS)
-→ Trả về: {"type_search": "web_search", "key_word": ["học phần chương trình đào tạo ngành Ngôn ngữ Anh ULIS"]}
-
-Câu hỏi: "Địa chỉ của UEB và Học viện Công nghệ Bưu chính Viễn thông?"
-→ Vector DB có thông tin chung như địa chỉ nên tìm trong DB
-→ Trả về: {"type_search": "vector_db", "key_word": [{"school_id": "UEB", "section": "thong_tin_chung"},{"school_id": "PTIT", "section": "thong_tin_chung"}]}
-
-NGUYÊN TẮC:
-- Các câu hỏi ngoài phạm vi vector DB (thông tin chung (gồm tên trường, giới thiệu, mã trường, địa chỉ, thông tin liên hệ như điện thoại, web ...), điểm chuẩn các năm, học phí, thông tin tuyển sinh) thì tìm kiếm trên web
-- Nếu câu hỏi cần tìm thông tin mới nhất, ví dụ trong câu hỏi có từ khóa như "mới nhất", "cập nhật",... thì ưu tiên tìm kiếm trên web
-- Tìm "danh sách", "bảng", "chương trình" thay vì câu hỏi trực tiếp
-
+1. **Xác định nguồn tìm kiếm**: Có 2 nguồn để tìm kiếm là tìm trên local database hoặc tìm trên web.
+    - Local DB: Chứa thông tin về các trường đại học: thông tin chung của trường(tên trường, địa chỉ, website, thông tin liên hệ), điểm chuẩn các năm gần đây, học phí, các ngành đào tạo và thông tin tuyển sinh.
+    - Web search: Tìm trên web nếu chủ đề câu hỏi không có trong local DB, ví dụ như: danh sách giảng viên, học bổng, bảng xếp hạng,...
+2. **Xác định tên viết tắt của trường**: Nếu câu hỏi có liên quan đến trường đại học cụ thể, hãy xác định tên viết tắt chính xác của trường đó, khi tìm trên local DB luôn luôn sử dụng tên viết tắt, web search thì ưu tiên dùng tên viết tắt nếu có thể.
+    Một số tên viết tắt phổ biến:
+    - Trường Đại học Công nghệ - ĐHQG Hà Nội: UET
+    - Trường Đại học Khoa học Tự nhiên - ĐHQG Hà Nội: HUS
+    - Đại học Bách khoa Hà Nội: HUST
+    - Đại học Kinh tế Quốc dân: NEU
+    - Đại học Ngoại thương: FTU
+    - Đại học Thương mại: TMU
+    - Đại học Luật Hà Nội: HLU
+    - Đại học sư phạm Hà Nội: HNUE
+    - Đại học Y Hà Nội: HMU
+    - Đại học Công nghiệp Hà Nội: HAUI
+    - Trường Đại học Luật - ĐHQG Hà Nội: LS(đối với local DB), VNU-UL(đối với web search)
+    - Trường Đại học Kinh tế - ĐHQG Hà Nội: UEB
+    - Trường Đại học Ngoại ngữ - ĐHQG Hà Nội: ULIS
+    - Trường Đại học Khoa học Xã hội và Nhân văn - ĐHQG Hà Nội: USSH
+    - Đại học Giao thông Vận tải: UTC
+    - Học viện Công nghệ Bưu chính Viễn thông: PTIT
+    - Học viện Kĩ thuật mật mã: ACT(đối với local DB), KMA(đối với web search)
+    - Học viện Báo chí và Tuyên truyền: AJC
+    ...
+    Nếu câu hỏi chung chung không liên quan đến trường cụ thể nào, thì không cần lấy tên viết tắt, đồng thời luôn sử dụng web search.
+3. **Xác định từ khóa tìm kiếm**:
+    - Đối với tìm trên local DB: dùng 1 trong 4 từ khóa sau: "thong_tin_chung" (đối với các câu hỏi liên quan đến thông tin chung của trường như địa chỉ, thông tin liên hệ,...), "diem_chuan" (đối với các câu hỏi liên quan đến điểm chuẩn), "hoc_phi" (đối với các câu hỏi liên quan đến học phí của trường) và "tuyen_sinh" (đối với các câu hỏi liên quan đến thông tin tuyển sinh, các ngành đào tạo của trường).
+    - Đối với tìm trên web: tóm tắt câu hỏi thành từ khóa chính làm sao để khi tìm kiếm các trang hiện ra sẽ có chứa thông tin cần thiết để trả lời câu hỏi. Ví dụ như hỏi số Tiến sĩ của trường thì không thể tìm trực tiếp ra số tiến sĩ được, mà phải tìm "danh sách giảng viên của trường", từ thông tin danh sách giảng viên LLM sẽ đếm số tiến sĩ.
+    Một số ví dụ cho từ khóa tìm trên web:
+    "danh sách giảng viên viện trí tuệ nhân tạo trường đại học công nghệ đhqg hà nội" → "danh sách giảng viên viện trí tuệ nhân tạo UET"
+    "học phần chương trình đào tạo ngành trí tuệ nhân tạo UET" → "chương trình đào tạo ngành trí tuệ nhân tạo UET"
+    "số tiến sĩ của khoa công nghệ thông tin ptit" → "danh sách giảng viên khoa công nghệ thông tin ptit"
+    "danh sách giảng viên của đại học kinh tế quốc dân. có bao nhiêu người là PGS" → "danh sách giảng viên NEU"
+    "chương trình đào tạo ngành khoa học máy tính của đại học bách khoa hà nội. tổng cộng có bao nhiêu học phần. học phần nào nhiều tín chỉ nhất" → "chương trình đào tạo ngành khoa học máy tính HUST"
+    "tỉ lệ sinh viên có việc làm sau khi tốt nghiệp của đại học ngoại thương" → "tỉ lệ việc làm FTU"
+    "danh sách giảng viên ngôn ngữ anh trường đại học ngoại ngữ. không tính trợ giảng" → "danh sách giảng viên ngôn ngữ anh ULIS"
+    ""
+4. **Định dạng kết quả**:
+    Kết quả trả về có địng dạng như sau, tùy thuộc vào nguồn tìm kiếm:
+    {"type_search": "local_db", "key_word": [{"school_id":"tên viết tắt của trường 1", "section":"section 1"}, {"school_id":"tên viết tắt của trường 2", "section":"section 2"}, ...]}
+    hoặc {"type_search": "web_search", "key_word": ["từ khóa tìm kiếm 1", "từ khóa tìm kiếm 2", ...]}
+    Ví dụ: {"type_search": "local_db", "key_word": [{"school_id":"UET", "section":"diem_chuan"}]}, {"type_search": "web_search", "key_word": ["danh sách giảng viên của UET"]}
+5. **Ví dụ cụ thể**:
+    "UET có các khoa/viện nào" → {"type_search": "web_search", "key_word": ["cơ câu tổ chức UET"]}
+    "điểm chuẩn năm 2025 của UET. ngành CNTT tăng hay giảm so với năm 2024" → {"type_search": "local_db", "key_word": [{"school_id":"UET", "section":"diem_chuan"}]}
+    "học phí năm 2025 của đại học kinh tế quốc dân" → {"type_search": "local_db", "key_word": [{"school_id":"NEU", "section":"hoc_phi"}]}
+    "địa chỉ và thông tin liên hệ của đại học sư phạm hà nội" → {"type_search": "local_db", "key_word": [{"school_id":"HNUE", "section":"thong_tin_chung"}]}
+    "so sánh điểm chuẩn ngành CNTT của UET và HUST năm 2024" → {"type_search": "local_db", "key_word": [{"school_id":"UET", "section":"diem_chuan"}, {"school_id":"HUST", "section":"diem_chuan"}]}
+    "viện trí tuệ nhân tạo UET có bao nhiêu tiến sĩ" → {"type_search": "web_search", "key_word": ["danh sách giảng viên viện trí tuệ nhân tạo UET"]}
+    "tổng số tín chỉ chương trình đào tạo ngành y đa khoa của đại học y hà nội" → {"type_search": "web_search", "key_word": ["chương trình đào tạo ngành y đa khoa HMU"]}
+    "năm 2025 đại học ngoại thương tuyển sinh bao nhiêu ngành đào tạo" → {"type_search": "local_db", "key_word": [{"school_id":"FTU", "section":"tuyen_sinh"}]}
+    "bảng xếp hạng các trường đại học ở việt nam năm 2025" → {"type_search": "web_search", "key_word": ["bảng xếp hạng các trường đại học ở việt nam năm 2025"]}
+    "Học viện công nghệ bưu chính viễn thông có bao nhiêu sinh viên, so với UET thì sao" → {"type_search": "web_search", "key_word": ["số lượng sinh viên PTIT", "số lượng sinh viên UET"]}
+    ...
 Chỉ trả về từ khóa, không giải thích."""
                 },
                 {
@@ -109,7 +118,7 @@ def route_search(question: str) -> Dict[str, Union[str, List]]:
         # Fallback
         return {"type_search": "web_search", "key_word": [question]}
 
-def search(question: str, max_results: int, domain_restrict: bool =False) -> Union[List[dict], None]:
+def search(question: str, max_results: int, domain_restrict: bool = False) -> Union[List[dict], None]:
     """
     Tìm kiếm thống nhất sử dụng router để quyết định nguồn
     
@@ -123,9 +132,14 @@ def search(question: str, max_results: int, domain_restrict: bool =False) -> Uni
         type_search = search_strategy.get("type_search")
         keywords = search_strategy.get("key_word", [])
         
-        if type_search == "vector_db":
-            results = search_from_vector_db(keywords)
+        if type_search == "local_db":
+            results = search_from_local_database(keywords)
             if results:
+                for result in results:
+                    if any("tuyen_sinh" in kw.get("section", "") for kw in keywords) and len(result["text"].split()) <= 50:
+                        return search_from_web([question], max_results, domain_restrict)
+                    elif any("hoc_phi" in kw.get("section", "") for kw in keywords) and len(result["text"].split()) <= 20:
+                        return search_from_web([question], max_results, domain_restrict)
                 return results
             else:
                 # Fallback to web search with original question

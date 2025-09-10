@@ -127,7 +127,7 @@ document.getElementById('register-form').addEventListener('submit', function(e) 
     if (!validatePasswords()) {
         return false;
     }
-    fetch('/register', {
+    fetch('/api/auth/register', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -154,15 +154,22 @@ document.getElementById('register-form').addEventListener('submit', function(e) 
     .then(data => {
         errorDiv.textContent = data.detail;
         errorDiv.style.display = 'block';
+        
         if (data.success) {
+            // Thay đổi style thành success
+            errorDiv.className = 'success-message';
             setTimeout(() => {
                 window.location.href = data.next;
             }, 1000);
+        } else {
+            // Giữ style error
+            errorDiv.className = 'error-message';
         }
     })
     .catch(error => {
         console.log(error);
         errorDiv.textContent = 'Đã xảy ra lỗi. Vui lòng thử lại.';
+        errorDiv.className = 'error-message';
         errorDiv.style.display = 'block';
     });
 });

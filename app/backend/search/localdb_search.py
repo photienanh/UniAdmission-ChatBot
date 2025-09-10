@@ -1,8 +1,8 @@
-from ..cache.vector_cache import get_vector_cache
+from ..cache.database_cache import get_database_cache
 
 def documents_search(school_id, section):
     # Lấy cached documents
-    cache = get_vector_cache()
+    cache = get_database_cache()
     if not cache or not cache.is_cache_ready():
         return None
     
@@ -19,8 +19,8 @@ def documents_search(school_id, section):
         
     return filtered_docs
 
-def search_from_vector_db(keywords):
-    """Tìm kiếm từ vector database với danh sách keywords"""
+def search_from_local_database(keywords):
+    """Tìm kiếm từ local database với danh sách keywords"""
     try:
         results = []
         
@@ -35,14 +35,14 @@ def search_from_vector_db(keywords):
                     description = content[:200] + "..." if len(content) > 200 else content
                     
                     # Tạo title có tên trường để phân biệt
-                    title = f"Tìm trường ĐH-CĐ - Cốc Cốc ({school_id})"
+                    title = f"Tìm trường ĐH-CĐ ({school_id})"
                     
                     results.append({
                         "url": "https://hoctap.coccoc.com/tim-truong-dh-cd",
                         "title": title,
                         "description": description,
                         "text": content,
-                        "source": "vector_db"
+                        "source": "local_db"
                     })
                 else:
                     return None

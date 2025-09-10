@@ -617,7 +617,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Logout function
     window.logout = function() {
-        fetch('/logout', {
+        fetch('/api/auth/logout', {
             method: 'GET',
             cache: 'no-cache'
         })
@@ -734,7 +734,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Check authentication periodically (but not too frequently to avoid false alerts)
     function checkAuthStatus() {
-        fetch('/check', {
+        fetch('/api/auth/check', {
             method: 'POST'
         })
         .then(response => {

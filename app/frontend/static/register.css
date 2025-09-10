@@ -199,6 +199,16 @@ body {
     font-size: 14px;
 }
 
+.success-message {
+    background-color: #d1fae5;
+    color: #065f46;
+    padding: 12px 16px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border-left: 4px solid #10b981;
+    font-size: 14px;
+}
+
 @media (max-width: 480px) {
     body {
         padding: 10px;

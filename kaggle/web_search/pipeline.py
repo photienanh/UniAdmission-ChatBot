@@ -38,7 +38,8 @@ class SearchPipeline:
         engine_type: Literal["brave", "google"] = "brave",
         include_pdf: bool = False,
         include_image: bool = False,
-        external_keywords: list[str] = None
+        external_keywords: list[str] = None,
+        rerank_pages = None
     ) -> list[ProcessedResult]:
         result: list[ProcessedResult] = []
         self.logger.enable = True
@@ -78,10 +79,14 @@ class SearchPipeline:
         for i, keyword_results in enumerate(keyword_results_list):
             added_from_this_keyword = 0            
             for result in keyword_results:
-                if result['url'] not in seen_urls and added_from_this_keyword < k_pages:
+                if result['url'] not in seen_urls and added_from_this_keyword < search_k:  # Use search_k to get more results
                     seen_urls.add(result['url'])
                     balanced_results.append(result)
                     added_from_this_keyword += 1
+        
+        # Apply rerank BEFORE crawling if callback provided
+        if rerank_pages:
+            balanced_results = rerank_pages(query, balanced_results)
         
         # Process balanced pages with detailed logging
         tasks = []
@@ -133,17 +138,19 @@ class SearchPipeline:
         engine_type: Literal["brave", "google"] = "brave",
         include_pdf: bool = False,
         include_image: bool = False,
-        external_keywords: list[str] = None
+        external_keywords: list[str] = None,
+        rerank_pages = None
     ) -> list[ProcessedResult]:
         # k is pages per keyword
         # Let _call handle the calculation after keyword generation
         return await self._call(
             query=query,
-            k_pages=k,  # Pages per keyword
-            search_k=max(k, 10),  # Results per keyword from API
+            k_pages=k,
+            search_k=k*4,
             in_domain=in_domain,
             engine_type=engine_type,
             include_pdf=include_pdf,
             include_image=include_image,
-            external_keywords=external_keywords
+            external_keywords=external_keywords,
+            rerank_pages=rerank_pages
         )
