@@ -8,7 +8,7 @@ from urllib.parse import urlparse
 
 from ..schema import SearchResult, AbstractSearchEngine
 
-SEARCH_QUERY = "(site:uet.udn.vn OR site:edu.vn OR site:ajc.hcma OR site:hvta.toaan.gov OR site:hcmcons.vn OR site:hanu.vn OR site:hiu.vn OR site:vju.ac) {query}"# from ..schema import AbstractSearchEngine, SearchResult
+SEARCH_QUERY = "(inurl:uet.udn.vn OR inurl:edu.vn OR inurl:ajc.hcma OR inurl:hvta.toaan.gov OR inurl:hcmcons.vn OR inurl:hanu.vn OR inurl:hiu.vn OR inurl:vju.ac) {query}"# from ..schema import AbstractSearchEngine, SearchResult
 class BraveSearchEngine(AbstractSearchEngine):
     def __init__(self) -> None:
         super().__init__()
@@ -21,7 +21,7 @@ class BraveSearchEngine(AbstractSearchEngine):
         if len(domains) == 0: return query
         domain_queries = []
         for domain in domains:
-            domain_queries.append(f"site:{domain}")
+            domain_queries.append(f"inurl:{domain}")
         engine_query = "(" + " OR ".join(domain_queries) + ") " + query
         return engine_query
     def _construct_freshness(self, time_metric: Literal["d", "m", "y"], time_range: int) -> str:

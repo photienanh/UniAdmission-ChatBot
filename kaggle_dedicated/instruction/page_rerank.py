@@ -10,9 +10,15 @@ Hướng dẫn:
 4. Không được đưa thêm văn bản ngoài JSON.  
 
 Quy tắc ưu tiên:  
+<<<<<<< HEAD
+- High: Trang nói rõ về đúng thực thể trong truy vấn và thông tin cần tìm kiếm. (Đúng trường -> đúng ngành, ...).
+- Medium: Trang đề cập đúng thực thể trong truy vấn, không nêu rõ thông tin cần tìm kiếm. (Đúng trường -> đúng ngành, ...). (Cần danh sách nhưng chỉ có tổng quát, giới thiệu)
+- Low: Trang chung chung về trường đại học hoặc không liên quan đến truy vấn. Cùng trường nhưng khác khoa/bộ môn. Sai trường nhưng cùng khoa / bộ môn.
+=======
 - High: Trang nói rõ về đúng thực thể trong truy vấn.  
 - Medium: Trang nói về thực thể liên quan chặt chẽ (cùng trường nhưng khác khoa/bộ môn) đến truy vấn.  
 - Low: Trang chung chung về trường đại học hoặc không liên quan đến truy vấn.  
+>>>>>>> a7d32b1fa6453dfc43a853321806dbbbb115bbfa
 
 Input format: 
 Query:  

@@ -245,8 +245,8 @@ class DataRetrieverPipeline:
     ) -> list[RagSource]:
         """Combine all ragsource, remove duplicate chunks"""
         import json
-        with open("FUC.json", 'w', encoding='utf-8') as file:
-            file.write(json.dumps(rag_sources_list_list, ensure_ascii=False))
+        # with open("log.json", 'w', encoding='utf-8') as file:
+        #     file.write(json.dumps(rag_sources_list_list, ensure_ascii=False))
         url_indexes: dict[str, set[int]] = {}
         final_rag_sources: list[RagSource] = []
         for rag_sources_list in rag_sources_list_list:
