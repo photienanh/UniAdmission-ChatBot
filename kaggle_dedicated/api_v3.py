@@ -9,6 +9,7 @@ DOMAIN = "http://127.0.0.1:8000"
 IS_LOCAL = DOMAIN == "http://127.0.0.1:8000"
 BASE_PATH = "" if IS_LOCAL else "/kaggle/working"
 
+ws_pipeline = None
 
 import os
 import requests
@@ -328,8 +329,8 @@ class APIModel(APIModelCore):
         copy_params.update(ROUTER_PARAMS) #type:ignore 
         async for chunk in await self(
             call_type=CallType.ROUTER, 
-            instruction=ROUTER_INSTRUCTION, 
-            prompt=ROUTER_PREFIX+prompt, 
+            instruction=ROUTER_INSTRUCTION+ROUTER_PREFIX, 
+            prompt=prompt, 
             params=copy_params
         ):
             text += chunk
@@ -349,8 +350,8 @@ class APIModel(APIModelCore):
         copy_params.update(PAGE_RERANKER_PARAMS) #type:ignore
         async for chunk in await self(
             call_type=CallType.RANKER, 
-            instruction=PAGE_RERANKER_INSTRUCTION, 
-            prompt=PAGE_RERANKER_PREFIX+prompt, 
+            instruction=PAGE_RERANKER_INSTRUCTION+PAGE_RERANKER_PREFIX, 
+            prompt=prompt, 
             params=copy_params
         ):
             text += chunk
@@ -577,6 +578,7 @@ class CustomQA:
         return prompt, pre_output
     
 async def main():
+    global ws_pipeline
     api_model = APIModel()
 
     ws_pipeline = CustomQA(api_model)

@@ -70,7 +70,9 @@ document.addEventListener('DOMContentLoaded', function() {
     const mergeTableCheckbox = document.getElementById('merge-table');
     const mergeNeighborCheckbox = document.getElementById('merge-neighbor');
     const llmRerankCheckbox = document.getElementById('llm-rerank-checkbox');
-    
+    const simpleTimeLimit = document.getElementById('simple-time-limit');
+    const simpleRetrieveMode = document.getElementById('simple-retrieve-mode');
+
     // Handle slider switch clicks
     document.querySelectorAll('.slider-switch').forEach(switchElement => {
         switchElement.addEventListener('click', function(e) {
@@ -477,20 +479,83 @@ document.addEventListener('DOMContentLoaded', function() {
         const maxHistory = parseInt(maxHistoryInput.value);
         
         // Advanced search parameters
-        const maxQuery = parseInt(maxQueryInput.value);
+        let maxQuery = parseInt(maxQueryInput.value);
         const queryScore = parseFloat(queryScoreThreshold.value);
-        const engineType = engineTypeSelect.value;
-        const schoolDomain = schoolDomainCheckbox.checked;
-        const timeMetric = timeMetricSelect.value;
-        const timeRange = parseInt(timeRangeInput.value);
+        let engineType = engineTypeSelect.value;
+        let schoolDomain = schoolDomainCheckbox.checked;
+        let timeMetric = timeMetricSelect.value;
+        let timeRange = parseInt(timeRangeInput.value);
         const pageRerank = pageRerankCheckbox.checked;
         const chunkRerank = chunkRerankCheckbox.checked;
         const pageScore = parseFloat(pageScoreThreshold.value);
         const chunkScore = parseFloat(chunkScoreThreshold.value);
-        const includePdf = includePdfCheckbox.checked;
+        let includePdf = includePdfCheckbox.checked;
         const includeImage = includeImageCheckbox.checked;
-        const mergeTable = mergeTableCheckbox.checked;
-        const mergeNeighbor = mergeNeighborCheckbox.checked;
+        let mergeTable = mergeTableCheckbox.checked;
+        let mergeNeighbor = mergeNeighborCheckbox.checked;
+        let llmrerank = llmRerankCheckbox.checked;
+        const simpleTimeLimitValue = simpleTimeLimit.value;
+        const simpleRetrieveModeValue = simpleRetrieveMode.value;
+        let usewebsearch = retrieveData && websearchCheckbox.checked;
+        let uselocaldb = retrieveData && localdbCheckbox.checked;
+
+        // Validate k_docs value before sending
+        let kDocsValue = parseInt(searchDocsCount.value);
+        if (isNaN(kDocsValue) || kDocsValue < 0) kDocsValue = 0;
+        if (kDocsValue > 50) kDocsValue = 50;
+        let kPagesValue = parseInt(searchResultsCount.value);
+        // Send to backend
+        if (!retrieveData) {
+            kDocsValue = 0;
+            kPagesValue = 0;
+        }
+
+        if (simpleTimeLimitValue === "") {
+        }
+        else {
+            // Match number + metric (like "7d", "1m", "1y")
+            const match = simpleTimeLimitValue.match(/^(\d+)([a-zA-Z])$/);
+            timeRange = parseInt(match[1], 10); // numeric value
+            timeMetric = match[2]; 
+        }
+        if (retrieveData) {
+            if (simpleRetrieveModeValue === "option") {
+
+            }
+            else if (simpleRetrieveModeValue === "basic") {
+                usewebsearch = true;
+                uselocaldb = true;
+                maxQuery = 1;
+                kPagesValue = 1;
+                kDocsValue = 3;
+                includePdf = false;
+                mergeTable = false;
+                mergeNeighbor = false;
+                llmrerank = false;
+            }
+            else if (simpleRetrieveModeValue == "mid") {
+                usewebsearch = true;
+                uselocaldb = true;
+                maxQuery = 2;
+                kPagesValue = 3;
+                kDocsValue = 5;
+                includePdf = false;
+                mergeTable = true;
+                mergeNeighbor = false;
+                llmrerank = false;
+            }
+            else if (simpleRetrieveModeValue == "advanced") {
+                usewebsearch = true;
+                uselocaldb = true;
+                maxQuery = 3;
+                kPagesValue = 5;
+                kDocsValue = 5;
+                includePdf = true;
+                mergeTable = true;
+                mergeNeighbor = true;
+                llmrerank = true;
+            }
+        }
         
         console.log('Model selected:', selectedModelType, 'Use Gemini:', useGemini);
         console.log('Web Search enabled:', retrieveData);
@@ -511,16 +576,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Show typing indicator
         showTypingIndicator();
-        // Validate k_docs value before sending
-        let kDocsValue = parseInt(searchDocsCount.value);
-        if (isNaN(kDocsValue) || kDocsValue < 0) kDocsValue = 0;
-        if (kDocsValue > 50) kDocsValue = 50;
-        let kPagesValue = parseInt(searchResultsCount.value);
-        // Send to backend
-        if (!retrieveData) {
-            kDocsValue = 0;
-            kPagesValue = 0;
-        }
+
         
         // Build comprehensive params object
         const params = {
@@ -538,8 +594,8 @@ document.addEventListener('DOMContentLoaded', function() {
             k_docs: kDocsValue,
             
             // Advanced search parameters
-            use_websearch: retrieveData && websearchCheckbox.checked,
-            use_localdb: retrieveData && localdbCheckbox.checked,
+            use_websearch: usewebsearch,
+            use_localdb: uselocaldb,
             max_query: maxQuery,
             query_score_threshold: queryScore,
             engine_type: engineType,
@@ -552,7 +608,7 @@ document.addEventListener('DOMContentLoaded', function() {
             include_image: includeImage,
             merge_table: mergeTable,
             merge_neighbor: mergeNeighbor,
-            llm_rerank: llmRerankCheckbox.checked,
+            llm_rerank: llmrerank,
         };
         
         // Add time parameters if specified

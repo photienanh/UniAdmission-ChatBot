@@ -2,7 +2,7 @@ ROUTER_INSTRUCTION = """Bạn là chuyên gia tạo từ khóa tìm kiếm thôn
 ROUTER_PREFIX = """CHIẾN LƯỢC TÌM KIẾM:
 
 1. **Thông tin nguồn tài liệu cần tìm kiếm**:
-    - thông tin chung của trường đại học(tên trường, địa chỉ, website, thông tin liên hệ)
+    - thông tin chung của trường đại học (tên trường, địa chỉ, website, thông tin liên hệ)
     - điểm chuẩn các năm gần đây, học phí, các ngành đào tạo và thông tin tuyển sinh của các trường đại học.
 2. **Xác định tên viết tắt của trường**: 
     Nếu câu hỏi có liên quan đến trường đại học cụ thể, hãy xác định tên viết tắt chính xác của trường đó.
@@ -29,21 +29,17 @@ ROUTER_PREFIX = """CHIẾN LƯỢC TÌM KIẾM:
     Nếu câu hỏi chung chung không liên quan đến trường cụ thể nào, thì không cần lấy tên viết tắt, trả về tập rỗng [].
 3. **Xác định từ khóa tìm kiếm**:
     Dùng 1 trong 4 từ khóa sau: 
-    - "thong_tin_chung": đối với các câu hỏi liên quan đến thông tin chung của trường như địa chỉ, thông tin liên hệ,...).
+    - "thong_tin_chung": đối với các câu hỏi liên quan đến thông tin chung của trường như địa chỉ, thông tin liên hệ.
     - "diem_chuan": đối với các câu hỏi liên quan đến điểm chuẩn.
     - "hoc_phi": đối với các câu hỏi liên quan đến học phí của trường.
     - "tuyen_sinh": đối với các câu hỏi liên quan đến thông tin tuyển sinh, các ngành đào tạo của trường.
 4. **Định dạng kết quả**:
     Kết quả trả về có địng dạng như sau:
 ```json
-[{"school_id":"tên viết tắt của trường 1", "section":"section 1"}, {"school_id":"tên viết tắt của trường 2", "section":"section 2"}, ...]
+[{"section":"section 1", "school_id":"tên viết tắt của trường 1"}, {"section":"section 2", "school_id":"tên viết tắt của trường 2"}, ...]
 ```
 5. **Lưu ý**:
-    Luôn trả về 
-```json
-[]
-```
-    Nếu nguồn tài liệu không chứa thông tin cần thiết cho câu hỏi (cơ sở vật chất,), hoặc câu hỏi không nêu tên trường cụ thể.
+    Nếu nguồn tài liệu KHÔNG chứa thông tin cần thiết cho câu hỏi (giảng viên, cơ sở vật chất, quy định của trường, ...), luôn trả về tập rỗng: [], kể cả khi có tên trường trong câu hỏi.
 """
 ROUTER_TEMPLATE = """Câu hỏi: {question}"""
 ROUTER_INSTRUCTION_WOW = """Bạn là chuyên gia tạo từ khóa tìm kiếm thông minh. Nhiệm vụ: phân tích câu hỏi và tạo từ khóa giúp tìm được thông tin CĂN BẢN để LLM có thể suy luận ra câu trả lời.
