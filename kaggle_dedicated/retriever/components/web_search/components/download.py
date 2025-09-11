@@ -19,11 +19,11 @@ class PageDowloader:
                     }
                     return result
                 else:
-                    print(f"[Page download] Error {response.status}: {await response.text()}")
+                    print(f"[Page download] Error {response.status}")#: {await response.text()}")
         except asyncio.TimeoutError:
             print(f"[Page downloader] Timeout: {input['url']}")
         except Exception as e:
             print(f"[Page downloader] Error: {str(e)[:100]}")
-            import traceback
-            traceback.print_exc()
+            # import traceback
+            # traceback.print_exc()
         return None

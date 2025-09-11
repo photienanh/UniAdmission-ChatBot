@@ -1,0 +1,1633 @@
+[
+    {
+        "normalized_name": "đại học nông lâm thành phố hồ chí minh",
+        "name": "Đại học Nông Lâm Thành phố Hồ Chí Minh",
+        "acronym": "NLU",
+        "netloc": "hcmuaf.edu.vn",
+        "website": "//www.hcmuaf.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học hồng đức",
+        "name": "Đại học Hồng Đức",
+        "acronym": "HDU",
+        "netloc": "hdu.edu.vn",
+        "website": "http://www.hdu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học ngoại thương",
+        "name": "Đại học Ngoại thương",
+        "acronym": "FTU",
+        "netloc": "ftu.edu.vn",
+        "website": "http://www.ftu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học ngoại thương (cơ sở quảng ninh)",
+        "name": "Đại học Ngoại thương (Cơ sở Quảng Ninh)",
+        "acronym": "FTU",
+        "netloc": "csquangninh.ftu.edu.vn",
+        "website": "http://csquangninh.ftu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học sư phạm hà nội 2",
+        "name": "Đại học Sư phạm Hà Nội 2",
+        "acronym": "không tìm thấy tên viết tắt",
+        "netloc": "hpu2.edu.vn",
+        "website": "http://www.hpu2.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học ngoại ngữ (đhqg hà nội)",
+        "name": "Đại học Ngoại ngữ (ĐHQG Hà Nội)",
+        "acronym": "ULIS",
+        "netloc": "ulis.vnu.edu.vn",
+        "website": "http://ulis.vnu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kinh tế quốc dân",
+        "name": "Đại học Kinh tế Quốc dân",
+        "acronym": "NEU",
+        "netloc": "neu.edu.vn",
+        "website": "https://www.neu.edu.vn/"
+    },
+    {
+        "normalized_name": "học viện báo chí và tuyên truyền",
+        "name": "Học viện Báo chí và Tuyên truyền",
+        "acronym": "AJC",
+        "netloc": "ajc.hcma.vn",
+        "website": "https://ajc.hcma.vn"
+    },
+    {
+        "normalized_name": "đại học sư phạm nghệ thuật trung ương hà nội (đhsp nghệ thuật tw)",
+        "name": "Đại học Sư phạm Nghệ thuật Trung ương Hà Nội (ĐHSP Nghệ thuật TW)",
+        "acronym": "NUAE",
+        "netloc": "spnttw.edu.vn",
+        "website": "http://www.spnttw.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học hà nội",
+        "name": "Đại học Hà Nội",
+        "acronym": null,
+        "netloc": "hanu.edu.vn",
+        "website": "https://hanu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học tôn đức thắng - phân hiệu nha trang",
+        "name": "Đại học Tôn Đức Thắng - Phân hiệu Nha Trang",
+        "acronym": null,
+        "netloc": "nhatrang.tdtu.edu.vn",
+        "website": "https://nhatrang.tdtu.edu.vn/trang-chu"
+    },
+    {
+        "normalized_name": "đại học tôn đức thắng",
+        "name": "Đại học Tôn Đức Thắng",
+        "acronym": "TDTU",
+        "netloc": "tdtu.edu.vn",
+        "website": "http://www.tdtu.edu.vn/"
+    },
+    {
+        "normalized_name": "học viện ngoại giao việt nam",
+        "name": "Học viện Ngoại giao Việt Nam",
+        "acronym": "DAV",
+        "netloc": "dav.edu.vn",
+        "website": "https://dav.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kinh tế - đại học quốc gia hà nội",
+        "name": "Đại học Kinh tế - Đại học Quốc gia Hà Nội",
+        "acronym": "VNU - UEB",
+        "netloc": "ueb.edu.vn",
+        "website": "https://ueb.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học sư phạm thể dục thể thao hà nội",
+        "name": "Đại học Sư phạm Thể dục thể thao Hà Nội",
+        "acronym": null,
+        "netloc": "dhsptdtthanoi.edu.vn",
+        "website": "http://dhsptdtthanoi.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học vinh",
+        "name": "Đại học Vinh",
+        "acronym": null,
+        "netloc": "vinhuni.edu.vn",
+        "website": "http://vinhuni.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học thủ đô hà nội",
+        "name": "Đại học Thủ đô Hà Nội",
+        "acronym": "HMU",
+        "netloc": "hnmu.edu.vn",
+        "website": "http://hnmu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học văn hóa hà nội",
+        "name": "Đại học văn hóa Hà Nội",
+        "acronym": "HUC",
+        "netloc": "huc.edu.vn",
+        "website": "http://www.huc.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học khoa học tự nhiên - đại học quốc gia hà nội",
+        "name": "Đại học Khoa học Tự nhiên - Đại học Quốc gia Hà Nội",
+        "acronym": "VNU - US",
+        "netloc": "hus.vnu.edu.vn",
+        "website": "http://www.hus.vnu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học mở hà nội",
+        "name": "Đại học Mở Hà Nội",
+        "acronym": "HOU",
+        "netloc": "hou.edu.vn",
+        "website": "https://www.hou.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học hàng hải việt nam",
+        "name": "Đại học Hàng hải Việt Nam",
+        "acronym": "VMU",
+        "netloc": "vimaru.edu.vn",
+        "website": "http://vimaru.edu.vn/"
+    },
+    {
+        "normalized_name": "học viện ngân hàng",
+        "name": "Học viện Ngân hàng",
+        "acronym": null,
+        "netloc": "hvnh.edu.vn",
+        "website": "http://hvnh.edu.vn"
+    },
+    {
+        "normalized_name": "đại học hùng vương",
+        "name": "Đại học Hùng Vương",
+        "acronym": "HVU",
+        "netloc": "hvu.edu.vn",
+        "website": "http://www.hvu.edu.vn/"
+    },
+    {
+        "normalized_name": "học viện chính sách và phát triển",
+        "name": "Học viện Chính sách và Phát triển",
+        "acronym": "APD",
+        "netloc": "apd.edu.vn",
+        "website": "http://apd.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công đoàn",
+        "name": "Đại học Công đoàn",
+        "acronym": "TUU",
+        "netloc": "dhcd.edu.vn",
+        "website": "http://www.dhcd.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học ngoại ngữ - tin học tp.hcm",
+        "name": "Đại học Ngoại ngữ - Tin học TP.HCM",
+        "acronym": "HUFLIT",
+        "netloc": "huflit.edu.vn",
+        "website": "http://huflit.edu.vn"
+    },
+    {
+        "normalized_name": "đại học mỹ thuật việt nam",
+        "name": "Đại học Mỹ thuật Việt Nam",
+        "acronym": "VUFA",
+        "netloc": "mythuatvietnam.edu.vn",
+        "website": "http://mythuatvietnam.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học hải phòng",
+        "name": "Đại học Hải Phòng",
+        "acronym": "HPU",
+        "netloc": "dhhp.edu.vn",
+        "website": "http://dhhp.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kiến trúc hà nội",
+        "name": "Đại học Kiến trúc Hà Nội",
+        "acronym": "HAU",
+        "netloc": "hau.edu.vn",
+        "website": "http://www.hau.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học ngoại ngữ - đại học huế",
+        "name": "Đại học Ngoại ngữ - Đại học Huế",
+        "acronym": null,
+        "netloc": "huflis.edu.vn",
+        "website": "https://huflis.edu.vn/vi/"
+    },
+    {
+        "normalized_name": "đại học tài nguyên và môi trường thành phố hồ chí minh",
+        "name": "Đại học Tài nguyên và Môi trường Thành phố Hồ Chí Minh",
+        "acronym": "HCMUNRE",
+        "netloc": "hcmunre.edu.vn",
+        "website": "http://www.hcmunre.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học khoa học xã hội và nhân văn - đại học quốc gia hà nội",
+        "name": "Đại học Khoa học Xã hội và Nhân văn - Đại học Quốc gia Hà Nội",
+        "acronym": "USSH",
+        "netloc": "ussh.vnu.edu.vn",
+        "website": "http://www.ussh.vnu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học tiền giang",
+        "name": "Đại học Tiền Giang",
+        "acronym": "TGU",
+        "netloc": "tgu.edu.vn",
+        "website": "http://www.tgu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học giáo dục - đại học quốc gia hà nội",
+        "name": "Đại học Giáo dục - Đại học Quốc gia Hà Nội",
+        "acronym": "VNU - UED",
+        "netloc": "education.vnu.edu.vn",
+        "website": "http://education.vnu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học sư phạm kỹ thuật tp.hcm",
+        "name": "Đại học Sư phạm Kỹ thuật TP.HCM",
+        "acronym": "HCMUTE",
+        "netloc": "hcmute.edu.vn",
+        "website": "http://hcmute.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học sư phạm - đại học đà nẵng",
+        "name": "Đại học Sư phạm - Đại học Đà Nẵng",
+        "acronym": "UED",
+        "netloc": "ued.udn.vn",
+        "website": "http://ued.udn.vn"
+    },
+    {
+        "normalized_name": "đại học bách khoa hà nội",
+        "name": "Đại học Bách khoa Hà Nội",
+        "acronym": "HUST",
+        "netloc": "hust.edu.vn",
+        "website": "https://www.hust.edu.vn/"
+    },
+    {
+        "normalized_name": "phân hiệu đại học cần thơ tại hậu giang",
+        "name": "Phân hiệu Đại học Cần Thơ tại Hậu Giang",
+        "acronym": "CTU",
+        "netloc": "ctu.edu.vn",
+        "website": "https://www.ctu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học cần thơ",
+        "name": "Đại học Cần Thơ",
+        "acronym": "CTU",
+        "netloc": "ctu.edu.vn",
+        "website": "https://www.ctu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghệ - đại học quốc gia hà nội",
+        "name": "Đại học Công nghệ - Đại học Quốc gia Hà Nội",
+        "acronym": "UET",
+        "netloc": "uet.vnu.edu.vn",
+        "website": "https://uet.vnu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghệ giao thông vận tải (cơ sở thái nguyên)",
+        "name": "Đại học Công nghệ Giao thông Vận tải (cơ sở Thái Nguyên)",
+        "acronym": "UTT",
+        "netloc": "utt.edu.vn",
+        "website": "http://utt.edu.vn/thainguyen"
+    },
+    {
+        "normalized_name": "đại học công nghệ giao thông vận tải (cơ sở vĩnh phúc)",
+        "name": "Đại học Công nghệ Giao thông Vận tải (cơ sở Vĩnh Phúc)",
+        "acronym": "UTT",
+        "netloc": "utt.edu.vn",
+        "website": "http://utt.edu.vn/vinhphuc"
+    },
+    {
+        "normalized_name": "đại học y dược - đại học huế",
+        "name": "Đại học Y dược - Đại học Huế",
+        "acronym": "Hue UMP",
+        "netloc": "huemed-univ.edu.vn",
+        "website": "https://huemed-univ.edu.vn/"
+    },
+    {
+        "normalized_name": "học viện tòa án",
+        "name": "Học viện Tòa án",
+        "acronym": null,
+        "netloc": "hvta.toaan.gov.vn",
+        "website": "http://hvta.toaan.gov.vn"
+    },
+    {
+        "normalized_name": "đại học công nghệ giao thông vận tải",
+        "name": "Đại học Công nghệ Giao thông Vận tải",
+        "acronym": "UTT",
+        "netloc": "utt.edu.vn",
+        "website": "http://utt.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học trà vinh",
+        "name": "Đại học Trà Vinh",
+        "acronym": "TVU",
+        "netloc": "tvu.edu.vn",
+        "website": "https://www.tvu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học sài gòn",
+        "name": "Đại học Sài Gòn",
+        "acronym": "SGU",
+        "netloc": "sgu.edu.vn",
+        "website": "https://sgu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học sư phạm - đại học huế",
+        "name": "Đại học Sư phạm - Đại học Huế",
+        "acronym": "HUCE",
+        "netloc": "dhsphue.edu.vn",
+        "website": "http://www.dhsphue.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học y hà nội",
+        "name": "Đại học Y Hà Nội",
+        "acronym": "HMU",
+        "netloc": "hmu.edu.vn",
+        "website": "http://hmu.edu.vn/"
+    },
+    {
+        "normalized_name": "khoa y dược - đại học đà nẵng",
+        "name": "Khoa Y dược - Đại học Đà Nẵng",
+        "acronym": "SMP",
+        "netloc": "smp.udn.vn",
+        "website": "http://smp.udn.vn/"
+    },
+    {
+        "normalized_name": "phân hiệu đại học đà nẵng tại kon tum",
+        "name": "Phân hiệu Đại học Đà Nẵng tại Kon Tum",
+        "acronym": "UDCK",
+        "netloc": "kontum.udn.vn",
+        "website": "http://www.kontum.udn.vn/"
+    },
+    {
+        "normalized_name": "đại học luật hà nội",
+        "name": "Đại học Luật Hà Nội",
+        "acronym": "HLU",
+        "netloc": "hlu.edu.vn",
+        "website": "http://hlu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học sư phạm tp. hcm",
+        "name": "Đại học Sư phạm TP. HCM",
+        "acronym": "HCMUE",
+        "netloc": "hcmue.edu.vn",
+        "website": "http://hcmue.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học sư phạm - đại học thái nguyên",
+        "name": "Đại học Sư phạm - Đại học Thái Nguyên",
+        "acronym": "TUE",
+        "netloc": "dhsptn.edu.vn",
+        "website": "http://dhsptn.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học mỹ thuật thành phố hồ chí minh",
+        "name": "Đại học Mỹ thuật Thành phố Hồ Chí Minh",
+        "acronym": "HCMUFA",
+        "netloc": "hcmufa.edu.vn",
+        "website": "http://hcmufa.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học quy nhơn",
+        "name": "Đại học Quy Nhơn",
+        "acronym": "QNU",
+        "netloc": "",
+        "website": "www.qnu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học sân khấu - điện ảnh thành phố hồ chí minh",
+        "name": "Đại học Sân khấu - Điện ảnh Thành phố Hồ Chí Minh",
+        "acronym": null,
+        "netloc": "skdahcm.edu.vn",
+        "website": "http://skdahcm.edu.vn"
+    },
+    {
+        "normalized_name": "đại học kiểm sát hà nội",
+        "name": "Đại học Kiểm sát Hà Nội",
+        "acronym": "HPU",
+        "netloc": "tks.edu.vn",
+        "website": "http://tks.edu.vn/"
+    },
+    {
+        "normalized_name": "khoa y dược - đại học quốc gia hà nội",
+        "name": "Khoa Y Dược - Đại học Quốc gia Hà Nội",
+        "acronym": "VNU - SMP",
+        "netloc": "smp.vnu.edu.vn",
+        "website": "http://www.smp.vnu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kiên giang",
+        "name": "Đại học Kiên Giang",
+        "acronym": "KGU",
+        "netloc": "vnkgu.edu.vn",
+        "website": "http://www.vnkgu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học tây bắc",
+        "name": "Đại học Tây Bắc",
+        "acronym": "UTB",
+        "netloc": "utb.edu.vn",
+        "website": "http://www.utb.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kỹ thuật - hậu cần công an nhân dân",
+        "name": "Đại học Kỹ thuật - Hậu cần Công an nhân dân",
+        "acronym": "T36",
+        "netloc": "truongt36.edu.vn",
+        "website": "http://truongt36.edu.vn"
+    },
+    {
+        "normalized_name": "đại học an giang",
+        "name": "Đại học An Giang",
+        "acronym": "AGU",
+        "netloc": "agu.edu.vn",
+        "website": "http://www.agu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học văn hóa thành phố hồ chí minh",
+        "name": "Đại học văn hóa thành phố Hồ Chí Minh",
+        "acronym": "HCMUC",
+        "netloc": "hcmuc.edu.vn",
+        "website": "http://www.hcmuc.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học đồng tháp",
+        "name": "Đại học Đồng Tháp",
+        "acronym": "DTHU",
+        "netloc": "dthu.edu.vn",
+        "website": "https://www.dthu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kinh tế thành phố hồ chí minh",
+        "name": "Đại học Kinh tế Thành phố Hồ Chí Minh",
+        "acronym": "UEH",
+        "netloc": "ueh.edu.vn",
+        "website": "http://ueh.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học thương mại",
+        "name": "Đại học Thương mại",
+        "acronym": "VUC",
+        "netloc": "tmu.edu.vn",
+        "website": "https://tmu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học tân trào",
+        "name": "Đại học Tân Trào",
+        "acronym": "TTU",
+        "netloc": "daihoctantrao.edu.vn",
+        "website": "http://daihoctantrao.edu.vn/"
+    },
+    {
+        "normalized_name": "phân hiệu trường đại học y hà nội tại thanh hóa",
+        "name": "Phân hiệu Trường Đại học Y Hà Nội tại Thanh Hóa",
+        "acronym": "HMU",
+        "netloc": "phanhieuthanhhoa.hmu.edu.vn",
+        "website": "http://phanhieuthanhhoa.hmu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học giao thông vận tải",
+        "name": "Đại học Giao thông Vận tải",
+        "acronym": "UTC",
+        "netloc": "utc.edu.vn",
+        "website": "https://www.utc.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học bách khoa - đại học đà nẵng",
+        "name": "Đại học Bách khoa - Đại học Đà Nẵng",
+        "acronym": "DUT",
+        "netloc": "dut.udn.vn",
+        "website": "http://dut.udn.vn/"
+    },
+    {
+        "normalized_name": "học viện thanh thiếu niên việt nam",
+        "name": "Học viện Thanh thiếu niên Việt Nam",
+        "acronym": "VYA",
+        "netloc": "vya.edu.vn",
+        "website": "http://vya.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học luật tp.hcm",
+        "name": "Đại học Luật TP.HCM",
+        "acronym": "HCMUL",
+        "netloc": "hcmulaw.edu.vn",
+        "website": "http://www.hcmulaw.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học ngoại ngữ - đại học đà nẵng",
+        "name": "Đại học Ngoại ngữ - Đại học Đà Nẵng",
+        "acronym": "UFLS",
+        "netloc": "ufl.udn.vn",
+        "website": "http://ufl.udn.vn/vie/"
+    },
+    {
+        "normalized_name": "đại học văn hóa, thể thao và du lịch thanh hóa",
+        "name": "Đại học Văn Hóa, Thể thao và Du lịch Thanh Hóa",
+        "acronym": "TUCST",
+        "netloc": "dvtdt.edu.vn",
+        "website": "http://www.dvtdt.edu.vn/"
+    },
+    {
+        "normalized_name": "phân hiệu đại học giao thông vận tải tại tp.hcm",
+        "name": "Phân hiệu Đại học Giao thông vận tải tại TP.HCM",
+        "acronym": "UTC2",
+        "netloc": "utc2.edu.vn",
+        "website": "http://www.utc2.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học hạ long",
+        "name": "Đại học Hạ Long",
+        "acronym": null,
+        "netloc": "uhl.edu.vn",
+        "website": "http://uhl.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học khoa học và công nghệ hà nội",
+        "name": "Đại học Khoa học và Công nghệ Hà Nội",
+        "acronym": "USTH",
+        "netloc": "usth.edu.vn",
+        "website": "https://www.usth.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học phạm văn đồng",
+        "name": "Đại học Phạm Văn Đồng",
+        "acronym": "PDU",
+        "netloc": "pdu.edu.vn",
+        "website": "http://www.pdu.edu.vn/"
+    },
+    {
+        "normalized_name": "học viện công nghệ bưu chính viễn thông",
+        "name": "Học viện Công nghệ Bưu chính Viễn thông",
+        "acronym": "PTIT",
+        "netloc": "ptit.edu.vn",
+        "website": "http://ptit.edu.vn"
+    },
+    {
+        "normalized_name": "đại học hoa lư",
+        "name": "Đại học Hoa Lư",
+        "acronym": "HLUV",
+        "netloc": "hluv.edu.vn",
+        "website": "http://hluv.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học y dược thái bình",
+        "name": "Đại học Y Dược Thái Bình",
+        "acronym": "TBUMP",
+        "netloc": "tbump.edu.vn",
+        "website": "http://tbump.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học dược hà nội",
+        "name": "Đại học Dược Hà Nội",
+        "acronym": "HUP",
+        "netloc": "hup.edu.vn",
+        "website": "http://www.hup.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học ngoại ngữ - đại học thái nguyên",
+        "name": "Đại học Ngoại ngữ - Đại học Thái Nguyên",
+        "acronym": "SFL",
+        "netloc": "sfl.tnu.edu.vn",
+        "website": "http://sfl.tnu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghệ thông tin và truyền thông việt hàn - đại học đà nẵng",
+        "name": "Đại học Công nghệ thông tin và Truyền thông Việt Hàn - Đại học Đà Nẵng",
+        "acronym": null,
+        "netloc": "vku.udn.vn",
+        "website": "http://vku.udn.vn"
+    },
+    {
+        "normalized_name": "đại học kinh tế - đại học đà nẵng",
+        "name": "Đại học Kinh tế - Đại học Đà Nẵng",
+        "acronym": "DUE",
+        "netloc": "due.udn.vn",
+        "website": "https://due.udn.vn/"
+    },
+    {
+        "normalized_name": "đại học y dược cần thơ",
+        "name": "Đại học Y Dược Cần Thơ",
+        "acronym": "CTUMP",
+        "netloc": "ctump.edu.vn",
+        "website": "http://www.ctump.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học y dược hải phòng",
+        "name": "Đại học Y Dược Hải Phòng",
+        "acronym": "HPMU",
+        "netloc": "hpmu.edu.vn",
+        "website": "http://hpmu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học xây dựng",
+        "name": "Đại học Xây dựng",
+        "acronym": null,
+        "netloc": "huce.edu.vn",
+        "website": "https://huce.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học bạc liêu",
+        "name": "Đại học Bạc Liêu",
+        "acronym": "BLU",
+        "netloc": "blu.edu.vn",
+        "website": "http://blu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học mở thành phố hồ chí minh",
+        "name": "Đại học Mở Thành phố Hồ Chí Minh",
+        "acronym": "OU",
+        "netloc": "ou.edu.vn",
+        "website": "http://ou.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học thủ dầu một",
+        "name": "Đại học Thủ Dầu Một",
+        "acronym": "TDMU",
+        "netloc": "tdmu.edu.vn",
+        "website": "https://tdmu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học hải dương",
+        "name": "Đại học Hải Dương",
+        "acronym": "UHD",
+        "netloc": "uhd.edu.vn",
+        "website": "http://uhd.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kỹ thuật y - dược đà nẵng",
+        "name": "Đại học Kỹ thuật Y - Dược Đà Nẵng",
+        "acronym": null,
+        "netloc": "dhktyduocdn.edu.vn",
+        "website": "http://dhktyduocdn.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học thăng long",
+        "name": "Đại học Thăng Long",
+        "acronym": "TLU",
+        "netloc": "thanglong.edu.vn",
+        "website": "https://thanglong.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học y dược - đại học thái nguyên",
+        "name": "Đại học Y Dược - Đại học Thái Nguyên",
+        "acronym": "TUMP",
+        "netloc": "tump.edu.vn",
+        "website": "http://tump.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học quảng bình",
+        "name": "Đại học Quảng Bình",
+        "acronym": "QBU",
+        "netloc": "qbu.edu.vn",
+        "website": "https://qbu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học thủy lợi",
+        "name": "Đại học Thủy lợi",
+        "acronym": null,
+        "netloc": "tlu.edu.vn",
+        "website": "http://www.tlu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học hà tĩnh",
+        "name": "Đại học Hà Tĩnh",
+        "acronym": "HTU",
+        "netloc": "htu.edu.vn",
+        "website": "http://www.htu.edu.vn/"
+    },
+    {
+        "normalized_name": "khoa luật (đhqg hà nội)",
+        "name": "Khoa Luật (ĐHQG Hà Nội)",
+        "acronym": "VNU - LS",
+        "netloc": "law.vnu.edu.vn",
+        "website": "http://law.vnu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kinh doanh và công nghệ hà nội",
+        "name": "Đại học Kinh doanh và Công nghệ Hà Nội",
+        "acronym": "HUBT",
+        "netloc": "hubt.edu.vn",
+        "website": "http://hubt.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học mỹ thuật công nghiệp",
+        "name": "Đại học Mỹ thuật Công nghiệp",
+        "acronym": "UIFA",
+        "netloc": "mythuatcongnghiep.edu.vn",
+        "website": "http://mythuatcongnghiep.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học lao động xã hội (cơ sở hà nội)",
+        "name": "Đại học Lao động Xã hội (Cơ sở Hà Nội)",
+        "acronym": "ULSA",
+        "netloc": "ulsa.edu.vn",
+        "website": "http://www.ulsa.edu.vn/"
+    },
+    {
+        "normalized_name": "học viện hàng không việt nam",
+        "name": "Học viện Hàng không Việt Nam",
+        "acronym": "VAA",
+        "netloc": "vaa.edu.vn",
+        "website": "http://www.vaa.edu.vn/"
+    },
+    {
+        "normalized_name": "học viện y dược học cổ truyền việt nam",
+        "name": "Học viện Y dược học cổ truyền Việt Nam",
+        "acronym": "VUTM",
+        "netloc": "",
+        "website": "Website"
+    },
+    {
+        "normalized_name": "đại học công nghiệp hà nội",
+        "name": "Đại học Công nghiệp Hà Nội",
+        "acronym": "HaUI",
+        "netloc": "haui.edu.vn",
+        "website": "https://www.haui.edu.vn/"
+    },
+    {
+        "normalized_name": "học viện công nghệ bưu chính viễn thông (cơ sở phía nam)",
+        "name": "Học viện Công nghệ Bưu chính Viễn thông (Cơ sở phía Nam)",
+        "acronym": "PTIT",
+        "netloc": "hcm.ptit.edu.vn",
+        "website": "http://hcm.ptit.edu.vn"
+    },
+    {
+        "normalized_name": "khoa quốc tế (đhqg hà nội)",
+        "name": "Khoa Quốc tế (ĐHQG Hà Nội)",
+        "acronym": "VNU - IS",
+        "netloc": "is.vnu.edu.vn",
+        "website": "http://is.vnu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kỹ thuật y tế hải dương",
+        "name": "Đại học Kỹ thuật Y tế Hải Dương",
+        "acronym": "HMTU",
+        "netloc": "hmtu.edu.vn",
+        "website": "http://www.hmtu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học văn lang",
+        "name": "Đại học Văn Lang",
+        "acronym": "VLU",
+        "netloc": "tuyensinh.vlu.edu.vn",
+        "website": "https://tuyensinh.vlu.edu.vn"
+    },
+    {
+        "normalized_name": "học viện phụ nữ việt nam",
+        "name": "Học viện Phụ nữ Việt Nam",
+        "acronym": "VWA",
+        "netloc": "hvpnvn.edu.vn",
+        "website": "http://hvpnvn.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học sư phạm kỹ thuật hưng yên",
+        "name": "Đại học Sư phạm Kỹ thuật Hưng Yên",
+        "acronym": "UTEHY",
+        "netloc": "utehy.edu.vn",
+        "website": "http://www.utehy.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học quảng nam",
+        "name": "Đại học Quảng Nam",
+        "acronym": null,
+        "netloc": "qnamuni.edu.vn",
+        "website": "http://www.qnamuni.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học thái bình",
+        "name": "Đại học Thái Bình",
+        "acronym": "TBU",
+        "netloc": "tbu.edu.vn",
+        "website": "http://tbu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học phú yên",
+        "name": "Đại học Phú Yên",
+        "acronym": "PYU",
+        "netloc": "pyu.edu.vn",
+        "website": "http://pyu.edu.vn/"
+    },
+    {
+        "normalized_name": "phân hiệu đại học thái nguyên tại lào cai",
+        "name": "Phân hiệu Đại học Thái Nguyên tại Lào Cai",
+        "acronym": null,
+        "netloc": "laocai.tnu.edu.vn",
+        "website": "http://laocai.tnu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học y khoa vinh",
+        "name": "Đại học Y khoa Vinh",
+        "acronym": "VMU",
+        "netloc": "vmu.edu.vn",
+        "website": "http://vmu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kiến trúc thành phố hồ chí minh",
+        "name": "Đại học Kiến trúc Thành phố Hồ Chí Minh",
+        "acronym": "UAH",
+        "netloc": "uah.edu.vn",
+        "website": "http://www.uah.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kiến trúc thành phố hồ chí minh (cơ sở cần thơ)",
+        "name": "Đại học Kiến trúc Thành phố Hồ Chí Minh (Cơ sở Cần Thơ)",
+        "acronym": "UAH",
+        "netloc": "uah.edu.vn",
+        "website": "http://www.uah.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kiến trúc tp. hcm cơ sở đà lạt",
+        "name": "Đại học Kiến trúc TP. HCM cơ sở Đà Lạt",
+        "acronym": null,
+        "netloc": "uah.edu.vn",
+        "website": "http://www.uah.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học đồng nai",
+        "name": "Đại học Đồng Nai",
+        "acronym": "DNU",
+        "netloc": "dnpu.edu.vn",
+        "website": "http://www.dnpu.edu.vn"
+    },
+    {
+        "normalized_name": "đại học mỏ địa chất (cs vũng tàu)",
+        "name": "Đại học Mỏ Địa chất (CS Vũng Tàu)",
+        "acronym": "HUMG",
+        "netloc": "humg.edu.vn",
+        "website": "http://humg.edu.vn/dao-tao/co-so-vung-tau/Pages/default.aspx"
+    },
+    {
+        "normalized_name": "học viện quản lý giáo dục",
+        "name": "Học viện Quản lý Giáo dục",
+        "acronym": "NAEM",
+        "netloc": "naem.edu.vn",
+        "website": "http://naem.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học mỏ - địa chất (cơ sở hà nội)",
+        "name": "Đại học Mỏ - Địa chất (cơ sở Hà Nội)",
+        "acronym": "HUMG",
+        "netloc": "ts.humg.edu.vn",
+        "website": "http://ts.humg.edu.vn"
+    },
+    {
+        "normalized_name": "đại học kỹ thuật công nghệ cần thơ",
+        "name": "Đại học Kỹ thuật Công nghệ Cần Thơ",
+        "acronym": "CTUT",
+        "netloc": "ctuet.edu.vn",
+        "website": "https://www.ctuet.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học sư phạm kỹ thuật vĩnh long",
+        "name": "Đại học Sư phạm Kỹ thuật Vĩnh Long",
+        "acronym": "VLUTE",
+        "netloc": "vlute.edu.vn",
+        "website": "http://vlute.edu.vn/"
+    },
+    {
+        "normalized_name": "học viện nông nghiệp việt nam",
+        "name": "Học viện Nông nghiệp Việt Nam",
+        "acronym": "VNUA",
+        "netloc": "vnua.edu.vn",
+        "website": "https://www.vnua.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học sư phạm thể dục thể thao tp.hcm",
+        "name": "Đại học Sư phạm Thể dục Thể thao TP.HCM",
+        "acronym": "UPES",
+        "netloc": "upes.edu.vn",
+        "website": "http://www.upes.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học nam cần thơ",
+        "name": "Đại học Nam Cần Thơ",
+        "acronym": "NCTU",
+        "netloc": "nctu.edu.vn",
+        "website": "https://nctu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghiệp vinh",
+        "name": "Đại học Công nghiệp Vinh",
+        "acronym": "IUV",
+        "netloc": "iuv.edu.vn",
+        "website": "http://www.iuv.edu.vn/"
+    },
+    {
+        "normalized_name": "học viện cán bộ thành phố hồ chí minh",
+        "name": "Học viện Cán bộ Thành phố Hồ Chí Minh",
+        "acronym": "HCA",
+        "netloc": "hocviencanbo.hochiminhcity.gov.vn",
+        "website": "http://www.hocviencanbo.hochiminhcity.gov.vn/"
+    },
+    {
+        "normalized_name": "đại học nguyễn tất thành",
+        "name": "Đại học Nguyễn Tất Thành",
+        "acronym": "NTTU",
+        "netloc": "ntt.edu.vn",
+        "website": "https://ntt.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kinh tế kỹ thuật - công nghiệp (cơ sở hà nội)",
+        "name": "Đại học Kinh tế Kỹ thuật - Công nghiệp (Cơ sở Hà Nội)",
+        "acronym": "UNETI",
+        "netloc": "uneti.edu.vn",
+        "website": "http://uneti.edu.vn/,"
+    },
+    {
+        "normalized_name": "đại học việt nhật",
+        "name": "Đại học Việt Nhật",
+        "acronym": null,
+        "netloc": "vju.ac.vn",
+        "website": "https://vju.ac.vn/"
+    },
+    {
+        "normalized_name": "đại học sư phạm kỹ thuật - đại học đà nẵng",
+        "name": "Đại học Sư phạm Kỹ thuật - Đại học Đà Nẵng",
+        "acronym": "UTE",
+        "netloc": "ute.udn.vn",
+        "website": "http://www.ute.udn.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghiệp thực phẩm thành phố hồ chí minh",
+        "name": "Đại học Công nghiệp Thực phẩm Thành phố Hồ Chí Minh",
+        "acronym": "HUFI",
+        "netloc": "hufi.edu.vn",
+        "website": "http://hufi.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học khánh hòa",
+        "name": "Đại học Khánh Hòa",
+        "acronym": "UKH",
+        "netloc": "ukh.edu.vn",
+        "website": "http://ukh.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học điện lực",
+        "name": "Đại học Điện lực",
+        "acronym": "EPU",
+        "netloc": "epu.edu.vn",
+        "website": "https://www.epu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học văn hiến",
+        "name": "Đại học Văn Hiến",
+        "acronym": "VHU",
+        "netloc": "vhu.edu.vn",
+        "website": "http://vhu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kiến trúc đà nẵng",
+        "name": "Đại học Kiến trúc Đà Nẵng",
+        "acronym": "DAU",
+        "netloc": "dau.edu.vn",
+        "website": "https://dau.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học buôn ma thuột",
+        "name": "Đại học Buôn Ma Thuột",
+        "acronym": "BMTU",
+        "netloc": "bmtu.edu.vn",
+        "website": "https://bmtu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học nghệ thuật - đại học huế",
+        "name": "Đại học Nghệ thuật - Đại học Huế",
+        "acronym": null,
+        "netloc": "hufa.hueuni.edu.vn",
+        "website": "http://hufa.hueuni.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học nha trang",
+        "name": "Đại học Nha Trang",
+        "acronym": "NTU",
+        "netloc": "ntu.edu.vn",
+        "website": "http://www.ntu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kinh tế - tài chính tp.hcm",
+        "name": "Đại học Kinh tế - Tài chính TP.HCM",
+        "acronym": "UEF",
+        "netloc": "uef.edu.vn",
+        "website": "https://www.uef.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học dân lập lương thế vinh",
+        "name": "Đại học Dân lập Lương Thế Vinh",
+        "acronym": "LTVU",
+        "netloc": "ltvu.edu.vn",
+        "website": "http://ltvu.edu.vn"
+    },
+    {
+        "normalized_name": "đại học phương đông",
+        "name": "Đại học Phương Đông",
+        "acronym": null,
+        "netloc": "phuongdong.edu.vn",
+        "website": "http://phuongdong.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kinh tế - đại học huế",
+        "name": "Đại học Kinh tế - Đại học Huế",
+        "acronym": null,
+        "netloc": "hce.edu.vn",
+        "website": "http://www.hce.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghiệp thành phố hồ chí minh",
+        "name": "Đại học Công nghiệp Thành phố Hồ Chí Minh",
+        "acronym": "IUH",
+        "netloc": "iuh.edu.vn",
+        "website": "http://www.iuh.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học y tế công cộng",
+        "name": "Đại học Y tế Công cộng",
+        "acronym": "HUPH",
+        "netloc": "huph.edu.vn",
+        "website": "http://www.huph.edu.vn/"
+    },
+    {
+        "normalized_name": "khoa du lịch - đại học huế",
+        "name": "Khoa Du lịch - Đại học Huế",
+        "acronym": "HAT",
+        "netloc": "hat.hueuni.edu.vn",
+        "website": "http://hat.hueuni.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kinh tế nghệ an",
+        "name": "Đại học Kinh tế Nghệ An",
+        "acronym": "NACE",
+        "netloc": "dhktna.edu.vn",
+        "website": "http://dhktna.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghệ đông á (cơ sở bắc ninh)",
+        "name": "Đại học Công nghệ Đông Á (Cơ sở Bắc Ninh)",
+        "acronym": "EAUT",
+        "netloc": "eaut.edu.vn",
+        "website": "https://eaut.edu.vn/"
+    },
+    {
+        "normalized_name": "học viện ngân hàng (phân viện bắc ninh)",
+        "name": "Học viện ngân hàng (Phân viện Bắc Ninh)",
+        "acronym": "BA",
+        "netloc": "bacninh.hvnh.edu.vn",
+        "website": "http://bacninh.hvnh.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học việt - đức (cơ sở tp. hcm)",
+        "name": "Đại học Việt - Đức (Cơ sở TP. HCM)",
+        "acronym": "VGU",
+        "netloc": "vgu.edu.vn",
+        "website": "https://vgu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghệ đông á",
+        "name": "Đại học Công nghệ Đông Á",
+        "acronym": "EAUT",
+        "netloc": "eaut.edu.vn",
+        "website": "https://eaut.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học việt - đức (cơ sở bình dương)",
+        "name": "Đại học Việt - Đức (Cơ sở Bình Dương)",
+        "acronym": "VGU",
+        "netloc": "vgu.edu.vn",
+        "website": "https://vgu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học đại nam",
+        "name": "Đại học Đại Nam",
+        "acronym": "DNU",
+        "netloc": "dainam.edu.vn",
+        "website": "https://dainam.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghệ thông tin và truyền thông - đại học thái nguyên",
+        "name": "Đại học Công nghệ Thông tin và Truyền thông - Đại học Thái Nguyên",
+        "acronym": "ICTU",
+        "netloc": "ictu.edu.vn",
+        "website": "http://ictu.edu.vn"
+    },
+    {
+        "normalized_name": "đại học công nghệ đồng nai",
+        "name": "Đại học Công nghệ Đồng Nai",
+        "acronym": "DNTU",
+        "netloc": "dntu.edu.vn",
+        "website": "https://dntu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học hòa bình",
+        "name": "Đại học Hòa Bình",
+        "acronym": "HBU",
+        "netloc": "daihochoabinh.edu.vn",
+        "website": "http://daihochoabinh.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học cửu long",
+        "name": "Đại học Cửu Long",
+        "acronym": "MKU",
+        "netloc": "mku.edu.vn",
+        "website": "http://www.mku.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học tân tạo",
+        "name": "Đại học Tân Tạo",
+        "acronym": "TTU",
+        "netloc": "ttu.edu.vn",
+        "website": "http://ttu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học duy tân",
+        "name": "Đại học Duy Tân",
+        "acronym": "DTU",
+        "netloc": "duytan.edu.vn",
+        "website": "https://duytan.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học võ trường toản",
+        "name": "Đại học Võ Trường Toản",
+        "acronym": "VTTU",
+        "netloc": "vttu.edu.vn",
+        "website": "http://vttu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học phan châu trinh",
+        "name": "Đại học Phan Châu Trinh",
+        "acronym": "PCTU",
+        "netloc": "pctu.edu.vn",
+        "website": "http://pctu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kinh bắc",
+        "name": "Đại học Kinh Bắc",
+        "acronym": "UKB",
+        "netloc": "ukb.edu.vn",
+        "website": "http://ukb.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học nguyễn trãi",
+        "name": "Đại học Nguyễn Trãi",
+        "acronym": "NTU",
+        "netloc": "daihocnguyentrai.edu.vn",
+        "website": "http://daihocnguyentrai.edu.vn/"
+    },
+    {
+        "normalized_name": "phân hiệu đại học huế tại quảng trị",
+        "name": "Phân hiệu Đại học Huế tại Quảng Trị",
+        "acronym": "HU-QTC",
+        "netloc": "qtb.hueuni.edu.vn",
+        "website": "http://qtb.hueuni.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghệ thành phố hồ chí minh",
+        "name": "Đại học Công nghệ Thành phố Hồ Chí Minh",
+        "acronym": "HUTECH",
+        "netloc": "hutech.edu.vn",
+        "website": "https://www.hutech.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học khoa học - đại học huế",
+        "name": "Đại học Khoa học - Đại học Huế",
+        "acronym": null,
+        "netloc": "husc.hueuni.edu.vn",
+        "website": "http://husc.hueuni.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học luật - đại học huế",
+        "name": "Đại học Luật - Đại học Huế",
+        "acronym": null,
+        "netloc": "hul.edu.vn",
+        "website": "https://www.hul.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học phenikaa (tên cũ là đại học thành tây)",
+        "name": "Đại học Phenikaa (Tên cũ là Đại học Thành Tây)",
+        "acronym": null,
+        "netloc": "phenikaa-uni.edu.vn",
+        "website": "http://phenikaa-uni.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học sao đỏ",
+        "name": "Đại học Sao Đỏ",
+        "acronym": null,
+        "netloc": "saodo.edu.vn",
+        "website": "http://saodo.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học quốc tế bắc hà",
+        "name": "Đại học Quốc tế Bắc Hà",
+        "acronym": "BHIU",
+        "netloc": "iubh.edu.vn",
+        "website": "http://iubh.edu.vn"
+    },
+    {
+        "normalized_name": "đại học dân lập lạc hồng",
+        "name": "Đại học dân lập Lạc Hồng",
+        "acronym": "LHU",
+        "netloc": "lhu.edu.vn",
+        "website": "https://lhu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kinh tế kỹ thuật bình dương",
+        "name": "Đại học Kinh tế Kỹ thuật Bình Dương",
+        "acronym": "BETU",
+        "netloc": "ktkt.edu.vn",
+        "website": "http://www.ktkt.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học tây đô",
+        "name": "Đại học Tây Đô",
+        "acronym": "TDU",
+        "netloc": "tdu.edu.vn",
+        "website": "http://www.tdu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học đông á",
+        "name": "Đại học Đông Á",
+        "acronym": null,
+        "netloc": "donga.edu.vn",
+        "website": "http://donga.edu.vn/"
+    },
+    {
+        "normalized_name": "phân hiệu đại học bình dương tại cà mau",
+        "name": "Phân hiệu Đại học Bình Dương tại Cà Mau",
+        "acronym": "BDU",
+        "netloc": "camau.bdu.edu.vn",
+        "website": "http://camau.bdu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học yersin đà lạt",
+        "name": "Đại học Yersin Đà Lạt",
+        "acronym": null,
+        "netloc": "yersin.edu.vn",
+        "website": "https://yersin.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học nông lâm - đại học thái nguyên",
+        "name": "Đại học Nông Lâm - Đại học Thái Nguyên",
+        "acronym": "TUAF",
+        "netloc": "tuaf.edu.vn",
+        "website": "http://tuaf.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học thành đông",
+        "name": "Đại học Thành Đông",
+        "acronym": "TDU",
+        "netloc": "thanhdong.edu.vn",
+        "website": "http://thanhdong.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học điều dưỡng nam định",
+        "name": "Đại học Điều dưỡng Nam Định",
+        "acronym": "NDUN",
+        "netloc": "ndun.edu.vn",
+        "website": "http://ndun.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học thành đô",
+        "name": "Đại học Thành Đô",
+        "acronym": "TDU",
+        "netloc": "thanhdo.edu.vn",
+        "website": "http://thanhdo.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học bình dương",
+        "name": "Đại học Bình Dương",
+        "acronym": "BDU",
+        "netloc": "bdu.edu.vn",
+        "website": "http://www.bdu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học bà rịa - vũng tàu",
+        "name": "Đại học Bà Rịa - Vũng Tàu",
+        "acronym": "BVU",
+        "netloc": "bvu.edu.vn",
+        "website": "http://bvu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghệ miền đông",
+        "name": "Đại học Công nghệ Miền Đông",
+        "acronym": "MUT",
+        "netloc": "mut.edu.vn",
+        "website": "http://www.mut.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học nông lâm - đại học huế",
+        "name": "Đại học Nông lâm - Đại học Huế",
+        "acronym": "HUAF",
+        "netloc": "huaf.edu.vn",
+        "website": "https://huaf.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học lâm nghiệp",
+        "name": "Đại học Lâm nghiệp",
+        "acronym": "VNUF",
+        "netloc": "vnuf.edu.vn",
+        "website": "https://vnuf.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học dầu khí việt nam",
+        "name": "Đại học Dầu khí Việt Nam",
+        "acronym": "PVU",
+        "netloc": "pvu.edu.vn",
+        "website": "http://www.pvu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học khoa học - đại học thái nguyên",
+        "name": "Đại học Khoa học - Đại học Thái Nguyên",
+        "acronym": "TNUS",
+        "netloc": "tnus.edu.vn",
+        "website": "http://tnus.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kinh tế - quản trị kinh doanh (thuộc đh thái nguyên)",
+        "name": "Đại học Kinh tế - Quản trị kinh doanh (thuộc ĐH Thái Nguyên)",
+        "acronym": "TUEBA",
+        "netloc": "tueba.edu.vn",
+        "website": "http://tueba.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghiệp dệt may hà nội",
+        "name": "Đại học Công nghiệp Dệt may Hà Nội",
+        "acronym": "HTU",
+        "netloc": "hict.edu.vn",
+        "website": "http://hict.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học trưng vương",
+        "name": "Đại học Trưng Vương",
+        "acronym": "TVU",
+        "netloc": "dhtv.edu.vn",
+        "website": "http://dhtv.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học quốc tế miền đông",
+        "name": "Đại học Quốc tế Miền Đông",
+        "acronym": "EIU",
+        "netloc": "eiu.edu.vn",
+        "website": "https://eiu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học phan thiết",
+        "name": "Đại học Phan Thiết",
+        "acronym": "UPT",
+        "netloc": "upt.edu.vn",
+        "website": "http://upt.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học quang trung",
+        "name": "Đại học Quang Trung",
+        "acronym": "QTU",
+        "netloc": "qtu.edu.vn",
+        "website": "http://qtu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học sư phạm kỹ thuật vinh",
+        "name": "Đại học Sư phạm Kỹ thuật Vinh",
+        "acronym": "VUTE",
+        "netloc": "vuted.edu.vn",
+        "website": "http://www.vuted.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kinh tế kỹ thuật công nghiệp (cơ sở nam định)",
+        "name": "Đại học Kinh tế Kỹ thuật Công nghiệp (Cơ sở Nam Định)",
+        "acronym": "UNETI",
+        "netloc": "uneti.edu.vn",
+        "website": "http://uneti.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học y khoa tokyo việt nam",
+        "name": "Đại học Y khoa Tokyo Việt Nam",
+        "acronym": "THUV",
+        "netloc": "tokyo-human.edu.vn",
+        "website": "https://tokyo-human.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học thể dục thể thao bắc ninh",
+        "name": "Đại học Thể dục Thể thao Bắc Ninh",
+        "acronym": null,
+        "netloc": "upes1.edu.vn",
+        "website": "http://upes1.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học nội vụ hà nội",
+        "name": "Đại học Nội vụ Hà Nội",
+        "acronym": "HUHA",
+        "netloc": "truongnoivu.edu.vn",
+        "website": "http://truongnoivu.edu.vn/"
+    },
+    {
+        "normalized_name": "phân hiệu trường đại học nội vụ hà nội tại quảng nam",
+        "name": "Phân hiệu trường Đại học Nội vụ Hà Nội tại Quảng Nam",
+        "acronym": null,
+        "netloc": "truongnoivu-csmt.edu.vn",
+        "website": "http://truongnoivu-csmt.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học nội vụ hà nội (cơ sở tp.hcm)",
+        "name": "Đại học Nội vụ Hà Nội (cơ sở Tp.HCM)",
+        "acronym": "HUHA",
+        "netloc": "truongnoivu-csmn.edu.vn",
+        "website": "http://truongnoivu-csmn.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học xây dựng miền tây",
+        "name": "Đại học Xây dựng Miền Tây",
+        "acronym": "MTU",
+        "netloc": "mtu.edu.vn",
+        "website": "http://www.mtu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học quốc tế sài gòn",
+        "name": "Đại học Quốc tế Sài Gòn",
+        "acronym": "SIU",
+        "netloc": "siu.edu.vn",
+        "website": "http://www.siu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghiệp việt trì",
+        "name": "Đại học Công nghiệp Việt Trì",
+        "acronym": "VUI",
+        "netloc": "vui.edu.vn",
+        "website": "http://vui.edu.vn/"
+    },
+    {
+        "normalized_name": "khoa công nghệ thông tin và truyền thông - đại học đà nẵng",
+        "name": "Khoa Công nghệ thông tin và Truyền thông - Đại học Đà Nẵng",
+        "acronym": "SICT",
+        "netloc": "sict.udn.vn",
+        "website": "http://sict.udn.vn/"
+    },
+    {
+        "normalized_name": "đại học tài chính ngân hàng hà nội",
+        "name": "Đại học Tài chính Ngân hàng Hà Nội",
+        "acronym": "FBU",
+        "netloc": "fbu.edu.vn",
+        "website": "https://fbu.edu.vn/"
+    },
+    {
+        "normalized_name": "phân hiệu trường đại học lâm nghiệp tại tỉnh đồng nai",
+        "name": "Phân hiệu Trường Đại học Lâm nghiệp tại tỉnh Đồng Nai",
+        "acronym": "VNUF",
+        "netloc": "vnuf2.edu.vn",
+        "website": "https://vnuf2.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học kinh tế công nghiệp long an",
+        "name": "Đại học Kinh tế Công nghiệp Long An",
+        "acronym": null,
+        "netloc": "daihoclongan.edu.vn",
+        "website": "https://daihoclongan.edu.vn"
+    },
+    {
+        "normalized_name": "đại học thể dục thể thao đà nẵng",
+        "name": "Đại học Thể dục Thể thao Đà Nẵng",
+        "acronym": null,
+        "netloc": "dsu.edu.vn",
+        "website": "https://dsu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học phú xuân",
+        "name": "Đại học Phú Xuân",
+        "acronym": null,
+        "netloc": "phuxuan.edu.vn",
+        "website": "https://phuxuan.edu.vn/"
+    },
+    {
+        "normalized_name": "khoa quốc tế - đại học thái nguyên",
+        "name": "Khoa Quốc tế - Đại học Thái Nguyên",
+        "acronym": "ISTNU",
+        "netloc": "is.tnu.edu.vn",
+        "website": "https://is.tnu.edu.vn/"
+    },
+    {
+        "normalized_name": "cao đẳng sư phạm trung ương",
+        "name": "Cao đẳng Sư phạm Trung ương",
+        "acronym": null,
+        "netloc": "cdsptw.edu.vn",
+        "website": "http://cdsptw.edu.vn/"
+    },
+    {
+        "normalized_name": "cao đẳng vĩnh phúc",
+        "name": "Cao đẳng Vĩnh Phúc",
+        "acronym": null,
+        "netloc": "caodangvinhphuc.edu.vn",
+        "website": "http://caodangvinhphuc.edu.vn"
+    },
+    {
+        "normalized_name": "đại học công nghệ sài gòn",
+        "name": "Đại học Công nghệ Sài Gòn",
+        "acronym": "STU",
+        "netloc": "stu.edu.vn",
+        "website": "http://www.stu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học nông lâm tp. hcm - phân hiệu tại gia lai",
+        "name": "Đại học Nông lâm TP. HCM - Phân hiệu tại Gia Lai",
+        "acronym": null,
+        "netloc": "phgl.hcmuaf.edu.vn",
+        "website": "http://phgl.hcmuaf.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghiệp việt hung",
+        "name": "Đại học Công nghiệp Việt Hung",
+        "acronym": "VIU",
+        "netloc": "viu.edu.vn",
+        "website": "http://viu.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghệ và quản lý hữu nghị",
+        "name": "Đại học Công nghệ và Quản lý Hữu Nghị",
+        "acronym": "UTM",
+        "netloc": "utm.edu.vn",
+        "website": "http://utm.edu.vn"
+    },
+    {
+        "normalized_name": "học viện ngân hàng - phân viện phú yên",
+        "name": "Học viện Ngân hàng - Phân viện Phú Yên",
+        "acronym": null,
+        "netloc": "bap.edu.vn",
+        "website": "https://bap.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học tài chính - kế toán",
+        "name": "Đại học Tài chính - Kế toán",
+        "acronym": "UFA",
+        "netloc": "tckt.edu.vn",
+        "website": "http://tckt.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghệ vạn xuân",
+        "name": "Đại học Công nghệ Vạn Xuân",
+        "acronym": "VXUT",
+        "netloc": "vxut.edu.vn",
+        "website": "https://www.vxut.edu.vn/"
+    },
+    {
+        "normalized_name": "phân hiệu trường đại học tài nguyên và môi trường hà nội tại thanh hóa",
+        "name": "Phân hiệu trường Đại học Tài nguyên và Môi trường Hà Nội tại Thanh Hóa",
+        "acronym": null,
+        "netloc": "chunre.edu.vn",
+        "website": "http://chunre.edu.vn/"
+    },
+    {
+        "normalized_name": "phân hiệu đại học tài chính - kế toán tại thừa thiên - huế",
+        "name": "Phân hiệu Đại học Tài chính - Kế toán tại Thừa Thiên - Huế",
+        "acronym": null,
+        "netloc": "hfa.tckt.edu.vn",
+        "website": "http://hfa.tckt.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học xây dựng miền trung",
+        "name": "Đại học Xây dựng miền Trung",
+        "acronym": "MUCE",
+        "netloc": "muce.edu.vn",
+        "website": "http://muce.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học công nghiệp quảng ninh",
+        "name": "Đại học Công nghiệp Quảng Ninh",
+        "acronym": "QUI",
+        "netloc": "qui.edu.vn",
+        "website": "http://www.qui.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học nông lâm bắc giang",
+        "name": "Đại học Nông Lâm Bắc Giang",
+        "acronym": "BAFU",
+        "netloc": "bafu.edu.vn",
+        "website": "http://bafu.edu.vn"
+    },
+    {
+        "normalized_name": "đại học việt bắc",
+        "name": "Đại học Việt Bắc",
+        "acronym": "VBU",
+        "netloc": "vietbac.edu.vn",
+        "website": "http://vietbac.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học thái bình dương",
+        "name": "Đại học Thái Bình Dương",
+        "acronym": "POU",
+        "netloc": "",
+        "website": "tbd.edu.vn"
+    },
+    {
+        "normalized_name": "đại học tài nguyên và môi trường hà nội",
+        "name": "Đại học Tài nguyên và Môi trường Hà Nội",
+        "acronym": "HUNRE",
+        "netloc": "hunre.edu.vn",
+        "website": "https://hunre.edu.vn/"
+    },
+    {
+        "normalized_name": "đại học tài chính quản trị kinh doanh",
+        "name": "Đại học Tài chính Quản trị kinh doanh",
+        "acronym": "UFBA",
+        "netloc": "tcqtkd.edu.vn",
+        "website": "http://tcqtkd.edu.vn/"
+    },
+    {
+        "normalized_name": "cao đẳng du lịch hà nội",
+        "name": "Cao đẳng Du lịch Hà Nội",
+        "acronym": "HTC",
+        "netloc": "htc.edu.vn",
+        "website": "http://www.htc.edu.vn/"
+    }
+]

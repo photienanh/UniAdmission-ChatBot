@@ -14,27 +14,24 @@ class GenerationParams(TypedDict):
     # Model
     model_id: str
     # Search
-    use_local_db: NotRequired[bool] # * # Enable localdb
-    use_websearch: NotRequired[bool] # * # Use websearch
-    max_query: NotRequired[int] # Max websearch query
-    query_score_threshold: NotRequired[float] # Score for query
+    max_query: NotRequired[int]
+    query_score_threshold: NotRequired[float]
     engine_type: NotRequired[SearchEngineType] # google/brave
-    domain_restrict: NotRequired[bool] # * # restrict domain like .edu.vn
-    school_domain: NotRequired[bool] # * # restrict to school in query domain 
-    # Use option as last week, last month, last year
-    time_metric: NotRequired[Literal["d", "m", "y"]] # * # day, month, year
-    time_range: NotRequired[int] # * # k days, k months, k years
+    domain_restrict: NotRequired[bool]
+    school_domain: NotRequired[bool]
+    time_metric: NotRequired[Literal["m", "y", "d"]]
+    time_range: NotRequired[int]
     # Rerank
-    page_rerank: NotRequired[bool]
-    chunk_rerank: NotRequired[bool]
-    page_score_threshold: NotRequired[float] # Score for page rerank
-    chunk_score_threshold: NotRequired[float] # Score for chunk rerank
+    page_score_threshold: NotRequired[float]
+    chunk_score_threshold: NotRequired[float]
     # Retrieve
     k_docs: NotRequired[int]
     k_pages: NotRequired[int]
+    page_rerank: NotRequired[bool]
+    chunk_rerank: NotRequired[bool]
     include_pdf: NotRequired[bool]
     include_image: NotRequired[bool]
-    merge_table: NotRequired[bool] # Keep table
+    merge_table: NotRequired[bool]
     merge_neighbor: NotRequired[bool]
     # Sampling
     max_tokens: NotRequired[int]
@@ -53,10 +50,7 @@ class ModelPreOutput(TypedDict):
     
 class ModelOutput(ModelPreOutput):
     text: str
-
-class AnswerState(TypedDict):
-    pass
-
+    
 TNumeric = TypeVar("TNumeric", float, int)
 def _clamp(value: TNumeric, low: TNumeric, high: TNumeric) -> TNumeric:
     return max(low, min(value, high))

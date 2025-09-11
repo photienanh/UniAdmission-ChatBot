@@ -1,654 +1,502 @@
-E: Điểm trúng tuyển ngành Quản trị Kinh doanh trường Đại học Kinh tế Quốc dân
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Công nghệ thông tin chất lượng cao trường Học viện Công nghệ Bưu chính Viễn thông
-E: Trường UET có trung tâm học liệu không ?
-E: Các hội thảo trường Đại học Ngoại thương
-M: Khả năng học tập và nâng cao trình độ sau khi ra trường ngành Truyền thông đa phương tiện CLC trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Khoa học máy tính trường UET
-E: Phương thức tuyển thẳng trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Kinh doanh quốc tế trường FTU
-E: Điểm trúng tuyển ngành Luật kinh doanh trường NEU
-M: Chỉ tiêu tuyển sinh ngành An toàn thông tin CLC trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Công nghệ kỹ thuật sinh học trường UET
-M: Phương thức thẳng ngành Chương trình tiên tiến Kỹ thuật Y sinh trường Đại học Bách khoa Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Thiết kế công nghiệp và đồ họa trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Tài chính doanh nghiệp trường Đại học Kinh tế Quốc dân
-M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Ngành Kinh doanh quốc tế trường Đại học Kinh tế Quốc dân
-H+: Học ngành Tài chính - Ngân hàng và Kế toán nên chọn trường nào
-M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Ngành Kỹ thuật điều khiển & Tự động hóa trường PTIT
-M: Phương thức xét tuyển theo kết quả thi THPT ngành Hóa học trường Đại học Bách khoa Hà Nội
-M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Công nghệ thông tin trường Học viện Công nghệ Bưu chính Viễn thông
-M: Đồ án tốt nghiệp Quản lý công nghiệp trường Đại học Bách khoa Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Công nghệ dệt may trường Đại học Bách khoa Hà Nội
-M: Phương thức xét tuyển ngành Cơ khí hàng không (Chương trình Việt - Pháp PFIEV) trường Đại học Bách khoa Hà Nội
-E: Thông tin ngành Logistics và quản trị chuỗi cung ứng (ngành Quản trị kinh doanh) trường PTIT
-E: Chỉ tiêu tuyển sinh theo kết quả thi HSA trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Số xưởng thực tập trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Thiết kế công nghiệp và đồ họa trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Số lượng tiến sĩ trường Đại học Ngoại thương
-E: Phương thức xét tuyển theo kết quả thi TSA trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Phương thức thẳng ngành An toàn thông tin CLC trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Định phí Bảo hiểm & Quản trị rủi ro (Actuary) học bằng tiếng Anh trường NEU
-M: Chính sách học bổng trường Học viện Công nghệ Bưu chính Viễn thông
-M: Số tín chỉ môn Đại số tuyến tính ngành Ngành Kinh doanh quốc tế trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển theo kết quả thi TSA ngành Ngành Luật trường Đại học Kinh tế Quốc dân
-E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL trường Đại học Bách khoa Hà Nội
-E: Trường PTIT có đào tạo Công nghệ thông tin không ?
-M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Kinh doanh quốc tế và Quản trị kinh doanh trường FTU
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Khoa học và kỹ thuật dữ liệu trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Số tín chỉ môn Tư tưởng Hoog Chí Minh ngành Kinh tế chính trị trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Chương trình tiên tiến Khoa học dữ liệu và Trí tuệ nhân tạo trường HUST
-E: các phòng chức năng khác trường Đại học Bách khoa Hà Nội
-M: Phương thức tuyển thẳng ngành Khoa học dữ liệu trường Đại học Kinh tế Quốc dân
-E: Đối tượng xét tuyển ngành Công nghệ kỹ thuật xây dựng trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Thời gian đào tạo ngành Vật lý kỹ thuật trường Đại học Bách khoa Hà Nội
-E: Chỉ tiêu tuyển sinh theo kết quả thi SAT trường PTIT
-H: Những trường nào đào tạo Kinh tế quốc tế
-M: Tỉ lệ sinh viên / giảng viên trường Đại học Kinh tế Quốc dân
-M: Số tín chỉ ngành Báo chí trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển ngành Khoa học máy tính trường Học viện Công nghệ Bưu chính Viễn thông
-E: Điểm chuẩn ngành Kỹ thuật Y sinh trường HUST
-E: Phương thức xét tuyển trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Số nhà đa năng trường PTIT
-E: Thời gian đào tạo ngành Chương trình tiên tiến Hệ thống nhúng thông minh và IoT trường Đại học Bách khoa Hà Nội
-E: Ngành Kinh tế tài nguyên thiên nhiên trường NEU
-M: Chỉ tiêu thẳng ngành Kinh doanh quốc tế (tại Quảng Ninh) trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh ngành Kế toán - Kiểm toán trường Đại học Ngoại thương
-E: Chỉ tiêu tuyển sinh trường PTIT
-E: Giới thiệu về ngành Nhóm ngành Kinh tế; Kinh tế quốc tế trường Đại học Ngoại thương
-M: Phương thức tuyển thẳng ngành Luật kinh tế trường Đại học Kinh tế Quốc dân
-E: Trường Đại học Ngoại thương có phòng học đa phương tiện không ?
-E: Phương thức xét tuyển trường Đại học Bách khoa Hà Nội
-E: Vị trí phòng học trường PTIT
-M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Quản trị khách sạn trường Đại học Kinh tế Quốc dân
-E: Phương thức xét tuyển theo kết quả thi HSA trường UET
-M: Khóa luận tốt nghiệp Mạng máy tính và truyền thông dữ liệu trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Luật kinh tế trường NEU
-M: Danh sách giảng viên ngành Kinh tế trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển theo kết quả thi SAT ngành Truyền thông đa phương tiện CLC trường Học viện Công nghệ Bưu chính Viễn thông
-E: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực trường Đại học Ngoại thương
-E: Số lượng giáo sư trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Mạng máy tính và truyền thông dữ liệu trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD trường Đại học Ngoại thương
-E: phòng thí nghiệm trường UET
-E: Thời gian đào tạo ngành Quản trị kinh doanh - ĐH Victoria (New Zealand) trường HUST
-E: Trường Đại học Ngoại thương có đào tạo Tài chính - Ngân hàng không ?
-E: Trường Đại học Kinh tế Quốc dân có nhà đa năng không ?
-E: Trường Đại học Ngoại thương có mấy cơ sở đào tạo ?
-E: Trường Đại học Bách khoa Hà Nội có các phòng chức năng khác không ?
-E: Phương thức xét tuyển theo kết quả thi ĐGTD trường FTU
-E: Phương thức xét tuyển trường Đại học Kinh tế Quốc dân
-E: phòng học trường UET
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Chương trình tiên tiến Kỹ thuật Ô tô trường Đại học Bách khoa Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Kỹ thuật Môi trường trường HUST
-E: Phương thức xét tuyển theo kết quả thi đánh giá năng lực trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển thẳng ngành Kinh doanh quốc tế và Quản trị kinh doanh trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Ngôn ngữ Pháp trường Đại học Ngoại thương
-E: Số thư viện trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành Chương trình tiên tiến Điều khiển - Tự động hóa và Hệ thống điện trường HUST
-E: Số lượng giáo sư trường FTU
-M: Phương thức xét tuyển theo kết quả thi THPT ngành Công nghệ thông tin (Global ICT) trường HUST
-E: Chỉ tiêu tuyển sinh theo kết quả thi TSA trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Chương trình tiên tiến Kỹ thuật Cơ điện tử trường Đại học Bách khoa Hà Nội
-E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL trường Đại học Bách khoa Hà Nội
-E: Số lượng giảng viên cơ hữu trường Đại học Bách khoa Hà Nội
-E: Học phí ngành Cơ kỹ thuật trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Trường Học viện Công nghệ Bưu chính Viễn thông đào tạo những ngành gì ?
-M: Tổng thu / chi trường Đại học Bách khoa Hà Nội
-H+: Với điểm thi ĐGNL 78.8 nên chọn trường nào ?
-M: Thời gian công bố Điểm trúng tuyển trường PTIT
-E: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy trường Đại học Bách khoa Hà Nội
-E: Số các phòng chức năng khác trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức thẳng ngành Công nghệ tài chính trường PTIT
-M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Kỹ thuật Điều kiển - Tự động hóa trường Đại học Bách khoa Hà Nội
-M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Công nghệ thông tin trường Học viện Công nghệ Bưu chính Viễn thông
-M: Thời gian công bố Điểm sàn trường UET
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Quản trị Kinh doanh trường Đại học Kinh tế Quốc dân
-E: Chỉ tiêu tuyển sinh theo kết quả thi THPT trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Kinh tế chính trị trường FTU
-E: Số phòng thực hành trường UET
-M: Số tín chỉ môn Triết học Mác-Lênin ngành Tài chính - Ngân hàng và Kế toán trường Đại học Ngoại thương
-E: Trường Đại học công nghệ - Đại học quốc gia Hà Nội có trung tâm học liệu không ?
-E: Thông tin ngành Nhóm ngành Kinh tế; Kinh tế quốc tế trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Quan hệ lao động (CN Quản lý Quan hệ lao động. CN Hành vi tổ chức) trường Đại học Kinh tế Quốc dân
-E: Chỉ tiêu tuyển sinh trường Đại học Kinh tế Quốc dân
-E: Chuẩn đầu ra ngoại ngữ của trường FTU
-M: Vị trí việc làm ngành Chương trình tiên tiến Kỹ thuật Thực phẩm trường HUST
-E: Vị trí phòng thí nghiệm trường Học viện Công nghệ Bưu chính Viễn thông
-E: Phương thức xét tuyển theo kết quả thi HSA trường Học viện Công nghệ Bưu chính Viễn thông
-E: Quy đổi điểm bằng chứng chỉ tiếng Anh khi xét tuyển trường Đại học Bách khoa Hà Nội
-E: Điểm chuẩn ngành Quản trị Kinh doanh trường Học viện Công nghệ Bưu chính Viễn thông
-M: Đồ án tốt nghiệp Tài chính - Ngân hàng trường HUST
-E: phòng thực hành trường UET
-M: Danh sách giảng viên ngành Công nghệ vi mạch bán dẫn (ngành Công nghệ kỹ thuật Điện, điện tử) trường PTIT
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Cử nhân công nghệ thông tin (định hướng ứng dụng) trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Khoa học máy tính trường Đại học Kinh tế Quốc dân
-E: Số lượng giảng viên cơ hữu trường Đại học Kinh tế Quốc dân
-M: Trường UET đào tạo những ngành gì ?
-E: Phương thức xét tuyển theo kết quả thi ĐGNL trường PTIT
-M: Chỉ tiêu tuyển sinh ngành Ngôn ngữ Trung trường Đại học Ngoại thương
-E: Số lượng tiến sĩ trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi TSA ngành Tiếng anh chuyên nghiệp quốc tế trường Đại học Bách khoa Hà Nội
-E: phòng thí nghiệm trường FTU
-M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Hệ thống thông tin trường UET
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành An toàn thông tin CLC trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Kinh tế học tài chính (FE) trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Công nghệ thông tin - ĐH La Trobe (Úc) trường HUST
-M: Chỉ tiêu thẳng ngành Trí tuệ nhân tạo vạn vật (AIoT) (ngành Kỹ thuật Điện tử viễn thông) trường PTIT
-M: Tổ hợp xét tuyển ngành Công nghệ thông tin (Chất lượng cao): Chương trình đào tạo đạt chuẩn kiểm định quốc tế AUN-QA trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Kế toán trường NEU
-M: Giáo trình môn Tư tưởng Hoog Chí Minh ngành Mạng máy tính và truyền thông dữ liệu trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Phương thức xét tuyển theo kết quả thi HSA ngành Công nghệ vật liệu và vi điện tử trường UET
-E: Số các phòng chức năng khác trường HUST
-E: Số phòng thực hành trường Đại học Ngoại thương
-H: Những trường nào đào tạo Ngân hàng
-E: phòng thực hành trường Đại học Ngoại thương
-M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành Kỹ thuật Nhiệt trường Đại học Bách khoa Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Logistics và quản trị chuỗi cung ứng (ngành Quản trị kinh doanh) trường PTIT
-M: Danh sách giảng viên ngành Công nghệ dệt may trường Đại học Bách khoa Hà Nội
-M: Giáo trình môn Đại số tuyến tính ngành Luật thương mại quốc tế trường Đại học Ngoại thương
-M: Thời gian công bố Điểm chuẩn trường Đại học Bách khoa Hà Nội
-E: Đối tượng tuyển sinh ngành Kế toán trường Học viện Công nghệ Bưu chính Viễn thông
-E: Vị trí phòng thực hành trường PTIT
-E: Đối tượng xét tuyển trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Phương thức xét tuyển theo kết quả thi THPT trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành Quản trị Kinh doanh trường Học viện Công nghệ Bưu chính Viễn thông
-E: Chuẩn đầu ra ngành Kinh doanh quốc tế của trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Kỹ thuật phần mềm trường Đại học Kinh tế Quốc dân
-E: Nợ học phí trường Đại học Kinh tế Quốc dân
-M: Danh sách học phần ngành Chương trình tiên tiến Phân tích kinh doanh
-E: Trường FTU có phòng thí nghiệm không ?
-E: Trường HUST có thư viện không ?
-E: Điểm cộng khi xét tuyển trường Đại học Kinh tế Quốc dân
-M: Thời gian công bố Điểm trúng tuyển trường NEU
-H: Danh sách giảng viên trường Đại học Bách khoa Hà Nội
-E: Chỉ tiêu tuyển sinh trường Đại học Bách khoa Hà Nội
-E: Địa chỉ trường UET
-E: Chuẩn đầu ra ngành Kinh doanh quốc tế của trường Đại học Ngoại thương
-E: Đối tượng xét tuyển ngành Kinh tế công nghiệp trường Đại học Bách khoa Hà Nội
-E: Chỉ tiêu tuyển sinh trường HUST
-E: Đối tượng tuyển sinh ngành Quản trị kinh doanh học bằng tiếng Anh (EBBA) trường NEU
-H+: Với điểm thi đánh giá năng lực 55.8 nên chọn trường nào ?
-M: Chỉ tiêu thẳng ngành Trí tuệ nhân tạo vạn vật (AIoT) (ngành Kỹ thuật Điện tử viễn thông) trường Học viện Công nghệ Bưu chính Viễn thông
-E: trung tâm học liệu trường PTIT
-H+: Với điểm thi THPT 21.3 nên chọn trường nào ?
-E: Vị trí thư viện trường Đại học Bách khoa Hà Nội
-M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành Ngôn ngữ Trung trường Đại học Ngoại thương
-M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Kế toán tích hợp chứng chỉ quốc tế (ICAEW CFAB) trường NEU
-E: Vị trí các phòng chức năng khác trường Đại học Bách khoa Hà Nội
-M: Phương thức xét tuyển ngành Ngôn ngữ Pháp CLC trường Đại học Ngoại thương
-E: phòng học trường PTIT
-E: Trường Đại học Ngoại thương có phòng học không ?
-M: Tổ hợp xét tuyển ngành An toàn thông tin trường Đại học Kinh tế Quốc dân
-M: Phương thức thẳng ngành Khoa học máy tính - ĐH Troy (Hoa Kỳ) trường Đại học Bách khoa Hà Nội
-M: Tổ hợp xét tuyển ngành Trí tuệ nhân tạo trường Học viện Công nghệ Bưu chính Viễn thông
-E: Phương thức xét tuyển theo kết quả thi SAT trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Truyền thông đa phương tiện trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi HSA ngành Kinh tế nông nghiệp trường NEU
-M: Trường FTU có mấy giảng đường
-M: Chỉ tiêu tuyển sinh ngành Các chương trình định hướng ứng dụng (POHE - tiếng Anh hệ số 2) trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển ngành Quản lí thị trường trường NEU
-M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Ngôn ngữ Pháp CLC trường Đại học Ngoại thương
-E: Chỉ tiêu tuyển sinh theo kết quả thi TSA trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Chương trình tiên tiến Kỹ thuật Y sinh trường Đại học Bách khoa Hà Nội
-M: Phương thức xét tuyển theo kết quả thi TSA ngành Kỹ thuật Điện trường Đại học Bách khoa Hà Nội
-M: Số tín chỉ ngành Chương trình tiên tiến Kỹ thuật Ô tô trường HUST
-E: Chuẩn đầu ra ngành Công nghệ thông tin Việt - Nhật của trường Học viện Công nghệ Bưu chính Viễn thông
-E: Phương thức thẳng ngành trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Quy đổi điểm bằng chứng chỉ tiếng Anh khi xét tuyển trường Đại học Bách khoa Hà Nội
-M: Luận án tốt nghiệp Ngôn ngữ Pháp trường FTU
-M: Chính sách học bổng trường Đại học Ngoại thương
-E: Trường FTU có phòng học đa phương tiện không ?
-M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành Kỹ thuật Robot trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Tài chính - Ngân hàng và Kế toán trường FTU
-M: Đồ án tốt nghiệp Tiếng Anh KHKT và Công nghệ trường Đại học Bách khoa Hà Nội
-E: Số nghiên cứu sinh ngành Ngôn ngữ Anh trường Đại học Ngoại thương
-M: Học bổng trường FTU
-M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Công nghệ thông tin Việt - Nhật trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Marketing CLC trường PTIT
-M: Giáo trình môn Giải tích 1 ngành Công nghệ nông nghiệp* trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Điểm chuẩn ngành Kinh tế học tài chính (FE) trường Đại học Kinh tế Quốc dân
-M: Chỉ tiêu thẳng ngành Ngôn ngữ Pháp CLC trường FTU
-E: Cơ sở vật chất trường Đại học Kinh tế Quốc dân
-H+: Với điểm thi THPT 28.3 nên chọn trường nào ?
-E: Điểm trúng tuyển trường Đại học Kinh tế Quốc dân
-M: Giáo trình môn Tư tưởng Hoog Chí Minh ngành Khởi nghiệp và phát triển kinh doanh (BBAE) học bằng tiếng Anh (tiếng Anh hệ số 2) trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển theo kết quả thi HSA ngành Ngôn ngữ Trung trường FTU
-E: Chỉ tiêu tuyển sinh theo kết quả thi THPT trường HUST
-E: Trường Đại học Kinh tế Quốc dân có phòng thực hành không ?
-M: Giáo trình môn Tư tưởng Hoog Chí Minh ngành Luật thương mại quốc tế trường Đại học Ngoại thương
-E: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế trường NEU
-M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Kế toán trường Học viện Công nghệ Bưu chính Viễn thông
-E: Vị trí xưởng thực tập trường Học viện Công nghệ Bưu chính Viễn thông
-E: Trợ cấp trường FTU
-M: Phương thức tuyển thẳng ngành Chương trình tiên tiến Điều khiển - Tự động hóa và Hệ thống điện trường Đại học Bách khoa Hà Nội
-E: Điểm cộng khi xét tuyển trường PTIT
-E: Chỉ tiêu thẳng ngành trường Đại học Bách khoa Hà Nội
-M: Giáo trình môn Giải tích 1 ngành Toán kinh tế trường Đại học Kinh tế Quốc dân
-M: Thời gian công bố Điểm sàn trường Đại học Kinh tế Quốc dân
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Ngôn ngữ Anh trường Đại học Ngoại thương
-E: Chỉ tiêu tuyển sinh theo kết quả thi THPT trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Tài chính - Ngân hàng và Kế toán trường Đại học Ngoại thương
-M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Nghiệp vụ An ninh (Địa bàn 8 - Nữ) trường HUST
-M: Phương thức xét tuyển theo kết quả thi SAT ngành Kinh tế chính trị trường Đại học Ngoại thương
-M: Số tín chỉ môn Triết học Mác-Lênin ngành Kỹ thuật điều khiển và tự động hóa trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Điểm ưu tiên khi xét tuyển trường FTU
-M: Phương thức xét tuyển ngành Công nghệ nông nghiệp* trường UET
-M: Phương thức xét tuyển theo kết quả thi SAT ngành Kỹ thuật Hóa học trường Đại học Bách khoa Hà Nội
-M: Khóa luận tốt nghiệp Thống kê kinh tế trường NEU
-E: Trường Đại học Ngoại thương có xưởng thực tập không ?
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Công nghệ thông tin định hướng thị trường Nhật Bản trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy trường Học viện Công nghệ Bưu chính Viễn thông
-E: Học phí trường NEU
-E: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế trường Đại học Kinh tế Quốc dân
-E: Trường HUST có hội trường không ?
-E: Phương thức xét tuyển theo kết quả thi đánh gia tư duy trường HUST
-E: Phương thức xét tuyển theo kết quả thi đánh giá năng lực trường Đại học Kinh tế Quốc dân
-E: Trường Đại học Bách khoa Hà Nội có đào tạo Kỹ thuật Vi điện tử và công nghệ nano không ?
-E: Số lượng giảng viên trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành Kỹ thuật Robot trường UET
-M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Kinh doanh quốc tế trường Đại học Ngoại thương
-M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Kế toán - Kiểm toán trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Công nghệ kỹ thuật xây dựng trường UET
-M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Mạng máy tính và truyền thông dữ liệu trường PTIT
-E: Số thạc sĩ ngành Kỹ thuật Robot trường UET
-M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Công nghệ nông nghiệp* trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Số nghiên cứu sinh ngành Khoa học máy tính trường PTIT
-M: Phương thức xét tuyển theo kết quả thi TSA ngành Định hướng nghề nghiệp Khoa học máy tính và dữ liệu trong kinh tế và kinh doanh trường Đại học Ngoại thương
-E: Nợ học phí trường Đại học Ngoại thương
-M: Phương thức xét tuyển theo kết quả thi HSA ngành Quản lý tài nguyên và môi trường trường Đại học Kinh tế Quốc dân
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Chương trình tiên tiến Kỹ thuật Thực phẩm trường HUST
-E: Số sinh viên ngành Kinh doanh quốc tế trường FTU
-M: Danh sách học phần ngành Chương trình tiên tiến Kỹ thuật Y sinh
-E: Chính sách miễn giảm học phí trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Trường Đại học Bách khoa Hà Nội có mấy cơ sở đào tạo ?
-E: Điểm chuẩn trường HUST
-E: Học phí ngành Ngôn ngữ Trung Quốc trường FTU
-M: Phương thức xét tuyển theo kết quả thi HSA ngành Quan hệ công chúng ngành Marketing trường PTIT
-M: Phương thức xét tuyển theo kết quả thi SAT ngành Tiếng anh KHKT và Công nghệ trường Đại học Bách khoa Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Cơ khí - Chế tạo máy - ĐH Griffith (Úc) trường Đại học Bách khoa Hà Nội
-M: Luận văn tốt nghiệp Ngành Kỹ thuật điều khiển & Tự động hóa trường Học viện Công nghệ Bưu chính Viễn thông
-E: Học phí trường Đại học Ngoại thương
-M: Phương thức xét tuyển ngành Luật thương mại quốc tế trường Đại học Ngoại thương
-E: Phương thức xét tuyển theo kết quả thi SAT trường NEU
-E: Đối tượng xét tuyển trường FTU
-M: Chỉ tiêu tuyển sinh ngành Chương trình tiên tiến Kỹ thuật Thực phẩm trường HUST
-M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Ngôn ngữ Anh trường FTU
-E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD trường Đại học Bách khoa Hà Nội
-E: Chỉ tiêu tuyển sinh theo kết quả thi TSA trường Đại học Kinh tế Quốc dân
-E: Chuẩn đầu ra ngành Ngành Luật của trường Đại học Kinh tế Quốc dân
-E: Thông tin ngành Công nghệ kỹ thuật cơ điện tử trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Danh sách học phần ngành Tài chính - Ngân hàng
-M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Tiếng anh chuyên nghiệp quốc tế trường Đại học Bách khoa Hà Nội
-M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Quản lý đất đai trường Đại học Kinh tế Quốc dân
-E: Chỉ tiêu tuyển thẳng trường Đại học Ngoại thương
-M: Số tín chỉ ngành Tài chính - Ngân hàng và Kế toán trường Đại học Ngoại thương
-H+: Dự đoán điểm chuẩn trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL trường NEU
-M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Điện tử - Viên thông - ĐH Leibniz Hannover (Đức) trường HUST
-E: Giới thiệu về trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển thẳng ngành Trí tuệ nhân tạo trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Trợ cấp trường FTU
-E: Chỉ tiêu tuyển sinh theo kết quả thi SAT trường Đại học Bách khoa Hà Nội
-E: Số sinh viên ngành Công nghệ thông tin trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Cơ kỹ thuật trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Số nghiên cứu sinh ngành Thẩm định giá trường NEU
-E: Phương thức xét tuyển theo kết quả thi ĐGNL trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Điểm sàn ngành Ngôn ngữ Anh trường Đại học Kinh tế Quốc dân
-E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD trường Đại học Kinh tế Quốc dân
-M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Công nghệ Thông tin trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Giới thiệu về trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Kỹ thuật Điều kiển - Tự động hóa trường Đại học Bách khoa Hà Nội
-E: Trường Đại học Bách khoa Hà Nội có nhà đa năng không ?
-M: Danh sách giảng viên ngành Kỹ thuật sinh học trường HUST
-M: Học bổng trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển thẳng ngành Công nghệ kỹ thuật sinh học trường Đại học công nghệ - Đại học quốc gia Hà Nội
-H: Những trường nào đào tạo Quan hệ công chúng
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Bảo hiểm trường Đại học Kinh tế Quốc dân
-M: Số tín chỉ môn Đại số tuyến tính ngành Kinh doanh quốc tế trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Khoa học dữ liệu trong Kinh tế & Kinh doanh (DSEB) trường NEU
-E: Chuẩn đầu ra ngành Logistics và quản trị chuỗi cung ứng (ngành Quản trị kinh doanh) của trường PTIT
-E: Đối tượng xét tuyển ngành Nhóm ngành Kinh tế; Kinh tế quốc tế trường FTU
-E: Số trung tâm học liệu trường Đại học Bách khoa Hà Nội
-M: Giáo trình môn Vật lý đại cương ngành Công nghệ nông nghiệp* trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Trường Đại học Kinh tế Quốc dân có hội trường không ?
-E: Điểm chuẩn ngành Kinh tế chính trị trường Đại học Ngoại thương
-M: Phương thức xét tuyển theo kết quả thi SAT ngành Ngôn ngữ Trung trường Đại học Ngoại thương
-E: Phương thức xét tuyển theo kết quả thi TSA trường Đại học Ngoại thương
-M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Thiết kế công nghiệp và đồ họa trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Số sinh viên ngành Kỹ thuật y sinh (mới) trường Đại học Bách khoa Hà Nội
-E: Vị trí phòng học đa phương tiện trường Đại học Kinh tế Quốc dân
-E: Trường Học viện Công nghệ Bưu chính Viễn thông có đào tạo Báo chí không ?
-M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Ngành Luật trường Đại học Kinh tế Quốc dân
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Công nghệ kỹ thuật điện, điện tử trường Học viện Công nghệ Bưu chính Viễn thông
-M: Số tín chỉ ngành Kỹ thuật Vật liệu trường HUST
-E: trung tâm học liệu trường FTU
-E: Giới thiệu về ngành Thống kê kinh tế trường NEU
-E: Website trường Đại học Ngoại thương
-E: Cơ sở vật chất trường Đại học Ngoại thương
-E: Tỉ lệ sinh viên có việc làm sau 1 năm ra trường ngành An toàn thông tin CLC trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành Công nghệ thông tin (Việt - Pháp) trường HUST
-E: Tỉ lệ sinh viên có việc làm sau 1 năm ra trường ngành Ngôn ngữ Trung trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Thống kê kinh tế trường Đại học Kinh tế Quốc dân
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Tài chính - Ngân hàng trường Đại học Ngoại thương
-M: Tổ hợp xét tuyển trường Đại học Ngoại thương
-M: Phương thức xét tuyển theo kết quả thi THPT ngành Quản lý dự án trường NEU
-E: Đối tượng tuyển sinh ngành Kinh doanh quốc tế trường Đại học Ngoại thương
-M: Phương thức xét tuyển theo kết quả thi HSA ngành Kinh doanh quốc tế trường FTU
-M: Hoạt động liên kết đào tạo nước ngoài trường PTIT
-H+: So sánh giữa trường Đại học Bách khoa Hà Nội và Đại học Ngoại thương
-E: Chỉ tiêu tuyển sinh theo kết quả thi HSA trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Phương thức xét tuyển theo kết quả thi ĐGTD trường Đại học Kinh tế Quốc dân
-E: Trường PTIT có các phòng chức năng khác không ?
-E: Tỉ lệ sinh viên có việc làm sau 1 năm ra trường ngành Chương trình tiên tiến Hệ thống nhúng thông minh và IoT trường HUST
-M: Luận án tốt nghiệp Quản trị kinh doanh thương mại trường Đại học Kinh tế Quốc dân
-E: Vị trí trung tâm học liệu trường Học viện Công nghệ Bưu chính Viễn thông
-E: Số sinh viên ngành Cơ kỹ thuật trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Số thạc sĩ ngành Chương trình tiên tiến Logistics và Quản lý chuỗi cung ứng trường HUST
-E: Phương thức xét tuyển theo kết quả thi ĐGNL trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành Công nghệ Hàng không vũ trụ trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Số phòng học trường Đại học Ngoại thương
-E: Điểm trúng tuyển ngành Công nghệ thông tin - ĐH La Trobe (Úc) trường HUST
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Khoa học máy tính trường NEU
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Ngôn ngữ Pháp trường FTU
-H+: Học ngành Tài chính - Ngân hàng nên chọn trường nào
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Chương trình tiên tiến Kỹ thuật Thực phẩm trường Đại học Bách khoa Hà Nội
-E: Thông tin ngành Công nghệ thông tin chất lượng cao trường Học viện Công nghệ Bưu chính Viễn thông
-M: Luận văn tốt nghiệp Kinh doanh quốc tế và Quản trị kinh doanh trường FTU
-E: phòng học đa phương tiện trường UET
-E: thư viện trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi TSA ngành Kinh tế đối ngoại trường FTU
-E: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế trường HUST
-E: thư viện trường Đại học Ngoại thương
-E: Vị trí phòng thí nghiệm trường Đại học Ngoại thương
-E: Số nghiên cứu sinh ngành Kinh doanh quốc tế (tại Quảng Ninh) trường FTU
-E: Chỉ tiêu tuyển sinh trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Giới thiệu về ngành Quản lý tài nguyên và môi trường trường HUST
-M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Vật lý y khoa trường Đại học Bách khoa Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Ngôn ngữ Trung Quốc trường FTU
-E: Đối tượng tuyển sinh trường Đại học Bách khoa Hà Nội
-M: Thời hạn nộp hồ sơ xét tuyển trường Đại học Kinh tế Quốc dân
-H+: Dự đoán điểm chuẩn trường Đại học Bách khoa Hà Nội
-M: Số tín chỉ môn Triết học Mác-Lênin ngành Kỹ thuật điều khiển và tự động hóa trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy trường Đại học Ngoại thương
-E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL trường Học viện Công nghệ Bưu chính Viễn thông
-M: Khả năng học tập và nâng cao trình độ sau khi ra trường ngành Kinh doanh quốc tế và Quản trị kinh doanh trường FTU
-M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành Vật lý kỹ thuật trường UET
-M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Kinh tế chính trị trường Đại học Ngoại thương
-E: Chỉ tiêu tuyển sinh theo kết quả thi SAT trường FTU
-M: Chỉ tiêu tuyển sinh ngành Tài chính doanh nghiệp trường NEU
-E: Số xưởng thực tập trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Khóa luận tốt nghiệp Mạng máy tính và truyền thông dữ liệu trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Công nghệ thông tin chất lượng cao trường PTIT
-E: Số phòng thí nghiệm trường PTIT
-H+: Với điểm thi đánh giá năng lực 93.25 nên chọn trường nào ?
-M: Vị trí việc làm ngành Kế toán chất lượng cao trường Học viện Công nghệ Bưu chính Viễn thông
-M: Vị trí việc làm ngành Công nghệ tài chính trường PTIT
-E: Phương thức xét tuyển theo kết quả thi HSA trường Học viện Công nghệ Bưu chính Viễn thông
-M: Thời gian công bố Điểm chuẩn trường Đại học Bách khoa Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Hệ thống thông tin trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế trường Đại học Kinh tế Quốc dân
-E: Đối tượng tuyển sinh ngành Logistics và quản trị chuỗi cung ứng (ngành Quản trị kinh doanh) trường Học viện Công nghệ Bưu chính Viễn thông
-H: Những trường nào đào tạo Định hướng nghề nghiệp Khoa học máy tính và dữ liệu trong kinh tế và kinh doanh
-M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Kinh doanh quốc tế và Quản trị kinh doanh trường Đại học Ngoại thương
-M: Trường Đại học Ngoại thương có mấy giảng đường
-E: Điểm sàn ngành Ngành Kinh doanh quốc tế trường Đại học Kinh tế Quốc dân
-M: Luận văn tốt nghiệp Ngành Kinh doanh quốc tế trường NEU
-E: phòng học đa phương tiện trường NEU
-E: Chỉ tiêu tuyển sinh theo kết quả thi SAT trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Công nghệ nông nghiệp* trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Nhóm ngành Kinh tế; Kinh tế quốc tế trường Đại học Ngoại thương
-M: Phương thức xét tuyển theo kết quả thi TSA ngành Máy tính và Robot trường UET
-M: Giáo trình môn Triết học Mác-Lênin ngành Khởi nghiệp và phát triển kinh doanh (BBAE) học bằng tiếng Anh (tiếng Anh hệ số 2) trường Đại học Kinh tế Quốc dân
-E: Vị trí phòng học trường Đại học Kinh tế Quốc dân
-M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Tin học công nghiệp và Tự động hóa (Chương trình Việt - Pháp PFIEV) trường HUST
-H+: Với điểm thi ĐGNL 91.25 nên chọn trường nào ?
-E: Vị trí phòng học đa phương tiện trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Kỹ thuật điều khiển và tự động hóa trường UET
-M: Phương thức xét tuyển theo kết quả thi TSA ngành Kỹ thuật năng lượng trường UET
-E: Phương thức xét tuyển theo kết quả thi SAT trường Đại học công nghệ - Đại học quốc gia Hà Nội
-H+: Học ngành Quản lý công nên chọn trường nào
-M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Kinh tế đầu tư trường NEU
-M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Kinh tế tài nguyên thiên nhiên trường NEU
-E: Phương thức xét tuyển theo kết quả thi TSA trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Quản trị điều hành thông minh (E-SOM) trường Đại học Kinh tế Quốc dân
-E: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực trường Đại học Kinh tế Quốc dân
-H: Những trường nào đào tạo Kinh tế chính trị
-E: Số phòng thí nghiệm trường Đại học Ngoại thương
-E: Phương thức xét tuyển trường Đại học Kinh tế Quốc dân
-E: Trường HUST có phòng thí nghiệm không ?
-E: Giới thiệu về ngành Ngôn ngữ Pháp CLC trường FTU
-E: Chỉ tiêu tuyển sinh trường Học viện Công nghệ Bưu chính Viễn thông
-M: Khả năng học tập và nâng cao trình độ sau khi ra trường ngành Ngôn ngữ Pháp trường Đại học Ngoại thương
-E: Chỉ tiêu tuyển sinh theo kết quả thi HSA trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Nhóm ngành Kinh tế; Kinh tế quốc tế trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Ngôn ngữ Anh trường Đại học Ngoại thương
-M: Tổ hợp xét tuyển ngành Quản trị Kinh doanh trường PTIT
-M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Hệ thống điện và năng lượng tái tạo (CT tiên tiến) trường Đại học Bách khoa Hà Nội
-E: Số hội trường trường HUST
-E: Số phòng học trường Đại học Bách khoa Hà Nội
-M: Phương thức xét tuyển ngành Vật lý kỹ thuật trường UET
-E: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế trường NEU
-E: Phương thức xét tuyển theo kết quả thi THPT trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển sinh ngành Ngành Kỹ thuật điện tử truyền thông trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Công nghệ kỹ thuật cơ điện tử trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Ngôn ngữ Pháp CLC trường FTU
-E: Số thạc sĩ ngành Truyền thông đa phương tiện trường PTIT
-E: Phương thức xét tuyển trường Đại học Bách khoa Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Kinh doanh quốc tế và Quản trị kinh doanh trường Đại học Ngoại thương
-M: Phương thức xét tuyển ngành Kinh tế đối ngoại trường FTU
-E: Trường Đại học Ngoại thương có đào tạo trình độ tiến sĩ không ?
-E: Số lượng trợ giảng trường UET
-E: Phương thức xét tuyển theo kết quả thi đánh giá năng lực trường HUST
-E: Số sinh viên ngành Thẩm định giá trường Đại học Kinh tế Quốc dân
-M: Vị trí việc làm ngành Truyền thông đa phương tiện trường Học viện Công nghệ Bưu chính Viễn thông
-E: Vị trí hội trường trường Đại học công nghệ - Đại học quốc gia Hà Nội
-H+: Học ngành Kinh tế quốc tế nên chọn trường nào
-E: Số lượng phó giáo sư trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Tỉ lệ sinh viên có việc làm sau 1 năm ra trường ngành An toàn thông tin trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi HSA ngành Logistics và quản trị chuỗi cung ứng (ngành Quản trị kinh doanh) trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển thẳng ngành Ngân hàng trường Đại học Kinh tế Quốc dân
-M: Chỉ tiêu tuyển sinh ngành Khoa học quản lý trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển theo kết quả thi SAT ngành Truyền thông đa phương tiện trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Quan hệ lao động (CN Quản lý Quan hệ lao động. CN Hành vi tổ chức) trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển theo kết quả thi HSA ngành Kỹ thuật Robot trường UET
-M: Khóa luận tốt nghiệp Cử nhân Công nghệ thông tin (định hướng ứng dụng) trường Học viện Công nghệ Bưu chính Viễn thông
-M: Số tín chỉ ngành Ngôn ngữ Trung Quốc trường Đại học Ngoại thương
-E: Vị trí xưởng thực tập trường Đại học Bách khoa Hà Nội
-E: Số lượng trợ giảng trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Kỹ thuật điều khiển và tự động hóa trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Công nghệ vật liệu và vi điện tử trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: xưởng thực tập trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Kiểm định cơ sở đào tạo trường PTIT
-M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Kinh doanh quốc tế (tại Quảng Ninh) trường FTU
-E: Phương thức xét tuyển theo kết quả thi SAT trường Đại học Ngoại thương
-E: Trường Học viện Công nghệ Bưu chính Viễn thông có phòng thực hành không ?
-M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Công nghệ thông tin định hướng thị trường Nhật Bản trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Phương thức xét tuyển theo kết quả thi THPT trường Đại học Kinh tế Quốc dân
-E: Ngành Công nghệ giáo dục trường Đại học Bách khoa Hà Nội
-E: Vị trí phòng thực hành trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Đối tượng tuyển sinh trường Đại học Bách khoa Hà Nội
-E: Số trung tâm học liệu trường Học viện Công nghệ Bưu chính Viễn thông
-E: Điểm sàn ngành Kinh doanh quốc tế và Quản trị kinh doanh trường FTU
-E: Vị trí nhà đa năng trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Số lượng thạc sĩ trường HUST
-E: Trường Đại học Bách khoa Hà Nội có thư viện không ?
-E: Trường Đại học công nghệ - Đại học quốc gia Hà Nội có phòng học không ?
-M: Tổng thu / chi trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Chương trình tiên tiến Logistics và Quản lý chuỗi cung ứng trường HUST
-M: Chỉ tiêu thẳng ngành Nhóm ngành luật trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Chương trình tiên tiến Kỹ thuật Cơ điện tử trường HUST
-M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Công nghệ vật liệu và vi điện tử trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Số thạc sĩ ngành Kỹ thuật Dệt trường Đại học Bách khoa Hà Nội
-M: Luận văn tốt nghiệp Công nghệ Thông tin trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Truyền thông đa phương tiện trường PTIT
-M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Kinh doanh quốc tế trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Tài chính - Ngân hàng trường FTU
-M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Kinh doanh quốc tế (tại Quảng Ninh) trường FTU
-M: Số tín chỉ môn Giải tích 1 ngành Tài chính - Ngân hàng và Kế toán trường Đại học Ngoại thương
-H: Danh sách giảng viên trường NEU
-E: Trường Đại học Kinh tế Quốc dân có đào tạo Thương mại điện tử không ?
-M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Quản trị nhân lực trường Đại học Kinh tế Quốc dân
-H+: Với điểm thi HSA 99.5 nên chọn trường nào ?
-M: Hoạt động liên kết đào tạo nước ngoài trường UET
-E: Phương thức xét tuyển theo kết quả thi THPT trường Đại học Kinh tế Quốc dân
-M: Luận văn tốt nghiệp Kinh doanh quốc tế và Quản trị kinh doanh trường FTU
-M: Chỉ tiêu tuyển sinh ngành Ngôn ngữ Pháp CLC trường Đại học Ngoại thương
-M: Phương thức xét tuyển ngành Công nghệ kỹ thuật sinh học trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Khoa học máy tính trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển thẳng ngành Kinh tế quốc tế trường Đại học Ngoại thương
-E: Website trường NEU
-M: Phương thức thẳng ngành Quản trị Kinh doanh trường Học viện Công nghệ Bưu chính Viễn thông
-E: hội trường trường Đại học Kinh tế Quốc dân
-M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Kỹ thuật năng lượng trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Số tín chỉ môn Tư tưởng Hoog Chí Minh ngành Kinh doanh quốc tế trường Đại học Ngoại thương
-M: Khả năng học tập và nâng cao trình độ sau khi ra trường ngành Ngôn ngữ Anh trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh ngành Trí tuệ nhân tạo trường PTIT
-M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Công nghệ vi mạch bán dẫn (ngành Công nghệ kỹ thuật Điện, điện tử) trường Học viện Công nghệ Bưu chính Viễn thông
-E: xưởng thực tập trường Đại học Ngoại thương
-M: Danh sách học phần ngành Ngành Kỹ thuật điều khiển & Tự động hóa
-M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành Công nghệ thông tin trường NEU
-E: Số nghiên cứu sinh ngành Công nghệ kỹ thuật điện tử - viễn thông trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: nhà đa năng trường Đại học Ngoại thương
-M: Phương thức xét tuyển theo kết quả thi THPT ngành Tài chính - Ngân hàng trường FTU
-M: Tỉ lệ sinh viên / giảng viên trường HUST
-M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Ngôn ngữ Pháp trường Đại học Ngoại thương
-E: Số thư viện trường Đại học Bách khoa Hà Nội
-M: Phương thức xét tuyển theo kết quả thi HSA ngành Hệ thống điện và năng lượng tái tạo (CT tiên tiến) trường Đại học Bách khoa Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Quản trị giải trí và sự kiện trường Đại học Kinh tế Quốc dân
-M: Danh sách học phần ngành Kỹ thuật năng lượng
-E: Số lượng giảng viên trường Đại học Ngoại thương
-E: Hồ sơ xét tuyển trường FTU
-M: Đồ án tốt nghiệp Kinh doanh quốc tế trường Đại học Ngoại thương
-E: Số hội trường trường HUST
-E: Giới thiệu về ngành Tiếng Anh KHKT và Công nghệ trường HUST
-E: Diện tích trường Đại học Ngoại thương
-M: Danh sách giảng viên ngành Kế toán - Kiểm toán trường FTU
-E: Chỉ tiêu tuyển sinh theo kết quả thi HSA trường Đại học Kinh tế Quốc dân
-M: Vị trí việc làm ngành Công nghệ vật liệu và vi điện tử trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Vị trí trung tâm học liệu trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Công nghệ Thông tin trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Đối tượng xét tuyển ngành Thống kê kinh tế trường Đại học Kinh tế Quốc dân
-E: các phòng chức năng khác trường Đại học Ngoại thương
-M: Phương thức tuyển thẳng ngành An toàn thông tin trường Đại học Kinh tế Quốc dân
-E: Số lượng thạc sĩ trường PTIT
-M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Ngành Kỹ thuật điều khiển & Tự động hóa trường PTIT
-M: Phương thức xét tuyển theo kết quả thi TSA ngành Trí tuệ nhân tạo trường UET
-E: Điểm chuẩn ngành Kế toán tích hợp chứng chỉ quốc tế (ICAEW CFAB) trường Đại học Kinh tế Quốc dân
-E: nhà đa năng trường HUST
-M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Ngành Kỹ thuật điều khiển & Tự động hóa trường Học viện Công nghệ Bưu chính Viễn thông
-E: Điểm trúng tuyển ngành Định hướng nghề nghiệp Khoa học máy tính và dữ liệu trong kinh tế và kinh doanh trường Đại học Ngoại thương
-E: Chỉ tiêu tuyển sinh theo kết quả thi TSA trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển theo kết quả thi THPT ngành Trí tuệ nhân tạo trường PTIT
-E: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực trường FTU
-E: Phương thức xét tuyển theo kết quả thi đánh gia tư duy trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Điểm ưu tiên khi xét tuyển trường NEU
-E: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế trường Đại học Kinh tế Quốc dân
-E: Phương thức xét tuyển theo kết quả thi ĐGTD trường UET
-E: Hồ sơ xét tuyển trường Đại học Bách khoa Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Thương mại điện tử trường NEU
-E: Vị trí nhà đa năng trường NEU
-M: Kiểm định cơ sở đào tạo trường Học viện Công nghệ Bưu chính Viễn thông
-M: Số tín chỉ môn Giải tích 1 ngành Ngành Kinh doanh quốc tế trường Đại học Kinh tế Quốc dân
-E: Điểm sàn ngành Máy tính và Robot trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Số phòng học đa phương tiện trường PTIT
-E: Thông tin ngành Ngành Kỹ thuật điện tử truyền thông trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Công nghệ tài chính trường PTIT
-E: Điểm sàn trường PTIT
-M: Phương thức xét tuyển theo kết quả thi THPT ngành Công nghệ nông nghiệp* trường UET
-M: Phương thức xét tuyển theo kết quả thi TSA ngành Truyền thông đa phương tiện CLC trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Công nghệ vi mạch bán dẫn (ngành Công nghệ kỹ thuật Điện, điện tử) trường PTIT
-E: Phương thức xét tuyển theo kết quả thi đánh giá năng lực trường Đại học Bách khoa Hà Nội
-E: Chính sách miễn giảm học phí trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Kỹ thuật Robot trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Trí tuệ nhân tạo vạn vật (AIoT) (ngành Kỹ thuật Điện tử viễn thông) trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Mạng máy tính và truyền thông dữ liệu trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Chỉ tiêu tuyển thẳng trường Học viện Công nghệ Bưu chính Viễn thông
-M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Công nghệ kỹ thuật sinh học trường UET
-E: hội trường trường HUST
-E: Học phí ngành Ngôn ngữ Pháp trường Đại học Ngoại thương
-H+: Với điểm thi HSA 95.8 nên chọn trường nào ?
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Kinh tế đối ngoại trường Đại học Ngoại thương
-E: Phương thức xét tuyển theo kết quả thi HSA trường Học viện Công nghệ Bưu chính Viễn thông
-E: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy trường Đại học Kinh tế Quốc dân
-E: Điểm sàn ngành Cử nhân công nghệ thông tin (định hướng ứng dụng) trường Học viện Công nghệ Bưu chính Viễn thông
-E: Điểm sàn trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Phương thức xét tuyển theo kết quả thi ĐGNL trường NEU
-M: Đồ án tốt nghiệp Kinh doanh quốc tế và Quản trị kinh doanh trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Kỹ thuật Điện tử - Viễn thông trường HUST
-E: Điểm trúng tuyển trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi TSA ngành Kinh doanh thương mại trường Đại học Kinh tế Quốc dân
-E: Số thạc sĩ ngành Thiết kế công nghiệp và đồ họa trường UET
-E: Diện tích trường HUST
-M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Marketing CLC trường PTIT
-E: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực trường Đại học Kinh tế Quốc dân
-M: Khả năng học tập và nâng cao trình độ sau khi ra trường ngành An toàn không gian số - Cyber Security (CT tiên tiến) trường HUST
-M: Các giảng đường trường Học viện Công nghệ Bưu chính Viễn thông
-E: Thời gian đào tạo ngành Khoa học máy tính trường Đại học Kinh tế Quốc dân
+M: Số tín chỉ môn Vật lý đại cương ngành Kinh tế đối ngoại trường FTU
+E: Số lượng tiến sĩ trường HUST
+E: Phương thức xét tuyển theo kết quả thi đánh giá năng lực trường Học viện Công nghệ Bưu chính Viễn thông
 E: Chuẩn đầu ra ngoại ngữ của trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Phương thức xét tuyển theo kết quả thi THPT ngành Toán kinh tế trường Đại học Kinh tế Quốc dân
-E: Phương thức tuyển thẳng trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Chỉ tiêu tuyển sinh theo kết quả thi THPT trường Đại học Bách khoa Hà Nội
-M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Quản trị lữ hành trường NEU
-M: Phương thức tuyển thẳng ngành Nhóm ngành Kinh tế; Kinh tế quốc tế trường FTU
-E: Số nhà đa năng trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi SAT ngành Tài chính – Ngân hàng trường Đại học Kinh tế Quốc dân
-E: Điểm trúng tuyển ngành Ngôn ngữ Anh trường FTU
-E: Các hội thảo trường FTU
-M: Số tín chỉ môn Giải tích 1 ngành Kinh tế chính trị trường Đại học Ngoại thương
-M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành An toàn thông tin CLC trường PTIT
-E: Phương thức thẳng ngành trường Đại học Kinh tế Quốc dân
-E: Phương thức xét tuyển theo kết quả thi đánh gia tư duy trường Đại học Kinh tế Quốc dân
-E: Phương thức xét tuyển theo kết quả thi ĐGTD trường FTU
-E: Trường Học viện Công nghệ Bưu chính Viễn thông có đào tạo trình độ tiến sĩ không ?
-E: Phương thức xét tuyển theo kết quả thi đánh gia tư duy trường Đại học Bách khoa Hà Nội
-E: Phương thức xét tuyển theo kết quả thi TSA trường FTU
-E: Ngành Công nghệ thông tin ICT trường Đại học Bách khoa Hà Nội
-M: Phương thức xét tuyển theo kết quả thi SAT ngành Công nghệ thông tin định hướng thị trường Nhật Bản trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Thời hạn nộp hồ sơ xét tuyển trường Đại học Bách khoa Hà Nội
-E: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế trường Đại học Kinh tế Quốc dân
-M: Luận án tốt nghiệp Kinh tế chính trị trường Đại học Ngoại thương
-M: Luận án tốt nghiệp Khoa học và kỹ thuật dữ liệu trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Tổ hợp xét tuyển ngành Công nghệ thông tin chất lượng cao trường PTIT
-M: Phương thức xét tuyển theo kết quả thi SAT ngành Kế toán - Kiểm toán trường Đại học Ngoại thương
+E: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy trường Đại học Kinh tế Quốc dân
+M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Nhóm ngành Kinh tế; Kinh tế quốc tế trường Đại học Ngoại thương
+E: Đối tượng tuyển sinh ngành Quản lí thị trường trường NEU
+E: Vị trí các phòng chức năng khác trường Đại học công nghệ - Đại học quốc gia Hà Nội
 E: Phương thức xét tuyển trường Đại học Ngoại thương
-E: Số phòng học đa phương tiện trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Số lượng phó giáo sư trường NEU
-E: Địa chỉ trường Học viện Công nghệ Bưu chính Viễn thông
-M: Phương thức xét tuyển theo kết quả thi HSA ngành Quản lý Tài nguyên và Môi trường trường Đại học Bách khoa Hà Nội
-M: Phương thức xét tuyển theo kết quả thi THPT ngành Máy tính và Robot trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Tỉ lệ sinh viên có việc làm sau 1 năm ra trường ngành Thương mại điện tử trường Học viện Công nghệ Bưu chính Viễn thông
-E: Vị trí thư viện trường Học viện Công nghệ Bưu chính Viễn thông
-E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD trường Học viện Công nghệ Bưu chính Viễn thông
-E: Học phí ngành Công nghệ vật liệu và vi điện tử trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Đối tượng xét tuyển ngành Đầu tư tài chính (BFI - tiếng Anh hệ số 2) trường NEU
-M: Khóa luận tốt nghiệp Kỹ thuật Điện trường Đại học Bách khoa Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Công nghệ thông tin Việt - Nhật trường PTIT
-E: Trường Đại học Kinh tế Quốc dân có đào tạo trình độ thạc sĩ không ?
-M: Phương thức xét tuyển ngành Ngôn ngữ Pháp trường Đại học Ngoại thương
-M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Quan hệ công chúng trường Đại học Kinh tế Quốc dân
-H+: Học ngành Kinh tế đối ngoại nên chọn trường nào
-E: Học phí ngành Marketing CLC trường PTIT
-E: Chỉ tiêu thẳng ngành trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Luận án tốt nghiệp Đầu tư tài chính (BFI - tiếng Anh hệ số 2) trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển theo kết quả thi THPT ngành Công nghệ Thông tin trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Ngành Công nghệ thông tin (Global ICT) trường HUST
-M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Nghiệp vụ An ninh (Địa bàn 8 - Nữ) trường Đại học Bách khoa Hà Nội
-M: Phương thức xét tuyển theo kết quả thi THPT ngành Kinh doanh quốc tế và Quản trị kinh doanh trường FTU
-H+: So sánh giữa trường Học viện Công nghệ Bưu chính Viễn thông và Đại học Kinh tế Quốc dân
-E: Trường Đại học Bách khoa Hà Nội có đào tạo trình độ thạc sĩ không ?
-M: Giáo trình môn Triết học Mác-Lênin ngành Mạng máy tính và truyền thông dữ liệu trường Đại học công nghệ - Đại học quốc gia Hà Nội
-E: Trường Đại học Bách khoa Hà Nội có xưởng thực tập không ?
-E: Ngành Kỹ thuật y sinh (mới) trường Đại học Bách khoa Hà Nội
-M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Công nghệ thông tin trường Đại học Kinh tế Quốc dân
-M: Các giảng đường trường PTIT
-E: Đối tượng tuyển sinh ngành Công nghệ dệt may trường Đại học Bách khoa Hà Nội
-E: Điểm chuẩn trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Công nghệ kỹ thuật điện tử - viễn thông trường UET
+M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Ngôn ngữ Pháp CLC trường Đại học Ngoại thương
+H+: Với điểm thi THPT 23.75 nên chọn trường nào ?
+M: Phương thức xét tuyển theo kết quả thi HSA ngành Chương trình tiên tiến Logistics và Quản lý chuỗi cung ứng trường Đại học Bách khoa Hà Nội
+E: Thời gian đào tạo ngành Tài chính - Ngân hàng trường Đại học Ngoại thương
+M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Đầu tư tài chính (BFI - tiếng Anh hệ số 2) trường Đại học Kinh tế Quốc dân
+M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Kinh doanh nông nghiệp trường Đại học Kinh tế Quốc dân
+E: Trường Học viện Công nghệ Bưu chính Viễn thông có trung tâm học liệu không ?
+E: Chỉ tiêu tuyển sinh theo kết quả thi HSA trường Đại học Kinh tế Quốc dân
+E: Đối tượng tuyển sinh ngành Quản trị nhân lực trường NEU
+E: Trường Đại học Bách khoa Hà Nội có đào tạo Quản lý giáo dục không ?
+M: Chỉ tiêu tuyển thẳng ngành Logistics và Quản lý chuỗi cung ứng tích hợp chứng chỉ quốc tế (LSIC) trường NEU
+E: Phương thức xét tuyển theo kết quả thi ĐGTD trường Đại học Bách khoa Hà Nội
+E: Chỉ tiêu tuyển sinh theo kết quả thi HSA trường Đại học Ngoại thương
+E: Tỉ lệ sinh viên có việc làm sau 1 năm ra trường ngành Kinh tế đối ngoại trường Đại học Ngoại thương
+M: Phương thức xét tuyển theo kết quả thi HSA ngành Truyền thông Marketing trường Đại học Kinh tế Quốc dân
+E: Trường Đại học Bách khoa Hà Nội có phòng học đa phương tiện không ?
+M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Cử nhân công nghệ thông tin (định hướng ứng dụng) trường Học viện Công nghệ Bưu chính Viễn thông
+E: Chỉ tiêu tuyển sinh theo kết quả thi HSA trường Đại học Kinh tế Quốc dân
+M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành An toàn thông tin trường PTIT
+E: Các hội thảo trường PTIT
+M: Phương thức xét tuyển theo kết quả thi SAT ngành Quản trị dịch vụ du lịch và lữ hành trường NEU
+E: Số phòng thực hành trường Đại học Ngoại thương
+E: Phương thức xét tuyển theo kết quả thi SAT trường Đại học Ngoại thương
+E: Điểm cộng khi xét tuyển trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Vị trí phòng thí nghiệm trường HUST
+M: Chỉ tiêu tuyển sinh ngành Tiếng Anh chuyên nghiệp quốc tế trường Đại học Bách khoa Hà Nội
+M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Trí tuệ nhân tạo trường UET
+M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Ngôn ngữ Pháp CLC trường FTU
+E: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực trường Đại học Bách khoa Hà Nội
+E: Trường Đại học Kinh tế Quốc dân có đào tạo Tài chính công không ?
+E: Thời gian đào tạo ngành Ngôn ngữ Anh trường Đại học Ngoại thương
+E: Số lượng giảng viên trường Học viện Công nghệ Bưu chính Viễn thông
+M: Số tín chỉ môn Tư tưởng Hoog Chí Minh ngành Kinh tế đối ngoại trường FTU
+E: các phòng chức năng khác trường Đại học Ngoại thương
+E: Chỉ tiêu tuyển sinh theo kết quả thi TSA trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Quản trị lữ hành trường NEU
+E: Phương thức xét tuyển theo kết quả thi ĐGNL trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Phương thức xét tuyển theo kết quả thi THPT trường Học viện Công nghệ Bưu chính Viễn thông
+M: Tỉ lệ sinh viên / giảng viên trường Đại học Kinh tế Quốc dân
+M: Phương thức xét tuyển theo kết quả thi TSA ngành Quản trị Kinh doanh trường Học viện Công nghệ Bưu chính Viễn thông
+E: Chỉ tiêu tuyển thẳng trường HUST
+E: phòng thí nghiệm trường Đại học Bách khoa Hà Nội
+M: Phương thức tuyển thẳng ngành Thiết kế và phát triển Game (Công nghệ Đa phương tiện) trường Học viện Công nghệ Bưu chính Viễn thông
+H+: Học ngành Trí tuệ nhân tạo nên chọn trường nào
+M: Thời hạn nộp hồ sơ xét tuyển trường UET
+E: Điểm chuẩn ngành Khoa học máy tính trường UET
+M: Số tín chỉ môn Đại số tuyến tính ngành Kinh doanh quốc tế (tại Quảng Ninh) trường Đại học Ngoại thương
+H+: Với điểm thi HSA 58.25 nên chọn trường nào ?
+E: Phương thức xét tuyển theo kết quả thi SAT trường Học viện Công nghệ Bưu chính Viễn thông
+E: Số nghiên cứu sinh ngành Tiếng anh KHKT và Công nghệ trường HUST
+M: Luận án tốt nghiệp Tài chính - Ngân hàng trường Đại học Ngoại thương
+M: Danh sách giảng viên ngành Truyền thông đa phương tiện trường PTIT
+E: Thông tin ngành Chương trình tiên tiến Phân tích kinh doanh trường HUST
+M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Kế toán tích hợp chứng chỉ quốc tế (ICAEW CFAB) trường Đại học Kinh tế Quốc dân
+M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Nghiệp vụ An ninh (Địa bàn 8 - Nữ) trường HUST
+E: Số nhà đa năng trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Luận văn tốt nghiệp Trí tuệ nhân tạo vạn vật (AIoT) (ngành Kỹ thuật Điện tử viễn thông) trường PTIT
+E: Số các phòng chức năng khác trường Đại học Bách khoa Hà Nội
+M: Số tín chỉ ngành Quản lý năng lượng trường Đại học Bách khoa Hà Nội
+E: Trường NEU có phòng thí nghiệm không ?
+E: Chỉ tiêu tuyển sinh theo kết quả thi TSA trường HUST
+E: Điểm chuẩn trường NEU
+M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Kỹ thuật Điều kiển - Tự động hóa trường Đại học Bách khoa Hà Nội
+H+: Với điểm thi đánh giá năng lực 74.8 nên chọn trường nào ?
+M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Ngôn ngữ Anh trường Đại học Ngoại thương
+M: Phương thức thẳng ngành Truyền thông đa phương tiện CLC trường PTIT
+M: Phương thức xét tuyển theo kết quả thi THPT ngành Kỹ thuật Hóa Học trường Đại học Bách khoa Hà Nội
+E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD trường Đại học Kinh tế Quốc dân
+M: Giáo trình môn Vật lý đại cương ngành Tài chính - Ngân hàng trường Đại học Ngoại thương
+M: Đồ án tốt nghiệp Cơ kỹ thuật trường UET
+M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Khoa học máy tính trường UET
+E: Phương thức tuyển thẳng trường Đại học Bách khoa Hà Nội
+E: Vị trí phòng thực hành trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Số phòng thí nghiệm trường UET
+E: Phương thức xét tuyển theo kết quả thi ĐGTD trường Đại học Ngoại thương
+M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Tài chính – Ngân hàng trường Đại học Kinh tế Quốc dân
+E: Địa chỉ trường Đại học Ngoại thương
 M: Tổ hợp xét tuyển trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Kinh tế quốc tế trường Đại học Ngoại thương
-E: Vị trí các phòng chức năng khác trường PTIT
-M: Giáo trình môn Vật lý đại cương ngành Toán kinh tế trường Đại học Kinh tế Quốc dân
-M: Phương thức xét tuyển theo kết quả thi SAT ngành Kinh tế đối ngoại trường Đại học Ngoại thương
-E: Thời gian đào tạo ngành Công nghệ kỹ thuật xây dựng trường Đại học công nghệ - Đại học quốc gia Hà Nội
-M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Ngành Kỹ thuật điều khiển & Tự động hóa trường Học viện Công nghệ Bưu chính Viễn thông
+M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành An toàn thông tin CLC trường Học viện Công nghệ Bưu chính Viễn thông
+E: Phương thức xét tuyển theo kết quả thi ĐGTD trường Đại học Ngoại thương
+E: Phương thức xét tuyển theo kết quả thi ĐGNL trường Đại học Kinh tế Quốc dân
+E: Phương thức xét tuyển trường Học viện Công nghệ Bưu chính Viễn thông
+E: Số thạc sĩ ngành Cử nhân Công nghệ thông tin (định hướng ứng dụng) trường PTIT
+E: phòng học đa phương tiện trường PTIT
+E: Trợ cấp trường Học viện Công nghệ Bưu chính Viễn thông
+M: Chỉ tiêu thẳng ngành Công nghệ đa phương tiện trường Học viện Công nghệ Bưu chính Viễn thông
+M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Thương mại điện tử trường Học viện Công nghệ Bưu chính Viễn thông
+M: Chỉ tiêu tuyển sinh ngành Trí tuệ nhân tạo trường Đại học Kinh tế Quốc dân
+E: Vị trí nhà đa năng trường Học viện Công nghệ Bưu chính Viễn thông
+M: Vị trí việc làm ngành Chương trình tiên tiến Kỹ thuật Ô tô trường Đại học Bách khoa Hà Nội
+E: Trường FTU có đào tạo Ngôn ngữ Trung không ?
+H+: So sánh giữa trường Đại học công nghệ - Đại học quốc gia Hà Nội và Đại học Bách khoa Hà Nội
+E: Phương thức xét tuyển theo kết quả thi ĐGNL trường PTIT
+M: Phương thức xét tuyển ngành Mạng máy tính và truyền thông dữ liệu trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển theo kết quả thi SAT ngành Kỹ thuật Điều khiển - Tự động hóa trường Đại học Bách khoa Hà Nội
+E: Cơ sở vật chất trường FTU
+M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Công nghệ vật liệu và vi điện tử trường UET
+M: Trường Đại học công nghệ - Đại học quốc gia Hà Nội đào tạo những ngành gì ?
+E: Phương thức xét tuyển theo kết quả thi đánh gia tư duy trường Đại học Ngoại thương
+E: Chỉ tiêu tuyển sinh trường PTIT
+E: Trường Đại học Kinh tế Quốc dân có xưởng thực tập không ?
+M: Thời gian công bố Điểm sàn trường FTU
+E: Diện tích trường Học viện Công nghệ Bưu chính Viễn thông
+E: nhà đa năng trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Giới thiệu về ngành Công nghệ thông tin Việt-Nhật trường Đại học Bách khoa Hà Nội
+E: phòng thực hành trường Đại học Ngoại thương
+M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Kỹ thuật Vật liệu trường Đại học Bách khoa Hà Nội
+E: Điểm ưu tiên khi xét tuyển trường UET
+E: Chuẩn đầu ra ngoại ngữ của trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển theo kết quả thi HSA ngành Kỹ thuật sinh học chương trình Tiên tiến trường Đại học Bách khoa Hà Nội
+M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Kinh tế trường Đại học Kinh tế Quốc dân
+E: Chỉ tiêu tuyển sinh theo kết quả thi SAT trường Đại học Bách khoa Hà Nội
+M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Kinh tế quốc tế trường Đại học Ngoại thương
+E: Số thư viện trường Đại học công nghệ - Đại học quốc gia Hà Nội
+H+: Với điểm thi THPT 29.8 nên chọn trường nào ?
+E: Giới thiệu về trường Đại học Kinh tế Quốc dân
+M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Cơ kỹ thuật trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Số lượng trợ giảng trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức thẳng ngành Cơ kỹ thuật trường UET
+E: Số thư viện trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Chỉ tiêu tuyển sinh trường PTIT
+M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Công nghệ tài chính (BFT) trường Đại học Kinh tế Quốc dân
+M: Tổ hợp xét tuyển ngành Ngôn ngữ Trung trường Đại học Ngoại thương
+E: Số lượng thạc sĩ trường NEU
+E: Chỉ tiêu tuyển sinh theo kết quả thi TSA trường Đại học Ngoại thương
+M: Phương thức xét tuyển theo kết quả thi TSA ngành Công nghệ kỹ thuật cơ điện tử trường UET
+H: Những trường nào đào tạo Công nghệ thông tin
+E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL trường PTIT
+E: Trường Học viện Công nghệ Bưu chính Viễn thông có thư viện không ?
+E: Số hội trường trường Đại học Ngoại thương
+M: Thời gian công bố Điểm chuẩn trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Tổ hợp xét tuyển ngành Kỹ thuật Điện trường Đại học Bách khoa Hà Nội
+M: Phương thức xét tuyển theo kết quả thi THPT ngành Nhóm ngành luật trường FTU
+E: Số lượng giáo sư trường Đại học Bách khoa Hà Nội
+M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Ngôn ngữ Pháp CLC trường FTU
+M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Công nghệ thông tin (Việt - Nhật) trường Đại học Bách khoa Hà Nội
+E: Nợ học phí trường Học viện Công nghệ Bưu chính Viễn thông
+M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Công nghệ thông tin Việt - Nhật trường PTIT
+M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Cử nhân Công nghệ thông tin (định hướng ứng dụng) trường PTIT
+E: Phương thức xét tuyển theo kết quả thi HSA trường Đại học Kinh tế Quốc dân
+E: Đối tượng xét tuyển ngành Quan hệ công chúng trường Đại học Kinh tế Quốc dân
+M: Khả năng học tập và nâng cao trình độ sau khi ra trường ngành Kỹ thuật phần mềm trường Đại học Kinh tế Quốc dân
+M: Giáo trình môn Vật lý đại cương ngành Công nghệ thông tin (Việt - Nhật) trường Đại học Bách khoa Hà Nội
+E: Trường Đại học Bách khoa Hà Nội có đào tạo trình độ tiến sĩ không ?
+M: Thời gian công bố Điểm trúng tuyển trường Đại học Kinh tế Quốc dân
+M: Chỉ tiêu tuyển sinh ngành Công nghệ thông tin chất lượng cao trường Học viện Công nghệ Bưu chính Viễn thông
+M: Kiểm định cơ sở đào tạo trường Đại học Ngoại thương
+E: Hồ sơ xét tuyển trường PTIT
+M: Học bổng trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Công nghệ dệt may trường HUST
+E: Chỉ tiêu tuyển sinh theo kết quả thi HSA trường FTU
+E: Trường PTIT có phòng học không ?
+M: Danh sách giảng viên ngành Nhóm ngành luật trường FTU
+M: Phương thức xét tuyển theo kết quả thi TSA ngành Kinh doanh quốc tế (tại Quảng Ninh) trường Đại học Ngoại thương
+E: Vị trí thư viện trường Học viện Công nghệ Bưu chính Viễn thông
+M: Số tín chỉ ngành Công nghệ thông tin chất lượng cao trường Học viện Công nghệ Bưu chính Viễn thông
+E: Số phòng học đa phương tiện trường Đại học Ngoại thương
+M: Luận văn tốt nghiệp Tài chính - Ngân hàng và Kế toán trường Đại học Ngoại thương
+E: thư viện trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Khoa học Máy tính trường HUST
+E: Tỉ lệ sinh viên có việc làm sau 1 năm ra trường ngành Ngôn ngữ Anh trường Đại học Kinh tế Quốc dân
+M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Thương mại điện tử trường NEU
+E: Trường Đại học Kinh tế Quốc dân có trung tâm học liệu không ?
+M: Danh sách giảng viên ngành Logistics và quản trị chuỗi cung ứng (ngành Quản trị kinh doanh) trường Học viện Công nghệ Bưu chính Viễn thông
+M: Phương thức xét tuyển theo kết quả thi SAT ngành Ngôn ngữ Pháp trường Đại học Ngoại thương
+M: Đồ án tốt nghiệp Kinh doanh số (E-BDB) trường Đại học Kinh tế Quốc dân
+M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Kỹ thuật sinh học chương trình Tiên tiến trường HUST
+E: hội trường trường Đại học Kinh tế Quốc dân
+M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Công nghệ kỹ thuật điện tử - viễn thông trường UET
+E: Số sinh viên ngành Chương trình tiên tiến Khoa học dữ liệu và Trí tuệ nhân tạo trường Đại học Bách khoa Hà Nội
+M: Thời gian công bố Điểm chuẩn trường Học viện Công nghệ Bưu chính Viễn thông
+E: Trường HUST có phòng học không ?
+M: Chỉ tiêu tuyển sinh ngành Khoa học và kỹ thuật dữ liệu trường UET
+M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Hệ thống thông tin trường Đại học Kinh tế Quốc dân
+E: Ngành Quản trị lữ hành trường NEU
+M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Khoa học máy tính trường Đại học Kinh tế Quốc dân
+M: Phương thức thẳng ngành Mạng máy tính và truyền thông dữ liệu trường Học viện Công nghệ Bưu chính Viễn thông
+E: Số thạc sĩ ngành Chương trình tiên tiến Điện tử - Viễn thông trường HUST
+M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Chương trình tiên tiến Kỹ thuật Thực phẩm trường Đại học Bách khoa Hà Nội
+M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Định hướng nghề nghiệp Khoa học máy tính và dữ liệu trong kinh tế và kinh doanh trường Đại học Ngoại thương
+E: Điểm chuẩn ngành Quan hệ công chúng ngành Marketing trường PTIT
+E: Phương thức thẳng ngành trường NEU
+E: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế trường FTU
+E: Giới thiệu về trường HUST
+M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Công nghệ kỹ thuật điện tử - viễn thông trường UET
+M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Trí tuệ nhân tạo trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL trường UET
+H+: Với điểm thi đánh giá năng lực 80.75 nên chọn trường nào ?
+E: Website trường Đại học Kinh tế Quốc dân
+E: Học phí ngành Quản lý công trường Đại học Kinh tế Quốc dân
+M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Quản lý giáo dục trường HUST
+E: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế trường HUST
+M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Kỹ thuật Ô tô trường Đại học Bách khoa Hà Nội
+M: Thời hạn nộp hồ sơ xét tuyển trường Đại học Bách khoa Hà Nội
+H: Danh sách giảng viên trường Đại học Ngoại thương
+E: Hồ sơ xét tuyển trường Đại học Bách khoa Hà Nội
+M: Trường Đại học công nghệ - Đại học quốc gia Hà Nội có mấy giảng đường
+E: Trường Học viện Công nghệ Bưu chính Viễn thông có nhà đa năng không ?
+E: Thông tin ngành Kinh tế chính trị trường Đại học Ngoại thương
+E: Phương thức xét tuyển theo kết quả thi THPT trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Số xưởng thực tập trường Học viện Công nghệ Bưu chính Viễn thông
+E: Điểm trúng tuyển trường Đại học Kinh tế Quốc dân
+E: Vị trí phòng học trường Đại học Bách khoa Hà Nội
+E: Quy đổi điểm bằng chứng chỉ tiếng Anh khi xét tuyển trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển ngành Công nghệ kỹ thuật điện, điện tử trường Học viện Công nghệ Bưu chính Viễn thông
+E: Điểm sàn ngành Ngôn ngữ Pháp trường Đại học Ngoại thương
+E: Chỉ tiêu tuyển sinh trường Học viện Công nghệ Bưu chính Viễn thông
+E: Số sinh viên ngành Kiểm toán tích hợp chứng chỉ quốc tế (AUD-ICAEW) trường NEU
+M: Phương thức xét tuyển theo kết quả thi SAT ngành Khoa học máy tính trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển ngành Kỹ thuật điều khiển và tự động hóa trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển theo kết quả thi HSA ngành Ngành Kỹ thuật điện tử truyền thông trường Học viện Công nghệ Bưu chính Viễn thông
+E: Phương thức xét tuyển theo kết quả thi TSA trường NEU
+M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành Chương trình tiên tiến Kỹ thuật Hóa dược trường Đại học Bách khoa Hà Nội
+E: hội trường trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế trường NEU
+M: Tỉ lệ sinh viên / giảng viên trường Đại học Ngoại thương
+H+: So sánh giữa trường Đại học Ngoại thương và Học viện Công nghệ Bưu chính Viễn thông
+M: Chính sách học bổng trường Đại học Kinh tế Quốc dân
+E: phòng thực hành trường Đại học Kinh tế Quốc dân
+M: Hoạt động liên kết đào tạo nước ngoài trường FTU
+E: Địa chỉ trường Học viện Công nghệ Bưu chính Viễn thông
+E: Số xưởng thực tập trường PTIT
+M: Chỉ tiêu tuyển thẳng ngành Quản trị Kinh doanh trường Học viện Công nghệ Bưu chính Viễn thông
+E: Chỉ tiêu tuyển thẳng trường NEU
+E: Trợ cấp trường Học viện Công nghệ Bưu chính Viễn thông
+E: Vị trí phòng học đa phương tiện trường NEU
+M: Tổng thu / chi trường Học viện Công nghệ Bưu chính Viễn thông
+E: Phương thức thẳng ngành trường Đại học Kinh tế Quốc dân
+M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Kế toán - Kiểm toán trường Đại học Ngoại thương
+E: Phương thức xét tuyển theo kết quả thi HSA trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành An toàn thông tin CLC trường Học viện Công nghệ Bưu chính Viễn thông
+M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Quản lý đất đai trường Đại học Kinh tế Quốc dân
+E: Chỉ tiêu tuyển sinh trường Đại học Kinh tế Quốc dân
+E: Số lượng phó giáo sư trường Đại học Bách khoa Hà Nội
+E: Số trung tâm học liệu trường HUST
+E: Điểm trúng tuyển ngành Công nghệ thông tin Việt-Nhật trường Đại học Bách khoa Hà Nội
+E: Phương thức xét tuyển theo kết quả thi SAT trường Học viện Công nghệ Bưu chính Viễn thông
+E: Thời gian đào tạo ngành An toàn không gian số - Cyber security (CT tiên tiến) trường HUST
+E: Số phòng học trường Đại học Kinh tế Quốc dân
+E: Phương thức xét tuyển theo kết quả thi SAT trường Đại học Bách khoa Hà Nội
+M: Chỉ tiêu tuyển sinh ngành Công nghệ thông tin (Chất lượng cao): Chương trình đào tạo đạt chuẩn kiểm định quốc tế AUN-QA trường Học viện Công nghệ Bưu chính Viễn thông
+E: Số phòng học trường HUST
+E: Vị trí nhà đa năng trường HUST
+E: nhà đa năng trường FTU
+E: Phương thức xét tuyển theo kết quả thi đánh gia tư duy trường Đại học Bách khoa Hà Nội
+M: Chính sách học bổng trường Đại học Bách khoa Hà Nội
+M: Luận văn tốt nghiệp Tài chính - Ngân hàng trường Đại học Ngoại thương
+E: Đối tượng tuyển sinh trường Đại học công nghệ - Đại học quốc gia Hà Nội
+H+: Dự đoán điểm chuẩn trường Đại học Ngoại thương
+E: Chỉ tiêu thẳng ngành trường FTU
+E: Trường Đại học Kinh tế Quốc dân có mấy cơ sở đào tạo ?
+E: Chuẩn đầu ra ngành Tài chính - Ngân hàng của trường Đại học Bách khoa Hà Nội
+E: Điểm sàn ngành Công nghệ nông nghiệp* trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành Kinh tế trường Đại học Kinh tế Quốc dân
+M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Công nghệ thông tin Việt - Nhật trường PTIT
+M: Số tín chỉ môn Giải tích 1 ngành Trí tuệ nhân tạo trường UET
+M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Trí tuệ nhân tạo trường Học viện Công nghệ Bưu chính Viễn thông
+M: Tổ hợp xét tuyển trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Vị trí xưởng thực tập trường Đại học Bách khoa Hà Nội
+M: Phương thức tuyển thẳng ngành Mạng máy tính và truyền thông dữ liệu trường PTIT
+E: Chỉ tiêu tuyển sinh trường NEU
+E: Phương thức xét tuyển theo kết quả thi THPT trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Điểm sàn ngành Quan hệ công chúng ngành Marketing trường Học viện Công nghệ Bưu chính Viễn thông
+E: Điểm chuẩn ngành Kỹ thuật sinh học chương trình Tiên tiến trường Đại học Bách khoa Hà Nội
+E: Số lượng giảng viên cơ hữu trường Đại học Ngoại thương
+M: Chỉ tiêu thẳng ngành Marketing trường Học viện Công nghệ Bưu chính Viễn thông
+M: Tổ hợp xét tuyển ngành Khoa học máy tính - ĐH Troy (Hoa Kỳ) trường Đại học Bách khoa Hà Nội
+E: Học phí trường Đại học Bách khoa Hà Nội
+M: Phương thức xét tuyển theo kết quả thi THPT ngành Công nghệ vi mạch bán dẫn (ngành Công nghệ kỹ thuật Điện, điện tử) trường PTIT
+M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Tiếng anh chuyên nghiệp quốc tế trường Đại học Bách khoa Hà Nội
+M: Khóa luận tốt nghiệp Kỹ thuật phần mềm trường Đại học Kinh tế Quốc dân
+E: Trường Đại học Kinh tế Quốc dân có nhà đa năng không ?
+M: Danh sách học phần ngành Luật kinh doanh
+E: Trường HUST có hội trường không ?
+E: Giới thiệu về ngành Khoa học dữ liệu trong Kinh tế & Kinh doanh (DSEB) trường Đại học Kinh tế Quốc dân
+E: Phương thức tuyển thẳng trường UET
+M: Vị trí việc làm ngành Kinh tế đầu tư trường Đại học Kinh tế Quốc dân
+M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Quản trị nhân lực trường Đại học Kinh tế Quốc dân
+M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Ngôn ngữ Trung Quốc trường FTU
+E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD trường Đại học Ngoại thương
+M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Định phí Bảo hiểm & Quản trị rủi ro (Actuary) học bằng tiếng Anh trường Đại học Kinh tế Quốc dân
+E: Phương thức xét tuyển theo kết quả thi đánh giá năng lực trường Đại học Ngoại thương
+M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Công nghệ thông tin (Chất lượng cao): Chương trình đào tạo đạt chuẩn kiểm định quốc tế AUN-QA trường Học viện Công nghệ Bưu chính Viễn thông
+E: trung tâm học liệu trường PTIT
+E: Trường Đại học Bách khoa Hà Nội có đào tạo trình độ thạc sĩ không ?
+M: Danh sách học phần ngành Logistics và Quản lý chuỗi cung ứng
+M: Các giảng đường trường Đại học Ngoại thương
+M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Thương mại điện tử trường Học viện Công nghệ Bưu chính Viễn thông
+E: Đối tượng xét tuyển ngành Kỹ thuật Robot trường UET
+M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Mạng máy tính và truyền thông dữ liệu trường Học viện Công nghệ Bưu chính Viễn thông
+M: Phương thức xét tuyển ngành Quản lý giáo dục trường Đại học Bách khoa Hà Nội
+E: Chuẩn đầu ra ngành Công nghệ kỹ thuật điện tử - viễn thông của trường UET
+M: Khóa luận tốt nghiệp Vật lý kỹ thuật trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực trường Đại học Kinh tế Quốc dân
+E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD trường Đại học công nghệ - Đại học quốc gia Hà Nội
+H+: Học ngành Công nghệ vi mạch bán dẫn (ngành Công nghệ kỹ thuật Điện, điện tử) nên chọn trường nào
+E: Vị trí phòng thí nghiệm trường PTIT
+E: thư viện trường Đại học Ngoại thương
+E: Số lượng trợ giảng trường Đại học Bách khoa Hà Nội
+E: Trường HUST có mấy cơ sở đào tạo ?
+E: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy trường Đại học Ngoại thương
+M: Số tín chỉ ngành Công nghệ vi mạch bán dẫn (ngành Công nghệ kỹ thuật Điện, điện tử) trường Học viện Công nghệ Bưu chính Viễn thông
+E: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực trường NEU
+H: Những trường nào đào tạo Cử nhân công nghệ thông tin (định hướng ứng dụng)
+M: Giáo trình môn Giải tích 1 ngành Công nghệ nông nghiệp* trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Phương thức xét tuyển theo kết quả thi HSA trường HUST
+M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Quan hệ công chúng trường Đại học Kinh tế Quốc dân
+E: Số các phòng chức năng khác trường UET
+E: các phòng chức năng khác trường Đại học Kinh tế Quốc dân
+M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Kỹ thuật điều khiển và tự động hóa trường UET
+H+: Với điểm thi ĐGNL 64.5 nên chọn trường nào ?
+M: Trường Đại học Ngoại thương đào tạo những ngành gì ?
+E: Điểm ưu tiên khi xét tuyển trường Đại học Ngoại thương
+E: trung tâm học liệu trường PTIT
+E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL trường Học viện Công nghệ Bưu chính Viễn thông
+E: Phương thức xét tuyển theo kết quả thi đánh gia tư duy trường Đại học Bách khoa Hà Nội
+E: Đối tượng xét tuyển trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Chỉ tiêu tuyển sinh theo kết quả thi THPT trường FTU
+E: xưởng thực tập trường FTU
+E: Số lượng tiến sĩ trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Chỉ tiêu tuyển sinh theo kết quả thi SAT trường Đại học Kinh tế Quốc dân
+E: Học phí trường Đại học Kinh tế Quốc dân
+E: Đối tượng tuyển sinh ngành Kỹ thuật Máy tính trường Đại học Bách khoa Hà Nội
+M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL ngành Công nghệ Thông tin trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển theo kết quả thi SAT ngành Logistics và Quản lý chuỗi cung ứng trường Đại học Kinh tế Quốc dân
+E: Số nghiên cứu sinh ngành Chương trình tiên tiến Cơ điện tử trường Đại học Bách khoa Hà Nội
+E: Vị trí phòng học đa phương tiện trường NEU
+E: Vị trí phòng học trường Học viện Công nghệ Bưu chính Viễn thông
+M: Chỉ tiêu tuyển sinh ngành Công nghệ kỹ thuật điện, điện tử trường Học viện Công nghệ Bưu chính Viễn thông
+H: Danh sách giảng viên trường Đại học Kinh tế Quốc dân
+E: Vị trí trung tâm học liệu trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Số lượng giáo sư trường HUST
+E: Giới thiệu về ngành Kinh doanh quốc tế trường Đại học Ngoại thương
+E: Phương thức xét tuyển theo kết quả thi ĐGNL trường Học viện Công nghệ Bưu chính Viễn thông
+E: Trường HUST có hội trường không ?
+M: Phương thức xét tuyển theo kết quả thi HSA ngành Công nghệ Hàng không vũ trụ trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Danh sách học phần ngành Thống kê kinh tế
+M: Số tín chỉ môn Triết học Mác-Lênin ngành Kinh doanh quốc tế (tại Quảng Ninh) trường Đại học Ngoại thương
+H+: Học ngành Định hướng nghề nghiệp Khoa học máy tính và dữ liệu trong kinh tế và kinh doanh nên chọn trường nào
+E: Điểm trúng tuyển ngành Kỹ thuật sinh học trường Đại học Bách khoa Hà Nội
+M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Công nghệ Thông tin trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Trường NEU có phòng học đa phương tiện không ?
+M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Kỹ thuật năng lượng trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Giáo trình môn Giải tích 1 ngành Công nghệ nông nghiệp* trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Công nghệ thông tin trường Học viện Công nghệ Bưu chính Viễn thông
+E: Số phòng học đa phương tiện trường Đại học Ngoại thương
 E: Vị trí hội trường trường Đại học Kinh tế Quốc dân
+M: Chỉ tiêu thẳng ngành Công nghệ kỹ thuật cơ điện tử trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Thời gian công bố Điểm trúng tuyển trường PTIT
+M: Kiểm định cơ sở đào tạo trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Thông tin ngành Kinh tế phát triển trường Đại học Kinh tế Quốc dân
+M: Phương thức xét tuyển theo kết quả thi HSA ngành Chương trình tiên tiến Kỹ thuật Ô tô trường HUST
+E: phòng thí nghiệm trường Học viện Công nghệ Bưu chính Viễn thông
+E: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy trường FTU
+M: Phương thức xét tuyển theo kết quả thi đánh gia tư duy ngành Quản lý công trường Đại học Kinh tế Quốc dân
+E: Website trường Học viện Công nghệ Bưu chính Viễn thông
+M: Chỉ tiêu tuyển sinh theo kết quả thi HSA ngành Thiết kế và phát triển Game (Công nghệ Đa phương tiện) trường Học viện Công nghệ Bưu chính Viễn thông
+E: Số hội trường trường Học viện Công nghệ Bưu chính Viễn thông
+M: Phương thức xét tuyển theo kết quả thi SAT ngành Thiết kế và phát triển Game (Công nghệ Đa phương tiện) trường PTIT
+E: xưởng thực tập trường Học viện Công nghệ Bưu chính Viễn thông
+M: Khả năng học tập và nâng cao trình độ sau khi ra trường ngành Quan hệ công chúng trường Đại học Kinh tế Quốc dân
+E: Diện tích trường Đại học Bách khoa Hà Nội
+E: Trường Đại học Kinh tế Quốc dân có các phòng chức năng khác không ?
+E: Số trung tâm học liệu trường Đại học Kinh tế Quốc dân
+E: Đối tượng xét tuyển trường UET
+E: Cơ sở vật chất trường FTU
+E: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy trường HUST
+E: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế trường HUST
+E: Số lượng giảng viên trường Đại học Bách khoa Hà Nội
+M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Công nghệ vật liệu và vi điện tử trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Chỉ tiêu tuyển sinh theo kết quả thi SAT trường Đại học Ngoại thương
+M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Kinh tế học tài chính (FE) trường Đại học Kinh tế Quốc dân
+E: Chính sách miễn giảm học phí trường Đại học Bách khoa Hà Nội
+M: Hoạt động liên kết đào tạo nước ngoài trường PTIT
+E: Phương thức xét tuyển trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành Cơ kỹ thuật trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển ngành Logistics và Quản lý chuỗi cung ứng trường NEU
+M: Phương thức xét tuyển theo kết quả thi THPT ngành Công nghệ kỹ thuật điện tử - viễn thông trường Đại học công nghệ - Đại học quốc gia Hà Nội
+H+: Với điểm thi ĐGNL 97.25 nên chọn trường nào ?
+M: Chỉ tiêu tuyển sinh theo kết quả thi đánh gia tư duy ngành Quan hệ lao động (CN Quản lý Quan hệ lao động. CN Hành vi tổ chức) trường Đại học Kinh tế Quốc dân
+E: Số nhà đa năng trường HUST
+H: Những trường nào đào tạo Công nghệ thông tin ICT
+E: Điểm sàn trường Học viện Công nghệ Bưu chính Viễn thông
+E: Tỉ lệ sinh viên có việc làm sau 1 năm ra trường ngành Kỹ thuật Vi điện tử và công nghệ nano trường Đại học Bách khoa Hà Nội
+M: Phương thức xét tuyển theo kết quả thi TSA ngành Trí tuệ nhân tạo vạn vật (AIoT) (ngành Kỹ thuật Điện tử viễn thông) trường Học viện Công nghệ Bưu chính Viễn thông
+E: Ngành Trí tuệ nhân tạo trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Đối tượng xét tuyển ngành Kinh tế chính trị trường Đại học Ngoại thương
+M: Số tín chỉ môn Giải tích 1 ngành Trí tuệ nhân tạo trường UET
+E: Chỉ tiêu tuyển sinh trường Học viện Công nghệ Bưu chính Viễn thông
+H+: Với điểm thi HSA 70.5 nên chọn trường nào ?
+M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Công nghệ thông tin trường Học viện Công nghệ Bưu chính Viễn thông
+E: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế trường Đại học Bách khoa Hà Nội
+E: phòng học trường Đại học Bách khoa Hà Nội
+M: Vị trí việc làm ngành Công nghệ thông tin ICT trường Đại học Bách khoa Hà Nội
+E: Vị trí trung tâm học liệu trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển theo kết quả thi ĐGNL ngành Kiểm toán trường NEU
+E: Phương thức xét tuyển trường Đại học Bách khoa Hà Nội
+E: phòng học trường Học viện Công nghệ Bưu chính Viễn thông
+E: Điểm chuẩn trường NEU
+E: Trường PTIT có phòng thí nghiệm không ?
+E: Phương thức xét tuyển theo kết quả thi TSA trường Học viện Công nghệ Bưu chính Viễn thông
+E: Trường Học viện Công nghệ Bưu chính Viễn thông có phòng thực hành không ?
+E: Trường Đại học Bách khoa Hà Nội có đào tạo trình độ thạc sĩ không ?
+M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Ngôn ngữ Trung Quốc trường Đại học Ngoại thương
+E: Phương thức xét tuyển theo kết quả thi ĐGTD trường Đại học Bách khoa Hà Nội
+E: Vị trí các phòng chức năng khác trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Giáo trình môn Triết học Mác-Lênin ngành Công nghệ thông tin (Việt - Nhật) trường Đại học Bách khoa Hà Nội
+M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Marketing trường Đại học Kinh tế Quốc dân
+M: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD ngành Cử nhân công nghệ thông tin (định hướng ứng dụng) trường Học viện Công nghệ Bưu chính Viễn thông
+M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Ngôn ngữ Nhật trường FTU
+E: Các hội thảo trường Đại học Ngoại thương
+E: Điểm trúng tuyển trường Học viện Công nghệ Bưu chính Viễn thông
+M: Phương thức xét tuyển theo kết quả thi TSA ngành An toàn không gian số - Cyber security (CT tiên tiến) trường Đại học Bách khoa Hà Nội
+M: Chỉ tiêu tuyển sinh theo kết quả thi SAT ngành Trí tuệ nhân tạo trường UET
+M: Chỉ tiêu tuyển sinh theo kết quả thi THPT ngành Chương trình tiên tiến Kỹ thuật Điện tử - Viên thông trường Đại học Bách khoa Hà Nội
+M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Hệ thống thông tin trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển ngành Chương trình tiên tiến Hệ thống điện và năng lượng tái tạo trường Đại học Bách khoa Hà Nội
+E: phòng học đa phương tiện trường FTU
+M: Giáo trình môn Triết học Mác-Lênin ngành Tài chính - Ngân hàng trường Đại học Ngoại thương
+M: Tổng thu / chi trường Đại học Ngoại thương
+E: Số thạc sĩ ngành Kế toán chất lượng cao trường Học viện Công nghệ Bưu chính Viễn thông
+E: Học phí ngành Mạng máy tính và truyền thông dữ liệu trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Quy đổi điểm bằng chứng chỉ tiếng Anh khi xét tuyển trường FTU
+E: Chỉ tiêu tuyển sinh theo kết quả thi THPT trường HUST
+M: Chỉ tiêu tuyển thẳng ngành Truyền thông đa phương tiện CLC trường PTIT
+M: Phương thức xét tuyển theo kết quả thi THPT ngành Quan hệ công chúng ngành Marketing trường Học viện Công nghệ Bưu chính Viễn thông
+E: Phương thức xét tuyển theo kết quả thi đánh gia tư duy trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Số phòng thực hành trường Đại học Kinh tế Quốc dân
+M: Phương thức xét tuyển theo kết quả thi ĐGTD ngành Ngành Kỹ thuật điều khiển & Tự động hóa trường PTIT
+E: Chỉ tiêu tuyển sinh theo kết quả thi THPT trường Đại học Kinh tế Quốc dân
+M: Đồ án tốt nghiệp Cơ khí - Chế tạo máy - Đh Griffith (Úc) trường Đại học Bách khoa Hà Nội
+E: Số sinh viên ngành Ngôn ngữ Anh trường Đại học Ngoại thương
+E: Chỉ tiêu thẳng ngành trường Đại học Ngoại thương
+E: Số phòng thí nghiệm trường PTIT
+M: Các giảng đường trường Đại học Ngoại thương
+H+: Dự đoán điểm chuẩn trường UET
+E: Đối tượng tuyển sinh trường Đại học Ngoại thương
+E: Chuẩn đầu ra ngành Ngôn ngữ Nhật của trường Đại học Ngoại thương
+E: Điểm cộng khi xét tuyển trường Đại học Bách khoa Hà Nội
+E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGTD trường Học viện Công nghệ Bưu chính Viễn thông
+M: Chỉ tiêu tuyển sinh theo kết quả thi TSA ngành Marketing CLC trường Học viện Công nghệ Bưu chính Viễn thông
+E: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế trường Đại học Ngoại thương
+M: Trường Học viện Công nghệ Bưu chính Viễn thông có mấy giảng đường
+E: Phương thức xét tuyển theo kết quả thi TSA trường Đại học Kinh tế Quốc dân
+E: Chính sách miễn giảm học phí trường Đại học Kinh tế Quốc dân
+M: Khả năng học tập và nâng cao trình độ sau khi ra trường ngành Quản trị khách sạn trường Đại học Kinh tế Quốc dân
+E: Số lượng phó giáo sư trường Đại học Kinh tế Quốc dân
+M: Luận án tốt nghiệp Thiết kế và phát triển Game (Công nghệ Đa phương tiện) trường Học viện Công nghệ Bưu chính Viễn thông
+E: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế trường HUST
+E: Trường NEU có phòng thực hành không ?
+E: Vị trí hội trường trường FTU
+E: Chỉ tiêu tuyển sinh theo kết quả thi TSA trường Đại học Bách khoa Hà Nội
+M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Tài chính - Ngân hàng trường Đại học Ngoại thương
+E: Phương thức xét tuyển theo kết quả thi đánh giá năng lực trường Đại học Bách khoa Hà Nội
+E: Phương thức xét tuyển theo kết quả thi HSA trường Đại học Ngoại thương
+M: Khóa luận tốt nghiệp Định hướng nghề nghiệp Khoa học máy tính và dữ liệu trong kinh tế và kinh doanh trường FTU
+M: Chỉ tiêu tuyển sinh theo kết quả thi chuẩn hóa quốc tế ngành Công nghệ nông nghiệp* trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế trường PTIT
+M: Phương thức tuyển thẳng ngành Mạng máy tính và truyền thông dữ liệu trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Cử nhân Công nghệ thông tin (định hướng ứng dụng) trường PTIT
+E: Phương thức xét tuyển theo kết quả thi THPT trường NEU
+E: Trường Đại học Bách khoa Hà Nội có thư viện không ?
+E: Trường Học viện Công nghệ Bưu chính Viễn thông có xưởng thực tập không ?
+E: Chỉ tiêu tuyển sinh theo kết quả thi SAT trường Đại học Ngoại thương
+E: Vị trí xưởng thực tập trường UET
+E: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực trường Đại học Kinh tế Quốc dân
+E: Vị trí thư viện trường Đại học Kinh tế Quốc dân
+E: Trường NEU có các phòng chức năng khác không ?
+M: Thời gian công bố Điểm sàn trường Đại học Bách khoa Hà Nội
+M: Phương thức xét tuyển theo kết quả thi TSA ngành Công nghệ kỹ thuật sinh học trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển theo kết quả thi THPT ngành Công nghệ kỹ thuật cơ điện tử trường UET
+M: Phương thức xét tuyển theo kết quả thi chuẩn hóa quốc tế ngành Truyền thông đa phương tiện trường Học viện Công nghệ Bưu chính Viễn thông
+E: Chỉ tiêu tuyển sinh theo kết quả thi THPT trường Học viện Công nghệ Bưu chính Viễn thông
+E: Điểm trúng tuyển ngành An toàn thông tin CLC trường PTIT
+M: Chỉ tiêu tuyển sinh theo kết quả thi đánh giá năng lực ngành Thiết kế công nghiệp và đồ họa trường Đại học công nghệ - Đại học quốc gia Hà Nội
+M: Phương thức xét tuyển theo kết quả thi đánh giá năng lực ngành Kinh tế đầu tư trường NEU
+M: Luận án tốt nghiệp Ngôn ngữ Pháp CLC trường Đại học Ngoại thương
+E: Số lượng giảng viên cơ hữu trường Học viện Công nghệ Bưu chính Viễn thông
+M: Học bổng trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Chỉ tiêu tuyển sinh theo kết quả thi ĐGNL trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Trường Đại học Bách khoa Hà Nội có đào tạo trình độ tiến sĩ không ?
+E: Phương thức xét tuyển trường Đại học Bách khoa Hà Nội
+E: Điểm sàn trường Đại học Kinh tế Quốc dân
+E: Số nghiên cứu sinh ngành Bảo hiểm trường Đại học Kinh tế Quốc dân
+E: Ngành Khoa học và kỹ thuật dữ liệu trường Đại học công nghệ - Đại học quốc gia Hà Nội
+E: Phương thức xét tuyển theo kết quả thi đánh giá năng lực trường Đại học Bách khoa Hà Nội
+E: Số lượng thạc sĩ trường Đại học Kinh tế Quốc dân
+E: Vị trí phòng thực hành trường Đại học Ngoại thương
+E: Nợ học phí trường Đại học Kinh tế Quốc dân
+E: Phương thức xét tuyển theo kết quả thi TSA trường HUST
+E: Phương thức xét tuyển trường Học viện Công nghệ Bưu chính Viễn thông
+E: Học phí ngành Quản trị kinh doanh học bằng tiếng Anh (EBBA) trường NEU

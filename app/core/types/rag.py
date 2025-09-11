@@ -8,12 +8,15 @@ from typing import Literal, NotRequired
 SearchEngineType = Literal["google", "brave"]
 
 class RagSource(TypedDict):
+    query: str
     url: str
     title: str
     text: str
+    chunk_index: int
     file_url: NotRequired[str]
     file_title: NotRequired[str]
     file_type: NotRequired[str]
+    
 
 class FileSource(TypedDict):
     file_url: str
@@ -22,8 +25,10 @@ class FileSource(TypedDict):
     text: str
     
 class WebSource(TypedDict):
+    query: str
     url: str
     title: str
     description: str
     text: str
     files: list[FileSource]
+    score: float

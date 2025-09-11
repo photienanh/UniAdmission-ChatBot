@@ -17,6 +17,7 @@ class PDFProcessor:
             return file_path.lower().endswith('.pdf')
 
     def extract_text_from_image_of_pdf(self, images_dir: str) -> list:
+        return []
         markdown_pages = []
         try:
             if not os.path.exists(images_dir):

@@ -11,7 +11,6 @@ from core.types import GenerationParams, ChatMessageRole, RagSource, WebSource
 
 class ChatRequest(BaseModel):
     text: str
-    model_id: str
     session_id: Optional[str]
     params: GenerationParams
     
@@ -26,7 +25,7 @@ class PreChatResponse(TypedDict):
 class MessageResponse(TypedDict):
     id: str
     text: str
-    model_id: Optional[str]
+    model_id: str
     session_id: str
     role: ChatMessageRole
     timestamp: datetime
