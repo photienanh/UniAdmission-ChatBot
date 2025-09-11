@@ -81,7 +81,7 @@ class SchoolMapper:
         max_score = matches[0][1]
         for name, score, _ in matches:
             if score == max_score:
-                print( "E",name, score)
+                print("E", name, score)
                 matched_names.append(name)
             elif len(matched_names) < top_k:
                 print(name, score)

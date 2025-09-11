@@ -14,6 +14,8 @@ class GenerationParams(TypedDict):
     # Model
     model_id: str
     # Search
+    use_websearch: NotRequired[bool]
+    use_localdb: NotRequired[bool]
     max_query: NotRequired[int]
     query_score_threshold: NotRequired[float]
     engine_type: NotRequired[SearchEngineType] # google/brave
@@ -22,6 +24,7 @@ class GenerationParams(TypedDict):
     time_metric: NotRequired[Literal["m", "y", "d"]]
     time_range: NotRequired[int]
     # Rerank
+    llm_rerank: NotRequired[bool]
     page_score_threshold: NotRequired[float]
     chunk_score_threshold: NotRequired[float]
     # Retrieve

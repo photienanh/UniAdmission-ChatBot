@@ -84,6 +84,7 @@ class DataRetrieverPipeline:
         params: GenerationParams,
         queries_and_domains: list[str | tuple[str, list[str]]]
     ) -> tuple[list[WebSource], list[RagSource]]:
+        include_pdf = params.get("include_pdf", False)
         if len(queries_and_domains) == 0: return [], []
         tasks = []
         async def search_and_rerank_task(query: str, school_domains: list[str]):
@@ -98,7 +99,7 @@ class DataRetrieverPipeline:
                 
         search_results_list: list[list[SearchResult]] = await asyncio.gather(*tasks)
         html_results_list = await self._download(params, search_results_list)
-        web_sources_list = [await self._process(html_results) for html_results in html_results_list]
+        web_sources_list = [await self._process(html_results, include_pdf) for html_results in html_results_list]
         web_sources_list = self._pages_list_reorder(web_sources_list)
         # K-query
         # each query have k-page
@@ -204,11 +205,12 @@ class DataRetrieverPipeline:
         return final_results_list
     async def _process(
         self,
-        html_results: list[HtmlResult]
+        html_results: list[HtmlResult],
+        include_pdf: bool
     ) -> list[WebSource]:
         # Process page
         self.logger.start()
-        web_sources: list[WebSource] = await self._page_extractor.extract(html_results)
+        web_sources: list[WebSource] = await self._page_extractor.extract(html_results, include_pdf)
         self.logger.end("Process")
         return web_sources
     async def _split_rag_merge(
@@ -234,9 +236,9 @@ class DataRetrieverPipeline:
         for web_source, page_k_doc in zip(web_sources, page_k_docs):
             rag_sources = self._splitter.split(web_source)
             relavent_sources = self._rag.retrieve(rag_sources, query, page_k_doc)
-            rag_sources = self._merger.merge(rag_sources, relavent_sources, merge_table, merge_neighbor)
-            rag_sources = self._chunk_ranker.rerank_chunks(relavent_sources, query, chunk_score_threshold)
-            rag_sources_list.append(rag_sources)
+            relavent_sources = self._merger.merge(rag_sources, relavent_sources, merge_table, merge_neighbor)
+            relavent_sources = self._chunk_ranker.rerank_chunks(relavent_sources, query, chunk_score_threshold)
+            rag_sources_list.append(relavent_sources)
         self.logger.end("RAG")
         return rag_sources_list
     async def _merge_rag_source(
@@ -324,7 +326,7 @@ class DataRetrieverPipeline:
         self.logger.end("Download")
         # Process page
         self.logger.start()
-        web_sources: list[WebSource] = await self._page_extractor.extract(html_results)
+        web_sources: list[WebSource] = await self._page_extractor.extract(html_results, include_pdf)
         self.logger.end("Process")
         # Split, rag, merge
         self.logger.start()

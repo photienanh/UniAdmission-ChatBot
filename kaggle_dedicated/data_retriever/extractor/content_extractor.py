@@ -122,11 +122,11 @@ class ContentExtractor:
         markdown = parsed.raw_markdown
         markdown = URL_PATTERN_REMOVE.sub(r'\1', markdown)
         return self.__processs_lines(markdown, self._min_line_length)
-    async def extract(self, html_results: list[HtmlResult]) -> list[WebSource]:
+    async def extract(self, html_results: list[HtmlResult], include_pdf: bool) -> list[WebSource]:
         ssl = os.getenv("WEB_SEARCH_SSL", "True").lower() in ("true", "1")
         jobs = []
         for html_result in html_results:
-            jobs.append(self._extract_job(ssl, html_result))
+            jobs.append(self._extract_job(ssl, html_result, include_pdf))
         # Use job to maximize files download. (I think extract content can't be speedup even with multi-thread)
         results = await asyncio.gather(*jobs)
         web_sources = []
@@ -134,21 +134,22 @@ class ContentExtractor:
             if result:
                 web_sources.append(result)
         return web_sources
-    async def _extract_job(self, ssl: bool, html_result: HtmlResult) -> WebSource | None:
+    async def _extract_job(self, ssl: bool, html_result: HtmlResult, include_pdf: bool) -> WebSource | None:
         links_info = self._extract_links(html_result["html"], html_result["url"])
         main_content = self._extract_content(html_result["html"], html_result["url"])
         # Todo: We can implement a basic link filter based on links_info and main_content
-        file_jobs = []
-        for link_info in links_info:
-            if link_info["url_type"] == "pdf":
-                file_jobs.append(self._pdf_task(ssl, link_info["title"], link_info["url"]))
-                if len(file_jobs) >= self._max_file_per_page:
-                    break
-        file_results = await asyncio.gather(*file_jobs)
         file_contents: list[FileSource] = []
-        for file_result in file_results:
-            if file_result:
-                file_contents.append(file_result)
+        if include_pdf:
+            file_jobs = []
+            for link_info in links_info:
+                if link_info["url_type"] == "pdf":
+                    file_jobs.append(self._pdf_task(ssl, link_info["title"], link_info["url"]))
+                    if len(file_jobs) >= self._max_file_per_page:
+                        break
+            file_results = await asyncio.gather(*file_jobs)
+            for file_result in file_results:
+                if file_result:
+                    file_contents.append(file_result)
         web_source: WebSource = {
             "query": html_result["query"],
             "title": html_result["title"],

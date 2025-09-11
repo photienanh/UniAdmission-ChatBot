@@ -8,6 +8,7 @@ import traceback
 
 from .schema import WorkerServerInfo, ModelPreOutput, WorkerChatRequest, WorkerStoreChatData
 from .router import router
+from .protocol import ServerModel
 
 async def kaggle_register(server_domain: str, info: WorkerServerInfo):
     async with aiohttp.ClientSession() as ss:
@@ -51,8 +52,7 @@ async def store_chat(server_domain: str, data: WorkerStoreChatData):
 def construct_app(
         server_domain: str,
         info: WorkerServerInfo,
-        pre_inference: Callable[[WorkerChatRequest], Awaitable[ModelPreOutput]],
-        inferece: Callable[[str], AsyncGenerator[str, None]],
+        server_model: ServerModel,
         init_tasks: list[Awaitable] = [],
         shutdown_tasks: list[Awaitable] = [],
         update_poll: float = 10,
@@ -75,10 +75,10 @@ def construct_app(
         for task in shutdown_tasks:
             await task
     app = FastAPI(lifespan=lifespan)
+    server_model.set_app(app)
     app.include_router(router, tags=["Server"])
     app.state.info = info
-    app.state.pre_inference = pre_inference
-    app.state.inference = inferece
+    app.state.model = server_model
     async def store_chat_function(data: WorkerStoreChatData):
         return await store_chat(server_domain, data)
     app.state.store_chat = store_chat_function

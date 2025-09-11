@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const sidebar = document.getElementById('sidebar');
     const newChatBtn = document.getElementById('new-chat-btn');
     const modelSelect = document.getElementById('model-select');
-    const webSearchButton = document.getElementById('web-search-button');
+    const retrieveDataButton = document.getElementById('retrieve-data-button');
     const searchResultsCount = document.getElementById('search-results-count');
     const searchDocsCount = document.getElementById('search-docs-count');
     const priorityDomains = document.getElementById('priority-domains');
@@ -50,6 +50,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const maxHistoryInput = document.getElementById('max-history');
     
     // Advanced search parameters
+    const websearchCheckbox = document.getElementById('websearch-checkbox');
+    const localdbCheckbox = document.getElementById('localdb-checkbox');
     const maxQueryInput = document.getElementById('max-query');
     const queryScoreThreshold = document.getElementById('query-score-threshold');
     const queryScoreValue = document.getElementById('query-score-value');
@@ -67,6 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const includeImageCheckbox = document.getElementById('include-image');
     const mergeTableCheckbox = document.getElementById('merge-table');
     const mergeNeighborCheckbox = document.getElementById('merge-neighbor');
+    const llmRerankCheckbox = document.getElementById('llm-rerank-checkbox');
     
     // Handle slider switch clicks
     document.querySelectorAll('.slider-switch').forEach(switchElement => {
@@ -466,7 +469,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const activeModelItem = document.querySelector('.model-item.active');
         const selectedModelType = activeModelItem ? activeModelItem.dataset.model : modelSelect.value;
         const useGemini = selectedModelType.includes('gemini');
-        const useWebSearch = webSearchButton.checked;
+        const retrieveData = retrieveDataButton.checked;
         const temperature = parseFloat(temperatureSlider.value);
         const topP = parseFloat(topPSlider.value);
         const topK = parseInt(topKSlider.value);
@@ -490,7 +493,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const mergeNeighbor = mergeNeighborCheckbox.checked;
         
         console.log('Model selected:', selectedModelType, 'Use Gemini:', useGemini);
-        console.log('Web Search enabled:', useWebSearch);
+        console.log('Web Search enabled:', retrieveData);
         
         // Add user message
         addMessage(message, 'user');
@@ -514,13 +517,14 @@ document.addEventListener('DOMContentLoaded', function() {
         if (kDocsValue > 50) kDocsValue = 50;
         let kPagesValue = parseInt(searchResultsCount.value);
         // Send to backend
-        if (!useWebSearch) {
+        if (!retrieveData) {
             kDocsValue = 0;
             kPagesValue = 0;
         }
         
         // Build comprehensive params object
         const params = {
+            model_id: selectedModelType,
             // Sampling parameters
             temperature: temperature,
             top_p: topP,
@@ -534,7 +538,8 @@ document.addEventListener('DOMContentLoaded', function() {
             k_docs: kDocsValue,
             
             // Advanced search parameters
-            use_websearch: useWebSearch,
+            use_websearch: retrieveData && websearchCheckbox.checked,
+            use_localdb: retrieveData && localdbCheckbox.checked,
             max_query: maxQuery,
             query_score_threshold: queryScore,
             engine_type: engineType,
@@ -546,7 +551,8 @@ document.addEventListener('DOMContentLoaded', function() {
             include_pdf: includePdf,
             include_image: includeImage,
             merge_table: mergeTable,
-            merge_neighbor: mergeNeighbor
+            merge_neighbor: mergeNeighbor,
+            llm_rerank: llmRerankCheckbox.checked,
         };
         
         // Add time parameters if specified
@@ -563,7 +569,6 @@ document.addEventListener('DOMContentLoaded', function() {
             body: JSON.stringify({
                 text: message,
                 session_id: currentSessionId,
-                model_id: selectedModelType,
                 params: params
             })
         })

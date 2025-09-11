@@ -1,8 +1,8 @@
 from typing import Any
 from .schema import RagSource
 
-PAGE_HEADER_TEMPLATE = "PAGE : [**{title}**]({url})"
-FILE_HEADER_TEMPLATE = "FILE : [{title}]({url})"
+PAGE_HEADER_TEMPLATE = "**Nguồn**: [**{title}**]({url})"
+FILE_HEADER_TEMPLATE = "[{title}]({url})"
 
 class SourceFormat:
     def __init__(self) -> None:
@@ -15,7 +15,7 @@ class SourceFormat:
         main_file_url = None
         page_buffer: list[str] = []
         file_buffer: list[str] = []
-        for source in sources:
+        for index, source in enumerate(sources):
             page_url = source["url"]
             if main_page_url == page_url:
                 if "file_url" not in source:
@@ -39,6 +39,7 @@ class SourceFormat:
                     file_buffer.clear()
                 result.extend(page_buffer)
                 prefix = PAGE_HEADER_TEMPLATE.format(
+                    # index=str(index),
                     title=source["title"],
                     url=source["url"]
                 )

@@ -3,6 +3,7 @@ from fastapi.responses import Response, StreamingResponse
 from typing import Callable, Awaitable, AsyncGenerator
 
 from .schema import WorkerServerInfo, WorkerChatRequest, ModelPreOutput, WorkerPreInferenceResponse
+from .protocol import ServerModel
 
 router = APIRouter()
 
@@ -17,9 +18,9 @@ async def info(request: Request) -> WorkerServerInfo:
 
 @router.post("/pre_inference")
 async def pre_inference(request: Request, data: WorkerChatRequest) -> WorkerPreInferenceResponse:
-    pre_inference_call: Callable[[WorkerChatRequest], Awaitable[ModelPreOutput]] = request.app.state.pre_inference
+    model: ServerModel = request.app.state.model
     info: WorkerServerInfo = request.app.state.info
-    pre_output = await pre_inference_call(data)
+    pre_output = await model.pre_inference(data)
     pre_output["result_url"] = f'{info["domain"]}/inference/{pre_output["result_url"]}'
     return {
         "info": info,
@@ -28,14 +29,14 @@ async def pre_inference(request: Request, data: WorkerChatRequest) -> WorkerPreI
 
 @router.get("/inference/{stream_id}")
 async def inference(request: Request, stream_id: str):
-    inference:  Callable[[str], AsyncGenerator[str, None]] = request.app.state.inference
-    generator = inference(stream_id)
+    model: ServerModel = request.app.state.model
+    generator = model.inference(stream_id)
     return StreamingResponse(generator)
 
 @router.post("/inference/{stream_id}")
 async def inference_post(request: Request, stream_id: str):
     """Bypass ngrok"""
-    inference:  Callable[[str], AsyncGenerator[str, None]] = request.app.state.inference
-    generator = inference(stream_id)
+    model: ServerModel = request.app.state.model
+    generator = model.inference(stream_id)
     return StreamingResponse(generator)
 
