@@ -224,21 +224,6 @@ document.addEventListener('DOMContentLoaded', function() {
         hideSettingsPopup();
     });
     
-    // Toggle setting side bar
-    settingSidebarToggle.addEventListener('click', toggleSettingbar);
-    // Close setting side bar
-    settingSidebarClose.addEventListener('click', function() {
-        hideSettingsSidebar();
-    });
-    function toggleSettingbar() {
-        settingBar.classList.toggle('collapsed');
-        // Update bot message spacing when sidebar toggles on desktop
-        updateBotMessageSpacing();
-    }
-    function hideSettingsSidebar() {
-        settingBar.classList.remove('collapsed');
-    }
-
     // Close popup when clicking outside
     document.addEventListener('click', function(e) {
         if (!settingsPopup.contains(e.target) && !settingsToggle.contains(e.target)) {
@@ -402,18 +387,12 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateBotMessageSpacing() {
         const botMessages = document.querySelectorAll('.message.bot-message .message-content');
         const isSidebarCollapsed = sidebar.classList.contains('collapsed');
-        const isSettingbarCollapsed = settingBar.classList.contains('collapsed');
         
         botMessages.forEach(messageContent => {
             if (isSidebarCollapsed) {
                 messageContent.style.paddingLeft = '24px';
             } else {
                 messageContent.style.paddingLeft = '40px'; // Gần lề sidebar hơn nữa
-            }
-            if (isSettingbarCollapsed) {
-                messageContent.style.paddingRight = '24px';
-            } else {
-                messageContent.style.paddingRight = '40px'; // Gần lề sidebar hơn nữa
             }
         });
     }

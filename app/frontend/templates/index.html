@@ -53,18 +53,13 @@
         
         <!-- Main Chat Area -->
         <div class="chat-main">
-            <!-- Chat Header -->
+            <!-- Header -->
             <div class="chat-header">
                 <button class="sidebar-toggle" id="sidebar-toggle">
                     <i class="fas fa-bars"></i>
                 </button>
                 <h1 id="chat-title">UniAdmission Chatbot</h1>
-                <!-- New Advance Settings Button -->
-                <button type="button" class="sidebar-toggle" id="setting-sidebar-button" title="Advanced Settings">
-                    <i class="fas fa-sliders-h"></i>
-                </button>
             </div>
-
             
             <!-- Chat Messages Area -->
             <div class="chat-messages" id="chat-messages">
@@ -205,10 +200,10 @@
 
                     <!-- Rerank Settings -->
                     <div class="settings-section">
-                        <h4><i class="fas fa-sort"></i> Cài đặt rerank</h4>
+                        <h4><i class="fas fa-sort"></i> Cài đặt xếp hạng lại</h4>
                         <div class="settings-section-content">
                             <div class="control-group">
-                                <label for="page-rerank" class="control-label">Rerank Pages:</label>
+                                <label for="page-rerank" class="control-label">Xếp hạng lại trang:</label>
                                 <div class="control-input">
                                     <div class="slider-container">
                                         <div class="slider-switch">
@@ -222,7 +217,7 @@
                             </div>
                             
                             <div class="control-group">
-                                <label for="chunk-rerank" class="control-label">Rerank Chunks:</label>
+                                <label for="chunk-rerank" class="control-label">Xếp hạng lại đoạn văn:</label>
                                 <div class="control-input">
                                     <div class="slider-container">
                                         <div class="slider-switch">
@@ -452,67 +447,6 @@
                     </div>
                 </form>
             </div>
-            </div>
-            <!-- New Advance Settings Sidebar -->
-            <div class="settings-sidebar collapsed" id="settings-sidebar">
-                <div class="sidebar-header">
-                    <h3>Cài đặt nâng cao</h3>
-                    <button type="button" class="settings-close-btn" id="settings-close-btn">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-
-                <div class="settings-menu">
-                    <div class="settings-item" id="websearch-setting-item">
-                        <div class="settings-item-header">
-                            <h5>Websearch</h5>
-                        </div>
-                        <div class="settings-item-content">
-                            <div class="control-group">
-                                <label for="search-results-count">Số trang:</label>
-                                <select id="search-results-count">
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3" selected>3</option>
-                                    <option value="4">4</option>
-                                    <option value="5">5</option>
-                                    <option value="6">6</option>
-                                    <option value="7">7</option>
-                                    <option value="8">8</option>
-                                    <option value="9">9</option>
-                                    <option value="10">10</option>
-                                </select>
-                            </div>
-                            
-                            <div class="control-group">
-                                <label for="search-docs-count">Số tài liệu:</label>
-                                <input type="number" id="search-docs-count" min="0" max="30" value="5" step="1">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="settings-item" id="sampling-settings-item">
-                        <div class="settings-item-header">
-                            <h5>Sampling Parameters</h5>
-                        </div>
-                        <div class="settings-item-content">
-                            <div class="control-group">
-                                <label for="temperature-slider">Temperature: <span id="temperature-value">0.5</span></label>
-                                <input type="range" id="temperature-slider" min="0" max="1" step="0.1" value="0.5">
-                            </div>
-                            
-                            <div class="control-group">
-                                <label for="top-p-slider">Top P: <span id="top-p-value">0.9</span></label>
-                                <input type="range" id="top-p-slider" min="0" max="1" step="0.05" value="0.9">
-                            </div>
-                            
-                            <div class="control-group">
-                                <label for="max-tokens-input">Max Tokens:</label>
-                                <input type="number" id="max-tokens-input" min="128" max="8192" value="2048" step="1">
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
             </div>
         </div>
     </div>
