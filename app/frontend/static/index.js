@@ -29,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const newChatBtn = document.getElementById('new-chat-btn');
     const modelSelect = document.getElementById('model-select');
     const webSearchButton = document.getElementById('web-search-button');
-    const webSearchOptions = document.getElementById('web-search-options');
     const searchResultsCount = document.getElementById('search-results-count');
     const searchDocsCount = document.getElementById('search-docs-count');
     const priorityDomains = document.getElementById('priority-domains');
@@ -37,24 +36,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const settingsToggle = document.getElementById('settings-toggle');
     const settingsPopup = document.getElementById('settings-popup');
     const settingsCloseBtn = document.getElementById('settings-close-btn');
+    const advancedSettingsItem = document.getElementById('advanced-settings-item');
+    const advancedSettingsSidebar = document.getElementById('advanced-settings-sidebar');
+    const advancedSettingsCloseBtn = document.getElementById('advanced-settings-close-btn');
+    const advancedSettingsOverlay = document.getElementById('advanced-settings-overlay');
     const temperatureSlider = document.getElementById('temperature-slider');
     const temperatureValue = document.getElementById('temperature-value');
     const topPSlider = document.getElementById('top-p-slider');
     const topPValue = document.getElementById('top-p-value');
+    const topKSlider = document.getElementById('top-k-slider');
+    const topKValue = document.getElementById('top-k-value');
     const maxTokensInput = document.getElementById('max-tokens-input');
+    const maxHistoryInput = document.getElementById('max-history');
     
-    // Web Search Options Toggle
-    webSearchButton.addEventListener('change', function() {
-        if (this.checked) {
-            webSearchOptions.style.display = 'flex';
-            webSearchOptions.classList.add('show');
-        } else {
-            webSearchOptions.classList.remove('show');
-            setTimeout(() => {
-                webSearchOptions.style.display = 'none';
-            }, 300);
-        }
-    });
+    // Advanced search parameters
+    const maxQueryInput = document.getElementById('max-query');
+    const queryScoreThreshold = document.getElementById('query-score-threshold');
+    const queryScoreValue = document.getElementById('query-score-value');
+    const engineTypeSelect = document.getElementById('engine-type');
+    const schoolDomainCheckbox = document.getElementById('school-domain');
+    const timeMetricSelect = document.getElementById('time-metric');
+    const timeRangeInput = document.getElementById('time-range');
+    const pageRerankCheckbox = document.getElementById('page-rerank');
+    const chunkRerankCheckbox = document.getElementById('chunk-rerank');
+    const pageScoreThreshold = document.getElementById('page-score-threshold');
+    const pageScoreValue = document.getElementById('page-score-value');
+    const chunkScoreThreshold = document.getElementById('chunk-score-threshold');
+    const chunkScoreValue = document.getElementById('chunk-score-value');
+    const includePdfCheckbox = document.getElementById('include-pdf');
+    const includeImageCheckbox = document.getElementById('include-image');
+    const mergeTableCheckbox = document.getElementById('merge-table');
+    const mergeNeighborCheckbox = document.getElementById('merge-neighbor');
     
     // Handle slider switch clicks
     document.querySelectorAll('.slider-switch').forEach(switchElement => {
@@ -93,66 +105,107 @@ document.addEventListener('DOMContentLoaded', function() {
             const modelsList = document.getElementById('models-list');
             if (!modelsList) return;
             
-            // Clear existing models
-            modelsList.innerHTML = '';
-            
-            // Add models to list
-            models.forEach(model => {
-                const modelItem = document.createElement('div');
-                modelItem.className = 'model-item';
-                modelItem.dataset.model = model.id;
+            // Clear existing models but keep at least default ones
+            const hasModels = models && models.length > 0;
+            if (hasModels) {
+                modelsList.innerHTML = '';
                 
-                // Set Gemini as default if available
-                if (model.name === 'Gemini' || model.name.toLowerCase().includes('gemini')) {
-                    modelItem.classList.add('active');
-                }
-                
-                modelItem.innerHTML = `
-                    <span>${model.name}</span>
-                `;
-                
-                // Add click handler
-                modelItem.addEventListener('click', function() {
-                    // Remove active class from all models
-                    document.querySelectorAll('.model-item').forEach(item => {
-                        item.classList.remove('active');
+                // Add models to list
+                models.forEach((model, index) => {
+                    const modelItem = document.createElement('div');
+                    modelItem.className = 'model-item';
+                    modelItem.dataset.model = model.id;
+                    
+                    // Set first model as default if available
+                    if (index === 0) {
+                        modelItem.classList.add('active');
+                    }
+                    
+                    modelItem.innerHTML = `
+                        <span>${model.name}</span>
+                    `;
+                    
+                    // Add click handler
+                    modelItem.addEventListener('click', function() {
+                        // Remove active class from all models
+                        document.querySelectorAll('.model-item').forEach(item => {
+                            item.classList.remove('active');
+                        });
+                        
+                        // Add active class to clicked model
+                        this.classList.add('active');
+                        
+                        // Update hidden select for compatibility
+                        const hiddenSelect = document.getElementById('model-select');
+                        if (hiddenSelect) {
+                            hiddenSelect.value = model.id;
+                        }
                     });
                     
-                    // Add active class to clicked model
-                    this.classList.add('active');
-                    
-                    // Update hidden select for compatibility
-                    const hiddenSelect = document.getElementById('model-select');
-                    if (hiddenSelect) {
-                        hiddenSelect.value = model.id;
-                    }
+                    modelsList.appendChild(modelItem);
                 });
                 
-                modelsList.appendChild(modelItem);
-            });
+                // Update hidden select options
+                const hiddenSelect = document.getElementById('model-select');
+                if (hiddenSelect) {
+                    hiddenSelect.innerHTML = '';
+                    models.forEach((model, index) => {
+                        const option = document.createElement('option');
+                        option.value = model.id;
+                        option.textContent = model.name;
+                        if (index === 0) option.selected = true;
+                        hiddenSelect.appendChild(option);
+                    });
+                }
+            }
         } catch (error) {
             console.error('Error loading models:', error);
-            // Fallback models list
-            const modelsList = document.getElementById('models-list');
-            if (modelsList) {
-                modelsList.innerHTML = `
-                    <div class="model-item active" data-model="gemini-2.0-flash-lite-preview-02-05">
-                        <span>Gemini AI</span>
-                    </div>
-                    <div class="model-item" data-model="custom">
-                        <span>Custom LLM</span>
-                    </div>
-                `;
-                
-                // Add click handlers for fallback models
-                document.querySelectorAll('.model-item').forEach(item => {
-                    item.addEventListener('click', function() {
-                        document.querySelectorAll('.model-item').forEach(i => i.classList.remove('active'));
-                        this.classList.add('active');
-                    });
-                });
+            // Keep default models if API fails - they're already in HTML
+        }
+    }
+    
+    // Advanced settings item click handler
+    advancedSettingsItem.addEventListener('click', function(e) {
+        e.stopPropagation();
+        showAdvancedSettingsSidebar();
+    });
+    
+    // Close advanced settings sidebar
+    advancedSettingsCloseBtn.addEventListener('click', function() {
+        hideAdvancedSettingsSidebar();
+    });
+    
+    // Handle ESC key for advanced sidebar
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+            if (advancedSettingsSidebar.classList.contains('show')) {
+                hideAdvancedSettingsSidebar();
             }
         }
+    });
+    
+    // Close advanced sidebar when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!advancedSettingsSidebar.contains(e.target) && !advancedSettingsItem.contains(e.target)) {
+            hideAdvancedSettingsSidebar();
+        }
+    });
+    
+    // Close advanced sidebar when clicking overlay
+    advancedSettingsOverlay.addEventListener('click', function() {
+        hideAdvancedSettingsSidebar();
+    });
+    
+    function showAdvancedSettingsSidebar() {
+        advancedSettingsSidebar.classList.add('show');
+        advancedSettingsOverlay.classList.add('show');
+        // Close basic settings popup
+        hideSettingsPopup();
+    }
+    
+    function hideAdvancedSettingsSidebar() {
+        advancedSettingsSidebar.classList.remove('show');
+        advancedSettingsOverlay.classList.remove('show');
     }
     
     // Toggle settings popup
@@ -181,6 +234,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function showSettingsPopup() {
         settingsPopup.classList.add('show');
         settingsToggle.classList.add('active');
+        // Close advanced settings if open
+        hideAdvancedSettingsSidebar();
     }
     
     function hideSettingsPopup() {
@@ -197,6 +252,23 @@ document.addEventListener('DOMContentLoaded', function() {
         topPValue.textContent = this.value;
     });
     
+    topKSlider.addEventListener('input', function() {
+        topKValue.textContent = this.value;
+    });
+    
+    // Advanced settings sliders
+    queryScoreThreshold.addEventListener('input', function() {
+        queryScoreValue.textContent = this.value;
+    });
+    
+    pageScoreThreshold.addEventListener('input', function() {
+        pageScoreValue.textContent = this.value;
+    });
+    
+    chunkScoreThreshold.addEventListener('input', function() {
+        chunkScoreValue.textContent = this.value;
+    });
+    
     // Enable/disable send button based on input
     userInput.addEventListener('input', function() {
         sendButton.disabled = this.value.trim().length === 0;
@@ -205,25 +277,25 @@ document.addEventListener('DOMContentLoaded', function() {
         this.style.height = Math.min(this.scrollHeight, 200) + 'px';
     });
     
-    // Validate k_docs input (20-30 range) - visual feedback for invalid values
+    // Validate search docs count input (0-30 range) - visual feedback for invalid values
     searchDocsCount.addEventListener('input', function() {
         let value = parseInt(this.value);
         
         // Check if value is invalid and add/remove visual feedback
-        if (this.value !== '' && (!isNaN(value) && (value < 0 || value > 100))) {
+        if (this.value !== '' && (!isNaN(value) && (value < 0 || value > 30))) {
             this.classList.add('invalid');
         } else {
             this.classList.remove('invalid');
         }
     });
     
-    // Validate k_docs input (20-30 range) - only on blur to allow free typing
+    // Validate search docs count input (0-30 range) - only on blur to allow free typing
     searchDocsCount.addEventListener('blur', function() {
         let value = parseInt(this.value);
         if (this.value === '' || isNaN(value) || value < 0) {
             this.value = 0;
-        } else if (value > 100) {
-            this.value = 100;
+        } else if (value > 30) {
+            this.value = 30;
         }
         // Remove invalid class after correction
         this.classList.remove('invalid');
@@ -252,6 +324,54 @@ document.addEventListener('DOMContentLoaded', function() {
             this.value = 8192;
         }
         
+        // Remove invalid class after correction
+        this.classList.remove('invalid');
+    });
+    
+    // Validate max query input (1-4 range) - visual feedback for invalid values
+    maxQueryInput.addEventListener('input', function() {
+        let value = parseInt(this.value);
+        
+        // Check if value is invalid and add/remove visual feedback
+        if (this.value !== '' && (!isNaN(value) && (value < 1 || value > 4))) {
+            this.classList.add('invalid');
+        } else {
+            this.classList.remove('invalid');
+        }
+    });
+    
+    // Validate max query input (1-4 range) - only on blur to allow free typing
+    maxQueryInput.addEventListener('blur', function() {
+        let value = parseInt(this.value);
+        if (this.value === '' || isNaN(value) || value < 1) {
+            this.value = 1;
+        } else if (value > 4) {
+            this.value = 4;
+        }
+        // Remove invalid class after correction
+        this.classList.remove('invalid');
+    });
+    
+    // Validate max history input (1-20 range) - visual feedback for invalid values
+    maxHistoryInput.addEventListener('input', function() {
+        let value = parseInt(this.value);
+        
+        // Check if value is invalid and add/remove visual feedback
+        if (this.value !== '' && (!isNaN(value) && (value < 1 || value > 20))) {
+            this.classList.add('invalid');
+        } else {
+            this.classList.remove('invalid');
+        }
+    });
+    
+    // Validate max history input (1-20 range) - only on blur to allow free typing
+    maxHistoryInput.addEventListener('blur', function() {
+        let value = parseInt(this.value);
+        if (this.value === '' || isNaN(value) || value < 1) {
+            this.value = 1;
+        } else if (value > 20) {
+            this.value = 20;
+        }
         // Remove invalid class after correction
         this.classList.remove('invalid');
     });
@@ -349,7 +469,25 @@ document.addEventListener('DOMContentLoaded', function() {
         const useWebSearch = webSearchButton.checked;
         const temperature = parseFloat(temperatureSlider.value);
         const topP = parseFloat(topPSlider.value);
+        const topK = parseInt(topKSlider.value);
         const maxTokens = parseInt(maxTokensInput.value);
+        const maxHistory = parseInt(maxHistoryInput.value);
+        
+        // Advanced search parameters
+        const maxQuery = parseInt(maxQueryInput.value);
+        const queryScore = parseFloat(queryScoreThreshold.value);
+        const engineType = engineTypeSelect.value;
+        const schoolDomain = schoolDomainCheckbox.checked;
+        const timeMetric = timeMetricSelect.value;
+        const timeRange = parseInt(timeRangeInput.value);
+        const pageRerank = pageRerankCheckbox.checked;
+        const chunkRerank = chunkRerankCheckbox.checked;
+        const pageScore = parseFloat(pageScoreThreshold.value);
+        const chunkScore = parseFloat(chunkScoreThreshold.value);
+        const includePdf = includePdfCheckbox.checked;
+        const includeImage = includeImageCheckbox.checked;
+        const mergeTable = mergeTableCheckbox.checked;
+        const mergeNeighbor = mergeNeighborCheckbox.checked;
         
         console.log('Model selected:', selectedModelType, 'Use Gemini:', useGemini);
         console.log('Web Search enabled:', useWebSearch);
@@ -380,6 +518,43 @@ document.addEventListener('DOMContentLoaded', function() {
             kDocsValue = 0;
             kPagesValue = 0;
         }
+        
+        // Build comprehensive params object
+        const params = {
+            // Sampling parameters
+            temperature: temperature,
+            top_p: topP,
+            top_k: topK,
+            max_tokens: maxTokens,
+            max_history: maxHistory,
+            
+            // Basic web search
+            domain_restrict: priorityDomains.checked,
+            k_pages: kPagesValue,
+            k_docs: kDocsValue,
+            
+            // Advanced search parameters
+            use_websearch: useWebSearch,
+            max_query: maxQuery,
+            query_score_threshold: queryScore,
+            engine_type: engineType,
+            school_domain: schoolDomain,
+            page_rerank: pageRerank,
+            chunk_rerank: chunkRerank,
+            page_score_threshold: pageScore,
+            chunk_score_threshold: chunkScore,
+            include_pdf: includePdf,
+            include_image: includeImage,
+            merge_table: mergeTable,
+            merge_neighbor: mergeNeighbor
+        };
+        
+        // Add time parameters if specified
+        if (timeMetric && timeRange) {
+            params.time_metric = timeMetric;
+            params.time_range = timeRange;
+        }
+        
         fetch('/chat', {
             method: 'POST',
             headers: {
@@ -389,14 +564,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 text: message,
                 session_id: currentSessionId,
                 model_id: selectedModelType,
-                params: {
-                    temperature: temperature,
-                    top_p: topP,
-                    max_tokens: maxTokens,
-                    domain_restrict: priorityDomains.checked,
-                    k_pages: kPagesValue,
-                    k_docs: kDocsValue
-                }
+                params: params
             })
         })
 .then(response => {

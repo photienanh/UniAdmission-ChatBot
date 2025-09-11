@@ -13,6 +13,9 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 </head>
 <body>
+    <!-- Advanced Settings Overlay for Mobile -->
+    <div class="advanced-settings-overlay" id="advanced-settings-overlay"></div>
+    
     <div class="chat-container">
         <!-- Sidebar -->
         <div class="chat-sidebar" id="sidebar">
@@ -82,9 +85,280 @@
                 </div>
             </div>
             
+            <!-- Advanced Settings Sidebar -->
+            <div class="advanced-settings-sidebar" id="advanced-settings-sidebar">
+                <div class="advanced-settings-header">
+                    <h3><i class="fas fa-cog"></i> Cài đặt nâng cao</h3>
+                    <button type="button" class="advanced-settings-close-btn" id="advanced-settings-close-btn">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="advanced-settings-content">
+                    <!-- Web Search Advanced Settings -->
+                    <div class="settings-section">
+                        <h4><i class="fas fa-search"></i> Tìm kiếm nâng cao</h4>
+                        <div class="settings-section-content">
+                            <div class="control-group">
+                                <label for="priority-domains" class="control-label">Ưu tiên trang chính thức:</label>
+                                <div class="control-input">
+                                    <div class="slider-container">
+                                        <div class="slider-switch">
+                                            <input type="checkbox" id="priority-domains">
+                                            <span class="slider-track">
+                                                <span class="slider-thumb"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="search-results-count" class="control-label">Số trang:</label>
+                                <div class="control-input">
+                                    <select id="search-results-count">
+                                        <option value="1">1</option>
+                                        <option value="2">2</option>
+                                        <option value="3" selected>3</option>
+                                        <option value="4">4</option>
+                                        <option value="5">5</option>
+                                        <option value="6">6</option>
+                                        <option value="7">7</option>
+                                        <option value="8">8</option>
+                                        <option value="9">9</option>
+                                        <option value="10">10</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="search-docs-count" class="control-label">Số tài liệu:</label>
+                                <div class="control-input">
+                                    <input type="number" id="search-docs-count" min="0" max="30" value="5" step="1">
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="max-query" class="control-label">Số lượng truy vấn tối đa:</label>
+                                <div class="control-input">
+                                    <input type="number" id="max-query" min="1" max="4" value="3" step="1">
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="query-score-threshold" class="control-label">Ngưỡng điểm truy vấn:</label>
+                                <div class="control-input">
+                                    <input type="range" id="query-score-threshold" min="0" max="1" step="0.1" value="0.5">
+                                    <span class="range-value" id="query-score-value">0.5</span>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="engine-type" class="control-label">Công cụ tìm kiếm:</label>
+                                <div class="control-input">
+                                    <select id="engine-type">
+                                        <option value="google">Google</option>
+                                        <option value="brave">Brave</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="school-domain" class="control-label">Ưu tiên miền trường học:</label>
+                                <div class="control-input">
+                                    <div class="slider-container">
+                                        <div class="slider-switch">
+                                            <input type="checkbox" id="school-domain">
+                                            <span class="slider-track">
+                                                <span class="slider-thumb"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="time-metric" class="control-label">Khoảng thời gian:</label>
+                                <div class="control-input">
+                                    <select id="time-metric">
+                                        <option value="">Không giới hạn</option>
+                                        <option value="d">Ngày</option>
+                                        <option value="m">Tháng</option>
+                                        <option value="y">Năm</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="time-range" class="control-label">Số lượng thời gian:</label>
+                                <div class="control-input">
+                                    <input type="number" id="time-range" min="1" max="365" value="30" step="1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Rerank Settings -->
+                    <div class="settings-section">
+                        <h4><i class="fas fa-sort"></i> Cài đặt rerank</h4>
+                        <div class="settings-section-content">
+                            <div class="control-group">
+                                <label for="page-rerank" class="control-label">Rerank Pages:</label>
+                                <div class="control-input">
+                                    <div class="slider-container">
+                                        <div class="slider-switch">
+                                            <input type="checkbox" id="page-rerank">
+                                            <span class="slider-track">
+                                                <span class="slider-thumb"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="chunk-rerank" class="control-label">Rerank Chunks:</label>
+                                <div class="control-input">
+                                    <div class="slider-container">
+                                        <div class="slider-switch">
+                                            <input type="checkbox" id="chunk-rerank">
+                                            <span class="slider-track">
+                                                <span class="slider-thumb"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="page-score-threshold" class="control-label">Ngưỡng điểm trang:</label>
+                                <div class="control-input">
+                                    <input type="range" id="page-score-threshold" min="0" max="1" step="0.1" value="0.5">
+                                    <span class="range-value" id="page-score-value">0.5</span>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="chunk-score-threshold" class="control-label">Ngưỡng điểm đoạn văn:</label>
+                                <div class="control-input">
+                                    <input type="range" id="chunk-score-threshold" min="0" max="1" step="0.1" value="0.5">
+                                    <span class="range-value" id="chunk-score-value">0.5</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Retrieval Settings -->
+                    <div class="settings-section">
+                        <h4><i class="fas fa-file-alt"></i> Tùy chọn nội dung</h4>
+                        <div class="settings-section-content">
+                            <div class="control-group">
+                                <label for="include-pdf" class="control-label">Bao gồm file PDF:</label>
+                                <div class="control-input">
+                                    <div class="slider-container">
+                                        <div class="slider-switch">
+                                            <input type="checkbox" id="include-pdf">
+                                            <span class="slider-track">
+                                                <span class="slider-thumb"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="include-image" class="control-label">Bao gồm hình ảnh:</label>
+                                <div class="control-input">
+                                    <div class="slider-container">
+                                        <div class="slider-switch">
+                                            <input type="checkbox" id="include-image">
+                                            <span class="slider-track">
+                                                <span class="slider-thumb"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="merge-table" class="control-label">Giữ nguyên bảng:</label>
+                                <div class="control-input">
+                                    <div class="slider-container">
+                                        <div class="slider-switch">
+                                            <input type="checkbox" id="merge-table">
+                                            <span class="slider-track">
+                                                <span class="slider-thumb"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="merge-neighbor" class="control-label">Gộp đoạn liền kề:</label>
+                                <div class="control-input">
+                                    <div class="slider-container">
+                                        <div class="slider-switch">
+                                            <input type="checkbox" id="merge-neighbor">
+                                            <span class="slider-track">
+                                                <span class="slider-thumb"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Sampling Parameters -->
+                    <div class="settings-section">
+                        <h4><i class="fas fa-sliders-h"></i> Tham số sinh văn bản</h4>
+                        <div class="settings-section-content">
+                            <div class="control-group">
+                                <label for="temperature-slider" class="control-label">Temperature:</label>
+                                <div class="control-input">
+                                    <input type="range" id="temperature-slider" min="0" max="1" step="0.1" value="0.5">
+                                    <span class="range-value" id="temperature-value">0.5</span>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="top-p-slider" class="control-label">Top P:</label>
+                                <div class="control-input">
+                                    <input type="range" id="top-p-slider" min="0" max="1" step="0.05" value="0.9">
+                                    <span class="range-value" id="top-p-value">0.9</span>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="top-k-slider" class="control-label">Top K:</label>
+                                <div class="control-input">
+                                    <input type="range" id="top-k-slider" min="1" max="256" step="1" value="40">
+                                    <span class="range-value" id="top-k-value">40</span>
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="max-tokens-input" class="control-label">Số token tối đa:</label>
+                                <div class="control-input">
+                                    <input type="number" id="max-tokens-input" min="128" max="16384" value="2048" step="1">
+                                </div>
+                            </div>
+                            
+                            <div class="control-group">
+                                <label for="max-history" class="control-label">Lịch sử tối đa:</label>
+                                <div class="control-input">
+                                    <input type="number" id="max-history" min="1" max="20" value="8" step="1">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Chat Input -->
             <div class="chat-input-area">
-                <!-- Settings Popup Menu -->
+                <!-- Basic Settings Popup Menu -->
                 <div class="settings-popup" id="settings-popup">
                     <div class="settings-popup-header">
                         <h3><i class="fas fa-cog"></i> Cài đặt</h3>
@@ -93,7 +367,7 @@
                         </button>
                     </div>
                     
-                    <!-- Settings Menu Items -->
+                    <!-- Basic Settings Menu Items -->
                     <div class="settings-menu">
                         <!-- Model Settings -->
                         <div class="settings-item" id="model-settings-item">
@@ -104,7 +378,7 @@
                             </div>
                             <div class="settings-item-content">
                                 <div class="models-list" id="models-list">
-                                    <!-- Models will be loaded dynamically -->
+                                    <!-- Default models - will be replaced if API loads successfully -->
                                     <div class="model-item active" data-model="gemini-2.0-flash-lite-preview-02-05">
                                         <span>Gemini AI</span>
                                     </div>
@@ -115,15 +389,16 @@
                                 <!-- Hidden select for compatibility -->
                                 <select id="model-select" style="display: none;">
                                     <option value="gemini-2.0-flash-lite-preview-02-05" selected>Gemini AI</option>
+                                    <option value="custom">Custom LLM</option>
                                 </select>
                             </div>
                         </div>
 
-                        <!-- Web Search Settings -->
+                        <!-- Web Search Basic Settings -->
                         <div class="settings-item" id="web-search-settings-item">
                             <div class="settings-item-header">
                                 <i class="fas fa-globe"></i>
-                                <span>Web Search</span>
+                                <span>Tìm kiếm Web</span>
                                 <i class="fas fa-chevron-right arrow"></i>
                             </div>
                             <div class="settings-item-content">
@@ -140,68 +415,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                
-                                <div class="web-search-options" id="web-search-options">
-                                    <div class="control-group">
-                                        <label for="priority-domains" class="slider-label">
-                                            Ưu tiên trang chính thức:
-                                        </label>
-                                        <div class="slider-container">
-                                            <div class="slider-switch">
-                                                <input type="checkbox" id="priority-domains">
-                                                <span class="slider-track">
-                                                    <span class="slider-thumb"></span>
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="control-group">
-                                        <label for="search-results-count">Số trang:</label>
-                                        <select id="search-results-count">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3" selected>3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                            <option value="6">6</option>
-                                            <option value="7">7</option>
-                                            <option value="8">8</option>
-                                            <option value="9">9</option>
-                                            <option value="10">10</option>
-                                        </select>
-                                    </div>
-                                    
-                                    <div class="control-group">
-                                        <label for="search-docs-count">Số tài liệu:</label>
-                                        <input type="number" id="search-docs-count" min="0" max="30" value="5" step="1">
-                                    </div>
-                                </div>
                             </div>
                         </div>
 
-                        <!-- Sampling Parameters Settings -->
-                        <div class="settings-item" id="sampling-settings-item">
+                        <!-- Advanced Settings Item -->
+                        <div class="settings-item" id="advanced-settings-item">
                             <div class="settings-item-header">
                                 <i class="fas fa-sliders-h"></i>
-                                <span>Sampling Parameters</span>
+                                <span>Cài đặt nâng cao</span>
                                 <i class="fas fa-chevron-right arrow"></i>
-                            </div>
-                            <div class="settings-item-content">
-                                <div class="control-group">
-                                    <label for="temperature-slider">Temperature: <span id="temperature-value">0.5</span></label>
-                                    <input type="range" id="temperature-slider" min="0" max="1" step="0.1" value="0.5">
-                                </div>
-                                
-                                <div class="control-group">
-                                    <label for="top-p-slider">Top P: <span id="top-p-value">0.9</span></label>
-                                    <input type="range" id="top-p-slider" min="0" max="1" step="0.05" value="0.9">
-                                </div>
-                                
-                                <div class="control-group">
-                                    <label for="max-tokens-input">Max Tokens:</label>
-                                    <input type="number" id="max-tokens-input" min="128" max="8192" value="2048" step="1">
-                                </div>
                             </div>
                         </div>
                     </div>
@@ -210,7 +432,7 @@
                 <!-- Input Form -->
                 <form id="chat-form" class="chat-form">
                     <div class="input-container">
-                        <button type="button" id="settings-toggle" title="Settings">
+                        <button type="button" id="settings-toggle" title="Cài đặt">
                             <i class="fas fa-cog"></i>
                         </button>
                         <textarea 

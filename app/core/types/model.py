@@ -3,42 +3,78 @@ if sys.version_info.minor >= 12:
     from typing import TypedDict
 else:
     from typing_extensions import TypedDict
-from typing import Literal, Optional, NotRequired
+from typing import Literal, Optional, NotRequired, TypeVar
+import math
 from .rag import WebSource, RagSource, SearchEngineType
-
-AnswerState = Literal["need_clarification", "successfully", "partially", "relevant", "not_found", "other"]
-
 class ModelInfo(TypedDict):
     name: str
     id: str
 
 class GenerationParams(TypedDict):
-    engine_type: NotRequired[SearchEngineType]
-    query_rewrite: NotRequired[bool]
-    hyde: NotRequired[bool]
-    domain_restrict: NotRequired[bool]
+    # Model
+    model_id: str
+    # Search
+    use_local_db: NotRequired[bool] # * # Enable localdb
+    use_websearch: NotRequired[bool] # * # Use websearch
+    max_query: NotRequired[int] # Max websearch query
+    query_score_threshold: NotRequired[float] # Score for query
+    engine_type: NotRequired[SearchEngineType] # google/brave
+    domain_restrict: NotRequired[bool] # * # restrict domain like .edu.vn
+    school_domain: NotRequired[bool] # * # restrict to school in query domain 
+    # Use option as last week, last month, last year
+    time_metric: NotRequired[Literal["d", "m", "y"]] # * # day, month, year
+    time_range: NotRequired[int] # * # k days, k months, k years
+    # Rerank
+    page_rerank: NotRequired[bool]
+    chunk_rerank: NotRequired[bool]
+    page_score_threshold: NotRequired[float] # Score for page rerank
+    chunk_score_threshold: NotRequired[float] # Score for chunk rerank
+    # Retrieve
     k_docs: NotRequired[int]
     k_pages: NotRequired[int]
+    include_pdf: NotRequired[bool]
+    include_image: NotRequired[bool]
+    merge_table: NotRequired[bool] # Keep table
+    merge_neighbor: NotRequired[bool]
+    # Sampling
     max_tokens: NotRequired[int]
     temperature: NotRequired[float]
     top_p: NotRequired[float]
     top_k: NotRequired[int]
+    # Other
     max_history: NotRequired[int]
-
+    
 class ModelPreOutput(TypedDict):
-    model_id: str
     generation_params: GenerationParams
     web_sources: list[WebSource]
     rag_sources: list[RagSource]
     extra_data: dict
-    user_summary: str
-    user_intent: str
-    user_keywords: list[str]
     result_url: str
-
     
 class ModelOutput(ModelPreOutput):
-    answer_state: AnswerState
-    bot_summary: str
-    bot_keywords: list[str]
     text: str
+
+class AnswerState(TypedDict):
+    pass
+
+TNumeric = TypeVar("TNumeric", float, int)
+def _clamp(value: TNumeric, low: TNumeric, high: TNumeric) -> TNumeric:
+    return max(low, min(value, high))
+def server_side_generation_params_validation(params: GenerationParams):
+    # Assign params["time_range"] to time_range then check if time_range is not None
+    if (time_range := params.get("time_range")) is not None:
+        params["time_range"] = _clamp(time_range, 0, 365)
+    if (max_tokens := params.get("max_tokens")) is not None:
+        params["max_tokens"] = _clamp(max_tokens, 1, 16384)
+    if (temperature := params.get("temperature")) is not None:
+        params["temperature"] = _clamp(temperature, 0, 1)
+    if (top_p := params.get("top_p")) is not None:
+        params["top_p"] = _clamp(top_p, 0, 1)
+    if (top_k := params.get("top_k")) is not None:
+        params["top_k"] = _clamp(top_k, 1, 256)
+    if (max_history := params.get("max_history")) is not None:
+        params["max_history"] = _clamp(max_history, 0, 16)
+    if (k_pages := params.get("k_pages")) is not None:
+        params["k_pages"] = _clamp(k_pages, 0, 10)
+    if (k_docs := params.get("k_docs")) is not None:
+        params["k_docs"] = _clamp(k_docs, 0, 30)
