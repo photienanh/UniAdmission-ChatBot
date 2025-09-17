@@ -141,7 +141,7 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
 Dự án sử dụng Kaggle để deploy mô hình Qwen3-4B với vLLM:
 
 1. **Upload notebook**: `kaggle/kaggle_deploy.ipynb`
-2. **Upload LoRA adapter lên Kaggle Dataset**
+2. **Upload LoRA adapter lên Kaggle Dataset hoặc Add Input dataset [LoRA Adapter dataset](https://www.kaggle.com/datasets/photienanh/loraweight)**
 3. **Cấu hình secrets** trong Kaggle:
    ```
    NGROK_KEY: Your ngrok auth token

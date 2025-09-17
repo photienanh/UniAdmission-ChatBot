@@ -1,6 +1,7 @@
 """Configuration constants for Kaggle deployment"""
 
 from .schema import ModelInfo, ModelStatus, KaggleServerInfo
+import os
 
 # Templates and constants
 DOC_TEMPLATE = "[**{title}**]({url}):\n\n{text}\n" + "\n" + 100*"-" + "\n"
@@ -34,7 +35,7 @@ LORA_MAPPER = {
     1: {
         "lora_int_id": 1, # Same as key
         "lora_name": "Qwen Adapter v1",
-        "lora_path": "/kaggle/input/qwen-lora-adapter/qwen_lora_adapter"
+        "lora_path": os.getenv("LORA_ADAPTER_PATH", "/kaggle/input/loraweight/qwen_lora_adapter")
     }
 }
 
