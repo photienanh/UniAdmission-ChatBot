@@ -112,14 +112,6 @@ Tạo file `server.env` trong thư mục `app/`:
 ```env
 NGROK_TOKEN=your_ngrok_token
 JWT_SECRET_KEY=your_jwt_secret_key
-# Server settings
-HOST=0.0.0.0
-PORT=8000
-JWT_SECRET_KEY=your_secret_key_here
-DATABASE_URL=your_database_url
-OPENAI_API_KEY=your_openai_api_key
-GOOGLE_API_KEY=your_google_api_key
-BRAVE_API_KEY=your_brave_api_key
 ```
 Tạo file `worker.env` trong thư mục `app/`:
 ```
