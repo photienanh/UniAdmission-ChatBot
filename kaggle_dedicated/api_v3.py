@@ -101,13 +101,13 @@ search_config = WebsearchConfig(
 )
 rag_config = RagConfig(
     embedding_name="intfloat/multilingual-e5-small",
-    device="cuda"
+    device="cpu"
 )
 splitter_config = SplitterConfig(
     tokenizer_name=MODEL_ID,
     chunk_size=512,
     chunk_overlap=0,
-    # device="cuda"
+    device="cpu"
 )
 table_merge_config = MergeTableConfig(
     k_max_previous=5,
@@ -640,9 +640,10 @@ async def main():
         allow_methods=["*"],
         allow_headers=["*"]
     )
-    import nest_asyncio
     import uvicorn
-    nest_asyncio.apply()
-    uvicorn.run(app, port=NGROK_PORT)
+
+    uvicorn_config = uvicorn.Config(app, port=NGROK_PORT)
+    uvicorn_server = uvicorn.Server(uvicorn_config)
+    await uvicorn_server.serve()
     
 asyncio.run(main())

@@ -57,6 +57,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const queryScoreValue = document.getElementById('query-score-value');
     const engineTypeSelect = document.getElementById('engine-type');
     const schoolDomainCheckbox = document.getElementById('school-domain');
+    const schoolDomainExCheckbox = document.getElementById('school-domain-ex');
     const timeMetricSelect = document.getElementById('time-metric');
     const timeRangeInput = document.getElementById('time-range');
     const pageRerankCheckbox = document.getElementById('page-rerank');
@@ -520,7 +521,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         if (retrieveData) {
             if (simpleRetrieveModeValue === "option") {
-
+                schoolDomain = schoolDomainExCheckbox.checked;
             }
             else if (simpleRetrieveModeValue === "basic") {
                 usewebsearch = true;
@@ -529,7 +530,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 kPagesValue = 1;
                 kDocsValue = 3;
                 includePdf = false;
-                mergeTable = false;
+                mergeTable = true;
                 mergeNeighbor = false;
                 llmrerank = false;
             }
@@ -542,7 +543,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 includePdf = false;
                 mergeTable = true;
                 mergeNeighbor = false;
-                llmrerank = false;
+                llmrerank = true;
             }
             else if (simpleRetrieveModeValue == "advanced") {
                 usewebsearch = true;
@@ -554,6 +555,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 mergeTable = true;
                 mergeNeighbor = true;
                 llmrerank = true;
+            }
+            else {
             }
         }
         

@@ -1001,13 +1001,13 @@ body {
 /* Models popup - nrang bằng với Models item, compact */
 #model-settings-item .settings-item-content {
     top: 0;
-    width: 250px;
-    min-height: 100px;
+    width: 400px;
+    min-height: 80px;
 }
 
 #web-search-settings-item .settings-item-content {
     top: -10px;
-    width: 250px;
+    width: 400px;
     min-height: 50px;
     display: flex;
     flex-direction: column;
