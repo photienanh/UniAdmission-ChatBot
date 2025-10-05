@@ -16,9 +16,9 @@ Một chatbot AI hỗ trợ tư vấn tuyển sinh đại học thông minh.
 - [Kiến trúc hệ thống](#kiến-trúc-hệ-thống)
 - [Cài đặt](#cài-đặt)
 - [Sử dụng](#sử-dụng)
+- [Triển khai API model](#triển-khai-api)
 - [Triển khai Kaggle](#triển-khai-kaggle)
 - [API Documentation](#api-documentation)
-- [Cấu trúc thư mục](#cấu-trúc-thư-mục)
 - [Cấu hình nâng cao](#-cấu-hình-nâng-cao)
 
 ## 🎯 Tổng quan
@@ -61,14 +61,14 @@ Hệ thống sử dụng mô hình **Qwen3-4B được fine-tune** riêng cho nh
 - **Qwen3-4B Fine-tuned**: Được training trên 1000+ Q&A tuyển sinh đại học tại Việt Nam
 - **Smart Query Router**: Phân loại câu hỏi và chọn data source phù hợp
   ```python
-  # Vector DB: "Điểm chuẩn CNTT UET 2024?"
+  # Local DB: "Điểm chuẩn CNTT UET 2024?"
   # Web Search: "Xu hướng tuyển sinh 2025?"
   ```
 - **Vector Database**: FAISS với multilingual-e5-small embeddings
 - **Kaggle Deployment**: vLLM inference server với ngrok tunneling
 
 ### Data Architecture
-- **Vector DB Structure**:
+- **Local DB Structure**:
   ```
   📁 vectordb/
   ├── 🏫 200+ universities × 4 sections each
@@ -83,7 +83,7 @@ Hệ thống sử dụng mô hình **Qwen3-4B được fine-tune** riêng cho nh
 ## 🚀 Cài đặt
 
 ### Yêu cầu hệ thống
-- Python 3.9+ (ưu tiên Python 3.12+)
+- Python 3.9+ (ưu tiên Python 3.12.8)
 - pip hoặc conda
 - GPU (khuyến nghị cho việc chạy mô hình AI)
 
@@ -108,13 +108,31 @@ pip install -r requirements.txt
 ```
 
 ### Bước 4: Cấu hình môi trường
-Tạo file `.env` trong thư mục `app/config/`:
+Tạo file `server.env` trong thư mục `app/`:
 ```env
+NGROK_TOKEN=your_ngrok_token
+JWT_SECRET_KEY=your_jwt_secret_key
+# Server settings
+HOST=0.0.0.0
+PORT=8000
 JWT_SECRET_KEY=your_secret_key_here
 DATABASE_URL=your_database_url
 OPENAI_API_KEY=your_openai_api_key
 GOOGLE_API_KEY=your_google_api_key
 BRAVE_API_KEY=your_brave_api_key
+```
+Tạo file `worker.env` trong thư mục `app/`:
+```
+HUGGING_FACE_TOKEN=your_hugging_face_token
+
+GEMINI_API_KEY=your_gemini_api_key
+BRAVE_SEARCH_API_KEY=your_brave_api_key
+OPENAI_API_KEY=your_openai_api_key
+GOOGLE_SEARCH_API_KEY=your_google_api_key
+GOOGLE_SEARCH_CX=your_google_search_cx
+
+NGROK_TOKEN=your_ngrok_token
+NGROK_TOKEN_1=your_ngrok_token_1
 ```
 
 ### Bước 5: Chạy ứng dụng
@@ -130,26 +148,28 @@ uvicorn main:app --host 0.0.0.0 --port 8000 --workers 4
 
 Ứng dụng sẽ chạy tại: `http://localhost:8000`
 
+### Bước 6: Mở public server
+Chạy file ngrok.py
+## 🚀 Triển khai API model trên local
+```bash
+cd kaggle_dedicated
+```
+Chạy file `api_v3.py` (hoặc `api_v3.ipynb`)
+
 ## 🚀 Triển khai Kaggle
 
 ### Setup Kaggle Notebook
 Dự án sử dụng Kaggle để deploy mô hình Qwen3-4B với vLLM:
 
-1. **Upload notebook**: `kaggle/kaggle_deploy.ipynb`
-2. **Upload LoRA adapter lên Kaggle Dataset**
-3. **Cấu hình secrets** trong Kaggle:
-   ```
-   NGROK_KEY: Your ngrok auth token
-   GPT_API_KEY: OpenAI API key  
-   BRAVE_API_KEY: Brave search API key
-   GOOGLE_API_KEY: Google search API key
-   ```
-
-4. **Chạy notebook** - sẽ tự động:
+1. **Upload notebook**: `kaggle_dedicatd/vllm_single_v3.ipynb`
+2. **Cấu hình kết nối**:
+   Đổi giá trị của `DOMAIN` trong block code đầu tiên thành url in ra khi chạy file `ngrok.py` (hoặc `https://uniadmission.me)`)
+3. **Chạy notebook** - sẽ tự động:
+   - Download code, dữ liệu, LoRA adapter từ server
    - Load Qwen3-4B + LoRA adapter
    - Khởi động vLLM inference server
    - Tạo ngrok tunnel cho public access
-   - Connect với main application
+   - Connect với main server
 
 ### Kaggle Architecture
 ```python
@@ -166,7 +186,7 @@ Qwen3-4B (Base Model)
 - **Base Model**: Qwen3-4B (4B parameters)
 - **Fine-tuning**: LoRA on 1000+ Vietnamese admission Q&As
 - **Inference Speed**: ~50 tokens/second trên Kaggle GPU
-- **Context Length**: 8K tokens
+- **Context Length**: 32K tokens
 - **Languages**: Vietnamese + English
 
 ## 📖 Sử dụng
@@ -203,68 +223,11 @@ Hệ thống tự động phân tích câu hỏi và chọn data source:
 - `GET /session/{session_id}/messages`: Lấy lịch sử tin nhắn
 - `DELETE /session/{session_id}`: Xóa session
 
-### Ví dụ sử dụng API
-```python
-import requests
-
-# Gửi tin nhắn với vector DB search
-response = requests.post("http://localhost:8000/chat", json={
-    "text": "Điểm chuẩn ngành CNTT UET 2024?",
-    "model_id": "Qwen/Qwen3-4B",
-    "session_id": None,
-    "params": {
-        "k_pages": 3,  # Enable search
-        "k_docs": 5,
-        "max_tokens": 512,
-        "temperature": 0.1
-    }
-})
-
-print(response.json())
-```
-
 ## 📚 API Documentation
 
 Sau khi chạy ứng dụng, bạn có thể truy cập:
 - **Swagger UI**: `http://localhost:8000/docs`
 - **ReDoc**: `http://localhost:8000/redoc`
-
-## 📁 Cấu trúc thư mục
-
-```
-UniAdmission-ChatBot/
-├── app/
-│   ├── main.py                 # FastAPI application entry point
-│   ├── backend/
-│   │   ├── app_.py            # FastAPI app configuration & lifespan
-│   │   ├── llm/               # LLM management và vector cache
-│   │   │   ├── vector_cache.py    # Vector DB cache với auto-refresh
-│   │   │   └── history_cache.py   # Chat history caching
-│   │   ├── route/             # API routes
-│   │   │   ├── chat.py           # Chat endpoints với smart routing
-│   │   │   ├── auth.py           # Authentication
-│   │   │   └── template.py       # Web template serving
-│   │   └── schema/            # Pydantic models
-│   ├── frontend/
-│   │   ├── static/            # CSS, JS, images
-│   │   └── templates/         # Jinja2 templates
-│   ├── config/                # Environment configuration
-│   ├── core/                  # Core utilities  
-│   └── database/              # Database models & operations
-├── finetune/
-│   ├── make_data.py           # Script tạo training data từ OpenAI
-│   ├── finetune_qwen3_4b.ipynb   # Jupyter notebook fine-tuning
-│   ├── data.jsonl            # Training conversations
-│   └── qwen_lora_adapter.zip  # Trained LoRA weights
-├── kaggle/                    # 🚀 Kaggle deployment
-│   └── kaggle_deploy.ipynb   # Main Kaggle inference notebook
-├── vector_database/
-│   ├── create_vector_db.py    # Script tạo FAISS vector DB
-│   ├── university_mapping.json   # University code mappings
-│   ├── crawl/                 # Web crawling cho university data
-│   └── vectordb/              # FAISS index files
-└── README.md
-```
 
 ## 🔧 Cấu hình nâng cao
 
@@ -293,15 +256,5 @@ cd ..
 python create_vector_db.py
 # Tạo 800+ documents (200 trường × 4 sections)
 ```
-
-### Kaggle Deployment Update
-1. **Upload LoRA weights**: Tải `qwen_lora_adapter.zip` lên Kaggle dataset
-2. **Update notebook**: Modify `kaggle_deploy.ipynb` với model mới
-3. **Restart inference**: Kaggle sẽ auto-reload với tunnel mới
-
-### Performance Tuning
-- **Vector Cache**: Auto-refresh 15 phút cho real-time updates
-- **vLLM**: Optimized inference với quantization
-- **Smart Routing**: Giảm 60% response time bằng cách chọn đúng data source
 
 **⭐ Nếu project này hữu ích cho bạn, hãy give star để ủng hộ nhé!**
