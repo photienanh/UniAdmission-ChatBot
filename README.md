@@ -97,7 +97,7 @@ cd UniAdmission-ChatBot
 ```bash
 python -m venv venv
 # Windows
-venv\Scripts\activate
+venv\Scripts\activate.bat
 # Linux/Mac
 source venv/bin/activate
 ```
