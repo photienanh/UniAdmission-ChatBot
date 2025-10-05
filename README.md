@@ -95,10 +95,11 @@ cd UniAdmission-ChatBot
 
 ### Bước 2: Tạo môi trường ảo
 ```bash
-python -m venv venv
 # Windows
+python -m venv venv
 venv\Scripts\activate.bat
 # Linux/Mac
+python3 -m venv venv
 source venv/bin/activate
 ```
 
