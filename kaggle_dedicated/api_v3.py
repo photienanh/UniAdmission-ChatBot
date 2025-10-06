@@ -1,5 +1,5 @@
 DOMAIN = "http://127.0.0.1:8000"
-DEPLOY_URL = "https://uniadmission.me"
+DEPLOY_URL = None#"https://uniadmission.me"
 
 
 IS_LOCAL = DOMAIN == "http://127.0.0.1:8000"
