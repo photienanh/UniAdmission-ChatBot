@@ -998,10 +998,10 @@ body {
     pointer-events: auto;
 }
 
-/* Models popup - nrang bằng với Models item, compact */
+/* Models popup - rút gọn chiều ngang */
 #model-settings-item .settings-item-content {
     top: 0;
-    width: 400px;
+    width: 280px;
     min-height: 80px;
 }
 
@@ -1033,13 +1033,38 @@ body {
     flex-direction: row;
 }
 
-#web-search-settings-item .slider-label {
+#web-search-settings-item .slider-label,
+#web-search-settings-item .control-label {
     text-align: left;
     margin: 0;
+    flex: 1;
 }
 
 #web-search-settings-item .slider-container {
     display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-shrink: 0;
+    width: 50px; /* Cố định chiều rộng để đảm bảo alignment */
+}
+
+#web-search-settings-item .control-input {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    flex-shrink: 0;
+    min-width: 140px; /* Đảm bảo tất cả control-input có cùng chiều rộng */
+}
+
+/* Đảm bảo slider-container trong control-input cũng có cùng alignment */
+#web-search-settings-item .control-input .slider-container {
+    width: 50px;
+    justify-content: center;
+}
+
+/* Đảm bảo tất cả slider switch trong Web Search popup có cùng alignment */
+#web-search-settings-item .slider-switch {
+    margin: 0;
 }
 
 #web-search-settings-item .web-search-options {
@@ -1061,6 +1086,8 @@ body {
     text-align: center;
     text-align-last: center;
     font-weight: 600;
+    min-width: 140px; /* Thống nhất chiều rộng cho tất cả select boxes */
+    max-width: 140px; /* Đảm bảo không vượt quá */
 }
 
 /* Bold text in select options */
