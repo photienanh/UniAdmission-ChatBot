@@ -56,7 +56,8 @@ def construct_app(
         init_tasks: list[Awaitable] = [],
         shutdown_tasks: list[Awaitable] = [],
         update_poll: float = 10,
-        is_local: bool = False
+        is_local: bool = False,
+        deploy_url: str | None = None
     ):
     @asynccontextmanager
     async def lifespan(app: FastAPI):
@@ -79,6 +80,8 @@ def construct_app(
     app.include_router(router, tags=["Server"])
     app.state.info = info
     app.state.model = server_model
+    app.state.is_local = is_local
+    app.state.deploy_url = deploy_url
     async def store_chat_function(data: WorkerStoreChatData):
         return await store_chat(server_domain, data)
     app.state.store_chat = store_chat_function

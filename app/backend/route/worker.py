@@ -1,5 +1,7 @@
-from fastapi import APIRouter, Response
+from fastapi import APIRouter, Response, Request
+from fastapi.responses import StreamingResponse
 import traceback
+import aiohttp
 
 from core.types import ModelInfo, WorkerServerInfo, WorkerStoreChatData
 from backend.llm import ModelManager, WorkerManager
@@ -32,3 +34,27 @@ async def kaggle_store_chat(data: WorkerStoreChatData):
         model_output=data["model_output"]
     )
     return Response(status_code=200, content="ok")
+
+@router.get("/inference/{stream_id}")
+async def forward_local_inference(request: Request, stream_id: str):
+    """Forward to local API model
+    """
+    url = f"http://127.0.0.1:8002/inference/{stream_id}"
+    async def stream():
+        async with aiohttp.ClientSession() as session:
+            async with session.get(url) as response:
+                async for chunk in response.content.iter_any():
+                    yield chunk
+    return StreamingResponse(stream(), media_type="text/event-stream")
+
+@router.post("/inference/{stream_id}")
+async def forward_local_inference_post(request: Request, stream_id: str):
+    """Forward to local API model
+    """
+    url = f"http://127.0.0.1:8002/inference/{stream_id}"
+    async def stream():
+        async with aiohttp.ClientSession() as session:
+            async with session.post(url) as response:
+                async for chunk in response.content.iter_any():
+                    yield chunk
+    return StreamingResponse(stream(), media_type="text/event-stream")

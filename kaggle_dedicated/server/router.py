@@ -20,8 +20,13 @@ async def info(request: Request) -> WorkerServerInfo:
 async def pre_inference(request: Request, data: WorkerChatRequest) -> WorkerPreInferenceResponse:
     model: ServerModel = request.app.state.model
     info: WorkerServerInfo = request.app.state.info
+    is_local: bool = request.app.state.is_local
+    deploy_url: str | None = request.app.state.deploy_url
     pre_output = await model.pre_inference(data)
-    pre_output["result_url"] = f'{info["domain"]}/inference/{pre_output["result_url"]}'
+    domain = info["domain"]
+    if is_local and deploy_url != None:
+        domain = deploy_url
+    pre_output["result_url"] = f'{domain}/inference/{pre_output["result_url"]}'
     return {
         "info": info,
         "pre_output": pre_output

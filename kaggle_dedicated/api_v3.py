@@ -1,5 +1,5 @@
 DOMAIN = "http://127.0.0.1:8000"
-
+DEPLOY_URL = None
 # !pip install vllm==0.10.0
 # !pip install triton==3.2.0
 # !pip install flashrank langchain langchain-community langchain_google_genai openai faiss-cpu langchain_huggingface crawl4ai unidecode pymupdf4llm google-genai rapidfuzz
@@ -625,7 +625,8 @@ async def main():
         server_model=server_model,
         init_tasks=[],
         shutdown_tasks=[],
-        is_local=IS_LOCAL
+        is_local=IS_LOCAL,
+        deploy_url=DEPLOY_URL
     )
     # CORS policy
     from fastapi.middleware.cors import CORSMiddleware
