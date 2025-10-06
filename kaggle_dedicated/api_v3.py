@@ -1,10 +1,6 @@
 DOMAIN = "http://127.0.0.1:8000"
-DEPLOY_URL = None
-# !pip install vllm==0.10.0
-# !pip install triton==3.2.0
-# !pip install flashrank langchain langchain-community langchain_google_genai openai faiss-cpu langchain_huggingface crawl4ai unidecode pymupdf4llm google-genai rapidfuzz
-# !pip uninstall -y openai
-# !pip install openai==1.90.0
+DEPLOY_URL = "https://uniadmission.me"
+
 
 IS_LOCAL = DOMAIN == "http://127.0.0.1:8000"
 BASE_PATH = "" if IS_LOCAL else "/kaggle/working"
@@ -309,7 +305,7 @@ class APIModelCore:
                         parts=[types.Part.from_text(text=prompt)]
                     )
                 ],
-                config=gemini_config,
+                config=gemini_config
             )
             async for chunk in stream:
                 if chunk.candidates:
