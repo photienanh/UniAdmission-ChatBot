@@ -1,0 +1,11 @@
+venv/
+__pycache__/
+*.pkl
+*.ipynb
+instance/
+server.env
+worker.env
+app/server.env
+app/worker.env
+kaggle_dedicated/files/worker.env
+

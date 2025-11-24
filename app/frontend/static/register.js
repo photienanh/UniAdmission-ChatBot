@@ -1,168 +1,149 @@
-// Function to toggle password visibility
-function togglePassword(event, inputId, toggleIcon) {
-    // Prevent the input from getting focus when clicking the icon
-    event.preventDefault();
-    event.stopPropagation();
-    
-    const passwordInput = document.getElementById(inputId);
-    
-    if (passwordInput.type === 'password') {
-        passwordInput.type = 'text';
-        toggleIcon.classList.remove('fa-eye');
-        toggleIcon.classList.add('fa-eye-slash');
-    } else {
-        passwordInput.type = 'password';
-        toggleIcon.classList.remove('fa-eye-slash');
-        toggleIcon.classList.add('fa-eye');
-    }
-}
+import React, { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import './Auth.css';
 
-// Setup event listeners for password toggles
-document.addEventListener('DOMContentLoaded', function() {
-    // Prevent unwanted focus behavior
-    document.addEventListener('mousedown', function(e) {
-        // Only allow focus on inputs, textareas, and buttons
-        if (!e.target.matches('input, textarea, button, a, select')) {
-            e.preventDefault();
-        }
+function Register() {
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: '',
+    full_name: '',
+    role: 'student',
+  });
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
+  const { register } = useAuth();
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
     });
+  };
 
-    // Password toggle
-    const passwordToggle = document.getElementById('password-toggle');
-    const passwordInput = document.getElementById('password');
-    
-    passwordToggle.addEventListener('mousedown', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            passwordToggle.classList.remove('fa-eye');
-            passwordToggle.classList.add('fa-eye-slash');
-        } else {
-            passwordInput.type = 'password';
-            passwordToggle.classList.remove('fa-eye-slash');
-            passwordToggle.classList.add('fa-eye');
-        }
-    });
-    
-    passwordToggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    });
-
-    // Confirm password toggle
-    const confirmPasswordToggle = document.getElementById('confirm-password-toggle');
-    const confirmPasswordInput = document.getElementById('confirm_password');
-    
-    confirmPasswordToggle.addEventListener('mousedown', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        if (confirmPasswordInput.type === 'password') {
-            confirmPasswordInput.type = 'text';
-            confirmPasswordToggle.classList.remove('fa-eye');
-            confirmPasswordToggle.classList.add('fa-eye-slash');
-        } else {
-            confirmPasswordInput.type = 'password';
-            confirmPasswordToggle.classList.remove('fa-eye-slash');
-            confirmPasswordToggle.classList.add('fa-eye');
-        }
-    });
-    
-    confirmPasswordToggle.addEventListener('click', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-    });
-});
-
-// Auto focus on full name field
-document.getElementById('full_name').focus();
-
-// Password validation function
-function validatePasswords() {
-    const password = document.getElementById('password').value;
-    const confirmPassword = document.getElementById('confirm_password').value;
-    const errorDiv = document.getElementById('error-message');
-    const confirmPasswordInput = document.getElementById('confirm_password');
-    
-    if (password !== confirmPassword && confirmPassword.length > 0) {
-        errorDiv.textContent = 'Mật khẩu xác nhận không khớp';
-        errorDiv.style.display = 'block';
-        confirmPasswordInput.classList.add('error');
-        return false;
-    } else {
-        errorDiv.style.display = 'none';
-        confirmPasswordInput.classList.remove('error');
-        return true;
-    }
-}
-
-// Real-time validation on confirm password input
-document.getElementById('confirm_password').addEventListener('input', function() {
-    validatePasswords();
-});
-
-// Also validate when password changes
-document.getElementById('password').addEventListener('input', function() {
-    const confirmPassword = document.getElementById('confirm_password');
-    if (confirmPassword.value.length > 0) {
-        validatePasswords();
-    }
-});
-
-// Form submission validation
-document.getElementById('register-form').addEventListener('submit', function(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    const fullName = document.getElementById('full_name').value;
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const errorDiv = document.getElementById('error-message');
-    // Clear previous errors
-    document.getElementById('error-message').style.display = 'none';
+    setError('');
 
-
-    // Validate passwords
-    if (!validatePasswords()) {
-        return false;
+    if (formData.password !== formData.confirmPassword) {
+      setError('Mật khẩu xác nhận không khớp');
+      return;
     }
-    fetch('/register', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            full_name: fullName,
-            username: username,
-            email: email,
-            password: password
-        }),
-        redirect: 'follow'
-    })
-    .then(response => {
-        if (response.status == 422) {
-            return {
-                "success": false,
-                "detail": "Vui lòng nhập dữ liệu hợp lệ"
-            }
-        }
-        else {
-            return response.json();
-        }
-    })
-    .then(data => {
-        errorDiv.textContent = data.detail;
-        errorDiv.style.display = 'block';
-        if (data.success) {
-            setTimeout(() => {
-                window.location.href = data.next;
-            }, 1000);
-        }
-    })
-    .catch(error => {
-        console.log(error);
-        errorDiv.textContent = 'Đã xảy ra lỗi. Vui lòng thử lại.';
-        errorDiv.style.display = 'block';
-    });
-});
+
+    setLoading(true);
+
+    try {
+      const { confirmPassword, ...userData } = formData;
+      const response = await register(userData);
+      
+      if (response.user.role === 'teacher') {
+        navigate('/teacher');
+      } else {
+        navigate('/chat');
+      }
+    } catch (err) {
+      setError(err.response?.data?.detail || 'Đăng ký thất bại');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="auth-container">
+      <div className="auth-box">
+        <div className="auth-header">
+          <h1>🎓 Chatbot Tâm Lý</h1>
+          <p>Hỗ trợ tâm lý học sinh</p>
+        </div>
+        
+        <form onSubmit={handleSubmit} className="auth-form">
+          <h2>Đăng Ký</h2>
+          
+          {error && <div className="error-message">{error}</div>}
+          
+          <div className="form-group">
+            <label>Họ và tên</label>
+            <input
+              type="text"
+              name="full_name"
+              value={formData.full_name}
+              onChange={handleChange}
+              placeholder="Nhập họ và tên"
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Tên đăng nhập</label>
+            <input
+              type="text"
+              name="username"
+              value={formData.username}
+              onChange={handleChange}
+              placeholder="Nhập tên đăng nhập"
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Nhập email"
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Vai trò</label>
+            <select name="role" value={formData.role} onChange={handleChange}>
+              <option value="student">Học sinh</option>
+              <option value="teacher">Giáo viên</option>
+            </select>
+          </div>
+          
+          <div className="form-group">
+            <label>Mật khẩu</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="Nhập mật khẩu"
+              required
+            />
+          </div>
+          
+          <div className="form-group">
+            <label>Xác nhận mật khẩu</label>
+            <input
+              type="password"
+              name="confirmPassword"
+              value={formData.confirmPassword}
+              onChange={handleChange}
+              placeholder="Nhập lại mật khẩu"
+              required
+            />
+          </div>
+          
+          <button type="submit" disabled={loading} className="auth-button">
+            {loading ? 'Đang đăng ký...' : 'Đăng Ký'}
+          </button>
+          
+          <p className="auth-link">
+            Đã có tài khoản? <Link to="/login">Đăng nhập</Link>
+          </p>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+export default Register;
+

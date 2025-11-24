@@ -1,0 +1,361 @@
+================================================================================
+                    BÁO CÁO DỰ ÁN CHATBOT TUYỂN SINH ĐẠI HỌC
+================================================================================
+
+1. TỔNG QUAN DỰ ÁN
+-------------------
+Dự án Chatbot Tuyển sinh Đại học được phát triển nhằm hỗ trợ thí sinh và phụ 
+huynh trong việc tìm kiếm thông tin về tuyển sinh, điểm chuẩn, chương trình 
+đào tạo của các trường đại học tại Việt Nam. Hệ thống sử dụng công nghệ RAG 
+(Retrieval-Augmented Generation) kết hợp với mô hình ngôn ngữ lớn (LLM) để 
+cung cấp câu trả lời chính xác và kịp thời.
+
+Dự án được triển khai theo 2 giai đoạn chính:
+- Phase 1: Đánh giá khả năng trả lời của mô hình với dữ liệu có sẵn
+- Phase 2: Tích hợp web search và xử lý dữ liệu thời gian thực
+
+================================================================================
+2. PHASE 1: ĐÁNH GIÁ KHẢ NĂNG TRẢ LỜI CỦA MÔ HÌNH
+================================================================================
+
+2.1. Mục tiêu Phase 1
+---------------------
+Giai đoạn đầu tiên của dự án tập trung vào việc đánh giá khả năng xử lý và 
+trả lời câu hỏi của mô hình ngôn ngữ khi được cung cấp dữ liệu văn bản có 
+sẵn. Mục tiêu chính là kiểm tra xem mô hình có thể:
+- Hiểu và phân tích đúng các câu hỏi liên quan đến tuyển sinh đại học
+- Trích xuất thông tin chính xác từ văn bản được cung cấp
+- Tổng hợp và trình bày thông tin một cách rõ ràng, dễ hiểu
+- Xử lý các câu hỏi phức tạp yêu cầu so sánh, phân tích nhiều thông tin
+
+2.2. Phương pháp đánh giá
+--------------------------
+Để đánh giá khả năng của mô hình, nhóm đã xây dựng một bộ dữ liệu kiểm thử 
+bao gồm:
+- Các câu hỏi về điểm chuẩn các ngành học
+- Câu hỏi về chương trình đào tạo và chuyên ngành
+- Câu hỏi so sánh giữa các trường đại học
+- Câu hỏi về quy trình tuyển sinh và thủ tục đăng ký
+- Câu hỏi về học phí, học bổng và chế độ chính sách
+
+Mỗi câu hỏi được kèm theo một đoạn văn bản context chứa thông tin liên quan. 
+Mô hình được yêu cầu đọc và phân tích context này để đưa ra câu trả lời chính 
+xác.
+
+2.3. Quá trình kiểm thử
+------------------------
+Quá trình kiểm thử được thực hiện theo các bước:
+1. Chuẩn bị dữ liệu: Thu thập và làm sạch các văn bản về tuyển sinh từ 
+   nhiều nguồn khác nhau
+2. Tạo bộ câu hỏi: Xây dựng các câu hỏi đa dạng, phản ánh nhu cầu thực tế 
+   của người dùng
+3. Chạy thử nghiệm: Đưa từng cặp (câu hỏi, context) vào mô hình và thu thập 
+   kết quả
+4. Đánh giá kết quả: So sánh câu trả lời của mô hình với đáp án chuẩn, đánh 
+   giá độ chính xác về mặt thông tin và chất lượng trình bày
+
+2.4. Kết quả Phase 1
+---------------------
+Sau quá trình kiểm thử kỹ lưỡng, kết quả cho thấy mô hình hoạt động tốt trong 
+việc xử lý các câu hỏi về tuyển sinh đại học:
+
+✓ Độ chính xác cao: Mô hình có khả năng trích xuất và trình bày thông tin 
+  chính xác từ context được cung cấp. Các câu trả lời về điểm chuẩn, ngành 
+  học, và thông tin tuyển sinh đều đúng với dữ liệu nguồn.
+
+✓ Khả năng tổng hợp tốt: Mô hình không chỉ trả lời trực tiếp câu hỏi mà còn 
+  có khả năng tổng hợp thông tin từ nhiều phần khác nhau của context để đưa 
+  ra câu trả lời đầy đủ và toàn diện.
+
+✓ Xử lý câu hỏi phức tạp: Mô hình có thể xử lý các câu hỏi yêu cầu so sánh, 
+  phân tích nhiều thông tin cùng lúc, ví dụ như so sánh điểm chuẩn giữa các 
+  ngành hoặc các trường khác nhau.
+
+✓ Trình bày rõ ràng: Câu trả lời được trình bày một cách có cấu trúc, dễ 
+  đọc và dễ hiểu, phù hợp với nhu cầu của người dùng cuối.
+
+Kết luận: Phase 1 đã chứng minh rằng mô hình ngôn ngữ có khả năng xử lý tốt 
+các câu hỏi về tuyển sinh đại học khi được cung cấp context phù hợp. Điều 
+này tạo tiền đề vững chắc cho việc phát triển hệ thống RAG ở giai đoạn tiếp 
+theo, nơi mô hình sẽ cần tự động tìm kiếm và trích xuất thông tin từ nhiều 
+nguồn khác nhau.
+
+================================================================================
+3. PHASE 2: TÍCH HỢP WEB SEARCH VÀ XỬ LÝ DỮ LIỆU THỜI GIAN THỰC
+================================================================================
+
+3.1. Thách thức ban đầu
+------------------------
+Sau khi hoàn thành Phase 1, nhóm nhận ra rằng để hệ thống thực sự hữu ích, 
+cần phải có khả năng tìm kiếm và cập nhật thông tin từ internet một cách tự 
+động. Tuy nhiên, việc này gặp phải nhiều thách thức lớn:
+
+Thách thức chính là các trang web hiện nay đã triển khai các hệ thống bảo 
+mật và chống bot rất mạnh mẽ. Cụ thể:
+
+- Web Application Firewall (WAF): Nhiều trang web đã triển khai WAF để chặn 
+  các request không hợp lệ, phát hiện và chặn các bot tự động. Các kỹ thuật 
+  crawl truyền thống như sử dụng thư viện requests đơn giản hoặc BeautifulSoup 
+  đều bị chặn ngay lập tức.
+
+- Rate Limiting: Các trang web giới hạn số lượng request từ cùng một IP trong 
+  một khoảng thời gian. Khi vượt quá ngưỡng, IP sẽ bị chặn tạm thời hoặc vĩnh 
+  viễn.
+
+- JavaScript Rendering: Nhiều trang web hiện đại sử dụng JavaScript để render 
+  nội dung động. Các công cụ crawl cũ không thể xử lý được, dẫn đến việc chỉ 
+  lấy được HTML trống hoặc không đầy đủ.
+
+- User-Agent và Fingerprinting: Các trang web phân tích User-Agent, header, 
+  và các đặc điểm khác của request để phát hiện bot. Request từ bot thường 
+  bị từ chối ngay lập tức.
+
+3.2. Giải pháp kỹ thuật
+-----------------------
+Để vượt qua các thách thức trên, nhóm đã phải áp dụng nhiều kỹ thuật tiên 
+tiến:
+
+3.2.1. Premium Proxy và Đổi IP liên tục
+-----------------------------------------
+Một trong những giải pháp quan trọng nhất là sử dụng premium proxy service 
+với khả năng đổi IP liên tục. Hệ thống được tích hợp với các dịch vụ proxy 
+chất lượng cao, cho phép:
+
+- Rotate IP tự động: Mỗi request được gửi từ một IP khác nhau, tránh việc bị 
+  phát hiện và chặn do quá nhiều request từ cùng một nguồn.
+
+- Residential Proxy: Sử dụng residential proxy thay vì datacenter proxy để 
+  giảm khả năng bị phát hiện. Các IP này có đặc điểm giống với IP của người 
+  dùng thông thường.
+
+- Geo-targeting: Có thể chọn proxy từ các vị trí địa lý cụ thể để phù hợp 
+  với nội dung cần crawl.
+
+- Failover mechanism: Khi một proxy bị chặn, hệ thống tự động chuyển sang 
+  proxy khác để đảm bảo tính liên tục của dịch vụ.
+
+3.2.2. Xử lý text sạch sẽ
+-------------------------
+Sau khi lấy được HTML từ các trang web, một thách thức lớn khác là làm sạch 
+và trích xuất nội dung văn bản có ý nghĩa. HTML thường chứa rất nhiều thông 
+tin không liên quan như:
+
+- Script và style tags
+- Navigation menus và headers
+- Footers với nhiều links
+- Comments và conditional comments
+- Quảng cáo và các element không cần thiết
+
+Nhóm đã phát triển một pipeline xử lý text phức tạp bao gồm:
+
+- Loại bỏ các element không cần thiết: Sử dụng BeautifulSoup để loại bỏ 
+  các tag như script, style, header, footer, nav, và các element có class/id 
+  đặc biệt.
+
+- Bảo toàn cấu trúc: Giữ nguyên cấu trúc của văn bản như headings, paragraphs, 
+  lists, và tables để đảm bảo thông tin không bị mất.
+
+- Chuyển đổi sang Markdown: Chuyển đổi HTML sang định dạng Markdown để dễ 
+  xử lý hơn, đặc biệt là với các bảng và danh sách.
+
+- Normalize whitespace: Chuẩn hóa khoảng trắng và xuống dòng để văn bản dễ 
+  đọc và dễ xử lý hơn.
+
+- Loại bỏ duplicate: Xóa các dòng trùng lặp và các đoạn văn bản không cần 
+  thiết.
+
+Kết quả là một văn bản sạch, có cấu trúc rõ ràng, phù hợp cho việc chunking 
+và RAG.
+
+3.2.3. Parallel Crawl
+---------------------
+Để tối ưu hóa thời gian xử lý, nhóm đã triển khai parallel crawling:
+
+- Asynchronous processing: Sử dụng asyncio và aiohttp để thực hiện nhiều 
+  request đồng thời thay vì tuần tự.
+
+- Batch processing: Nhóm các URL cần crawl thành các batch và xử lý song song.
+
+- Connection pooling: Tái sử dụng các kết nối HTTP để giảm overhead.
+
+- Timeout và retry: Thiết lập timeout hợp lý và cơ chế retry tự động khi 
+  request thất bại.
+
+Với parallel crawl, thời gian crawl nhiều trang web giảm đáng kể so với cách 
+tiếp cận tuần tự truyền thống.
+
+3.2.4. Parallel Chunk RAG
+--------------------------
+Sau khi có được text sạch từ các trang web, hệ thống cần chia nhỏ (chunking) 
+và tìm kiếm các đoạn liên quan (retrieval) để đưa vào context cho LLM. Nhóm 
+đã tối ưu hóa quá trình này:
+
+- Parallel chunking: Chia nhỏ nhiều văn bản đồng thời thay vì tuần tự.
+
+- Semantic chunking: Sử dụng TokenMarkdownSplitter để chia văn bản dựa trên 
+  cấu trúc Markdown và token count, đảm bảo các chunk có ý nghĩa và không bị 
+  cắt giữa chừng.
+
+- Merge strategy: Kết hợp các chunk liền kề, đặc biệt là các bảng, để đảm 
+  bảo context đầy đủ.
+
+- Parallel retrieval: Sử dụng FAISS để tìm kiếm semantic các chunk liên quan 
+  một cách nhanh chóng.
+
+- Priority mechanism: Ưu tiên các chunk chứa bảng và thông tin quan trọng 
+  để đảm bảo chúng luôn được đưa vào context.
+
+3.2.5. Tối ưu Query
+-------------------
+Để cải thiện chất lượng kết quả tìm kiếm, nhóm đã tối ưu hóa query:
+
+- Query expansion: Mở rộng query với các từ khóa liên quan và synonyms.
+
+- Query rewriting: Viết lại query để phù hợp hơn với ngữ cảnh tìm kiếm.
+
+- Multi-query strategy: Tạo nhiều biến thể của query và kết hợp kết quả.
+
+- Keyword extraction: Trích xuất các từ khóa quan trọng từ câu hỏi để tăng 
+  độ chính xác của tìm kiếm.
+
+3.2.6. Training Page Reranker
+------------------------------
+Một trong những cải tiến quan trọng nhất là training một page reranker model 
+riêng cho domain tuyển sinh đại học:
+
+- Fine-tuning: Fine-tune mô hình Qwen3-Reranker-0.6B với LoRA adapter dựa trên 
+  dữ liệu tuyển sinh để nó hiểu rõ hơn về domain này, đặc biệt là khả năng 
+  phân biệt giữa "ngành học" (chương trình đào tạo) và "lĩnh vực nghiên cứu".
+
+- Page ranking: Page reranker đánh giá lại độ liên quan của các trang web sau 
+  khi search, dựa trên title và description của từng trang. Nó sắp xếp lại các 
+  trang web theo thứ tự ưu tiên trước khi quyết định crawl trang nào.
+
+- Semantic understanding: Reranker không chỉ dựa vào keyword matching mà còn 
+  hiểu được ngữ nghĩa của câu hỏi và nội dung của trang web. Ví dụ, nó có thể 
+  phân biệt khi người dùng hỏi về "ngành Trí tuệ nhân tạo" (chương trình đào 
+  tạo) thì ưu tiên các trang về chương trình đào tạo hơn là các trang về lĩnh 
+  vực nghiên cứu.
+
+- Performance improvement: Page reranker giúp cải thiện đáng kể chất lượng 
+  của các trang web được chọn để crawl, giảm thiểu việc crawl các trang không 
+  liên quan, từ đó tiết kiệm thời gian và tăng độ chính xác của câu trả lời.
+
+3.3. Kiến trúc hệ thống
+-----------------------
+Hệ thống Phase 2 được xây dựng với kiến trúc modular và scalable:
+
+1. Search Engine Layer: Tích hợp với các công cụ tìm kiếm (Google, Bing) để 
+   tìm các URL liên quan đến câu hỏi.
+
+2. Page Reranker: Sử dụng mô hình reranker đã được fine-tune để xếp hạng lại 
+   các kết quả tìm kiếm dựa trên title và description, chọn ra những trang web 
+   liên quan nhất trước khi crawl.
+
+3. Snippet Checker: Kiểm tra xem snippet từ kết quả tìm kiếm đã đủ thông tin 
+   để trả lời câu hỏi chưa. Nếu đủ, bỏ qua việc crawl để tiết kiệm thời gian.
+
+4. Page Downloader: Sử dụng premium proxy và các kỹ thuật anti-detection để 
+   download HTML từ các trang web.
+
+5. Content Extractor: Làm sạch HTML và trích xuất text có cấu trúc.
+
+6. Chunking Pipeline: Chia nhỏ text thành các chunk phù hợp cho RAG.
+
+7. Retrieval System: Sử dụng FAISS để tìm các chunk liên quan nhất dựa trên 
+   semantic similarity.
+
+8. LLM Integration: Đưa các chunk đã được retrieve vào context và gọi LLM 
+   để tạo câu trả lời.
+
+3.4. Kết quả Phase 2
+---------------------
+Sau khi triển khai tất cả các giải pháp trên, hệ thống web search đã hoạt động 
+rất tốt:
+
+✓ Khả năng crawl thành công: Hệ thống có thể lấy được HTML từ hầu hết các 
+  trang web, kể cả những trang có WAF mạnh, nhờ vào premium proxy và đổi IP 
+  liên tục.
+
+✓ Chất lượng text cao: Text được trích xuất sạch sẽ, có cấu trúc rõ ràng, 
+  giữ nguyên format của bảng và danh sách, phù hợp cho RAG.
+
+✓ Độ chính xác câu trả lời: Model trả lời chính xác các câu hỏi dựa trên 
+  thông tin được crawl từ web. Các câu trả lời về điểm chuẩn, ngành học, và 
+  thông tin tuyển sinh đều đúng và đầy đủ.
+
+✓ Thời gian phản hồi nhanh: Nhờ parallel processing ở nhiều tầng (parallel 
+  crawl, parallel chunking, parallel retrieval), thời gian trả lời một câu 
+  hỏi chỉ mất khoảng 8-20 giây, rất phù hợp cho ứng dụng thực tế.
+
+✓ Khả năng mở rộng: Kiến trúc modular cho phép dễ dàng thêm các tính năng 
+  mới hoặc tối ưu hóa từng component riêng lẻ.
+
+✓ Tính ổn định: Hệ thống có cơ chế failover và retry tự động, đảm bảo tính 
+  liên tục của dịch vụ ngay cả khi một số component gặp sự cố.
+
+================================================================================
+4. HƯỚNG PHÁT TRIỂN
+================================================================================
+
+Hiện tại chatbot đã có khả năng tư vấn cho cả học sinh và sinh viên. Trong 
+tương lai, nhóm dự định phát triển hệ thống tư vấn cá nhân hóa dựa trên 
+profile người dùng với các bộ câu hỏi chuyên biệt cho từng đối tượng:
+
+- Phân loại người dùng: Khi người dùng bắt đầu sử dụng chatbot, hệ thống sẽ 
+  hỏi về vai trò (học sinh hay sinh viên) để xác định đúng đối tượng và áp 
+  dụng bộ câu hỏi phù hợp.
+
+- Bộ câu hỏi cho học sinh: Đối với học sinh muốn vào đại học, chatbot sẽ có 
+  bộ câu hỏi tư vấn về:
+  * Ngành học phù hợp với sở thích và năng lực
+  * Nguyện vọng và lựa chọn trường đại học
+  * Điểm số các môn học và khả năng đạt điểm chuẩn
+  * Định hướng nghề nghiệp và cơ hội việc làm
+  * Lộ trình chuẩn bị cho kỳ thi tuyển sinh
+
+- Bộ câu hỏi cho sinh viên: Đối với sinh viên đang học đại học, chatbot sẽ 
+  có bộ câu hỏi khác về:
+  * Tín chỉ và kế hoạch học tập
+  * Ngành học và chuyên ngành
+  * Đăng ký môn học và lịch học
+  * Học bổng và chế độ chính sách
+  * Định hướng nghề nghiệp sau khi tốt nghiệp
+
+- Tư vấn dựa trên profile: Sau khi thu thập thông tin qua các câu hỏi, chatbot 
+  sẽ xây dựng profile người dùng và đưa ra các tư vấn chi tiết, phù hợp với 
+  từng cá nhân cụ thể. Hệ thống sẽ lưu trữ profile để có thể cung cấp tư vấn 
+  nhất quán và cải thiện theo thời gian.
+
+Với hướng phát triển này, chatbot sẽ trở thành một cố vấn tuyển sinh thông 
+minh và cá nhân hóa, giúp học sinh và sinh viên đưa ra quyết định phù hợp 
+nhất với bản thân.
+
+================================================================================
+5. KẾT LUẬN
+================================================================================
+
+Dự án Chatbot Tuyển sinh Đại học đã trải qua hai giai đoạn phát triển quan 
+trọng:
+
+Phase 1 đã chứng minh rằng mô hình ngôn ngữ có khả năng xử lý tốt các câu 
+hỏi về tuyển sinh khi được cung cấp context phù hợp. Điều này tạo nền tảng 
+vững chắc cho việc phát triển hệ thống RAG.
+
+Phase 2 đã giải quyết thành công các thách thức lớn trong việc crawl dữ liệu 
+từ web, đặc biệt là vượt qua các hệ thống WAF và anti-bot. Với việc áp dụng 
+nhiều kỹ thuật tiên tiến như premium proxy, parallel processing, và reranker, 
+hệ thống đã đạt được mục tiêu về độ chính xác và hiệu suất.
+
+Hệ thống hiện tại có thể:
+- Tự động tìm kiếm thông tin từ internet
+- Xử lý và làm sạch dữ liệu một cách hiệu quả
+- Trả lời câu hỏi chính xác dựa trên thông tin thời gian thực
+- Phản hồi nhanh chóng (8-20 giây) phù hợp với ứng dụng thực tế
+
+Dự án đã sẵn sàng để triển khai và phục vụ người dùng thực tế.
+
+================================================================================
+END OF REPORT
+================================================================================
+

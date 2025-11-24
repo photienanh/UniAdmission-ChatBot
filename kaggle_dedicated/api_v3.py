@@ -560,8 +560,31 @@ class CustomQA:
             question, 
             params
         )
+        print("\n" + "=" * 80)
+        print(f"[RAG CHUNKS] Total {len(rag_sources)} chunks selected for reader:")
+        for idx, chunk in enumerate(rag_sources, 1):
+            title = chunk.get("title", "N/A")
+            url = chunk.get("url", "N/A")
+            chunk_idx = chunk.get("chunk_index", "N/A")
+            text_preview = chunk.get("text", "")[:400]
+            print("-" * 80)
+            print(f"[Chunk {idx}] title={title} | url={url} | chunk_index={chunk_idx}")
+            print(f"Text preview:\n{text_preview}")
+        if not rag_sources:
+            print("[RAG CHUNKS] No chunks selected.")
+        print("=" * 80)
+
         context = SourceFormat()(rag_sources)
         prompt = READER_TEMPLATE.format(context=context, question=question)
+        print("\n" + "=" * 80)
+        print("[RAG CONTEXT] Formatted chunks sent to reader:")
+        print("-" * 80)
+        print(context if context.strip() else "[Empty context]")
+        print("=" * 80)
+        print("[FINAL PROMPT] Qwen4B input:")
+        print("-" * 80)
+        print(prompt)
+        print("=" * 80 + "\n")
         self.logger.start()
         pre_output: ModelPreOutput = {
             "generation_params": params,

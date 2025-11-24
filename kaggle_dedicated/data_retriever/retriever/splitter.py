@@ -23,20 +23,5 @@ class Splitter:
                 "chunk_index": len(rag_sources)
             }
             rag_sources.append(rag_source)
-        # Handle files
-        file_sources: list[FileSource] = web_source["files"]
-        for file_source in file_sources:
-            file_chunks = self.splitter.split_text(file_source["text"])
-            for file_chunk in file_chunks:
-                rag_source: RagSource = {
-                    "query": web_source["query"],
-                    "title": web_source["title"],
-                    "url": web_source["url"],
-                    "text": file_chunk,
-                    "chunk_index": len(rag_sources),
-                    "file_title": file_source["file_title"],
-                    "file_url": file_source["file_url"],
-                    "file_type": file_source["file_type"]
-                }
         print(f'Split {web_source["title"]} to {len(rag_sources)} chunks')
         return rag_sources

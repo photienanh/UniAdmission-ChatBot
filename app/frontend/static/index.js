@@ -3,6 +3,9 @@ import { stream_text } from "/static/stream.js";
 let currentSessionId = null;
 let chatHistory = [];
 
+// Rating state management
+const ratedMessages = new Set(); // Track already rated messages
+
 document.addEventListener('DOMContentLoaded', function() {
     // Prevent unwanted focus behavior
     document.addEventListener('mousedown', function(e) {
@@ -497,8 +500,8 @@ document.addEventListener('DOMContentLoaded', function() {
         let llmrerank = llmRerankCheckbox.checked;
         const simpleTimeLimitValue = simpleTimeLimit.value;
         const simpleRetrieveModeValue = simpleRetrieveMode.value;
-        let usewebsearch = retrieveData && websearchCheckbox.checked;
-        let uselocaldb = retrieveData && localdbCheckbox.checked;
+        let usewebsearch = websearchCheckbox.checked;
+        let uselocaldb = localdbCheckbox.checked;
 
         // Validate k_docs value before sending
         let kDocsValue = parseInt(searchDocsCount.value);
@@ -646,21 +649,57 @@ document.addEventListener('DOMContentLoaded', function() {
         console.log(data.result_url);
         console.log('Server response datax:', data);
         currentSessionId = data.session_id;
-        // Tạo message rỗng để append dần text stream
-        // const botMessageDiv = document.createElement('div');
-        // botMessageDiv.className = 'message bot-message';
-        // botMessageDiv.innerHTML = `<div class="message-content markdown-content"></div>`;
-        // chatMessages.appendChild(botMessageDiv);
-
-        // Generate a timestamp string
+        
+        // Generate unique message ID
         const timestampId = 'element-' + Date.now();
-
+        
         addMessage_with_id("", 'bot', timestampId, data.web_sources || null);
         const contentDiv = document.getElementById(timestampId);
-        // Gọi API stream với stream_id
+        const messageDiv = contentDiv.closest('.message');
+        const messageContentDiv = messageDiv.querySelector('.message-content');
+        
+        // Track stream timing
+        const streamStartTime = Date.now();
+        
+        // Stream text
         let speed = 1; // 1/(1) s to flush buffer
         let max_speed = 300; // 300 char/s
         await stream_text(data.result_url, contentDiv, chatMessages, speed, max_speed);
+        
+        // After stream completes, wait 2s then show rating UI
+        setTimeout(async () => {
+                // Fetch real message ID from backend
+                const maxRetries = 3;
+                let retryCount = 0;
+                let realMessageId = null;
+                
+                while (retryCount < maxRetries && !realMessageId) {
+                    try {
+                        const msgResponse = await fetch(`/session/${currentSessionId}/latest_bot_message`);
+                        
+                        if (msgResponse.ok) {
+                            const msgData = await msgResponse.json();
+                            realMessageId = msgData.message_id;
+                            
+                            if (realMessageId) {
+                                break;
+                            }
+                        }
+                    } catch (error) {
+                        console.error('[RATING] Error fetching message ID:', error);
+                    }
+                    
+                    retryCount++;
+                    if (retryCount < maxRetries && !realMessageId) {
+                        await new Promise(resolve => setTimeout(resolve, 1000));
+                    }
+                }
+                
+                // Show rating if we got the ID
+                if (realMessageId && !ratedMessages.has(realMessageId)) {
+                    addRatingUI(messageContentDiv, realMessageId);
+                }
+        }, 2000); // 2s delay after stream completes
 
         // Reload chat history nếu là session mới
         if (!document.querySelector(`[data-session-id="${data.session_id}"]`)) {
@@ -1246,3 +1285,406 @@ document.addEventListener('DOMContentLoaded', function() {
         userInput.focus();
     }, 100);
 });
+
+// ============= RATING SYSTEM =============
+
+/**
+ * Add rating UI to a bot message
+ */
+function addRatingUI(messageContentDiv, messageId) {
+    // Check if already rated or rating UI exists
+    if (ratedMessages.has(messageId) || messageContentDiv.querySelector('.rating-container')) {
+        return;
+    }
+    
+    const ratingHTML = `
+        <div class="rating-container" data-message-id="${messageId}">
+            <div class="rating-wrapper">
+                <span class="rating-label">Đánh giá câu trả lời</span>
+                <div class="rating-stars">
+                    <i class="far fa-star" data-rating="1"></i>
+                    <i class="far fa-star" data-rating="2"></i>
+                    <i class="far fa-star" data-rating="3"></i>
+                    <i class="far fa-star" data-rating="4"></i>
+                    <i class="far fa-star" data-rating="5"></i>
+                </div>
+            </div>
+            <span class="rating-thanks" style="display: none;">
+                <i class="fas fa-check-circle"></i> Cảm ơn bạn!
+            </span>
+        </div>
+    `;
+    
+    messageContentDiv.insertAdjacentHTML('beforeend', ratingHTML);
+    
+    // Show animation
+    setTimeout(() => {
+        const container = messageContentDiv.querySelector('.rating-container');
+        if (container) {
+            container.classList.add('show');
+        }
+    }, 100);
+    
+    attachRatingHandlers(messageId);
+}
+
+/**
+ * Attach event handlers to rating stars
+ */
+function attachRatingHandlers(messageId) {
+    const container = document.querySelector(`[data-message-id="${messageId}"]`);
+    if (!container) return;
+    
+    const starsContainer = container.querySelector('.rating-stars');
+    const stars = container.querySelectorAll('.rating-stars i');
+    
+    // Hover preview effect
+    stars.forEach((star, index) => {
+        star.addEventListener('mouseenter', () => {
+            if (starsContainer.classList.contains('rated')) return;
+            
+            stars.forEach((s, i) => {
+                if (i <= index) {
+                    s.classList.remove('far');
+                    s.classList.add('fas', 'active');
+                } else {
+                    s.classList.remove('fas', 'active');
+                    s.classList.add('far');
+                }
+            });
+        });
+    });
+    
+    // Reset hover on mouse leave
+    starsContainer.addEventListener('mouseleave', () => {
+        if (starsContainer.classList.contains('rated')) return;
+        
+        stars.forEach(s => {
+            s.classList.remove('fas', 'active');
+            s.classList.add('far');
+        });
+    });
+    
+    // Click to submit rating
+    stars.forEach((star, index) => {
+        star.addEventListener('click', async () => {
+            if (starsContainer.classList.contains('rated')) return;
+            
+            const rating = index + 1;
+            
+            // Visual feedback - fill stars
+            stars.forEach((s, i) => {
+                s.classList.remove('far', 'active');
+                if (i <= index) {
+                    s.classList.add('fas', 'active');
+                } else {
+                    s.classList.add('far');
+                }
+            });
+            
+            // Mark as rated
+            starsContainer.classList.add('rated');
+            ratedMessages.add(messageId);
+            
+            // Hide label, show thanks
+            const wrapper = container.querySelector('.rating-wrapper');
+            const thanks = container.querySelector('.rating-thanks');
+            
+            if (wrapper) wrapper.style.display = 'none';
+            if (thanks) thanks.style.display = 'flex';
+            
+            // Send to backend
+            await submitRating(messageId, rating);
+        });
+    });
+}
+
+/**
+ * Submit rating to backend API
+ */
+async function submitRating(messageId, rating) {
+    try {
+        const response = await fetch(`/message/${messageId}/rate`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({rating: rating})
+        });
+        
+        if (!response.ok) {
+            console.error('Rating submission failed:', response.status);
+            return;
+        }
+        
+        // If rating <= 3 stars, show regenerate prompt inline
+        if (rating <= 3) {
+            console.log('[A/B] Low rating detected');
+            setTimeout(() => {
+                showRegeneratePrompt(messageId);
+            }, 800);
+        }
+    } catch (error) {
+        console.error('Rating submission error:', error);
+    }
+}
+
+// ============= A/B PREFERENCE SYSTEM =============
+
+/**
+ * Show inline regenerate prompt
+ */
+function showRegeneratePrompt(messageId) {
+    const ratingContainer = document.querySelector(`[data-message-id="${messageId}"]`);
+    if (!ratingContainer) return;
+    
+    // Check if prompt already exists
+    if (ratingContainer.querySelector('.regenerate-prompt')) return;
+    
+    const promptHTML = `
+        <div class="regenerate-prompt">
+            <span class="regenerate-question">Bạn có muốn tôi trả lời lại không?</span>
+            <button class="regenerate-btn regenerate-yes">Có</button>
+            <button class="regenerate-btn regenerate-no">Không</button>
+        </div>
+    `;
+    
+    ratingContainer.insertAdjacentHTML('beforeend', promptHTML);
+    
+    // Add handlers
+    const prompt = ratingContainer.querySelector('.regenerate-prompt');
+    const yesBtn = prompt.querySelector('.regenerate-yes');
+    const noBtn = prompt.querySelector('.regenerate-no');
+    
+    yesBtn.addEventListener('click', () => {
+        prompt.remove();
+        triggerRegenerate(messageId);
+    });
+    
+    noBtn.addEventListener('click', () => {
+        prompt.remove();
+    });
+}
+
+/**
+ * Regenerate response and show in main chat
+ */
+async function triggerRegenerate(originalMessageId) {
+    try {
+        console.log('[Regenerate] Starting...');
+        
+        // Find original message container via rating container
+        const ratingContainer = document.querySelector(`[data-message-id="${originalMessageId}"]`);
+        if (!ratingContainer) {
+            console.error('[Regenerate] Rating container not found');
+            return;
+        }
+        
+        const originalContainer = ratingContainer.closest('.message');
+        if (!originalContainer) {
+            console.error('[Regenerate] Message container not found');
+            return;
+        }
+        
+        // Add "regenerating" indicator to original message
+        const originalContent = originalContainer.querySelector('.message-content');
+        const regenIndicator = document.createElement('div');
+        regenIndicator.className = 'regenerating-indicator';
+        regenIndicator.innerHTML = '🔄 Đang tạo câu trả lời mới...';
+        originalContent.appendChild(regenIndicator);
+        
+        // Call regenerate API
+        const response = await fetch(`/message/${originalMessageId}/regenerate`, {
+            method: 'POST'
+        });
+        
+        if (!response.ok) {
+            console.error('[Regenerate] API failed:', response.status);
+            regenIndicator.remove();
+            alert('Không thể tạo câu trả lời mới. Vui lòng thử lại.');
+            return;
+        }
+        
+        const data = await response.json();
+        console.log('[Regenerate] Got result_url:', data.result_url);
+        
+        // Create new message element for regenerated response (same style as original)
+        const newMessageRow = document.createElement('div');
+        newMessageRow.className = 'message bot-message';
+        newMessageRow.innerHTML = `
+            <div class="message-content markdown-content">
+                <div class="message-text"></div>
+                <div class="message-actions">
+                    <button class="copy-button" onclick="copyMessageContent(this)" title="Copy message">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        // Insert after original message
+        originalContainer.insertAdjacentElement('afterend', newMessageRow);
+        
+        // Apply padding like original messages
+        const messageContent = newMessageRow.querySelector('.message-content');
+        const sidebar = document.getElementById('sidebar');
+        const isSidebarCollapsed = sidebar?.classList.contains('collapsed');
+        if (isSidebarCollapsed) {
+            messageContent.style.paddingLeft = '24px';
+        } else {
+            messageContent.style.paddingLeft = '40px';
+        }
+        
+        const messageTextEl = newMessageRow.querySelector('.message-text');
+        const chatMessagesEl = document.getElementById('chat-messages');
+        
+        // Stream new response
+        await stream_text(data.result_url, messageTextEl, chatMessagesEl, 1, 300);
+        
+        // Remove loading indicator
+        regenIndicator.remove();
+        
+        // Wait for backend to save message and retry if needed
+        let regeneratedMessageId = null;
+        for (let attempt = 0; attempt < 5; attempt++) {
+            await new Promise(resolve => setTimeout(resolve, 1000 + attempt * 500));
+            
+            // Get new message ID
+            const msgResponse = await fetch(`/session/${currentSessionId}/latest_bot_message`);
+            if (!msgResponse.ok) {
+                console.warn(`[Regenerate] Failed to get latest message (attempt ${attempt + 1})`);
+                continue;
+            }
+            
+            const msgData = await msgResponse.json();
+            regeneratedMessageId = msgData.message_id;
+            
+            if (regeneratedMessageId) {
+                console.log('[Regenerate] New message ID:', regeneratedMessageId);
+                break;
+            }
+        }
+        
+        if (!regeneratedMessageId) {
+            console.error('[Regenerate] Could not get regenerated message ID');
+            alert('Không thể lấy ID của câu trả lời mới. Vui lòng thử lại.');
+            return;
+        }
+        
+        // Add comparison prompt to new message
+        addComparisonPrompt(newMessageRow, originalMessageId, regeneratedMessageId, data.query_text);
+        
+        // Scroll to new message
+        newMessageRow.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+    } catch (error) {
+        console.error('[Regenerate] Error:', error);
+        alert('Có lỗi xảy ra. Vui lòng thử lại.');
+    }
+}
+
+/**
+ * Add comparison prompt after regenerated response
+ */
+function addComparisonPrompt(messageElement, originalId, regeneratedId, queryText) {
+    const messageContent = messageElement.querySelector('.message-content');
+    
+    if (!messageContent) {
+        console.error('[Comparison] Message content not found');
+        return;
+    }
+    
+    if (!originalId || !regeneratedId || !queryText) {
+        console.error('[Comparison] Missing required parameters:', { originalId, regeneratedId, queryText });
+        return;
+    }
+    
+    const promptHTML = `
+        <div class="comparison-prompt">
+            <span class="comparison-question">Bạn có hài lòng với câu trả lời mới không?</span>
+            <button class="comparison-btn comparison-yes" data-choice="new">Có</button>
+            <button class="comparison-btn comparison-no" data-choice="original">Không</button>
+        </div>
+    `;
+    
+    messageContent.insertAdjacentHTML('beforeend', promptHTML);
+    
+    // Add handlers
+    const prompt = messageContent.querySelector('.comparison-prompt');
+    const yesBtn = prompt.querySelector('.comparison-yes');
+    const noBtn = prompt.querySelector('.comparison-no');
+    
+    if (!yesBtn || !noBtn || !prompt) {
+        console.error('[Comparison] Failed to find prompt elements');
+        return;
+    }
+    
+    yesBtn.addEventListener('click', async () => {
+        // User prefers new version
+        await submitPreference(originalId, regeneratedId, queryText, regeneratedId, prompt);
+    });
+    
+    noBtn.addEventListener('click', async () => {
+        // User prefers original
+        await submitPreference(originalId, regeneratedId, queryText, originalId, prompt);
+    });
+}
+
+/**
+ * Submit preference choice
+ */
+async function submitPreference(originalId, regeneratedId, queryText, preferredId, promptElement) {
+    try {
+        console.log('[Preference] Submitting:', { originalId, regeneratedId, preferredId, queryText });
+        
+        if (!originalId || !regeneratedId || !queryText || !preferredId) {
+            console.error('[Preference] Missing required parameters');
+            return;
+        }
+        
+        if (!promptElement) {
+            console.error('[Preference] Prompt element not found');
+            return;
+        }
+        
+        // Show saving state
+        const question = promptElement.querySelector('.comparison-question');
+        const buttons = promptElement.querySelectorAll('.comparison-btn');
+        
+        if (question) question.textContent = 'Đang lưu...';
+        if (buttons) buttons.forEach(btn => btn.disabled = true);
+        
+        const response = await fetch('/preference/submit', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                query_text: queryText,
+                original_message_id: originalId,
+                regenerated_message_id: regeneratedId,
+                preferred_message_id: preferredId
+            })
+        });
+        
+        if (!response.ok) {
+            console.error('[Preference] Submit failed:', response.status);
+            if (question) question.textContent = '❌ Lưu thất bại';
+            return;
+        }
+        
+        // Success
+        if (question) question.textContent = '✓ Đã lưu, cảm ơn bạn!';
+        buttons.forEach(btn => btn.style.display = 'none');
+        
+        console.log('[Preference] Saved successfully');
+        
+        // Remove prompt after 2s
+        setTimeout(() => {
+            promptElement.remove();
+        }, 2000);
+        
+    } catch (error) {
+        console.error('[Preference] Error:', error);
+        const question = promptElement.querySelector('.comparison-question');
+        if (question) question.textContent = '❌ Có lỗi xảy ra';
+    }
+}
+
+// No modal needed anymore - all inline in chat!
