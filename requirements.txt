@@ -18,6 +18,8 @@ filetype==1.2.0
 FlashRank==0.2.10
 Crawl4AI==0.7.4
 pymupdf4llm==0.0.27
+pypdf==5.1.0
+pdfplumber==0.11.4
 langchain==0.3.27
 langchain-community==0.3.30
 langchain-huggingface==0.3.1

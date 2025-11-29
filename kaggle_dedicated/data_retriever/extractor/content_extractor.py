@@ -5,6 +5,9 @@ import re
 import os
 import asyncio
 import aiohttp
+import unicodedata
+from datetime import datetime
+from urllib.parse import urljoin, urlparse
 from bs4 import BeautifulSoup, NavigableString, Tag, Comment
 
 from ..schema import HtmlResult, WebSource, FileSource
@@ -16,6 +19,14 @@ IMAGE_EXTENSION = (".jpg", ".jpeg", ".png", ".avif", ".webp", ".svg")
 URL_PATTERN_REMOVE = re.compile(r'\[([^\]]+)\]\(.*?\)')
 # .ico is usually contain no information
 
+# Keywords để tìm links liên quan đến PDF
+KEYWORD_TERMS = [
+    "dinh muc", "quy dinh", "huong dan", "muc thu", "hoc phi", "phu luc", "quy trinh", "dinh kem",
+    "định mức", "quy định", "hướng dẫn", "mức thu", "học phí", "phụ lục", "quy trình", "đính kèm"
+]
+MAX_KEYWORD_LINKS = 4
+MAX_KEYWORD_WORKERS = 4
+
 def check_pdf(url: str) -> bool:
     """
     This is a little tricky, even download would be hard if it's from drive
@@ -25,6 +36,28 @@ def check_pdf(url: str) -> bool:
     elif "drive.google.com/file" in url:
         return False # Tempory, as there is hardly anyway to check
     return False
+
+def strip_accents(value: str) -> str:
+    """Remove diacritics from Vietnamese text for keyword matching"""
+    if not value:
+        return ""
+    normalized = unicodedata.normalize("NFKD", value)
+    return "".join(ch for ch in normalized if not unicodedata.combining(ch)).lower()
+
+def normalize_internal_link(href: str, base_url: str) -> str:
+    """Normalize internal link to full URL"""
+    if not href:
+        return ""
+    href = href.strip()
+    if not href or href.startswith("javascript") or href.startswith("mailto:"):
+        return ""
+    if href.startswith("//"):
+        return "https:" + href
+    if href.startswith("http"):
+        return href
+    if href.startswith("/"):
+        return base_url.rstrip("/") + href
+    return urljoin(base_url, href)
 
 class ContentExtractor:
     def __init__(
@@ -41,285 +74,596 @@ class ContentExtractor:
         self.session = session
         self.timeout = aiohttp.ClientTimeout(timeout)
         self.pdf_to_text = PDFProcessor()
-        self.content_filter = PruningContentFilter( # This is broken, really
-            threshold=0,
-            threshold_type="fixed",
-            min_word_threshold=1
-        )
-        self.link_filter = PruningContentFilter( # This is broken, really
-            threshold=0.1,
-            threshold_type="fixed",
-            min_word_threshold=1
-        )
-        # Filter header, spam content.
-        self.content_generator = DefaultMarkdownGenerator(
-            content_filter= None, #self.content_filter,
-            options={
-                "ignore_links": False,
-                "escape_html": True,
-                "ignore_images": True,
-                "skip_internal_links": True,
-                "include_sup_sub": False,
-                # "body_width": 80
-            }
-        )
-        self.link_generator = DefaultMarkdownGenerator(
-            content_filter= None, #self.link_filter,
-            options={
-                "ignore_links": False,
-                "escape_html": True,
-                "ignore_images": False,
-                "skip_internal_links": True,
-                "include_sup_sub": False,
-                # "body_width": 80
-            }
-        )
-    def _extract_links(self, html: str, url: str) -> list[dict]:
-        markdown = self.link_generator.generate_markdown(
-            input_html=html,
-            base_url=url   
-        ).fit_markdown or ""
-        _, citations = self.link_generator.convert_links_to_citations(markdown, url)
-        citations = citations.splitlines()
-        links: list[dict] = []
-        for citation in citations:
-            if "⟩" in citation:
-                line = citation.split("⟩")[-1].strip()
-                if ": " in line:
-                    parts = line.split(": ")
-                    if len(parts) == 2:
-                        url, title = parts
-                    else:
-                        url = parts[0]
-                        title = ": ".join(parts[1:])
-                    url = url.strip()
-                    title = title.strip()
-                else:
-                    url = line.strip()
-                url_type = "ref"
-                if check_pdf(url):
-                    url_type = "pdf"
-                elif any([url.endswith(extension) for extension in IMAGE_EXTENSION]):
-                    url_type = "image"
-                links.append({
-                    "title": title,
-                    "url": url,
-                    "url_type": url_type
-                })  
-        return links
-    def _extract_html_tables(self, html: str) -> tuple[str, dict[str, str]]:
-        """Extract HTML tables and convert to markdown format, replace with placeholders"""
+        markdown_options = {
+            "ignore_links": False, "escape_html": True, "skip_internal_links": True, "include_sup_sub": False
+        }
+        self.content_generator = DefaultMarkdownGenerator(content_filter=None, options={**markdown_options, "ignore_images": True})
+        self.link_generator = DefaultMarkdownGenerator(content_filter=None, options={**markdown_options, "ignore_images": True})
+        self.link_generator = DefaultMarkdownGenerator(content_filter=None, options={**markdown_options, "ignore_images": False})
+    def _find_keyword_links(self, html: str, base_url: str, max_links: int = MAX_KEYWORD_LINKS) -> list[str]:
+        """Tìm links có chứa keywords"""
         soup = BeautifulSoup(html, "html.parser")
-        tables = soup.find_all("table")
-        table_placeholders = {}
-        
-        for idx, table in enumerate(tables):
-            placeholder = f"[TABLE_{idx}]"
-            # Convert table to markdown
-            markdown_table = self._html_table_to_markdown(table)
-            table_placeholders[placeholder] = markdown_table
-            # Replace table with placeholder
-            table.replace_with(BeautifulSoup(f'<div>{placeholder}</div>', "html.parser").div)
-        
-        return str(soup), table_placeholders
+        links, seen = [], set()
+        for a in soup.find_all("a", href=True):
+            if len(links) >= max_links:
+                break
+            href = a.get("href", "").strip()
+            if not href or href.startswith("#"):
+                continue
+            target = normalize_internal_link(href, base_url)
+            if not target or target in seen:
+                continue
+            meta = " ".join(filter(None, [a.get_text(" ", strip=True), a.get("title"), href]))
+            if any(term in strip_accents(meta) for term in KEYWORD_TERMS):
+                links.append(target)
+                seen.add(target)
+        return links
     
-    def _html_table_to_markdown(self, table) -> str:
-        """Convert HTML table to markdown table format"""
+    def _find_attachment_links(self, html: str, base_url: str) -> list[dict]:
+        """Tìm links 'đính kèm' trong HTML"""
+        soup = BeautifulSoup(html, "html.parser")
+        keywords = ["đính kèm", "dinh kem", "file đính kèm", "tải về", "tai ve", "download"]
+        links, seen = [], set()
+        all_links_count = 0
+        for a in soup.find_all("a", href=True):
+            all_links_count += 1
+            href = a.get("href", "").strip()
+            if not href or href.startswith("#"):
+                continue
+            target = normalize_internal_link(href, base_url)
+            if not target or target in seen:
+                continue
+            text = a.get_text(" ", strip=True)
+            title = a.get("title", "")
+            meta = " ".join([text, title, href]).lower()
+            meta_normalized = strip_accents(meta)
+            # Kiểm tra keyword
+            matched_keywords = [kw for kw in keywords if kw in meta_normalized]
+            if matched_keywords:
+                is_pdf = check_pdf(target)
+                link_info = {
+                    "url": target,
+                    "title": text or title or target.split("/")[-1],
+                    "is_pdf": is_pdf
+                }
+                links.append(link_info)
+                seen.add(target)
+                print(f"[Attachment search] Tìm thấy: '{text[:50]}' -> {target[:80]} (PDF: {is_pdf}, keyword: {matched_keywords[0]})")
+        print(f"[Attachment search] Tổng số links kiểm tra: {all_links_count}, tìm thấy: {len(links)}")
+        return links
+    
+    async def _crawl_keyword_links(self, links: list[str], ssl: bool) -> list[FileSource]:
+        """Crawl keyword links để tìm PDF"""
+        if not links:
+            return []
+        
+        print(f"[Keyword crawl] Đang crawl {len(links)} keyword links:")
+        for idx, link in enumerate(links, 1):
+            print(f"[Keyword crawl]   [{idx}] {link}")
+        
+        async def process_link(link_url: str) -> FileSource | None:
+            try:
+                print(f"[Keyword crawl] → Crawling: {link_url}")
+                headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+                async with self.session.get(url=link_url, timeout=self.timeout, ssl=ssl, headers=headers) as response:
+                    if response.ok:
+                        html = await response.text()
+                        pdf_links = [li for li in self._extract_links(html, link_url) if li["url_type"] == "pdf"]
+                        print(f"[Keyword crawl]   → Tìm thấy {len(pdf_links)} PDF links trực tiếp")
+                        if not pdf_links:
+                            att_links = self._find_attachment_links(html, link_url)
+                            print(f"[Keyword crawl]   → Tìm thấy {len(att_links)} attachment links")
+                            pdf_att = [att for att in att_links if att["is_pdf"]]
+                            print(f"[Keyword crawl]   → PDF từ attachment: {len(pdf_att)}")
+                            pdf_links = [{"title": att["title"], "url": att["url"]} for att in pdf_att]
+                        if pdf_links:
+                            print(f"[Keyword crawl]   → Đang tải PDF: {pdf_links[0]['url']}")
+                            result = await self._pdf_task(ssl, pdf_links[0]["title"], pdf_links[0]["url"])
+                            if result:
+                                print(f"[Keyword crawl]   ✓ Thành công: {link_url[:50]}...")
+                            return result
+                        else:
+                            print(f"[Keyword crawl]   ✗ Không tìm thấy PDF trong: {link_url[:50]}...")
+            except Exception as e:
+                print(f"[Keyword crawl]   ✗ Error {link_url[:50]}...: {str(e)[:50]}")
+            return None
+        
+        semaphore = asyncio.Semaphore(min(MAX_KEYWORD_WORKERS, len(links)) or 1)
+        async def bounded(link_url: str):
+            async with semaphore:
+                return await process_link(link_url)
+        results = await asyncio.gather(*[bounded(link) for link in links])
+        pdfs = [r for r in results if r]
+        print(f"[Keyword crawl] Kết quả: {len(pdfs)}/{len(links)} PDFs found\n")
+        return pdfs
+    
+    async def _crawl_attachment_links(self, attachment_links: list[dict], ssl: bool) -> list[FileSource]:
+        """Crawl attachment links để tìm PDF"""
+        if not attachment_links:
+            return []
+        
+        # Lọc ra các link không phải PDF để crawl
+        non_pdf_links = [att for att in attachment_links if not att["is_pdf"]]
+        pdf_links = [att for att in attachment_links if att["is_pdf"]]
+        
+        print(f"[Attachment crawl] Đang crawl {len(non_pdf_links)} non-PDF attachment links:")
+        for idx, att in enumerate(non_pdf_links, 1):
+            print(f"[Attachment crawl]   [{idx}] {att['title']}: {att['url']}")
+        
+        async def process_attachment(att: dict) -> FileSource | None:
+            try:
+                print(f"[Attachment crawl] → Crawling: {att['url']}")
+                headers = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+                async with self.session.get(url=att["url"], timeout=self.timeout, ssl=ssl, headers=headers, allow_redirects=True) as response:
+                    # Kiểm tra Content-Type trước
+                    content_type = response.headers.get("Content-Type", "").lower()
+                    if "application/pdf" in content_type:
+                        print(f"[Attachment crawl]   → Response là PDF trực tiếp (Content-Type: {content_type})")
+                        # Tải PDF trực tiếp
+                        pdf_data = await response.read()
+                        if pdf_data:
+                            result = FileSource(
+                                title=att["title"],
+                                url=att["url"],
+                                content=self.pdf_to_text.extract_text(pdf_data, include_metadata=False),
+                                file_type="pdf"
+                            )
+                            print(f"[Attachment crawl]   ✓ Thành công: {att['url'][:50]}...")
+                            return result
+                    
+                    if response.ok:
+                        html = await response.text()
+                        pdf_links = [li for li in self._extract_links(html, att["url"]) if li["url_type"] == "pdf"]
+                        print(f"[Attachment crawl]   → Tìm thấy {len(pdf_links)} PDF links trong HTML")
+                        if pdf_links:
+                            print(f"[Attachment crawl]   → Đang tải PDF: {pdf_links[0]['url']}")
+                            result = await self._pdf_task(ssl, pdf_links[0]["title"], pdf_links[0]["url"])
+                            if result:
+                                print(f"[Attachment crawl]   ✓ Thành công: {att['url'][:50]}...")
+                            return result
+                        else:
+                            print(f"[Attachment crawl]   ✗ Không tìm thấy PDF trong: {att['url'][:50]}...")
+            except Exception as e:
+                print(f"[Attachment crawl]   ✗ Error {att['url'][:50]}...: {str(e)[:50]}")
+            return None
+        
+        # Xử lý PDF links trực tiếp trước
+        pdf_results = []
+        for att in pdf_links:
+            print(f"[Attachment crawl] → Tải PDF trực tiếp: {att['url']}")
+            result = await self._pdf_task(ssl, att["title"], att["url"])
+            if result:
+                pdf_results.append(result)
+                print(f"[Attachment crawl]   ✓ Thành công: {att['url'][:50]}...")
+        
+        # Crawl non-PDF links
+        if non_pdf_links:
+            semaphore = asyncio.Semaphore(min(MAX_KEYWORD_WORKERS, len(non_pdf_links)) or 1)
+            async def bounded(att: dict):
+                async with semaphore:
+                    return await process_attachment(att)
+            results = await asyncio.gather(*[bounded(att) for att in non_pdf_links])
+            pdf_results.extend([r for r in results if r])
+        
+        print(f"[Attachment crawl] Kết quả: {len(pdf_results)}/{len(attachment_links)} PDFs found\n")
+        return pdf_results
+    
+    def _extract_links(self, html: str, url: str) -> list[dict]:
+        """Extract links from HTML - tìm PDF trực tiếp từ HTML trước"""
+        links = []
+        seen = set()
+        
+        # 1. Tìm PDF links trực tiếp từ HTML (giống code mẫu)
+        soup = BeautifulSoup(html, "html.parser")
+        for a in soup.find_all("a", href=True):
+            raw = a.get("href", "").strip()
+            if not raw or raw.startswith("#"):
+                continue
+            
+            # Normalize URL
+            if raw.lower().endswith(".pdf"):
+                if raw.startswith("http"):
+                    pdf_url = raw
+                else:
+                    pdf_url = url.rstrip("/") + "/" + raw.lstrip("/")
+                
+                if pdf_url not in seen:
+                    seen.add(pdf_url)
+                    links.append({
+                        "title": a.get_text(" ", strip=True) or pdf_url.split("/")[-1],
+                        "url": pdf_url,
+                        "url_type": "pdf"
+                    })
+        
+        # 2. Tìm các links khác từ crawl4ai (nếu cần)
+        if len(links) < 10:  # Chỉ dùng crawl4ai nếu chưa tìm đủ links
+            try:
+                markdown = self.link_generator.generate_markdown(input_html=html, base_url=url).fit_markdown or ""
+                _, citations = self.link_generator.convert_links_to_citations(markdown, url)
+                for citation in citations.splitlines():
+                    if "⟩" not in citation:
+                        continue
+                    line = citation.split("⟩")[-1].strip()
+                    parts = line.split(": ", 1) if ": " in line else [line, ""]
+                    link_url, title = parts[0].strip(), parts[1].strip() if len(parts) > 1 else ""
+                    if link_url in seen:
+                        continue
+                    seen.add(link_url)
+                    url_type = "pdf" if check_pdf(link_url) else ("image" if any(link_url.endswith(ext) for ext in IMAGE_EXTENSION) else "ref")
+                    links.append({"title": title, "url": link_url, "url_type": url_type})
+            except Exception as e:
+                print(f"[Link extract] Lỗi crawl4ai: {str(e)[:50]}")
+        
+        return links
+    def _convert_table_to_markdown(self, table: Tag) -> str:
+        """Convert HTML table to markdown format - viết lại từ đầu"""
         rows = []
         for tr in table.find_all("tr"):
             cells = []
             for cell in tr.find_all(["td", "th"]):
-                text = cell.get_text(separator=" ", strip=True)
-                # Escape pipe characters
+                # Lấy text, clean và escape pipe
+                text = cell.get_text(" ", strip=True)
+                text = self._clean_cell_text(text)
+                # Xóa ** (bold markdown)
+                text = re.sub(r'\*\*', '', text)
                 text = text.replace("|", "\\|")
                 cells.append(text)
             if cells:
-                rows.append("| " + " | ".join(cells) + " |")
+                rows.append(cells)
         
         if not rows:
             return ""
         
-        # Add header separator for markdown table
-        if len(rows) > 0:
-            num_cols = len(rows[0].split("|")) - 2  # Subtract empty strings at start/end
-            separator = "| " + " | ".join(["---"] * num_cols) + " |"
-            # Insert separator after first row (header)
-            rows.insert(1, separator)
+        # Xóa các cột trống ở đầu và cuối của tất cả rows
+        if rows:
+            # Tìm cột đầu tiên và cuối cùng có nội dung
+            first_col = 0
+            last_col = max(len(row) for row in rows) - 1
+            
+            # Tìm cột đầu tiên có nội dung
+            for i in range(len(rows[0])):
+                if any(row[i].strip() if i < len(row) else False for row in rows):
+                    first_col = i
+                    break
+            
+            # Tìm cột cuối cùng có nội dung
+            for i in range(len(rows[0]) - 1, -1, -1):
+                if any(row[i].strip() if i < len(row) else False for row in rows):
+                    last_col = i
+                    break
+            
+            # Trim rows
+            trimmed_rows = []
+            for row in rows:
+                if first_col < len(row):
+                    trimmed_row = row[first_col:last_col+1]
+                    trimmed_rows.append(trimmed_row)
+                else:
+                    trimmed_rows.append([])
+            rows = trimmed_rows
         
-        return "\n".join(rows)
+        # Tạo markdown table
+        markdown_lines = []
+        # Header row (first row)
+        if rows:
+            header = rows[0]
+            if header:
+                markdown_lines.append("| " + " | ".join(header) + " |")
+                # Separator
+                markdown_lines.append("| " + " | ".join(["---"] * len(header)) + " |")
+                # Data rows
+                for row in rows[1:]:
+                    # Pad row nếu thiếu columns
+                    while len(row) < len(header):
+                        row.append("")
+                    # Trim nếu thừa columns
+                    row = row[:len(header)]
+                    markdown_lines.append("| " + " | ".join(row) + " |")
+        
+        return "\n".join(markdown_lines)
+    
+    def _clean_cell_text(self, text: str) -> str:
+        """Làm sạch text trong cell: gộp các dòng xuống dòng thành 1 dòng, xóa khoảng trắng thừa"""
+        if not text:
+            return ""
+        text = str(text).strip()
+        # Thay thế tất cả các ký tự whitespace (bao gồm \n, \r, \t, space) bằng 1 space duy nhất
+        # Đảm bảo mọi xuống dòng đều được gộp thành 1 dòng
+        text = re.sub(r'\s+', ' ', text)
+        return text.strip()
     
     def _normalize_whitespace(self, text: str) -> str:
-        """Normalize whitespace while preserving structure"""
-        # Preserve double newlines (paragraph breaks)
-        # Normalize multiple spaces to single space
-        text = re.sub(r'[ \t]+', ' ', text)
-        # Normalize 3+ newlines to 2 newlines (paragraph break)
-        text = re.sub(r'\n{3,}', '\n\n', text)
-        # Remove trailing whitespace from each line
-        lines = [line.rstrip() for line in text.splitlines()]
-        return '\n'.join(lines)
-    
-    def _detect_table_like_data(self, lines: list[str], start_idx: int) -> tuple[bool, int]:
-        """
-        Detect if lines form a table-like structure (numbered list with consistent pattern).
-        Returns (is_table_like, end_idx)
-        
-        Pattern: lines starting with numbers followed by codes/names/values
-        Example: "1 CN1 Công nghệ thông tin 28.19"
-        """
-        if start_idx >= len(lines):
-            return False, start_idx
-        
-        # Check first line pattern: number + code + name + value
-        first_line = lines[start_idx].strip()
-        # Pattern: starts with number, has multiple space-separated parts
-        if not re.match(r'^\d+\s+[A-Z0-9]', first_line):
-            return False, start_idx
-        
-        # Count consecutive lines with similar pattern
-        consecutive_count = 1
-        for i in range(start_idx + 1, len(lines)):
-            line = lines[i].strip()
-            if line == '':
-                break
-            # Check if line follows similar pattern (starts with number)
-            if re.match(r'^\d+\s+', line):
-                consecutive_count += 1
-            else:
-                break
-        
-        # If we have 3+ consecutive lines with this pattern, it's likely table-like data
-        return consecutive_count >= 3, start_idx + consecutive_count
-    
-    def _convert_table_like_to_markdown_table(self, lines: list[str], start_idx: int, end_idx: int) -> str:
-        """Convert table-like numbered list to markdown table format"""
-        table_lines = lines[start_idx:end_idx]
-        
-        # Try to detect columns by splitting on multiple spaces
-        rows = []
-        for line in table_lines:
-            line = line.strip()
-            if not line:
-                continue
-            # Split on 2+ spaces to get columns
-            parts = re.split(r'\s{2,}', line)
-            if len(parts) >= 2:
-                # Remove leading number if present
-                if re.match(r'^\d+', parts[0]):
-                    parts[0] = re.sub(r'^\d+\s+', '', parts[0], count=1)
-                rows.append(parts)
-        
-        if not rows or len(rows) < 2:
-            # Can't form table, return as-is
-            return '\n'.join(table_lines)
-        
-        # Determine number of columns (use max columns from all rows)
-        max_cols = max(len(row) for row in rows)
-        
-        # Normalize rows to have same number of columns
-        normalized_rows = []
-        for row in rows:
-            normalized = row + [''] * (max_cols - len(row))
-            normalized_rows.append(normalized[:max_cols])
-        
-        # Build markdown table
-        markdown_table = []
-        # Header row (use first row or generic headers)
-        if max_cols >= 3:
-            header = ['STT', 'Mã', 'Ngành', 'Điểm'] if max_cols == 4 else ['STT'] + [f'Cột {i+1}' for i in range(max_cols-1)]
-        else:
-            header = [f'Cột {i+1}' for i in range(max_cols)]
-        markdown_table.append('| ' + ' | '.join(header) + ' |')
-        markdown_table.append('| ' + ' | '.join(['---'] * max_cols) + ' |')
-        
-        # Data rows
-        for row in normalized_rows:
-            # Escape pipe characters
-            escaped_row = [cell.replace('|', '\\|') for cell in row]
-            markdown_table.append('| ' + ' | '.join(escaped_row) + ' |')
-        
-        return '\n'.join(markdown_table)
-    
-    def _preserve_lists(self, text: str) -> str:
-        """Ensure lists are properly formatted with blank lines, detect and convert table-like data"""
+        """Normalize whitespace - giữ table format, gộp inline metadata"""
         lines = text.splitlines()
         result = []
+        in_table = False
         i = 0
         
         while i < len(lines):
-            line = lines[i].strip()
+            line = lines[i]
+            stripped = line.strip()
             
-            # Check if this is start of table-like data
-            is_table_like, end_idx = self._detect_table_like_data(lines, i)
-            
-            if is_table_like:
-                # Convert to markdown table
-                if result and result[-1].strip():
-                    result.append('')
-                result.append('[BẢNG]')
-                table_markdown = self._convert_table_like_to_markdown_table(lines, i, end_idx)
-                result.append(table_markdown)
-                result.append('')
-                i = end_idx
+            # Phát hiện table block - bỏ qua nếu trùng lặp
+            if stripped == '[BẢNG]':
+                if not (result and result[-1].strip() == '[BẢNG]'):
+                    in_table = True
+                    result.append('[BẢNG]')
+                i += 1
                 continue
             
-            # Regular list item detection
-            is_list_item = (line.startswith('- ') or 
-                          line.startswith('* ') or
-                          line.startswith('+ ') or
-                          re.match(r'^\d+[.)]\s+', line))
+            # Trong table: giữ nguyên format, nhưng clean cell text
+            if in_table:
+                if stripped.startswith('|'):
+                    # Kiểm tra xem có phải separator row không
+                    if '---' in stripped:
+                        # Separator row: chỉ thêm nếu chưa có separator row ngay trước đó
+                        if not (result and result[-1].startswith('|') and '---' in result[-1]):
+                            # Đếm số cột từ dòng trước (nếu có)
+                            num_cols = 0
+                            if result and result[-1].startswith('|') and '---' not in result[-1]:
+                                prev_cells = result[-1].split('|')
+                                prev_cleaned = [c.strip() for c in prev_cells if c.strip()]
+                                num_cols = len(prev_cleaned)
+                            else:
+                                # Nếu không có dòng trước, đếm từ dòng hiện tại
+                                cells = stripped.split('|')
+                                num_cols = len([c for c in cells if '---' in c or c.strip() == ''])
+                            
+                            if num_cols > 0:
+                                separator = '|' + '|'.join(['---'] * num_cols) + '|'
+                                result.append(separator)
+                        # Bỏ qua separator row trùng lặp
+                    else:
+                        # Data row: clean từng cell
+                        cells = stripped.split('|')
+                        cleaned_cells = []
+                        for cell in cells:
+                            # Clean cell: xóa HTML tags (<br>), xóa ** (bold markdown), gộp whitespace thành 1 space
+                            cleaned_cell = re.sub(r'<[^>]+>', '', cell)  # Xóa HTML tags
+                            cleaned_cell = re.sub(r'\*\*', '', cleaned_cell)  # Xóa **
+                            cleaned_cell = re.sub(r'\s+', ' ', cleaned_cell.strip())
+                            cleaned_cells.append(cleaned_cell)
+                        
+                        # Xóa các cột trống ở đầu và cuối
+                        while cleaned_cells and not cleaned_cells[0].strip():
+                            cleaned_cells.pop(0)
+                        while cleaned_cells and not cleaned_cells[-1].strip():
+                            cleaned_cells.pop()
+                        
+                        if cleaned_cells:
+                            row = '|' + '|'.join(cleaned_cells) + '|'
+                            result.append(row)
+                            
+                            # Nếu đây là header row (dòng đầu tiên sau [BẢNG]), đảm bảo có separator
+                            if len(result) >= 2 and result[-2] == '[BẢNG]':
+                                # Đếm số cột
+                                num_cols = len([c for c in cleaned_cells if c.strip()])
+                                if num_cols > 0:
+                                    separator = '|' + '|'.join(['---'] * num_cols) + '|'
+                                    result.append(separator)
+                elif not stripped:
+                    # Bỏ qua dòng trống trong table
+                    pass
+                elif stripped.isdigit() or (stripped == '---' and not stripped.startswith('|')):
+                    # Bỏ qua các dòng chỉ có số hoặc dấu --- đơn lẻ (không phải separator row)
+                    pass
+                else:
+                    # Kết thúc table
+                    in_table = False
+                    # Xử lý dòng này như bình thường
+                    if stripped:
+                        cleaned = re.sub(r'<[^>]+>', '', stripped)  # Xóa HTML tags
+                        cleaned = re.sub(r'\s+', ' ', cleaned)
+                        result.append(cleaned)
+                i += 1
+                continue
             
-            if is_list_item:
-                # Check if previous line was also list item
-                if result and result[-1].strip() and not any(
-                    result[-1].strip().startswith(marker) 
-                    for marker in ['- ', '* ', '+ ']
-                ) and not re.match(r'^\d+[.)]\s+', result[-1].strip()):
-                    result.append('')
-                result.append(lines[i])  # Keep original line (with indentation if any)
-            elif line == '':
-                if not result or result[-1].strip():
-                    result.append('')
-            else:
-                # Regular text line
-                if result and result[-1].strip():
-                    # Check if previous was list
-                    prev_was_list = any(
-                        result[-1].strip().startswith(marker) 
-                        for marker in ['- ', '* ', '+ ']
-                    ) or re.match(r'^\d+[.)]\s+', result[-1].strip() if result[-1].strip() else '')
-                    if prev_was_list:
-                        result.append('')
-                result.append(lines[i])
+            # Gộp inline metadata: các dòng ngắn liên tiếp (có thể có | hoặc ·)
+            if stripped and not stripped.startswith('|') and len(stripped) < 150:
+                metadata_lines = [stripped]
+                j = i + 1
+                # Gộp các dòng ngắn liên tiếp (dừng khi gặp dòng dài hoặc structure)
+                while j < len(lines):
+                    next_stripped = lines[j].strip()
+                    if not next_stripped or len(next_stripped) > 150 or next_stripped.startswith(('#', '- ', '* ', '[BẢNG]')):
+                        break
+                    metadata_lines.append(next_stripped)
+                    j += 1
+                
+                # Gộp thành 1 dòng: xử lý | và ·
+                # Nếu có dòng chỉ là "|", gộp với dòng trước/sau
+                parts = []
+                for line in metadata_lines:
+                    line = line.replace('·', '|').strip()
+                    if line == '|':
+                        # Dòng chỉ có |, bỏ qua (sẽ được normalize sau)
+                        continue
+                    # Nếu dòng có |, tách ra
+                    if '|' in line:
+                        parts.extend(p.strip() for p in line.split('|') if p.strip())
+                    else:
+                        # Dòng không có |, thêm vào phần cuối hoặc tạo mới
+                        if parts:
+                            parts[-1] = (parts[-1] + ' ' + line).strip()
+                        else:
+                            parts.append(line)
+                
+                # Join bằng |
+                if parts:
+                    merged = ' | '.join(parts)
+                    result.append(merged)
+                i = j
+                continue
             
+            # Dòng thường: normalize spaces (gộp tất cả whitespace thành 1 space)
+            if stripped:
+                cleaned = re.sub(r'\s+', ' ', stripped)
+                result.append(cleaned)
+            elif result and result[-1] and result[-1].strip():
+                # Chỉ thêm dòng trống nếu dòng trước không phải dòng trống
+                result.append('')
             i += 1
         
-        return '\n'.join(result)
+        # Xóa tất cả dòng trống thừa giữa text với text
+        final_result = []
+        for i, line in enumerate(result):
+            if line.strip():
+                final_result.append(line)
+            # Bỏ qua tất cả dòng trống
+        
+        text = '\n'.join(final_result)
+        # Xóa dòng trống ở đầu và cuối
+        text = text.strip()
+        return text
+    
+    def _detect_table_like_data(self, lines: list[str], start_idx: int) -> tuple[bool, int]:
+        """Detect table-like numbered list pattern"""
+        if start_idx >= len(lines) or not re.match(r'^\d+\s+[A-Z0-9]', lines[start_idx].strip()):
+            return False, start_idx
+        count = 1
+        for i in range(start_idx + 1, len(lines)):
+            if not lines[i].strip() or not re.match(r'^\d+\s+', lines[i].strip()):
+                break
+            count += 1
+        return count >= 3, start_idx + count
+    
+    def _convert_table_like_to_markdown_table(self, lines: list[str], start_idx: int, end_idx: int) -> str:
+        """Convert table-like numbered list to markdown"""
+        rows = []
+        for line in lines[start_idx:end_idx]:
+            parts = re.split(r'\s{2,}', line.strip())
+            if len(parts) >= 2:
+                if re.match(r'^\d+', parts[0]):
+                    parts[0] = re.sub(r'^\d+\s+', '', parts[0], count=1)
+                rows.append(parts)
+        if not rows or len(rows) < 2:
+            return '\n'.join(lines[start_idx:end_idx])
+        max_cols = max(len(row) for row in rows)
+        normalized = [row + [''] * (max_cols - len(row)) for row in rows]
+        header = ['STT', 'Mã', 'Ngành', 'Điểm'] if max_cols == 4 else (['STT'] + [f'Cột {i+1}' for i in range(max_cols-1)] if max_cols >= 3 else [f'Cột {i+1}' for i in range(max_cols)])
+        md = ['| ' + ' | '.join(header) + ' |', '| ' + ' | '.join(['---'] * max_cols) + ' |']
+        md.extend('| ' + ' | '.join(cell.replace('|', '\\|') for cell in row[:max_cols]) + ' |' for row in normalized)
+        return '\n'.join(md)
+    
+    def _preserve_lists(self, text: str) -> str:
+        """Format lists và detect table-like data"""
+        lines = text.splitlines()
+        result = []
+        i = 0
+        while i < len(lines):
+            line = lines[i].strip()
+            is_table_like, end_idx = self._detect_table_like_data(lines, i)
+            if is_table_like:
+                if result and result[-1].strip():
+                    result.append('')
+                result.extend(['[BẢNG]', self._convert_table_like_to_markdown_table(lines, i, end_idx)])
+                i = end_idx
+                continue
+            is_list = line.startswith(('- ', '* ', '+ ')) or re.match(r'^\d+[.)]\s+', line)
+            if is_list:
+                if result and result[-1].strip() and not (result[-1].strip().startswith(('- ', '* ', '+ ')) or re.match(r'^\d+[.)]\s+', result[-1].strip())):
+                    result.append('')
+                result.append(lines[i])
+            elif line == '':
+                # Chỉ thêm dòng trống nếu cần
+                if result and result[-1].strip():
+                    result.append('')
+            else:
+                prev_list = result and (result[-1].strip().startswith(('- ', '* ', '+ ')) or re.match(r'^\d+[.)]\s+', result[-1].strip() if result[-1].strip() else ''))
+                if prev_list:
+                    result.append('')
+                result.append(lines[i])
+            i += 1
+        # Xóa dòng trống thừa
+        text = '\n'.join(result)
+        text = re.sub(r'\n{3,}', '\n\n', text)
+        return text.strip()
     
     def __processs_lines(self, text: str, min_length: int) -> str:
-        """Process lines: filter short lines, normalize whitespace, preserve structure"""
+        """Process lines: filter, normalize, preserve structure - giữ table format"""
         lines = text.splitlines()
-        valid_lines: list[str] = []
-        for line in lines:
-            line = line.strip()
+        valid_lines = []
+        in_table = False
+        structure_markers = ('#', '- ', '* ', '+ ', '|', '[BẢNG]')
+        
+        for original_line in lines:
+            line = original_line.strip()
             solid_line = re.sub(WHITE_SPACE, '', line)
-            # Keep lines that are not empty and meet minimum length
-            # OR are markdown structure elements (headers, list markers, table separators)
-            is_structure = (line.startswith('#') or 
-                          line.startswith('- ') or line.startswith('* ') or line.startswith('+ ') or
-                          re.match(r'^\d+[.)]\s+', line) or
-                          line.startswith('|') or
-                          line.startswith('[BẢNG]') or
-                          line.startswith('[TABLE'))
             
-            if (solid_line != "" and len(solid_line) > min_length) or is_structure:
+            # Table block detection - bỏ qua nếu trùng lặp
+            if line == '[BẢNG]':
+                if not (valid_lines and valid_lines[-1].strip() == '[BẢNG]'):
+                    in_table = True
+                    # Không thêm dòng trống trước [BẢNG] nếu dòng trước cũng là structure
+                    if valid_lines and valid_lines[-1].strip() and not valid_lines[-1].strip().startswith(('[BẢNG]', '|')):
+                        valid_lines.append('')
+                    valid_lines.append('[BẢNG]')
+            elif in_table:
+                # Trong table: giữ format nhưng clean cell text
+                if line.startswith('|'):
+                    # Kiểm tra xem có phải separator row không
+                    if '---' in line:
+                        # Separator row: chỉ thêm nếu chưa có separator row ngay trước đó
+                        if not (valid_lines and valid_lines[-1].startswith('|') and '---' in valid_lines[-1]):
+                            # Đếm số cột từ dòng trước (nếu có)
+                            num_cols = 0
+                            if valid_lines and valid_lines[-1].startswith('|') and '---' not in valid_lines[-1]:
+                                prev_cells = valid_lines[-1].split('|')
+                                prev_cleaned = [c.strip() for c in prev_cells if c.strip()]
+                                num_cols = len(prev_cleaned)
+                            else:
+                                # Nếu không có dòng trước, đếm từ dòng hiện tại
+                                cells = line.split('|')
+                                num_cols = len([c for c in cells if '---' in c or c.strip() == ''])
+                            
+                            if num_cols > 0:
+                                separator = '|' + '|'.join(['---'] * num_cols) + '|'
+                                valid_lines.append(separator)
+                        # Bỏ qua separator row trùng lặp
+                    else:
+                        # Data row: clean từng cell
+                        cells = line.split('|')
+                        cleaned_cells = []
+                        for cell in cells:
+                            # Xóa ** (bold markdown)
+                            cleaned_cell = re.sub(r'\*\*', '', cell)
+                            cleaned_cell = re.sub(r'\s+', ' ', cleaned_cell.strip())
+                            cleaned_cells.append(cleaned_cell)
+                        
+                        # Xóa các cột trống ở đầu và cuối
+                        while cleaned_cells and not cleaned_cells[0].strip():
+                            cleaned_cells.pop(0)
+                        while cleaned_cells and not cleaned_cells[-1].strip():
+                            cleaned_cells.pop()
+                        
+                        if cleaned_cells:
+                            row = '|' + '|'.join(cleaned_cells) + '|'
+                            valid_lines.append(row)
+                            
+                            # Nếu đây là header row (dòng đầu tiên sau [BẢNG]), đảm bảo có separator
+                            if len(valid_lines) >= 2 and valid_lines[-2] == '[BẢNG]':
+                                num_cols = len([c for c in cleaned_cells if c.strip()])
+                                if num_cols > 0:
+                                    separator = '|' + '|'.join(['---'] * num_cols) + '|'
+                                    valid_lines.append(separator)
+                elif not line:
+                    # Bỏ qua dòng trống trong table
+                    pass
+                else:
+                    # Kết thúc table
+                    in_table = False
+                    if (solid_line and len(solid_line) > min_length) or line.startswith(structure_markers):
+                        cleaned = re.sub(r'\s+', ' ', line)
+                        valid_lines.append(cleaned)
+            # Dòng thường
+            elif line.startswith(structure_markers) or (solid_line and len(solid_line) > min_length):
                 valid_lines.append(line)
         
         text = "\n".join(valid_lines)
-        # Normalize whitespace while preserving structure
         text = self._normalize_whitespace(text)
-        # Preserve list formatting
         text = self._preserve_lists(text)
+        # Xóa dòng trống thừa cuối cùng
+        text = re.sub(r'\n{3,}', '\n\n', text).strip()
         return text
     
     def _is_html_content(self, text: str) -> bool:
@@ -355,20 +699,8 @@ class ContentExtractor:
         return str(soup)
     
     def _convert_table(self, table: Tag) -> str:
-        rows = []
-        for tr in table.find_all("tr"):
-            cells = [c.get_text(strip=True) for c in tr.find_all(["th", "td"])]
-            if cells:
-                rows.append(cells)
-        if not rows:
-            return ""
-        header = rows[0]
-        body = rows[1:] if len(rows) > 1 else []
-        md = "| " + " | ".join(header) + " |\n"
-        md += "| " + " | ".join(["---"] * len(header)) + " |\n"
-        for row in body:
-            md += "| " + " | ".join(row) + " |\n"
-        return md.strip()
+        """Convert table tag to markdown"""
+        return self._convert_table_to_markdown(table)
     
     def _convert_list(self, list_tag: Tag, depth: int = 0) -> str:
         lines: list[str] = []
@@ -376,6 +708,8 @@ class ContentExtractor:
             text = li.get_text(" ", strip=True)
             if not text:
                 continue
+            # Clean text: xóa khoảng trắng thừa
+            text = self._clean_cell_text(text)
             indent = "  " * depth
             if list_tag.name == "ol":
                 prefix = f"{indent}{idx}. "
@@ -403,12 +737,16 @@ class ContentExtractor:
         if name in ["h1", "h2", "h3", "h4"]:
             text = node.get_text(separator=" ", strip=True)
             if text:
+                # Clean text: xóa khoảng trắng thừa
+                text = self._clean_cell_text(text)
                 level = int(name[1])
                 output.append("#" * level + " " + text)
             return
         if name == "p":
             text = node.get_text(separator=" ", strip=True)
             if text:
+                # Clean text: xóa khoảng trắng thừa
+                text = self._clean_cell_text(text)
                 output.append(text)
             return
         if name in ["ul", "ol"]:
@@ -419,7 +757,10 @@ class ContentExtractor:
         if name == "table":
             table_md = self._convert_table(node)
             if table_md:
-                output.append("[BẢNG]\n" + table_md)
+                output.append("[BẢNG]")
+                # Thêm từng dòng của table để dễ xử lý
+                for line in table_md.splitlines():
+                    output.append(line)
             return
         if name == "br":
             output.append("")
@@ -428,6 +769,7 @@ class ContentExtractor:
             self._walk_html(child, output)
     
     def _remove_by_selectors(self, soup: BeautifulSoup) -> None:
+        """Remove unwanted elements"""
         selectors = [
             "[class*=breadcrumb]", "#breadcrumbs", ".breadcrumbs",
             ".site-footer", "footer", ".footer", "#footer",
@@ -439,63 +781,50 @@ class ContentExtractor:
         for selector in selectors:
             for node in soup.select(selector):
                 node.decompose()
-        # Remove nav-like unordered lists with too many links
+        # Remove nav-like lists with too many links
         for tag in soup.find_all(["ul", "ol", "div", "section"]):
             links = tag.find_all("a")
             if len(links) >= 5:
                 text = tag.get_text(" ", strip=True)
-                link_text = " ".join(a.get_text(" ", strip=True) for a in links)
-                if text and len(link_text) / max(len(text), 1) >= 0.75:
+                if text and len(" ".join(a.get_text(" ", strip=True) for a in links)) / max(len(text), 1) >= 0.75:
                     tag.decompose()
 
-    def _deduplicate_lines(self, text: str) -> str:
-        lines = text.splitlines()
-        result: list[str] = []
-        prev = None
-        for line in lines:
-            if prev is not None and line.strip() == prev.strip():
-                continue
-            if line.strip() == "":
-                if prev and prev.strip() == "":
-                    continue
-            result.append(line)
-            prev = line
-        return "\n".join(result)
-    
     def _clean_html_to_text(self, html: str) -> str:
+        """Clean HTML to text, giữ table format"""
         soup = BeautifulSoup(html, "html.parser")
         for tag in soup(["script", "style", "meta", "header", "footer", "nav", "noscript", "svg"]):
             tag.decompose()
         for element in soup(text=lambda x: isinstance(x, Comment)):
             element.extract()
         self._remove_by_selectors(soup)
-        output: list[str] = []
+        output = []
         self._walk_html(soup, output)
-        cleaned = "\n".join(chunk for chunk in output if chunk)
-        return self._deduplicate_lines(cleaned)
+        return "\n".join(chunk for chunk in output if chunk)
     
     def _extract_content(self, html: str, url: str) -> str:
-        # Many upstream steps already clean HTML to plain text. Preserve original line breaks if so.
+        """Extract content from HTML"""
         if not self._is_html_content(html):
             return self.__processs_lines(html, self._min_line_length)
         
-        # Use custom HTML walker to create structured markdown-like text
         structured_text = self._clean_html_to_text(html)
         
-        # Fallback to previous method if walker produced nothing
         if not structured_text.strip():
-            html_with_lists_preserved = self._preserve_html_lists(html)
-            html_with_placeholders, table_placeholders = self._extract_html_tables(html_with_lists_preserved)
-            parsed: MarkdownGenerationResult = self.content_generator.generate_markdown(
-                input_html=html_with_placeholders,
-                base_url=url
-            )
-            structured_text = parsed.raw_markdown
-            structured_text = URL_PATTERN_REMOVE.sub(r'\1', structured_text)
-            for placeholder, markdown_table in table_placeholders.items():
-                structured_text = structured_text.replace(placeholder, f"\n[BẢNG]\n{markdown_table}\n")
+            # Fallback: crawl4ai markdown generator
+            html_with_lists = self._preserve_html_lists(html)
+            soup = BeautifulSoup(html_with_lists, "html.parser")
+            table_placeholders = {}
+            for idx, table in enumerate(soup.find_all("table")):
+                placeholder = f"[TABLE_{idx}]"
+                table_placeholders[placeholder] = self._convert_table_to_markdown(table)
+                table.replace_with(BeautifulSoup(f'<div>{placeholder}</div>', "html.parser").div)
+            
+            parsed: MarkdownGenerationResult = self.content_generator.generate_markdown(input_html=str(soup), base_url=url)
+            structured_text = URL_PATTERN_REMOVE.sub(r'\1', parsed.raw_markdown)
+            for placeholder, table_md in table_placeholders.items():
+                structured_text = structured_text.replace(placeholder, f"\n[BẢNG]\n{table_md}\n")
         
-        return self.__processs_lines(structured_text, self._min_line_length)
+        processed = self.__processs_lines(structured_text, self._min_line_length)
+        return re.sub(r'\n{3,}', '\n\n', processed)
     async def extract(self, html_results: list[HtmlResult], include_pdf: bool) -> list[WebSource]:
         ssl = os.getenv("WEB_SEARCH_SSL", "True").lower() in ("true", "1")
         jobs = []
@@ -511,68 +840,142 @@ class ContentExtractor:
     async def _extract_job(self, ssl: bool, html_result: HtmlResult, include_pdf: bool) -> WebSource | None:
         links_info = self._extract_links(html_result["html"], html_result["url"])
         main_content = self._extract_content(html_result["html"], html_result["url"])
-        # Todo: We can implement a basic link filter based on links_info and main_content
         file_contents: list[FileSource] = []
-        pdf_sections: list[str] = []
+        pdf_links = []
         if include_pdf:
+            print(f"\n[PDF SEARCH] Đang tìm PDF trong: {html_result['url']}")
+            print(f"[PDF SEARCH] Tổng số links tìm thấy: {len(links_info)}")
+            
+            # Đếm số PDF links
+            direct_pdf_links = [li for li in links_info if li["url_type"] == "pdf"]
+            print(f"[PDF SEARCH] PDF links trực tiếp từ links: {len(direct_pdf_links)}")
+            if direct_pdf_links:
+                for pdf_link in direct_pdf_links:
+                    print(f"[PDF SEARCH]   - {pdf_link['title']}: {pdf_link['url']}")
+            
             file_jobs = []
+            # 1. Tìm PDF trực tiếp từ links
             for link_info in links_info:
                 if link_info["url_type"] == "pdf":
                     file_jobs.append(self._pdf_task(ssl, link_info["title"], link_info["url"]))
+                    pdf_links.append(link_info["url"])
                     if len(file_jobs) >= self._max_file_per_page:
                         break
+            
+            # 2. Tìm PDF từ links "đính kèm"
+            attachment_links = self._find_attachment_links(html_result["html"], html_result["url"])
+            print(f"[PDF SEARCH] Attachment links tìm thấy: {len(attachment_links)}")
+            
+            # Ưu tiên PDF trực tiếp từ attachment
+            pdf_attachments = [att for att in attachment_links if att["is_pdf"] and att["url"] not in pdf_links]
+            print(f"[PDF SEARCH] PDF links từ attachment: {len(pdf_attachments)}")
+            if pdf_attachments:
+                for att_link in pdf_attachments:
+                    print(f"[PDF SEARCH]   - {att_link['title']}: {att_link['url']}")
+            
+            for att_link in pdf_attachments:
+                if len(file_jobs) >= self._max_file_per_page:
+                    break
+                file_jobs.append(self._pdf_task(ssl, att_link["title"], att_link["url"]))
+                pdf_links.append(att_link["url"])
+            
+            # 3. Crawl các link đính kèm không phải PDF (có thể cần click để tải PDF)
+            if len(file_jobs) < self._max_file_per_page:
+                non_pdf_attachments = [att for att in attachment_links if not att["is_pdf"] and att["url"] not in pdf_links]
+                print(f"[PDF SEARCH] Non-PDF attachment links: {len(non_pdf_attachments)}")
+                if non_pdf_attachments:
+                    print(f"[Attachment link] Crawl {len(non_pdf_attachments)} link đính kèm để tìm PDF...")
+                    attachment_pdfs = await self._crawl_attachment_links(non_pdf_attachments, ssl)
+                    print(f"[PDF SEARCH] PDF tìm thấy từ attachment crawl: {len(attachment_pdfs)}")
+                    for pdf_result in attachment_pdfs:
+                        if len(file_contents) >= self._max_file_per_page:
+                            break
+                        file_contents.append(pdf_result)
+                        pdf_links.append(pdf_result.url)
+            
+            print(f"[PDF SEARCH] Tổng số PDF jobs: {len(file_jobs)}")
             file_results = await asyncio.gather(*file_jobs)
             for file_result in file_results:
                 if file_result:
                     file_contents.append(file_result)
-                    pdf_text = file_result["text"].strip()
-                    if pdf_text:
-                        prefix = FILE_PREFIX.format(
-                            title=file_result["file_title"] or "Tài liệu PDF",
-                            url=file_result["file_url"]
-                        )
-                        pdf_sections.append(f"{prefix}{pdf_text}")
-        if pdf_sections:
-            pdf_block = "\n\n".join(pdf_sections)
-            if main_content.strip():
-                main_content = f"{main_content}\n\n{pdf_block}"
-            else:
-                main_content = pdf_block
+            print(f"[PDF SEARCH] PDF đã tải thành công: {len(file_contents)}/{len(file_jobs)}")
+            
+            # 4. Nếu vẫn chưa có PDF, crawl các link keyword
+            if not pdf_links:
+                keyword_links = self._find_keyword_links(html_result["html"], html_result["url"])
+                print(f"[PDF SEARCH] Keyword links tìm thấy: {len(keyword_links)}")
+                if keyword_links:
+                    print(f"[Keyword link crawl] Không tìm thấy PDF trực tiếp, crawl {len(keyword_links)} link liên quan...")
+                    keyword_pdfs = await self._crawl_keyword_links(keyword_links, ssl)
+                    print(f"[PDF SEARCH] PDF tìm thấy từ keyword crawl: {len(keyword_pdfs)}")
+                    for pdf_result in keyword_pdfs:
+                        if pdf_result:
+                            file_contents.append(pdf_result)
+                            pdf_links.append(pdf_result["file_url"])
+            
+            print(f"[PDF SEARCH] Kết quả cuối cùng: {len(pdf_links)} PDF links, {len(file_contents)} PDF files đã tải\n")
+        
+        # Format output
+        crawl_date = datetime.now().strftime("%Y-%m-%d")
+        parts = [
+            "---",
+            f"source_url: {html_result['url']}",
+            f"crawl_date: {crawl_date}",
+            f"page_title: {html_result['title']}",
+            f"content_type: html",
+            f"has_pdf: {len(pdf_links) > 0}",
+        ]
+        if pdf_links:
+            parts.append("pdf_links:")
+            parts.extend(f" - {link}" for link in pdf_links)
+        parts.append("---")
+        parts.append(main_content.strip() or "> Không có nội dung HTML được trích xuất.")
+        
+        # PDF sections
+        for file_result in file_contents:
+            if file_result["text"].strip():
+                filename = file_result["file_url"].split("/")[-1] or "document.pdf"
+                parts.extend(["", "---", f"# PDF Extracted ({filename})", "", file_result["text"].strip(), ""])
+        
+        final_text = re.sub(r'\n{3,}', '\n\n', "\n".join(parts)).strip()
+        
         web_source: WebSource = {
             "query": html_result["query"],
             "title": html_result["title"],
             "url": html_result["url"],
             "description": html_result["description"],
-            "text": main_content,
+            "text": final_text,
             "files": file_contents,
             "score": html_result["score"]
         }
         if len(web_source["text"].strip()) != 0 or len(file_contents) != 0:
-            # Print crawled text for logging
-            print(f"\n{'='*80}")
-            print(f"[CRAWL TEXT] URL: {web_source['url']}")
-            print(f"[CRAWL TEXT] Title: {web_source['title']}")
-            print(f"[CRAWL TEXT] Text length: {len(main_content)} characters")
-            print(f"[CRAWL TEXT] Text preview (first 500 chars):")
-            print("-" * 80)
-            preview = main_content[:500] if len(main_content) > 500 else main_content
-            print(preview)
-            if len(main_content) > 500:
-                print(f"... (truncated, total {len(main_content)} chars)")
-            print(f"[CRAWL TEXT] Full text:")
-            print("-" * 80)
-            print(main_content)
-            print(f"{'='*80}\n")
+            print(f"[CRAWL] {web_source['url'][:60]}... | {len(main_content)} chars | {len(file_contents)} PDFs")
             return web_source
         else:
             print(f"{web_source['url']} is empty")
                 
     async def _pdf_task(self, ssl: bool, title: str, url: str) -> FileSource | None:
+        """Download PDF - không dùng ScrapingBee, dùng aiohttp thông thường với User-Agent"""
         async with self._semaphore:
             try:
-                async with self.session.get(url=url, timeout=self.timeout, ssl=ssl) as response:
+                # Headers để download PDF (không dùng ScrapingBee)
+                headers = {
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
+                    "Accept": "application/pdf,application/octet-stream,*/*",
+                    "Accept-Language": "vi-VN,vi;q=0.9,en-US;q=0.8,en;q=0.7"
+                }
+                async with self.session.get(url=url, timeout=self.timeout, ssl=ssl, headers=headers) as response:
                     if response.ok:
+                        # Kiểm tra content-type
+                        content_type = response.headers.get("Content-Type", "").lower()
+                        if "pdf" not in content_type and not url.endswith(".pdf"):
+                            print(f"[CRAWL PDF] Warning: URL không phải PDF (Content-Type: {content_type})")
+                        
                         stream = await response.content.read()
+                        if not stream:
+                            print(f"[CRAWL PDF] Empty response từ {url}")
+                            return None
+                        
                         text = self.pdf_to_text.extract_text(stream)
                         result: FileSource = {
                             "file_title": title,
@@ -580,28 +983,12 @@ class ContentExtractor:
                             "file_type": "pdf",
                             "text": text
                         }
-                        # Print PDF text for logging
-                        print(f"\n{'='*80}")
-                        print(f"[CRAWL PDF] File URL: {url}")
-                        print(f"[CRAWL PDF] File Title: {title}")
-                        print(f"[CRAWL PDF] Text length: {len(text)} characters")
-                        print(f"[CRAWL PDF] Text preview (first 500 chars):")
-                        print("-" * 80)
-                        preview = text[:500] if len(text) > 500 else text
-                        print(preview)
-                        if len(text) > 500:
-                            print(f"... (truncated, total {len(text)} chars)")
-                        print(f"[CRAWL PDF] Full text:")
-                        print("-" * 80)
-                        print(text)
-                        print(f"{'='*80}\n")
+                        print(f"[CRAWL PDF] ✓ {title[:50]}... ({len(text)} chars)")
                         return result
                     else:
-                        print(f"[Page download] Error {response.status}")#: {await response.text()}")
+                        print(f"[CRAWL PDF] Error {response.status}: {url}")
             except asyncio.TimeoutError:
-                print(f"[Page downloader] Timeout: {url}")
+                print(f"[CRAWL PDF] Timeout: {url}")
             except Exception as e:
-                print(f"[Page downloader] Error: {str(e)[:100]}")
-                # import traceback
-                # traceback.print_exc()
+                print(f"[CRAWL PDF] Error: {url} - {str(e)[:100]}")
             return None

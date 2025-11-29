@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Request, HTTPException
-from fastapi.responses import HTMLResponse, RedirectResponse
+from fastapi.responses import HTMLResponse, RedirectResponse, JSONResponse
 from fastapi.templating import Jinja2Templates
 
 from database import check_login
@@ -22,7 +22,34 @@ def get_login(request: Request):
     return response
 
 @router.get("/register", name="register", response_class=HTMLResponse)
-def get_register(request: Request):
+async def get_register(request: Request):
+    # Support quick registration via query parameters (GET)
+    query = request.query_params
+    if any(field in query for field in ("full_name", "username", "email", "password", "confirm_password")):
+        required_fields = ("full_name", "username", "email", "password", "confirm_password")
+        missing = [field for field in required_fields if not query.get(field)]
+        if missing:
+            return JSONResponse(
+                {"success": False, "message": f"Thiếu thông tin: {', '.join(missing)}"},
+                status_code=400,
+            )
+        if query.get("password") != query.get("confirm_password"):
+            return JSONResponse(
+                {"success": False, "message": "Mật khẩu xác nhận không khớp"},
+                status_code=400,
+            )
+        success = await register_user(
+            query.get("full_name", "").strip(),
+            query.get("username", "").strip(),
+            query.get("email", "").strip(),
+            query.get("password", ""),
+        )
+        if success:
+            return JSONResponse({"success": True, "message": "Đăng ký thành công"})
+        return JSONResponse(
+            {"success": False, "message": "Tên người dùng hoặc email đã tồn tại"},
+            status_code=400,
+        )
     def get_flashed_messages():
         return request.session.pop("_messages", [])
     response = templates.TemplateResponse(

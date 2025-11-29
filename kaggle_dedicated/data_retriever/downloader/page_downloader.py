@@ -170,32 +170,42 @@ class PageDowloader:
             }
             return result
     def _clean_html(self, html: str) -> str:
+        """Clean HTML nhưng giữ nguyên HTML structure (không convert sang plain text) để preserve table format"""
         soup = BeautifulSoup(html, "html.parser")
+        # Xóa các tag không cần thiết nhưng giữ HTML structure
         for tag in soup(["script", "style", "noscript", "svg", "header", "footer", "nav", "aside"]):
             tag.decompose()
         for element in soup(text=lambda x: isinstance(x, Comment)):
             element.extract()
+        
+        # Tìm content area nhưng giữ HTML structure
         for selector in self._wp_selectors:
             target = soup.select_one(selector)
             if target:
-                text = target.get_text(separator="\n", strip=True)
-                if len(text) > 200:
-                    return self._normalize_text(text)
+                # Kiểm tra xem có content không (có table hoặc text dài)
+                has_table = target.find("table") is not None
+                text_preview = target.get_text(separator=" ", strip=True)
+                if len(text_preview) > 200 or has_table:
+                    return str(target)
+        
+        # Tìm best candidate nhưng giữ HTML
         candidates = soup.find_all(["div", "main", "section", "article"], recursive=True)
-        best = ""
+        best = None
+        best_score = 0
         for candidate in candidates:
-            candidate_text = candidate.get_text(separator="\n", strip=True)
-            if len(candidate_text) > len(best):
-                best = candidate_text
-        if len(best) > 200:
-            return self._normalize_text(best)
+            has_table = candidate.find("table") is not None
+            text_preview = candidate.get_text(separator=" ", strip=True)
+            score = len(text_preview) + (1000 if has_table else 0)  # Ưu tiên có table
+            if score > best_score:
+                best_score = score
+                best = candidate
+        
+        if best and best_score > 200:
+            return str(best)
+        
+        # Fallback: trả về main/body nhưng giữ HTML
         target = soup.find("main") or soup.body or soup
-        text = target.get_text(separator="\n", strip=True)
-        return self._normalize_text(text)
-
-    def _normalize_text(self, text: str) -> str:
-        lines = [line.strip() for line in text.splitlines() if line.strip()]
-        return "\n".join(lines)
+        return str(target)
 
     def _needs_premium_proxy(self, url: str) -> bool:
         """Kiểm tra URL có cần premium_proxy không (dựa vào domain)"""
